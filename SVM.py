@@ -17,11 +17,14 @@ def preprocess_image(img_path):
     crop_margin = 20
     h, w = img.shape
     img = img[crop_margin:h - crop_margin, crop_margin:w - crop_margin]
-
+    kernel = np.ones((5, 5), np.uint8)
+    img = cv2.erode(img, kernel, iterations=0)
+    img = cv2.equalizeHist(img)
     img_blur = cv2.GaussianBlur(img, (5, 5), 0)
     _, thresh = cv2.threshold(img_blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
     kernel = np.ones((3, 3), np.uint8)
     thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
     contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     if contours:
@@ -39,11 +42,11 @@ def preprocess_image(img_path):
             x_max = min(img.shape[1], x_max + expand)
             y_max = min(img.shape[0], y_max + expand)
 
-            img_crop = img[y_min:y_max, x_min:x_max]
+            img_crop = img_blur[y_min:y_max, x_min:x_max]
         else:
-            img_crop = img
+            img_crop = img_blur
     else:
-        img_crop = img
+        img_crop = img_blur
 
     img_resized = cv2.resize(img_crop, (128, 128))
     img_norm = img_resized.astype(np.float32) / 255.0
@@ -59,7 +62,7 @@ label_dict = {label: idx for idx, label in enumerate(labels)}
 
 def load_data():
     for label in labels:
-        if label.startswith("9"):
+        if label.startswith("9") or label.startswith("20"):
             print(label)
             folder_path = os.path.join(data_dir, label)
             for file in os.listdir(folder_path):
@@ -87,7 +90,7 @@ X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
 # Giảm chiều bằng PCA
-pca = PCA(n_components=75)
+pca = PCA(n_components=100)
 X_train_pca = pca.fit_transform(X_train)
 X_test_pca = pca.transform(X_test)
 

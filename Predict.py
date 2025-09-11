@@ -15,16 +15,17 @@ def process_image(image_path):
     img = np.expand_dims(img, axis=0)
     return img
 
-model = tf.keras.models.load_model("v4.keras", compile=False)
+model = tf.keras.models.load_model("v3.keras", compile=False)
 
 
 with open("class_indices.json", "r", encoding="utf-8") as f:
     class_indices = json.load(f)
 idx_to_class = {v: k for k, v in class_indices.items()}
 
-img_path = "img.png"
+img_path = "img_3.png"
 img = process_image(img_path)
-
+plt.imshow(img[0], cmap="gray")
+plt.show()
 pred = model.predict(img)[0]
 pred_class = np.argmax(pred)
 pred_label = idx_to_class[pred_class]

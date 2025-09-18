@@ -22,7 +22,7 @@ with open("class_indices.json", "r", encoding="utf-8") as f:
     class_indices = json.load(f)
 idx_to_class = {v: k for k, v in class_indices.items()}
 
-img_path = "img_3.png"
+img_path = "img_4.png"
 img = process_image(img_path)
 plt.imshow(img[0], cmap="gray")
 plt.show()

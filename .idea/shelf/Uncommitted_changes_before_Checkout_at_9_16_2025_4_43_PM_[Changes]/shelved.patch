@@ -1,0 +1,112 @@
+Index: Processing.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pandas as pd\r\nfrom sklearn.model_selection import train_test_split\r\nfrom transformers import TFAutoModel, AutoTokenizer\r\nimport tensorflow as tf\r\n\r\nData_dir = \"simplifyweibo_4_moods.csv\"\r\n\r\ndf = pd.read_csv(Data_dir)\r\nnum_labels = df['label'].nunique()\r\nX = df.iloc[:, 1]\r\ny = df.iloc[:, 0]\r\n\r\nprint(X.head())\r\nprint(y.head())\r\nprint(num_labels)\r\n\r\ntrain_df, test_df = train_test_split(df, test_size=0.2, stratify=df[\"label\"], random_state=42)\r\nprint(train_df.head())\r\nprint(test_df.head())\r\n\r\n# =====================\r\n# 2. Tokenizer\r\n# =====================\r\nPRETRAINED = \"bert-base-chinese\"\r\nMAX_LEN = 64\r\nNUM_LABELS = 4\r\ntokenizer = AutoTokenizer.from_pretrained(PRETRAINED)\r\n\r\ndef encode_texts(texts, max_len=MAX_LEN):\r\n    return tokenizer(\r\n        texts.tolist(),\r\n        truncation=True,\r\n        padding=\"max_length\",\r\n        max_length=max_len,\r\n        return_tensors=\"np\"\r\n    )\r\n\r\nX_train = encode_texts(train_df['review'])\r\nX_test  = encode_texts(test_df['review'])\r\n\r\ny_train = tf.keras.utils.to_categorical(train_df['label'], num_classes=num_labels)\r\ny_test  = tf.keras.utils.to_categorical(test_df['label'], num_classes=num_labels)\r\n\r\nprint(X_train)\r\nprint(y_train)\r\nprint(X_test)\r\nprint(y_test)
+===================================================================
+diff --git a/Processing.py b/Processing.py
+--- a/Processing.py	(revision c5305837a462ccdaa97740c49a6cc69d7bfe2c91)
++++ b/Processing.py	(date 1757749691591)
+@@ -41,7 +41,4 @@
+ y_train = tf.keras.utils.to_categorical(train_df['label'], num_classes=num_labels)
+ y_test  = tf.keras.utils.to_categorical(test_df['label'], num_classes=num_labels)
+ 
+-print(X_train)
+-print(y_train)
+-print(X_test)
+-print(y_test)
+\ No newline at end of file
++
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"4c0e595d-08c6-4e33-9c07-f17fab6d61ad\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Processing.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Processing.py\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;ducvinh101101&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/watashiwalds/tegao-japanesewordhelper.git&quot;,\r\n    &quot;accountId&quot;: &quot;d66e1357-d8d4-4b6c-b68d-33e0b15290be&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"31ocvGNcOtip1NlSfWvP0WRs3B3\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Python.Predict.executor\": \"Run\",\r\n    \"Python.Processing.executor\": \"Run\",\r\n    \"Python.tt.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"git-widget-placeholder\": \"Comments-Classification\",\r\n    \"last_opened_file_path\": \"D:/user/Desktop/Github/tegao-japanesewordhelper\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\user\\Desktop\\Github\\tegao-japanesewordhelper\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PY-243.22562.220\" />\r\n        <option value=\"bundled-python-sdk-0fc6c617c4bd-9a18a617cbe4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.22562.220\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"4c0e595d-08c6-4e33-9c07-f17fab6d61ad\" name=\"Changes\" comment=\"\" />\r\n      <created>1756194107659</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1756194107659</updated>\r\n      <workItem from=\"1756194109412\" duration=\"1509000\" />\r\n      <workItem from=\"1757331648839\" duration=\"100000\" />\r\n      <workItem from=\"1757336786175\" duration=\"2459000\" />\r\n      <workItem from=\"1757397669038\" duration=\"5449000\" />\r\n      <workItem from=\"1757409157051\" duration=\"20688000\" />\r\n      <workItem from=\"1757497566719\" duration=\"3095000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/SVM_py$tt.coverage\" NAME=\"tt Coverage Results\" MODIFIED=\"1757466897897\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/SVM_py$Predict.coverage\" NAME=\"Predict Coverage Results\" MODIFIED=\"1757488851584\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/tegao_japanesewordhelper$Processing.coverage\" NAME=\"Processing Coverage Results\" MODIFIED=\"1757499618971\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c5305837a462ccdaa97740c49a6cc69d7bfe2c91)
++++ b/.idea/workspace.xml	(date 1758000369276)
+@@ -5,6 +5,7 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="4c0e595d-08c6-4e33-9c07-f17fab6d61ad" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/2222.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/Processing.py" afterDir="false" />
+     </list>
+@@ -21,6 +22,11 @@
+     </option>
+   </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="Handwritten-Characters" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="GitHubPullRequestSearchHistory">{
+@@ -43,23 +49,25 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Python.Predict.executor": "Run",
+-    "Python.Processing.executor": "Run",
+-    "Python.tt.executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "git-widget-placeholder": "Comments-Classification",
+-    "last_opened_file_path": "D:/user/Desktop/Github/tegao-japanesewordhelper",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Python.2222.executor&quot;: &quot;Run&quot;,
++    &quot;Python.Predict.executor&quot;: &quot;Run&quot;,
++    &quot;Python.Processing.executor&quot;: &quot;Run&quot;,
++    &quot;Python.pptx.executor&quot;: &quot;Run&quot;,
++    &quot;Python.tt.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;Comments-Classification&quot;,
++    &quot;last_opened_file_path&quot;: &quot;D:/user/Desktop/Github/tegao-japanesewordhelper&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="D:\user\Desktop\Github\tegao-japanesewordhelper" />
+@@ -87,6 +95,14 @@
+       <workItem from="1757397669038" duration="5449000" />
+       <workItem from="1757409157051" duration="20688000" />
+       <workItem from="1757497566719" duration="3095000" />
++      <workItem from="1757570820031" duration="134000" />
++      <workItem from="1757596994773" duration="2986000" />
++      <workItem from="1757651648883" duration="843000" />
++      <workItem from="1757656669189" duration="2839000" />
++      <workItem from="1757739836819" duration="1717000" />
++      <workItem from="1757856856886" duration="6163000" />
++      <workItem from="1757917894951" duration="5412000" />
++      <workItem from="1757998756886" duration="1439000" />
+     </task>
+     <servers />
+   </component>
+@@ -94,6 +110,8 @@
+     <option name="version" value="3" />
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
++    <SUITE FILE_PATH="coverage/tegao_japanesewordhelper$pptx.coverage" NAME="pptx Coverage Results" MODIFIED="1757651714472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
++    <SUITE FILE_PATH="coverage/tegao_japanesewordhelper$2222.coverage" NAME="2222 Coverage Results" MODIFIED="1757651774181" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+     <SUITE FILE_PATH="coverage/SVM_py$tt.coverage" NAME="tt Coverage Results" MODIFIED="1757466897897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+     <SUITE FILE_PATH="coverage/SVM_py$Predict.coverage" NAME="Predict Coverage Results" MODIFIED="1757488851584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+     <SUITE FILE_PATH="coverage/tegao_japanesewordhelper$Processing.coverage" NAME="Processing Coverage Results" MODIFIED="1757499618971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

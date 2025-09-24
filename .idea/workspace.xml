@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0e595d-08c6-4e33-9c07-f17fab6d61ad" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/Processing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,23 +43,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Predict.executor": "Run",
-    "Python.Processing.executor": "Run",
-    "Python.tt.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Comments-Classification",
-    "last_opened_file_path": "D:/user/Desktop/Github/tegao-japanesewordhelper",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Predict.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Processing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tt.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Comments-Classification&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/user/Desktop/Github/tegao-japanesewordhelper&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\user\Desktop\Github\tegao-japanesewordhelper" />
@@ -87,6 +87,11 @@
       <workItem from="1757397669038" duration="5449000" />
       <workItem from="1757409157051" duration="20688000" />
       <workItem from="1757497566719" duration="3095000" />
+      <workItem from="1758165690841" duration="1498000" />
+      <workItem from="1758213741593" duration="1919000" />
+      <workItem from="1758448389987" duration="38000" />
+      <workItem from="1758613555502" duration="6156000" />
+      <workItem from="1758687597445" duration="6000" />
     </task>
     <servers />
   </component>

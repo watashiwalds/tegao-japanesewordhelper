@@ -1,0 +1,19 @@
+Index: Predict.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import cv2\r\nimport numpy as np\r\nimport pandas as pd\r\nimport tensorflow as tf\r\nimport json\r\n\r\nfrom matplotlib import pyplot as plt\r\n\r\nIMG_SIZE = 96\r\n\r\ndef process_image(image_path):\r\n    img = cv2.imread(image_path)\r\n    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)\r\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\r\n    img = np.expand_dims(img, axis=0)\r\n    return img\r\n\r\nmodel = tf.keras.models.load_model(\"v3.keras\", compile=False)\r\n\r\n\r\nwith open(\"class_indices.json\", \"r\", encoding=\"utf-8\") as f:\r\n    class_indices = json.load(f)\r\nidx_to_class = {v: k for k, v in class_indices.items()}\r\n\r\nimg_path = \"img_3.png\"\r\nimg = process_image(img_path)\r\nplt.imshow(img[0], cmap=\"gray\")\r\nplt.show()\r\npred = model.predict(img)[0]\r\npred_class = np.argmax(pred)\r\npred_label = idx_to_class[pred_class]\r\n\r\nprint(\"Ảnh:\", img_path)\r\nprint(\"Dự đoán:\", pred_label, \" (xác suất:\", pred[pred_class], \")\")\r\n\r\njis_dir = \"jis_kanji_unique.csv\"\r\ndf = pd.read_csv(jis_dir)\r\n\r\n\r\ntop5 = np.argsort(pred)[-5:][::-1]\r\nprint(\"\\nTop-5 dự đoán:\")\r\nfor i in top5:\r\n    jis_code = int(idx_to_class[i])\r\n    kanji_char = df.loc[df[\"JIS_code\"] == jis_code, \"Kanji_char\"].values[0]\r\n    print(f\"{kanji_char} (JIS {jis_code}): {pred[i]:.4f}\")\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Predict.py b/Predict.py
+--- a/Predict.py	(revision e18968977678c3c24bf123d4ad4ba32e775277d9)
++++ b/Predict.py	(date 1758016325847)
+@@ -22,7 +22,7 @@
+     class_indices = json.load(f)
+ idx_to_class = {v: k for k, v in class_indices.items()}
+ 
+-img_path = "img_3.png"
++img_path = "img_4.png"
+ img = process_image(img_path)
+ plt.imshow(img[0], cmap="gray")
+ plt.show()

@@ -14,13 +14,13 @@
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
-    <style name="Theme.Tegao.ImageButton.24">
+    <style name="Theme.Tegao.ImageButton">
         <item name="android:layout_width">24dp</item>
         <item name="android:layout_height">24dp</item>
         <item name="android:scaleType">fitCenter</item>
-        <item name="android:background">""</item>
+        <item name="android:background">@null</item>
     </style>
-    <style name="Theme.Tegao.ImageButton.24.HasPadding">
+    <style name="Theme.Tegao.ImageButton.HasPadding">
         <item name="android:padding">3dp</item>
     </style>
 

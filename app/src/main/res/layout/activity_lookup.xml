@@ -36,7 +36,7 @@
 
             <ImageButton
                 android:id="@+id/searchStart_btn"
-                style="@style/Theme.Tegao.ImageButton.24.HasPadding"
+                style="@style/Theme.Tegao.ImageButton.HasPadding"
                 android:layout_marginEnd="@dimen/padding_small"
                 android:src="@drawable/ftc_round_search_128"
                 app:layout_constraintEnd_toStartOf="@+id/inputHandwriting_btn"
@@ -44,7 +44,7 @@
 
             <ImageButton
                 android:id="@+id/inputHandwriting_btn"
-                style="@style/Theme.Tegao.ImageButton.24"
+                style="@style/Theme.Tegao.ImageButton"
                 android:src="@drawable/ftc_round_handwriting_128"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

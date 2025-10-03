@@ -1,13 +1,40 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Tegao" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
     </style>
 
     <style name="Theme.Tegao" parent="Base.Theme.Tegao" >
         <item name="android:background">@color/background</item>
         <item name="android:textSize">@dimen/textSize_normal</item>
         <item name="android:textColor">@color/text_normal</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="Theme.Tegao.ImageButton.24">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">""</item>
+    </style>
+    <style name="Theme.Tegao.ImageButton.24.HasPadding">
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <style name="Theme.Tegao.TextButton">
+        <item name="backgroundTint">@null</item>
+        <item name="iconSize">@dimen/img_icon</item>
+    </style>
+    <style name="Theme.Tegao.TextButton.Primary">
+        <item name="android:background">@drawable/primary_solid_background</item>
+        <item name="android:textColor">@color/text_reverse</item>
+        <item name="iconTint">@color/text_reverse</item>
+    </style>
+    <style name="Theme.Tegao.TextButton.Neutral">
+        <item name="android:background">@drawable/neutral_stroke_background</item>
+        <item name="iconTint">@color/text_normal</item>
     </style>
 </resources>

@@ -7,9 +7,81 @@
     android:layout_height="match_parent"
     tools:context=".ui.LookupActivity">
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/lo_searchNav_lnr"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:orientation="vertical"
+        android:padding="@dimen/padding_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/primary_thick_stroke_background"
+            android:padding="@dimen/padding_large"
+            app:layout_constraintTop_toTopOf="@id/lo_searchNav_lnr">
+
+            <TextView
+                android:id="@+id/dl_searchKeywordInput_hint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/putJPhere_hint"
+                android:textColor="@color/neutral"
+                app:layout_constraintEnd_toStartOf="@+id/searchStart_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/searchStart_btn"
+                style="@style/Theme.Tegao.ImageButton.24.HasPadding"
+                android:layout_marginEnd="@dimen/padding_small"
+                android:src="@drawable/ftc_round_search_128"
+                app:layout_constraintEnd_toStartOf="@+id/inputHandwriting_btn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/inputHandwriting_btn"
+                style="@style/Theme.Tegao.ImageButton.24"
+                android:src="@drawable/ftc_round_handwriting_128"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small">
+
+            <Button
+                android:id="@+id/stringHistoryFrag_btn"
+                style="@style/Theme.Tegao.TextButton.Primary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_tiny"
+                app:layout_constraintEnd_toStartOf="@id/kanjiHistoryFrag_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/title_words"
+                app:icon="@drawable/ftc_bold_char_a_128" />
+
+            <Button
+                android:id="@+id/kanjiHistoryFrag_btn"
+                style="@style/Theme.Tegao.TextButton.Neutral"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_tiny"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/stringHistoryFrag_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/title_kanji"
+                app:icon="@drawable/ftc_bold_jp_char_go_128"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

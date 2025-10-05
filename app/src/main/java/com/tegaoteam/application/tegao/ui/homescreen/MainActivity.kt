@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui
+package com.tegaoteam.application.tegao.ui.homescreen
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/lookupFragment"
-        android:name="com.tegaoteam.application.tegao.ui.lookup.LookupFragment"
+        android:name="com.tegaoteam.application.tegao.ui.homescreen.LookupFragment"
         android:label="fragment_lookup"
         tools:layout="@layout/fragment_lookup" />
 </navigation>

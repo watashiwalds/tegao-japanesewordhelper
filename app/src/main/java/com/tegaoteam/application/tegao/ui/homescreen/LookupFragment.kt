@@ -1,11 +1,11 @@
-package com.tegaoteam.application.tegao.ui.lookup
+package com.tegaoteam.application.tegao.ui.homescreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentLookupBinding
 

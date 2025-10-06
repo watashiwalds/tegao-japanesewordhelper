@@ -5,6 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tegaoteam.application.tegao.ui.lookup.LookupActivityViewModel" />
+    </data>
+
     <FrameLayout
         android:id="@+id/before_main"
         android:layout_width="match_parent"
@@ -46,7 +52,8 @@
                     android:src="@drawable/ftc_round_x_128"
                     app:layout_constraintEnd_toStartOf="@+id/searchStart_btn"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"
+                    app:toggleVisibility="@{viewModel.enableClearSearchString}"
+                    android:onClick="@{() -> viewModel.startClearSearchString()}"
                     tools:visibility="visible"
                     />
 

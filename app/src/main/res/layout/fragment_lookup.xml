@@ -4,12 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    tools:context=".ui.homescreen.LookupFragment">
+    tools:context=".ui.homescreen.lookup.LookupFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tegaoteam.application.tegao.ui.homescreen.lookup.LookupFragmentViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/padding_normal">
+        style="@style/Theme.Tegao.Screen">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lo_searchBar_cst"
@@ -17,7 +23,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/primary_thick_stroke_background"
             android:padding="@dimen/padding_large"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> viewModel.startNavigateToLookup()}">
 
             <TextView
                 android:id="@+id/dl_searchKeywordInput_hint"

@@ -5,106 +5,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        style="@style/Theme.Tegao.Screen"
+    <FrameLayout
+        android:id="@+id/before_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.lookup.LookupActivity">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lo_searchBar_cst"
+            android:id="@+id/main"
+            style="@style/Theme.Tegao.Screen"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/primary_thick_stroke_background"
-            android:padding="@dimen/padding_large"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            tools:context=".ui.lookup.LookupActivity">
 
-            <EditText
-                android:id="@+id/keywordInput_edt"
-                android:background="#00FFFFFF"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lo_searchBar_cst"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/putJPhere_hint"
-                android:textColorHint="@color/neutral"
-                app:layout_constraintEnd_toStartOf="@+id/inputClear_btn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@drawable/primary_thick_stroke_background"
+                android:padding="@dimen/padding_large"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/inputClear_btn"
-                style="@style/Theme.Tegao.ImageButton.HasPadding"
-                android:layout_marginEnd="@dimen/padding_small"
-                android:src="@drawable/ftc_round_x_128"
-                app:layout_constraintEnd_toStartOf="@+id/searchStart_btn"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"
-                tools:visibility="visible"
+                <EditText
+                    android:id="@+id/keywordInput_edt"
+                    android:inputType="text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                    android:hint="@string/putJPhere_hint"
+                    android:selectAllOnFocus="true"
+                    android:maxLines="1"
+                    android:textColorHint="@color/neutral"
+                    app:layout_constraintEnd_toStartOf="@+id/inputClear_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/inputClear_btn"
+                    style="@style/Theme.Tegao.ImageButton.HasPadding"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:src="@drawable/ftc_round_x_128"
+                    app:layout_constraintEnd_toStartOf="@+id/searchStart_btn"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    />
+
+                <ImageButton
+                    android:id="@+id/searchStart_btn"
+                    style="@style/Theme.Tegao.ImageButton.HasPadding"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:src="@drawable/ftc_round_search_128"
+                    app:layout_constraintEnd_toStartOf="@+id/inputHandwriting_btn"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/inputHandwriting_btn"
+                    style="@style/Theme.Tegao.ImageButton"
+                    android:src="@drawable/ftc_round_handwriting_128"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lo_searchType_cst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                app:layout_constraintTop_toBottomOf="@id/lo_searchBar_cst">
+
+                <Button
+                    android:id="@+id/stringHistory_btn"
+                    style="@style/Theme.Tegao.TextButton.Primary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/padding_tiny"
+                    android:text="@string/title_words"
+                    app:icon="@drawable/ftc_bold_char_a_128"
+                    app:layout_constraintEnd_toStartOf="@id/kanjiHistory_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/kanjiHistory_btn"
+                    style="@style/Theme.Tegao.TextButton.Neutral"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_tiny"
+                    android:text="@string/title_kanji"
+                    app:icon="@drawable/ftc_bold_jp_char_go_128"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/stringHistory_btn"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lo_dictionaryChip_rcy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/lo_searchType_cst"
+                android:layout_marginTop="@dimen/padding_small"
+
+                tools:listitem="@layout/item_chip"
+                tools:layoutManager="LinearLayoutManager"
+                tools:orientation="horizontal"
+                tools:itemCount="4"
                 />
 
-            <ImageButton
-                android:id="@+id/searchStart_btn"
-                style="@style/Theme.Tegao.ImageButton.HasPadding"
-                android:layout_marginEnd="@dimen/padding_small"
-                android:src="@drawable/ftc_round_search_128"
-                app:layout_constraintEnd_toStartOf="@+id/inputHandwriting_btn"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/inputHandwriting_btn"
-                style="@style/Theme.Tegao.ImageButton"
-                android:src="@drawable/ftc_round_handwriting_128"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lo_searchType_cst"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small"
-            app:layout_constraintTop_toBottomOf="@id/lo_searchBar_cst">
-
-            <Button
-                android:id="@+id/stringHistory_btn"
-                style="@style/Theme.Tegao.TextButton.Primary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/padding_tiny"
-                android:text="@string/title_words"
-                app:icon="@drawable/ftc_bold_char_a_128"
-                app:layout_constraintEnd_toStartOf="@id/kanjiHistory_btn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/kanjiHistory_btn"
-                style="@style/Theme.Tegao.TextButton.Neutral"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding_tiny"
-                android:text="@string/title_kanji"
-                app:icon="@drawable/ftc_bold_jp_char_go_128"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/stringHistory_btn"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lo_dictionaryChip_rcy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lo_searchType_cst"
-            android:layout_marginTop="@dimen/padding_small"
-
-            tools:listitem="@layout/item_chip"
-            tools:layoutManager="LinearLayoutManager"
-            tools:orientation="horizontal"
-            tools:itemCount="4"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </layout>

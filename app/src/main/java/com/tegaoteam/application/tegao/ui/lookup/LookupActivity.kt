@@ -1,6 +1,10 @@
 package com.tegaoteam.application.tegao.ui.lookup
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,6 +30,54 @@ class LookupActivity : AppCompatActivity() {
         }
 
         makeStartState()
+    }
+
+    // UX: User click outside the input box -> Input box lose focus
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val focusedView = currentFocus
+        if (focusedView != null && ev?.action == MotionEvent.ACTION_DOWN) {
+            val focusRect = Rect()
+            focusedView.getGlobalVisibleRect(focusRect)
+            if (!focusRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                focusedView.clearFocus()
+
+                // Hide virtual keyboard 'cause Android don't do it automatically
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(focusedView.windowToken, 0)
+
+            }
+        }
+
+        return super.dispatchTouchEvent(ev)
+    }
+
+    private fun initVariables() {
+        _viewModel = ViewModelProvider(this).get(LookupActivityViewModel::class.java)
+        _binding.viewModel = _viewModel
+    }
+
+    private fun initListeners() {
+        _binding.keywordInputEdt.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                updateSearchString()
+            }
+        }
+    }
+
+    private fun initObservers() {
+        _viewModel.evClearSearchString.observe(this) {
+            if (it) {
+                clearSearchString()
+                _viewModel.finClearSearchString()
+            }
+        }
+    }
+
+    fun updateSearchString() = _viewModel.setSearchString(_binding.keywordInputEdt.text.toString())
+
+    fun clearSearchString() {
+        _binding.keywordInputEdt.text.clear()
+        updateSearchString()
     }
 
     private fun makeStartState() {

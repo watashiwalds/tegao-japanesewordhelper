@@ -37,7 +37,7 @@ class LookupFragment : Fragment() {
         _viewModel.navigateToLookup.observe(viewLifecycleOwner, { value ->
             if (value == true) {
                 navigatingToLookup()
-                _viewModel.finishNavigateToLookup()
+                _viewModel.finNavigateToLookup()
             }
         })
     }

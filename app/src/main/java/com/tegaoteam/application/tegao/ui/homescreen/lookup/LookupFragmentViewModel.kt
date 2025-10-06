@@ -11,5 +11,5 @@ class LookupFragmentViewModel(app: Application): AndroidViewModel(app) {
         get() = _navigateToLookup
 
     fun startNavigateToLookup() { _navigateToLookup.value = true }
-    fun finishNavigateToLookup() { _navigateToLookup.value = false }
+    fun finNavigateToLookup() { _navigateToLookup.value = false }
 }

@@ -34,12 +34,12 @@ class LookupFragment : Fragment() {
     }
 
     private fun initObservers() {
-        _viewModel.navigateToLookup.observe(viewLifecycleOwner, { value ->
-            if (value == true) {
+        _viewModel.evNavigateToLookupActivity.beacon.observe(viewLifecycleOwner) {
+            if (it) {
                 navigatingToLookup()
-                _viewModel.finNavigateToLookup()
+                _viewModel.evNavigateToLookupActivity.beaconOff()
             }
-        })
+        }
     }
 
     private fun navigatingToLookup() {

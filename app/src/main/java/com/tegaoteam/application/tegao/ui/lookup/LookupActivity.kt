@@ -72,10 +72,10 @@ class LookupActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        _viewModel.evClearSearchString.observe(this) {
+        _viewModel.evClearSearchString.beacon.observe(this) {
             if (it) {
                 clearSearchString()
-                _viewModel.finClearSearchString()
+                _viewModel.evClearSearchString.beaconOff()
             }
         }
     }

@@ -24,7 +24,7 @@
             android:background="@drawable/primary_thick_stroke_background"
             android:padding="@dimen/padding_large"
             app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{() -> viewModel.evNavigateToLookupActivity.beaconOn()}">
+            android:onClick="@{() -> viewModel.evNavigateToLookupActivity.ignite()}">
 
             <TextView
                 android:id="@+id/dl_searchKeywordInput_hint"

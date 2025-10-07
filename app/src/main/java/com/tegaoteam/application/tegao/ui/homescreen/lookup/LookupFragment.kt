@@ -35,9 +35,8 @@ class LookupFragment : Fragment() {
 
     private fun initObservers() {
         _viewModel.evNavigateToLookupActivity.beacon.observe(viewLifecycleOwner) {
-            if (it) {
+            if (_viewModel.evNavigateToLookupActivity.receive()) {
                 navigatingToLookup()
-                _viewModel.evNavigateToLookupActivity.beaconOff()
             }
         }
     }

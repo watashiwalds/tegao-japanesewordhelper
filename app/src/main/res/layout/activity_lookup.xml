@@ -53,7 +53,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/searchStart_btn"
                     app:layout_constraintTop_toTopOf="parent"
                     app:toggleVisibility="@{viewModel.enableClearSearchString}"
-                    android:onClick="@{() -> viewModel.evClearSearchString.beaconOn()}"
+                    android:onClick="@{() -> viewModel.evClearSearchString.ignite()}"
                     tools:visibility="visible"
                     />
 

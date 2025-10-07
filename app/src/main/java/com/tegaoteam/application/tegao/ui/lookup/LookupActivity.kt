@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.configs.DictionaryConfig
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
-import timber.log.Timber
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
@@ -76,9 +75,8 @@ class LookupActivity : AppCompatActivity() {
 
     private fun initObservers() {
         _viewModel.evClearSearchString.beacon.observe(this) {
-            if (it) {
+            if (_viewModel.evClearSearchString.receive()) {
                 clearSearchString()
-                _viewModel.evClearSearchString.beaconOff()
             }
         }
     }

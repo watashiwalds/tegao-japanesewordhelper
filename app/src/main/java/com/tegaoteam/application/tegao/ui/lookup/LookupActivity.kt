@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.configs.DictionaryConfig
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import timber.log.Timber
 
@@ -35,6 +36,8 @@ class LookupActivity : AppCompatActivity() {
         initVariables()
         initListeners()
         initObservers()
+
+        displayDictionaryOptions()
 
         makeStartState()
     }
@@ -85,6 +88,11 @@ class LookupActivity : AppCompatActivity() {
     fun clearSearchString() {
         _binding.keywordInputEdt.text.clear()
         updateSearchString()
+    }
+
+    fun displayDictionaryOptions() {
+        val dictChipsAdapter = DictionaryChipsAdapter(DictionaryConfig.getDictionariesList())
+
     }
 
     private fun makeStartState() {

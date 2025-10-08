@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -89,8 +90,15 @@ class LookupActivity : AppCompatActivity() {
     }
 
     fun displayDictionaryOptions() {
-        val dictChipsAdapter = DictionaryChipsAdapter(DictionaryConfig.getDictionariesList())
-
+        val availableDicts = DictionaryConfig.getDictionariesList()
+        val dictChipAdapter = DictionaryChipsAdapter(this)
+        dictChipAdapter.submitDictList(availableDicts) { dictId ->
+            Toast.makeText(
+                this,
+                "Selecting [$dictId, ${availableDicts.find { it.id == dictId }?.displayName}] ",
+                Toast.LENGTH_SHORT).show()
+        }
+        _binding.loDictionaryChipRcy.adapter = dictChipAdapter
     }
 
     private fun makeStartState() {

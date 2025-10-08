@@ -113,8 +113,10 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/lo_searchType_cst"
                 android:layout_marginTop="@dimen/padding_small"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
 
-                tools:listitem="@layout/item_chip"
+                tools:listitem="@layout/themed_chip_item"
                 tools:layoutManager="LinearLayoutManager"
                 tools:orientation="horizontal"
                 tools:itemCount="4"

@@ -52,12 +52,12 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
             }
         }
         super.submitList(chipItems)
+        chipItems.first()?.onClick()
     }
 
     //Chip control design for 1 selectable chip in concurrent
-    var currentSelected: ThemedChipItem? = null
-        private set
-    fun onChangeSelectedChip(selectedChip: ThemedChipItem) {
+    private var currentSelected: ThemedChipItem? = null
+    private fun onChangeSelectedChip(selectedChip: ThemedChipItem) {
         if (currentSelected != null) {
             currentSelected!!.setSelectedState(false)
             selectedChip.setSelectedState(true)

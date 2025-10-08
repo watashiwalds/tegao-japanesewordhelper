@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.configs.DictionaryConfig
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
+import com.tegaoteam.application.tegao.utils.AppToast
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
@@ -93,10 +93,12 @@ class LookupActivity : AppCompatActivity() {
         val availableDicts = DictionaryConfig.getDictionariesList()
         val dictChipAdapter = DictionaryChipsAdapter(this)
         dictChipAdapter.submitDictList(availableDicts) { dictId ->
-            Toast.makeText(
+            //TODO: Send info to ViewModel to swap dictionary according to selected chip
+            //Toast for testing
+            AppToast.show(
                 this,
                 "Selecting [$dictId, ${availableDicts.find { it.id == dictId }?.displayName}] ",
-                Toast.LENGTH_SHORT).show()
+                AppToast.LENGTH_SHORT)
         }
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter
     }

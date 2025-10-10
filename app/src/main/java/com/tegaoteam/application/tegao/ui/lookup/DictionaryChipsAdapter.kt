@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tegaoteam.application.tegao.data.configs.DictionaryConfig
 import com.tegaoteam.application.tegao.databinding.ThemedChipItemBinding
+import com.tegaoteam.application.tegao.domain.types.Dictionary
 import com.tegaoteam.application.tegao.utils.ThemedChipItem
 
 class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, DictionaryChipsAdapter.ViewHolder>( DiffCallback() ) {
@@ -38,7 +38,7 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
      * @param list Typical list of available dict fetch from config
      * @param clickListener Lambda with ```dictId``` as parameter to run per-dict function
      */
-    fun submitDictList(list: List<DictionaryConfig.Dict?>?, clickListener: (id: Int) -> Unit) {
+    fun submitDictList(list: List<Dictionary?>?, clickListener: (id: Int) -> Unit) {
         chipItems.clear()
         list?.forEach { item ->
             item?.let {

@@ -1,26 +1,15 @@
 package com.tegaoteam.application.tegao.data.configs
 
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-
+import com.tegaoteam.application.tegao.domain.types.Dictionary
 
 //TODO: Config placeholder, change when doing actual work
 class DictionaryConfig {
-    class Dict(
-        val id: Int,
-        val displayName: String,
-        val type: Int,
-        jsonInfos: String
-    ) {
-        //parse to default JsonObject (JsonObject::class.java)
-        var jsonObject: JsonObject = Gson().fromJson(jsonInfos, JsonObject::class.java)
-    }
 
     companion object {
         const val DICT_LOCAL = 0
         const val DICT_ONLINE = 1
 
-        val SIMDICT_MAZII = Dict(
+        val SIMDICT_MAZII = Dictionary(
             0,
             "Mazii",
             DICT_ONLINE,
@@ -34,7 +23,7 @@ class DictionaryConfig {
                 |"payloadRequest_kanji":"{"dict":"javi","type":"kanji","query":"%s"}"
                 |}""".trimMargin()
         )
-        val SIMDICT_JISHO = Dict(
+        val SIMDICT_JISHO = Dictionary(
             1,
             "Jisho",
             DICT_ONLINE,

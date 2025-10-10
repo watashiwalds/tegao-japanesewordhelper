@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tegaoteam.application.tegao.configs.DictionaryConfig
+import com.tegaoteam.application.tegao.data.configs.DictionaryConfig
 import com.tegaoteam.application.tegao.databinding.ThemedChipItemBinding
 import com.tegaoteam.application.tegao.utils.ThemedChipItem
 

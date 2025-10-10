@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.configs
+package com.tegaoteam.application.tegao.data.configs
 
 import org.json.JSONObject
 

@@ -16,6 +16,7 @@ timber = "5.0.1"
 fragment = "1.8.9"
 recyclerview = "1.4.0"
 flexbox = "3.0.0"
+converterGson = "2.0.0-beta2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,7 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
+converter-gson = { group = "com.squareup.retrofit", name = "converter-gson", version.ref = "converterGson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

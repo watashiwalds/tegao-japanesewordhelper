@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import com.tegaoteam.application.tegao.data.configs.DictionaryConfig
+import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.utils.EventBeacon
 
 class LookupActivityViewModel(app: Application): AndroidViewModel(app) {

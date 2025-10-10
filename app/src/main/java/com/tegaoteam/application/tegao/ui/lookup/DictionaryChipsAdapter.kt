@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.ThemedChipItemBinding
-import com.tegaoteam.application.tegao.domain.types.Dictionary
+import com.tegaoteam.application.tegao.domain.type.Dictionary
 import com.tegaoteam.application.tegao.utils.ThemedChipItem
 
 class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, DictionaryChipsAdapter.ViewHolder>( DiffCallback() ) {

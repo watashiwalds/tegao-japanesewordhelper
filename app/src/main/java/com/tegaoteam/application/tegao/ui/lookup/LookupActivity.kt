@@ -79,6 +79,12 @@ class LookupActivity : AppCompatActivity() {
                 clearSearchString()
             }
         }
+        _viewModel.evStartSearch.beacon.observe(this) {
+            if (_viewModel.evStartSearch.receive()) {
+                AppToast.show(this, "Search clicked", AppToast.LENGTH_SHORT)
+                _viewModel.searchKeyword()
+            }
+        }
     }
 
     fun updateSearchString() = _viewModel.setSearchString(_binding.keywordInputEdt.text.toString())
@@ -89,14 +95,14 @@ class LookupActivity : AppCompatActivity() {
     }
 
     fun displayDictionaryOptions() {
-        val availableDicts = _viewModel.availableDicts
+        val availableDicts = _viewModel.sources
         val dictChipAdapter = DictionaryChipsAdapter(this)
-        dictChipAdapter.submitDictList(availableDicts) { dictId ->
+        dictChipAdapter.submitDictList(availableDicts.map { it.dict }) { dictId ->
             //TODO: Send info to ViewModel to swap dictionary according to selected chip
             //Toast for testing
             AppToast.show(
                 this,
-                "Selecting [$dictId, ${availableDicts.find { it.id == dictId }?.displayName}] ",
+                "Selecting [$dictId, ${availableDicts.find { it.dict?.id == dictId }?.dict?.displayName}] ",
                 AppToast.LENGTH_SHORT)
         }
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter

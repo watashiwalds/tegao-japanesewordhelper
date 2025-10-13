@@ -62,6 +62,7 @@
                     style="@style/Theme.Tegao.ImageButton.HasPadding"
                     android:layout_marginEnd="@dimen/padding_small"
                     android:src="@drawable/ftc_round_search_128"
+                    android:onClick="@{() -> viewModel.evStartSearch.ignite()}"
                     app:layout_constraintEnd_toStartOf="@+id/inputHandwriting_btn"
                     app:layout_constraintTop_toTopOf="parent" />
 

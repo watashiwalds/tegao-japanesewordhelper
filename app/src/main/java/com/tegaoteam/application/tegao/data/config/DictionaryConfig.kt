@@ -10,7 +10,7 @@ class DictionaryConfig {
         const val DICT_ONLINE = 1
 
         val SIMDICT_MAZII = Dictionary(
-            0,
+            "mazii",
             "Mazii",
             DICT_ONLINE,
             """{
@@ -24,7 +24,7 @@ class DictionaryConfig {
                 |}""".trimMargin()
         )
         val SIMDICT_JISHO = Dictionary(
-            1,
+            "jisho",
             "Jisho",
             DICT_ONLINE,
             """{

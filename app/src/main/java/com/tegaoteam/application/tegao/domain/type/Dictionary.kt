@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 
 class Dictionary(
-    val id: Int,
+    val id: String,
     val displayName: String,
     val type: Int,
     jsonInfos: String

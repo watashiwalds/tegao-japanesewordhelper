@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.domain.type
+package com.tegaoteam.application.tegao.domain.model
 
 data class Word(
     val id: Int,

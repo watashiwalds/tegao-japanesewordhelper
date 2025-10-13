@@ -1,6 +1,6 @@
 package com.tegaoteam.application.tegao.data.config
 
-import com.tegaoteam.application.tegao.domain.type.Dictionary
+import com.tegaoteam.application.tegao.domain.model.Dictionary
 
 //TODO: Config placeholder, change when doing actual work
 class DictionaryConfig {

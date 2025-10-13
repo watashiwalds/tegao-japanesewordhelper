@@ -1,7 +1,7 @@
 package com.tegaoteam.application.tegao.domain.interf
 
-import com.tegaoteam.application.tegao.domain.type.Kanji
-import com.tegaoteam.application.tegao.domain.type.Word
+import com.tegaoteam.application.tegao.domain.model.Kanji
+import com.tegaoteam.application.tegao.domain.model.Word
 
 interface DictionaryAPI {
     suspend fun searchWord(keyword: String): List<Word>

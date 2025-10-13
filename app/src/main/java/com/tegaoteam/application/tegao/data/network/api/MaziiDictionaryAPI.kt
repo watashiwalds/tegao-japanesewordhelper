@@ -5,9 +5,9 @@ import com.tegaoteam.application.tegao.data.network.DictionaryRetrofitAPI
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.converter.MaziiJsonConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryAPI
-import com.tegaoteam.application.tegao.domain.type.Dictionary
-import com.tegaoteam.application.tegao.domain.type.Kanji
-import com.tegaoteam.application.tegao.domain.type.Word
+import com.tegaoteam.application.tegao.domain.model.Dictionary
+import com.tegaoteam.application.tegao.domain.model.Kanji
+import com.tegaoteam.application.tegao.domain.model.Word
 
 object MaziiDictionaryAPI: DictionaryAPI {
     var dict: Dictionary?

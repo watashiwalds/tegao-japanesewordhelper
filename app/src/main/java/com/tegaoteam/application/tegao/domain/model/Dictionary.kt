@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.domain.type
+package com.tegaoteam.application.tegao.domain.model
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject

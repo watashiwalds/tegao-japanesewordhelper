@@ -52,7 +52,7 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
             }
         }
         super.submitList(chipItems)
-        chipItems.first()?.onClick()
+        if (chipItems.isNotEmpty()) chipItems.first()?.onClick()
     }
 
     //Chip control design for 1 selectable chip in concurrent

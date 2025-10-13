@@ -10,6 +10,6 @@ interface RetrofitApi {
     suspend fun fetchJsonObject(
         @Path("endpoint") endpoint: String = "",
         @Path("parameter") parameter: String = "",
-        @Body body: String
+        @Body body: JsonObject
     ): JsonObject
 }

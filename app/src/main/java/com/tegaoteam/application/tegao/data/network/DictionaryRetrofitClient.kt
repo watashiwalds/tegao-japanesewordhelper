@@ -1,6 +1,9 @@
 package com.tegaoteam.application.tegao.data.network
 
-class DictionaryRetrofitClient {
-    //TODO: write function to make dictionary's Retrofit client with appropriate searchWord() and searchKanji()
-    //TODO: would need to write a interface in /domain to uniform /data fetch and /ui display
+import com.tegaoteam.application.tegao.domain.type.Dictionary
+
+class DictionaryRetrofitClient(val dict: Dictionary?) {
+    val retrofit by lazy {
+        if (dict != null) RetrofitMaker.createWithUrl(dict.jsonObject.get(Dictionary.ONL_URL).asString) else null
+    }
 }

@@ -1,0 +1,15 @@
+package com.tegaoteam.application.tegao.data.network
+
+import com.google.gson.JsonObject
+import retrofit2.http.Body
+import retrofit2.http.POST
+import retrofit2.http.Path
+
+interface DictionaryRetrofitAPI {
+    @POST("{endpoint}{parameter}")
+    suspend fun fetchData(
+        @Path("endpoint") endpoint: String = "",
+        @Path("parameter") parameter: String = "",
+        @Body body: JsonObject
+    ): JsonObject
+}

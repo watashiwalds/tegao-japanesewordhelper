@@ -1,15 +1,15 @@
 package com.tegaoteam.application.tegao.data.network.api
 
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
-import com.tegaoteam.application.tegao.data.network.DictionaryRetrofitAPI
+import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.converter.MaziiJsonConverter
-import com.tegaoteam.application.tegao.domain.interf.DictionaryAPI
+import com.tegaoteam.application.tegao.domain.interf.DictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 
-object MaziiDictionaryAPI: DictionaryAPI {
+object MaziiDictionaryApi: DictionaryApi {
     var dict: Dictionary?
         private set
     private lateinit var _url: String
@@ -27,8 +27,8 @@ object MaziiDictionaryAPI: DictionaryAPI {
             _kanjiPayloadRequest = it.jsonObject.get(Dictionary.ONL_KANJI_PAYLOADREQUEST).asString
         }
     }
-    private val instance: DictionaryRetrofitAPI by lazy {
-        RetrofitMaker.createWithUrl(_url).create(DictionaryRetrofitAPI::class.java)
+    private val instance: RetrofitApi by lazy {
+        RetrofitMaker.createWithUrl(_url).create(RetrofitApi::class.java)
     }
 
     override suspend fun searchWord(keyword: String): List<Word> {

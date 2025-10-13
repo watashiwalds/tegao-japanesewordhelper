@@ -5,7 +5,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface DictionaryRetrofitAPI {
+interface RetrofitApi {
     @POST("{endpoint}{parameter}")
     suspend fun fetchJsonObject(
         @Path("endpoint") endpoint: String = "",

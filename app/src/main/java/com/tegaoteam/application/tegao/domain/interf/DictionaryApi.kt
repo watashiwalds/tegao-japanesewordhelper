@@ -3,7 +3,7 @@ package com.tegaoteam.application.tegao.domain.interf
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 
-interface DictionaryAPI {
+interface DictionaryApi {
     suspend fun searchWord(keyword: String): List<Word>
     suspend fun searchKanji(keyword: String): List<Kanji>
 

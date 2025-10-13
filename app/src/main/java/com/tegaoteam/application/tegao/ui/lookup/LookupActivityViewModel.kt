@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import com.tegaoteam.application.tegao.data.config.DictionaryConfig
+import com.tegaoteam.application.tegao.domain.passing.DictionaryRelated
 import com.tegaoteam.application.tegao.utils.EventBeacon
 
 class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
@@ -22,5 +22,5 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val enableClearSearchString = _userSearchString.map { !it.isNullOrBlank() }
 
     //Dictionary available
-    val availableDicts = DictionaryConfig.getDictionariesList()
+    val availableDicts = DictionaryRelated.getDictionariesList()
 }

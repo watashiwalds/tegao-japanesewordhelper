@@ -12,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
-import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.utils.AppToast
 
@@ -90,7 +89,7 @@ class LookupActivity : AppCompatActivity() {
     }
 
     fun displayDictionaryOptions() {
-        val availableDicts = DictionaryConfig.getDictionariesList()
+        val availableDicts = _viewModel.availableDicts
         val dictChipAdapter = DictionaryChipsAdapter(this)
         dictChipAdapter.submitDictList(availableDicts) { dictId ->
             //TODO: Send info to ViewModel to swap dictionary according to selected chip

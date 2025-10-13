@@ -16,9 +16,9 @@ class DictionaryConfig {
             "Mazii",
             DICT_ONLINE,
             """{
-                "url":"https://mazii.net/api/search",
-                "path_word":"/word",
-                "path_kanji":"/kanji",
+                "url":"https://mazii.net/api/search/",
+                "path_word":"word",
+                "path_kanji":"kanji",
                 "type_word":"api",
                 "payloadRequest_word":{
                     "dict": "javi",
@@ -40,11 +40,11 @@ class DictionaryConfig {
             "Jisho",
             DICT_ONLINE,
             """{
-                |"url":"https://jisho.org",
-                |"path_word":"/api/v1/search/words",
+                |"url":"https://jisho.org/",
+                |"path_word":"api/v1/search/words",
                 |"type_word":"api",
                 |"paramRequest_word":"?keyword=%s",
-                |"path_kanji":"/search/",
+                |"path_kanji":"search/",
                 |"type_kanji":"web",
                 |"paramRequest_kanji":"%s#kanji"
                 |}""".trimMargin()

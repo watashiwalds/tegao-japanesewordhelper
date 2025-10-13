@@ -4,6 +4,8 @@ import com.tegaoteam.application.tegao.domain.type.Kanji
 import com.tegaoteam.application.tegao.domain.type.Word
 
 interface DictionaryAPI {
-    fun searchWord(keyword: String): List<Word>
-    fun searchKanji(keyword: String): List<Kanji>
+    suspend fun searchWord(keyword: String): List<Word>
+    suspend fun searchKanji(keyword: String): List<Kanji>
+
+    suspend fun indevTest(keyword: String): String
 }

@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
  * Require manual selecting control logic to correctly display (hold on to MutableLiveData<Boolean> or ```selected``` references)
  */
 class ThemedChipItem(
-    val id: Int,
+    val id: String,
     val label: String,
     private val _isSelected: MutableLiveData<Boolean>
 ) {

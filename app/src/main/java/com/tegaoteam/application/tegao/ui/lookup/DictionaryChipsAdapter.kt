@@ -38,7 +38,7 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
      * @param list Typical list of available dict fetch from config
      * @param clickListener Lambda with ```dictId``` as parameter to run per-dict function
      */
-    fun submitDictList(list: List<Dictionary?>?, clickListener: (id: Int) -> Unit) {
+    fun submitDictList(list: List<Dictionary?>?, clickListener: (id: String) -> Unit) {
         chipItems.clear()
         list?.forEach { item ->
             item?.let {

@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.ui.lookup
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.tegaoteam.application.tegao.domain.passing.DictionaryRelated
@@ -30,9 +31,13 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
 //    val availableDicts = DictionaryRelated.getDictionariesList()
     val sources = DictionaryRelated.getSupportedApi()
 
+    private var _indevRetrofitResult = MutableLiveData<String>()
+    val retrofitResult: LiveData<String> = _indevRetrofitResult
+
     //Start search on selected source
     val evStartSearch = EventBeacon()
     fun searchKeyword() {
+        _indevRetrofitResult.value = "testing"
         //TODO
 //        ioScope.launch {
 //

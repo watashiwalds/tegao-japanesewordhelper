@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     //Coroutine stuff
@@ -28,8 +29,8 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val enableClearSearchString = _userSearchString.map { !it.isNullOrBlank() }
 
     //Dictionary available
-//    val availableDicts = DictionaryRelated.getDictionariesList()
     val sources = DictionaryRelated.getSupportedApi()
+    var selectedSourceId: String = ""
 
     private var _indevRetrofitResult = MutableLiveData<String>()
     val retrofitResult: LiveData<String> = _indevRetrofitResult
@@ -37,11 +38,20 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     //Start search on selected source
     val evStartSearch = EventBeacon()
     fun searchKeyword() {
-        _indevRetrofitResult.value = "testing"
-        //TODO
-//        ioScope.launch {
-//
-//        }
+        if (_userSearchString.value.isNullOrBlank()) return
+        val currentSource = sources.firstOrNull { it.dict?.id == selectedSourceId }
+        currentSource?.let {
+            _indevRetrofitResult.value = "Now searching..."
+            ioScope.launch {
+                //for the test, default to indev
+                //TODO: Word and Kanji mode respectively
+                val result = it.indevTest(_userSearchString.value!!)
+                withContext(Dispatchers.Main) {
+                    _indevRetrofitResult.value = result
+                }
+            }
+            return
+        }
     }
 
     //when viewModel being cleared (activity dismiss)

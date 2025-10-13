@@ -99,6 +99,7 @@ class LookupActivity : AppCompatActivity() {
         val dictChipAdapter = DictionaryChipsAdapter(this)
         dictChipAdapter.submitDictList(availableDicts.map { it.dict }) { dictId ->
             //TODO: Send info to ViewModel to swap dictionary according to selected chip
+            _viewModel.selectedSourceId = dictId
             //Toast for testing
             AppToast.show(
                 this,

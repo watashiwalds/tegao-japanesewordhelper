@@ -1,41 +1,48 @@
 package com.tegaoteam.application.tegao.data.network.api
 
-import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
-import com.tegaoteam.application.tegao.data.network.DictionaryRetrofitClient
+import com.tegaoteam.application.tegao.data.network.DictionaryRetrofitAPI
+import com.tegaoteam.application.tegao.data.network.RetrofitMaker
+import com.tegaoteam.application.tegao.data.network.converter.MaziiJsonConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryAPI
 import com.tegaoteam.application.tegao.domain.type.Dictionary
 import com.tegaoteam.application.tegao.domain.type.Kanji
 import com.tegaoteam.application.tegao.domain.type.Word
-import retrofit2.http.POST
-import retrofit2.http.Path
 
-class MaziiDictionaryAPI(private val retrofitClient: DictionaryRetrofitClient): DictionaryAPI {
-    companion object {
-        val instance by lazy {
-            MaziiDictionaryAPI(DictionaryRetrofitClient(DictionaryConfig.getDictionariesList().find { it.id == "mazii" }))
-        }
-    }
-
-    private var _wordUrlPath: String? = null
-    private var _kanjiUrlPath: String? = null
-    private var _wordPayloadRequest: String? = null
-    private var _kanjiPayloadRequest: String? = null
-
+object MaziiDictionaryAPI: DictionaryAPI {
+    var dict: Dictionary?
+        private set
+    private lateinit var _url: String
+    private lateinit var _wordPath: String
+    private lateinit var _wordPayloadRequest: String
+    private lateinit var _kanjiPath: String
+    private lateinit var _kanjiPayloadRequest: String
     init {
-        retrofitClient.dict?.let {
-            _wordUrlPath = it.jsonObject.get(Dictionary.ONL_WORD_URLPATH).asString
+        dict = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
+        dict?.let {
+            _url = it.jsonObject.get(Dictionary.ONL_URL).asString
+            _wordPath = it.jsonObject.get(Dictionary.ONL_WORD_URLPATH).asString
             _wordPayloadRequest = it.jsonObject.get(Dictionary.ONL_WORD_PAYLOADREQUEST).asString
-            _kanjiUrlPath = it.jsonObject.get(Dictionary.ONL_KANJI_URLPATH).asString
+            _kanjiPath = it.jsonObject.get(Dictionary.ONL_KANJI_URLPATH).asString
             _kanjiPayloadRequest = it.jsonObject.get(Dictionary.ONL_KANJI_PAYLOADREQUEST).asString
         }
     }
-
-    override fun searchWord(keyword: String): List<Word> {
-        TODO("Not yet implemented")
+    private val instance: DictionaryRetrofitAPI by lazy {
+        RetrofitMaker.createWithUrl(_url).create(DictionaryRetrofitAPI::class.java)
     }
 
-    override fun searchKanji(keyword: String): List<Kanji> {
-        TODO("Not yet implemented")
+    override suspend fun searchWord(keyword: String): List<Word> {
+        val data = instance.fetchJsonObject(endpoint = _wordPath, body = _wordPayloadRequest.format(keyword))
+        return MaziiJsonConverter.toDomainWordList(data)
+    }
+
+    override suspend fun searchKanji(keyword: String): List<Kanji> {
+        val data = instance.fetchJsonObject(endpoint = _kanjiPath, body = _kanjiPayloadRequest.format(keyword))
+        return MaziiJsonConverter.toDomainKanjiList(data)
+    }
+
+    override suspend fun indevTest(keyword: String): String {
+        val data = instance.fetchJsonObject(endpoint = _wordPath, body = _wordPayloadRequest.format(keyword))
+        return data.asString
     }
 }

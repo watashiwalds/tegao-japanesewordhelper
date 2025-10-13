@@ -16,14 +16,24 @@ class DictionaryConfig {
             "Mazii",
             DICT_ONLINE,
             """{
-                |"url":"https://mazii.net/api/search",
-                |"path_word":"/word",
-                |"path_kanji":"/kanji",
-                |"type_word":"api",
-                |"payloadRequest_word":"{"dict":"javi","type":"word","query":"%s","limit":5,"page":1}",
-                |"type_kanji":"api",
-                |"payloadRequest_kanji":"{"dict":"javi","type":"kanji","query":"%s"}"
-                |}""".trimMargin()
+                "url":"https://mazii.net/api/search",
+                "path_word":"/word",
+                "path_kanji":"/kanji",
+                "type_word":"api",
+                "payloadRequest_word":{
+                    "dict": "javi",
+                    "type": "word",
+                    "query": "%s",
+                    "limit": 5,
+                    "page": 1
+                },
+                "type_kanji":"api",
+                "payloadRequest_kanji": {
+                    "dict": "javi",
+                    "type": "kanji",
+                    "query": "%s"
+                }
+                }""".trimIndent()
         )
         val SIMDICT_JISHO = Dictionary(
             "jisho",

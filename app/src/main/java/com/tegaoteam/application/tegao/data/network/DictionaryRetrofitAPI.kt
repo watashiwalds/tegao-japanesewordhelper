@@ -7,9 +7,9 @@ import retrofit2.http.Path
 
 interface DictionaryRetrofitAPI {
     @POST("{endpoint}{parameter}")
-    suspend fun fetchData(
+    suspend fun fetchJsonObject(
         @Path("endpoint") endpoint: String = "",
         @Path("parameter") parameter: String = "",
-        @Body body: JsonObject
+        @Body body: String
     ): JsonObject
 }

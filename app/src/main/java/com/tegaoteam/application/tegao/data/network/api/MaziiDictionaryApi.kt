@@ -47,6 +47,6 @@ object MaziiDictionaryApi: DictionaryApi {
     override suspend fun indevTest(keyword: String): String {
         _wordPayloadRequest.addProperty("query", keyword)
         val data = instance.fetchJsonObject(endpoint = _wordPath, body = _wordPayloadRequest)
-        return data.asString
+        return "$data"
     }
 }

@@ -10,15 +10,14 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 
 object MaziiDictionaryApi: DictionaryApi {
-    var dict: Dictionary?
-        private set
+    override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
+
     private lateinit var _url: String
     private lateinit var _wordPath: String
     private lateinit var _wordPayloadRequest: String
     private lateinit var _kanjiPath: String
     private lateinit var _kanjiPayloadRequest: String
     init {
-        dict = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
         dict?.let {
             _url = it.jsonObject.get(Dictionary.ONL_URL).asString
             _wordPath = it.jsonObject.get(Dictionary.ONL_WORD_URLPATH).asString

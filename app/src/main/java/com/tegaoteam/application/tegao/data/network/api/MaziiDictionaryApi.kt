@@ -34,19 +34,19 @@ object MaziiDictionaryApi: DictionaryApi {
 
     override suspend fun searchWord(keyword: String): List<Word> {
         _wordPayloadRequest.addProperty("query", keyword)
-        val data = instance.fetchJsonObject(endpoint = _wordPath, body = _wordPayloadRequest)
+        val data = instance.fetchJsonObject(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest)
         return MaziiJsonConverter.toDomainWordList(data)
     }
 
     override suspend fun searchKanji(keyword: String): List<Kanji> {
         _kanjiPayloadRequest.addProperty("query", keyword)
-        val data = instance.fetchJsonObject(endpoint = _kanjiPath, body = _kanjiPayloadRequest)
+        val data = instance.fetchJsonObject(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest)
         return MaziiJsonConverter.toDomainKanjiList(data)
     }
 
     override suspend fun indevTest(keyword: String): String {
         _wordPayloadRequest.addProperty("query", keyword)
-        val data = instance.fetchJsonObject(endpoint = _wordPath, body = _wordPayloadRequest)
+        val data = instance.fetchJsonObject(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest)
         return "$data"
     }
 }

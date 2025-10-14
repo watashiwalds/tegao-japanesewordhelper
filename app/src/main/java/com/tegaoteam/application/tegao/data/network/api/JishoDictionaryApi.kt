@@ -34,7 +34,7 @@ object JishoDictionaryApi: DictionaryApi {
 
     override suspend fun searchWord(keyword: String): List<Word> {
         _wordParams.addProperty("keyword", keyword)
-        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordParams)
+        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = mapOf())
         //TODO: Change to Jisho Converter
         return MaziiJsonConverter.toDomainWordList(data)
     }
@@ -48,7 +48,7 @@ object JishoDictionaryApi: DictionaryApi {
 
     override suspend fun indevTest(keyword: String): String {
         _wordParams.addProperty("keyword", keyword)
-        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordParams)
+        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = mapOf())
         return "$data"
     }
 }

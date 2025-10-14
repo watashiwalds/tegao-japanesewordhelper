@@ -21,7 +21,6 @@ interface RetrofitApi {
     @GET("{endpoint}")
     suspend fun getFunctionFetchJson(
         @Path("endpoint") endpoint: String = "",
-        @QueryMap params: Map<String, String>,
-        @Body body: JsonObject
+        @QueryMap params: Map<String, String>
     ): JsonObject
 }

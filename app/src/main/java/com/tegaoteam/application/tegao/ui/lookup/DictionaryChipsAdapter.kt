@@ -44,6 +44,7 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
      */
     fun submitDictList(list: List<Dictionary?>?, clickListener: (id: String) -> Unit) {
         chipItems.clear()
+        themedChipController = ThemedChipController(chipItems as List<ThemedChipItem>, ThemedChipController.MODE_SINGLE)
         list?.forEach { item ->
             item?.let {
                 val newChip = ThemedChipItem(
@@ -51,12 +52,11 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
                     it.displayName,
                     MutableLiveData<Boolean>()
                 )
-                newChip.setOnClickListener { clickListener(newChip.id) }
+                newChip.setOnClickListener { clickListener(newChip.id); themedChipController.setSelected(newChip) }
                 chipItems.add(newChip)
             }
         }
         super.submitList(chipItems)
-        themedChipController = ThemedChipController(chipItems as List<ThemedChipItem>, ThemedChipController.MODE_SINGLE)
         themedChipController.selectFirst()
     }
 

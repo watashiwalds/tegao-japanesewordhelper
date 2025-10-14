@@ -41,14 +41,16 @@ class DictionaryConfig {
             "Jisho",
             DICT_ONLINE,
             """{
-                |"url":"https://jisho.org/",
-                |"path_word":"api/v1/search/words",
-                |"type_word":"api",
-                |"paramRequest_word":"?keyword=%s",
-                |"path_kanji":"search/",
-                |"type_kanji":"web",
-                |"paramRequest_kanji":"%s#kanji"
-                |}""".trimMargin()
+                "url":"https://jisho.org/",
+                "path_word":"api/v1/search/words",
+                "type_word":"api",
+                "paramRequest_word":{
+                    "keyword":"%s"
+                },
+                "path_kanji":"search/",
+                "type_kanji":"web",
+                "pathAppend_kanji":"%s#kanji"
+                }""".trimIndent()
         )
 
         val supportedSource = listOf<DictionaryApi>(MaziiDictionaryApi, JishoDictionaryApi)

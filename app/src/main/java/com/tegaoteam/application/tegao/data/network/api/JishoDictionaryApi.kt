@@ -9,22 +9,24 @@ import com.tegaoteam.application.tegao.domain.interf.DictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
+import timber.log.Timber
 
 object JishoDictionaryApi: DictionaryApi {
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "jisho" }
 
     private lateinit var _url: String
     private lateinit var _wordPath: String
-    private lateinit var _wordParams: String
+    private lateinit var _wordParams: JsonObject
     private lateinit var _kanjiPath: String
-    private lateinit var _kanjiParams: String
+    private lateinit var _kanjiPathAppend: String
     init {
+        TODO("Hyperlink not work, make Retrofit 404, check it quick")
         dict?.let {
             _url = it.jsonObject.get(Dictionary.ONL_URL).asString
             _wordPath = it.jsonObject.get(Dictionary.ONL_WORD_URLPATH).asString
-            _wordParams = it.jsonObject.get(Dictionary.ONL_WORD_PARAMREQUEST).asString
+            _wordParams = it.jsonObject.get(Dictionary.ONL_WORD_PARAMREQUEST).asJsonObject
             _kanjiPath = it.jsonObject.get(Dictionary.ONL_KANJI_URLPATH).asString
-            _kanjiParams = it.jsonObject.get(Dictionary.ONL_KANJI_PARAMREQUEST).asString
+            _kanjiPathAppend = it.jsonObject.get(Dictionary.ONL_KANJI_PARAMREQUEST).asString
         }
     }
     private val instance: RetrofitApi by lazy {
@@ -32,22 +34,22 @@ object JishoDictionaryApi: DictionaryApi {
     }
 
     override suspend fun searchWord(keyword: String): List<Word> {
-        _wordParams.format(keyword)
-        val data = instance.fetchJsonObject(endpoint = _wordPath, parameter = _wordParams, body = JsonObject())
+        _wordParams.addProperty("keyword", keyword)
+        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordParams)
         //TODO: Change to Jisho Converter
         return MaziiJsonConverter.toDomainWordList(data)
     }
 
     override suspend fun searchKanji(keyword: String): List<Kanji> {
-        _kanjiParams.format(keyword)
-        val data = instance.fetchJsonObject(endpoint = _kanjiPath, parameter = _kanjiParams, body = JsonObject())
+        _kanjiPathAppend = String.format(_kanjiPathAppend, keyword)
+        val data = instance.postFunctionFetchJson(endpoint = _kanjiPath + _kanjiPathAppend, params = mapOf(), body = JsonObject())
         //TODO: Change to Jisho Converter
         return MaziiJsonConverter.toDomainKanjiList(data)
     }
 
     override suspend fun indevTest(keyword: String): String {
-        _wordParams.format(keyword)
-        val data = instance.fetchJsonObject(endpoint = _wordPath, parameter = _wordParams, body = JsonObject())
+        _wordParams.addProperty("keyword", keyword)
+        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordParams)
         return "$data"
     }
 }

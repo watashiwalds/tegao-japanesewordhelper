@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.data.config
 
+import com.tegaoteam.application.tegao.data.network.api.JishoDictionaryApi
 import com.tegaoteam.application.tegao.data.network.api.MaziiDictionaryApi
 import com.tegaoteam.application.tegao.domain.interf.DictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
@@ -50,7 +51,7 @@ class DictionaryConfig {
                 |}""".trimMargin()
         )
 
-        val supportedSource = listOf<DictionaryApi>(MaziiDictionaryApi)
+        val supportedSource = listOf<DictionaryApi>(MaziiDictionaryApi, JishoDictionaryApi)
 
         fun getDictionariesList() = listOf(
             SIMDICT_MAZII,

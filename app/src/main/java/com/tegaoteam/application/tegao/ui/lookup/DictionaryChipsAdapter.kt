@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.ThemedChipItemBinding
 import com.tegaoteam.application.tegao.domain.model.Dictionary
+import com.tegaoteam.application.tegao.utils.ui.ThemedChipController
 import com.tegaoteam.application.tegao.utils.ui.ThemedChipItem
 
 class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, DictionaryChipsAdapter.ViewHolder>( DiffCallback() ) {
@@ -31,7 +32,10 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
      * Please use [submitDictList] instead of this
      */
     override fun submitList(list: List<ThemedChipItem?>?) {} //emptied the function to swap with DictionaryConfig.Dict submitDictList()
-    private val chipItems = mutableListOf<ThemedChipItem?>()
+    private val chipItems = mutableListOf<ThemedChipItem>()
+    //Chip control design for 1 selectable chip in concurrent
+    private lateinit var themedChipController: ThemedChipController
+
     /**
      * Exclusively design for DictionaryChipAdapter
      *
@@ -47,25 +51,13 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
                     it.displayName,
                     MutableLiveData<Boolean>()
                 )
-                newChip.setOnClickListener { clickListener(newChip.id); onChangeSelectedChip(newChip) }
+                newChip.setOnClickListener { clickListener(newChip.id) }
                 chipItems.add(newChip)
             }
         }
         super.submitList(chipItems)
-        if (chipItems.isNotEmpty()) chipItems.first()?.onClick()
-    }
-
-    //Chip control design for 1 selectable chip in concurrent
-    private var currentSelected: ThemedChipItem? = null
-    private fun onChangeSelectedChip(selectedChip: ThemedChipItem) {
-        if (currentSelected != null) {
-            currentSelected!!.setSelectedState(false)
-            selectedChip.setSelectedState(true)
-            currentSelected = selectedChip
-        } else {
-            selectedChip.setSelectedState(true)
-            currentSelected = selectedChip
-        }
+        themedChipController = ThemedChipController(chipItems as List<ThemedChipItem>, ThemedChipController.MODE_SINGLE)
+        themedChipController.selectFirst()
     }
 
     class ViewHolder private constructor (private val binding: ThemedChipItemBinding, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {

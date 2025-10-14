@@ -20,13 +20,12 @@ object JishoDictionaryApi: DictionaryApi {
     private lateinit var _kanjiPath: String
     private lateinit var _kanjiPathAppend: String
     init {
-        TODO("Hyperlink not work, make Retrofit 404, check it quick")
         dict?.let {
             _url = it.jsonObject.get(Dictionary.ONL_URL).asString
             _wordPath = it.jsonObject.get(Dictionary.ONL_WORD_URLPATH).asString
             _wordParams = it.jsonObject.get(Dictionary.ONL_WORD_PARAMREQUEST).asJsonObject
             _kanjiPath = it.jsonObject.get(Dictionary.ONL_KANJI_URLPATH).asString
-            _kanjiPathAppend = it.jsonObject.get(Dictionary.ONL_KANJI_PARAMREQUEST).asString
+            _kanjiPathAppend = it.jsonObject.get(Dictionary.ONL_KANJI_PATHAPPEND).asString
         }
     }
     private val instance: RetrofitApi by lazy {

@@ -9,7 +9,6 @@ import com.tegaoteam.application.tegao.domain.interf.DictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
-import timber.log.Timber
 
 object MaziiDictionaryApi: DictionaryApi {
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
@@ -34,19 +33,19 @@ object MaziiDictionaryApi: DictionaryApi {
 
     override suspend fun searchWord(keyword: String): List<Word> {
         _wordPayloadRequest.addProperty("query", keyword)
-        val data = instance.fetchJsonObject(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest)
+        val data = instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest)
         return MaziiJsonConverter.toDomainWordList(data)
     }
 
     override suspend fun searchKanji(keyword: String): List<Kanji> {
         _kanjiPayloadRequest.addProperty("query", keyword)
-        val data = instance.fetchJsonObject(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest)
+        val data = instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest)
         return MaziiJsonConverter.toDomainKanjiList(data)
     }
 
     override suspend fun indevTest(keyword: String): String {
         _wordPayloadRequest.addProperty("query", keyword)
-        val data = instance.fetchJsonObject(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest)
+        val data = instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest)
         return "$data"
     }
 }

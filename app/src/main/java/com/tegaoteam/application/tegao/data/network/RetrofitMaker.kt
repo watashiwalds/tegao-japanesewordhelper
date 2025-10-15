@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.data.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -11,10 +12,16 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  * Make Retrofit client with 1 shared OkHttpClient for reduced connection load
  */
 object RetrofitMaker {
+    //logging interceptor for url call logging
+    val logging = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY  // Logs URL, headers, and body
+    }
+
     //shared OkHttpClient for all Retrofit instance of each source
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
+            .addInterceptor(logging)
             .build()
     }
 

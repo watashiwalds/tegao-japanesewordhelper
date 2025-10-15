@@ -4,7 +4,7 @@ import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 
-object MaziiJsonConverter {
+object JishoResponseConverter {
     fun toDomainWordList(json: JsonObject): List<Word> {
         //TODO
         return listOf()

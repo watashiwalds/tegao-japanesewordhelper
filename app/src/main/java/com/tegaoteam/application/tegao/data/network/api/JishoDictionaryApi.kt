@@ -5,7 +5,7 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
-import com.tegaoteam.application.tegao.data.network.converter.MaziiJsonConverter
+import com.tegaoteam.application.tegao.data.network.converter.JishoResponseConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
@@ -40,7 +40,7 @@ object JishoDictionaryApi: DictionaryRepo {
         //TODO: Change to Jisho Converter
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiJsonConverter.toDomainWordList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(JishoResponseConverter.toDomainWordList(res.data))
         }
     }
 
@@ -50,7 +50,7 @@ object JishoDictionaryApi: DictionaryRepo {
         //TODO: Change to Jisho Converter
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiJsonConverter.toDomainKanjiList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(JishoResponseConverter.toDomainKanjiList(res.data))
         }
     }
 

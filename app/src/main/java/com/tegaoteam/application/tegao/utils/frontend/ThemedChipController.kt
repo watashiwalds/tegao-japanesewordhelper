@@ -1,6 +1,4 @@
-package com.tegaoteam.application.tegao.utils.ui
-
-import timber.log.Timber
+package com.tegaoteam.application.tegao.utils.frontend
 
 class ThemedChipController(
     val chips: List<ThemedChipItem>,

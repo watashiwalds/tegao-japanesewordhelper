@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.utils.ui
+package com.tegaoteam.application.tegao.utils.frontend
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

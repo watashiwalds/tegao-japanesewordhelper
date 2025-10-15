@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
-import com.tegaoteam.application.tegao.utils.AppToast
+import com.tegaoteam.application.tegao.utils.frontend.AppToast
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding

@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.utils
+package com.tegaoteam.application.tegao.utils.frontend
 
 import android.content.Context
 import android.widget.Toast
@@ -10,7 +10,7 @@ class AppToast {
         const val LENGTH_SHORT = 0
         const val LENGTH_LONG = 1
 
-        private var toastInstance = Toast(TegaoApplication.instance)
+        private var toastInstance = Toast(TegaoApplication.Companion.instance)
 
         fun show(context: Context, text: CharSequence, duration: Int) {
             toastInstance.cancel()

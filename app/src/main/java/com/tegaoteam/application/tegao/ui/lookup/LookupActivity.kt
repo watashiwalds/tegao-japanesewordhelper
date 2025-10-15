@@ -95,9 +95,9 @@ class LookupActivity : AppCompatActivity() {
     }
 
     fun displayDictionaryOptions() {
-        val availableDicts = _viewModel.sources
+        val availableDictionaries = _viewModel.availableDictionariesList
         val dictChipAdapter = DictionaryChipsAdapter(this)
-        dictChipAdapter.submitDictList(availableDicts) { dictId ->
+        dictChipAdapter.submitDictList(availableDictionaries) { dictId ->
             _viewModel.selectedDictionaryId = dictId
         }
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter

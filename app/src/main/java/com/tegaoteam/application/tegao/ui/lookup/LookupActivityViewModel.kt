@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.tegaoteam.application.tegao.domain.passage.DictionaryPassage
 import com.tegaoteam.application.tegao.domain.model.RepoResult
+import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,12 +30,17 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val evClearSearchString = EventBeacon()
     val enableClearSearchString = _userSearchString.map { !it.isNullOrBlank() }
 
+    //Mode changing handling
+    val lookupMode = GlobalState.lookupMode
+    val evChangeToWordMode = EventBeacon()
+    val evChangeToKanjiMode = EventBeacon()
+
     //Dictionary available
     val availableDictionariesList = DictionaryPassage.getDictionariesList()
     var selectedDictionaryId: String = ""
 
     private var _indevRetrofitResult = MutableLiveData<String>()
-    val retrofitResult: LiveData<String> = _indevRetrofitResult
+    val indevRetrofitResult: LiveData<String> = _indevRetrofitResult
 
     //Start search on selected source
     val dictionaryHub = DictionaryPassage.getDictionaryHub()

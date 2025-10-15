@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
+import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.frontend.AppToast
 
 class LookupActivity : AppCompatActivity() {
@@ -83,6 +84,16 @@ class LookupActivity : AppCompatActivity() {
             if (_viewModel.evStartSearch.receive()) {
                 AppToast.show(this, "Search clicked", AppToast.LENGTH_SHORT)
                 _viewModel.searchKeyword()
+            }
+        }
+        _viewModel.evChangeToWordMode.beacon.observe(this) {
+            if (_viewModel.evChangeToWordMode.receive()) {
+                GlobalState.setLookupMode(GlobalState.LookupMode.WORD)
+            }
+        }
+        _viewModel.evChangeToKanjiMode.beacon.observe(this) {
+            if (_viewModel.evChangeToKanjiMode.receive()) {
+                GlobalState.setLookupMode(GlobalState.LookupMode.KANJI)
             }
         }
     }

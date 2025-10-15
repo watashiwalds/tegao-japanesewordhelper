@@ -6,6 +6,7 @@ import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 
 interface DictionaryRepo {
+    //cmt TODO: Remove this variable
     val dict: Dictionary?
 
     suspend fun searchWord(keyword: String): RepoResult<List<Word>>

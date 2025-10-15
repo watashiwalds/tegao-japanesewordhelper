@@ -97,14 +97,8 @@ class LookupActivity : AppCompatActivity() {
     fun displayDictionaryOptions() {
         val availableDicts = _viewModel.sources
         val dictChipAdapter = DictionaryChipsAdapter(this)
-        dictChipAdapter.submitDictList(availableDicts.map { it.dict }) { dictId ->
-            //TODO: Send info to ViewModel to swap dictionary according to selected chip
-            _viewModel.selectedSourceId = dictId
-            //Toast for testing
-            AppToast.show(
-                this,
-                "Selecting [$dictId, ${availableDicts.find { it.dict?.id == dictId }?.dict?.displayName}] ",
-                AppToast.LENGTH_SHORT)
+        dictChipAdapter.submitDictList(availableDicts) { dictId ->
+            _viewModel.selectedDictionaryId = dictId
         }
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter
     }

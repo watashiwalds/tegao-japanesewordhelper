@@ -30,23 +30,23 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val enableClearSearchString = _userSearchString.map { !it.isNullOrBlank() }
 
     //Dictionary available
-    val sources = DictionaryPassage.getDictionariesApi()
-    var selectedSourceId: String = ""
+    val sources = DictionaryPassage.getDictionariesList()
+    var selectedDictionaryId: String = ""
 
     private var _indevRetrofitResult = MutableLiveData<String>()
     val retrofitResult: LiveData<String> = _indevRetrofitResult
 
     //Start search on selected source
+    val dictionaryHub = DictionaryPassage.getDictionaryHub()
     val evStartSearch = EventBeacon()
     fun searchKeyword() {
         if (_userSearchString.value.isNullOrBlank()) return
-        val currentSource = sources.firstOrNull { it.dict?.id == selectedSourceId }
-        currentSource?.let {
+        //for the test of online api, default to indev
+        if (!selectedDictionaryId.isEmpty()) {
             _indevRetrofitResult.value = "Now searching..."
             ioScope.launch {
-                //for the test, default to indev
                 //TODO: Word and Kanji mode respectively
-                val result = it.devTest(_userSearchString.value!!)
+                val result = dictionaryHub.devTest(_userSearchString.value!!, selectedDictionaryId)
                 withContext(Dispatchers.Main) {
                     _indevRetrofitResult.value = when (result) {
                         is RepoResult.Error<*> -> "ErrorCode: ${result.code}, Reason: ${result.message}"

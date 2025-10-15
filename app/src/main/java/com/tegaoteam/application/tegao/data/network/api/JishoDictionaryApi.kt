@@ -12,6 +12,7 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.utils.toMap
+import okhttp3.ResponseBody
 
 object JishoDictionaryApi: DictionaryRepo {
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "jisho" }
@@ -37,7 +38,6 @@ object JishoDictionaryApi: DictionaryRepo {
     override suspend fun searchWord(keyword: String): RepoResult<List<Word>> {
         _wordParams.addProperty("keyword", keyword)
         val res = RetrofitResult.wrapper { instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() }) }
-        //TODO: Change to Jisho Converter
         return when (res) {
             is RepoResult.Error<*> -> res
             is RepoResult.Success<JsonObject> -> RepoResult.Success(JishoResponseConverter.toDomainWordList(res.data))
@@ -46,11 +46,10 @@ object JishoDictionaryApi: DictionaryRepo {
 
     override suspend fun searchKanji(keyword: String): RepoResult<List<Kanji>> {
         _kanjiPathAppend = String.format(_kanjiPathAppend, keyword)
-        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath + _kanjiPathAppend, params = mapOf(), body = JsonObject()) }
-        //TODO: Change to Jisho Converter
+        val res = RetrofitResult.wrapper { instance.getFunctionFetchRaw(endpoint = _kanjiPath + _kanjiPathAppend, params = mapOf()) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(JishoResponseConverter.toDomainKanjiList(res.data))
+            is RepoResult.Success<ResponseBody> -> RepoResult.Success(JishoResponseConverter.toDomainKanjiList(res.data))
         }
     }
 

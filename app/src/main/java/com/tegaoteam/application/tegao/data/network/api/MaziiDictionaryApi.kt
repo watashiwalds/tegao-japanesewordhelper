@@ -5,12 +5,12 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.converter.MaziiJsonConverter
-import com.tegaoteam.application.tegao.domain.interf.DictionaryApi
+import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 
-object MaziiDictionaryApi: DictionaryApi {
+object MaziiDictionaryApi: DictionaryRepo {
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
 
     private lateinit var _url: String

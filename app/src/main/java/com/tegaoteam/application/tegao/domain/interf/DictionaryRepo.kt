@@ -4,7 +4,7 @@ import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 
-interface DictionaryApi {
+interface DictionaryRepo {
     val dict: Dictionary?
 
     suspend fun searchWord(keyword: String): List<Word>

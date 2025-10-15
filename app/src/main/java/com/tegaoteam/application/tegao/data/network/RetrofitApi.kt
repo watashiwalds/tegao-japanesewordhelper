@@ -20,7 +20,7 @@ interface RetrofitApi {
 
     @GET("{endpoint}")
     suspend fun getFunctionFetchJson(
-        @Path("endpoint") endpoint: String = "",
+        @Path("endpoint", encoded = true) endpoint: String = "",
         @QueryMap params: Map<String, String>
     ): JsonObject
 }

@@ -45,7 +45,7 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
             ioScope.launch {
                 //for the test, default to indev
                 //TODO: Word and Kanji mode respectively
-                val result = it.indevTest(_userSearchString.value!!)
+                val result = it.devTest(_userSearchString.value!!)
                 withContext(Dispatchers.Main) {
                     _indevRetrofitResult.value = result
                 }

@@ -10,5 +10,5 @@ interface DictionaryRepo {
     suspend fun searchWord(keyword: String): List<Word>
     suspend fun searchKanji(keyword: String): List<Kanji>
 
-    suspend fun indevTest(keyword: String): String
+    suspend fun devTest(keyword: String): String
 }

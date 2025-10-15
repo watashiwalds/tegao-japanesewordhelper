@@ -8,5 +8,5 @@ object GlobalState {
     enum class LookupMode { WORD, KANJI }
     private var _lookupMode = MutableStateFlow<LookupMode>(LookupMode.WORD)
     val lookupMode = _lookupMode.asStateFlow()
-    fun setLookupMode(mode: LookupMode) { _lookupMode.value = mode; Timber.i("Mode change: ${lookupMode.value}") }
+    fun setLookupMode(mode: LookupMode) { _lookupMode.value = mode }
 }

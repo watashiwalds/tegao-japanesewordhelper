@@ -9,6 +9,7 @@ import com.tegaoteam.application.tegao.domain.interf.DictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.utils.toMap
 import timber.log.Timber
 
 object JishoDictionaryApi: DictionaryApi {
@@ -34,7 +35,7 @@ object JishoDictionaryApi: DictionaryApi {
 
     override suspend fun searchWord(keyword: String): List<Word> {
         _wordParams.addProperty("keyword", keyword)
-        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = mapOf())
+        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() })
         //TODO: Change to Jisho Converter
         return MaziiJsonConverter.toDomainWordList(data)
     }
@@ -48,7 +49,7 @@ object JishoDictionaryApi: DictionaryApi {
 
     override suspend fun indevTest(keyword: String): String {
         _wordParams.addProperty("keyword", keyword)
-        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = mapOf())
+        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() })
         return "$data"
     }
 }

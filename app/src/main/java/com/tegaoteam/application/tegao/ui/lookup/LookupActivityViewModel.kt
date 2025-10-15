@@ -52,7 +52,11 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
             _indevRetrofitResult.value = "Now searching..."
             ioScope.launch {
                 //TODO: Word and Kanji mode respectively
-                val result = dictionaryHub.devTest(_userSearchString.value!!, selectedDictionaryId)
+                val result = when (lookupMode.value) {
+                    GlobalState.LookupMode.WORD -> dictionaryHub.searchWord(_userSearchString.value!!, selectedDictionaryId)
+                    GlobalState.LookupMode.KANJI -> dictionaryHub.searchKanji(_userSearchString.value!!, selectedDictionaryId)
+                    else -> dictionaryHub.devTest(_userSearchString.value!!, selectedDictionaryId)
+                }
                 withContext(Dispatchers.Main) {
                     _indevRetrofitResult.value = when (result) {
                         is RepoResult.Error<*> -> "ErrorCode: ${result.code}, Reason: ${result.message}"

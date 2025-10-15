@@ -19,7 +19,7 @@ object JishoResponseConverter {
         return listOf(Kanji(
             id = 0,
             character = "Jisho KANJI fetching success",
-            meaning = "RAW size: ${raw.toString().length}",
+            meaning = "RAW size: ${raw.string().length}",
             strokeCount = 0,
             frequency = 0
         ))

@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import com.tegaoteam.application.tegao.domain.passing.DictionaryRelated
-import com.tegaoteam.application.tegao.domain.passing.RepoResult
+import com.tegaoteam.application.tegao.domain.passage.DictionaryPassage
+import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +30,7 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val enableClearSearchString = _userSearchString.map { !it.isNullOrBlank() }
 
     //Dictionary available
-    val sources = DictionaryRelated.getSupportedApi()
+    val sources = DictionaryPassage.getSupportedApi()
     var selectedSourceId: String = ""
 
     private var _indevRetrofitResult = MutableLiveData<String>()

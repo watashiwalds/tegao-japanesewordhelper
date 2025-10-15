@@ -10,7 +10,7 @@ import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.domain.passing.RepoResult
+import com.tegaoteam.application.tegao.domain.model.RepoResult
 
 object MaziiDictionaryApi: DictionaryRepo {
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }

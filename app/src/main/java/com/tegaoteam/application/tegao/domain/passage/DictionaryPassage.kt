@@ -1,8 +1,8 @@
-package com.tegaoteam.application.tegao.domain.passing
+package com.tegaoteam.application.tegao.domain.passage
 
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 
-class DictionaryRelated {
+class DictionaryPassage {
     companion object {
         fun getDictionariesList() = DictionaryConfig.getDictionariesList()
         fun getSupportedApi() = DictionaryConfig.getDictionariesApi()

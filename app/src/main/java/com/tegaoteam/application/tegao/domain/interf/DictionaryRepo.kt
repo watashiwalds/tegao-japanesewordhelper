@@ -3,7 +3,7 @@ package com.tegaoteam.application.tegao.domain.interf
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.domain.passing.RepoResult
+import com.tegaoteam.application.tegao.domain.model.RepoResult
 
 interface DictionaryRepo {
     val dict: Dictionary?

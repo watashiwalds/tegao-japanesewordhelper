@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentLookupBinding
+import com.tegaoteam.application.tegao.ui.shared.GlobalState
 
 class LookupFragment : Fragment() {
     private lateinit var _binding: FragmentLookupBinding
@@ -37,6 +38,16 @@ class LookupFragment : Fragment() {
         _viewModel.evNavigateToLookupActivity.beacon.observe(viewLifecycleOwner) {
             if (_viewModel.evNavigateToLookupActivity.receive()) {
                 navigatingToLookup()
+            }
+        }
+        _viewModel.evChangeToWordMode.beacon.observe(viewLifecycleOwner) {
+            if (_viewModel.evChangeToWordMode.receive()) {
+                GlobalState.setLookupMode(GlobalState.LookupMode.WORD)
+            }
+        }
+        _viewModel.evChangeToKanjiMode.beacon.observe(viewLifecycleOwner) {
+            if (_viewModel.evChangeToKanjiMode.receive()) {
+                GlobalState.setLookupMode(GlobalState.LookupMode.KANJI)
             }
         }
     }

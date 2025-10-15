@@ -81,7 +81,8 @@
                     app:toggleVisibility="@{viewModel.lookupMode != LookupMode.WORD}"
                     android:onClick="@{() -> viewModel.evChangeToWordMode.ignite()}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone"/>
 
                 <Button
                     android:id="@+id/lo_stringHistory_active_btn"
@@ -91,6 +92,7 @@
                     android:text="@string/title_words"
                     app:icon="@drawable/ftc_bold_char_a_128"
                     app:toggleVisibility="@{viewModel.lookupMode == LookupMode.WORD}"
+                    android:clickable="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,8 +128,10 @@
                     android:text="@string/title_kanji"
                     app:icon="@drawable/ftc_bold_jp_char_go_128"
                     app:toggleVisibility="@{viewModel.lookupMode == LookupMode.KANJI}"
+                    android:clickable="false"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone"/>
 
             </FrameLayout>
 

@@ -16,13 +16,9 @@ class ThemedChipController(
     private fun onSelectedChipChanged(selectedChip: ThemedChipItem) {
         when (mode) {
             MODE_SINGLE -> {
-                Timber.i("Set selected")
                 currentSelected?.let {
                     if (currentSelected == selectedChip) return
                     it.setSelectedState(false)
-                    selectedChip.setSelectedState(true)
-                    currentSelected = selectedChip
-                    return
                 }
                 selectedChip.setSelectedState(true)
                 currentSelected = selectedChip
@@ -35,7 +31,7 @@ class ThemedChipController(
     }
     fun setSelected(index: Int) {
         if (index in (0..<chips.size)) {
-            onSelectedChipChanged(chips[index])
+            chips[index].onClick()
         }
     }
     fun selectFirst() {

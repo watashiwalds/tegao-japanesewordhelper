@@ -30,7 +30,7 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val enableClearSearchString = _userSearchString.map { !it.isNullOrBlank() }
 
     //Dictionary available
-    val sources = DictionaryPassage.getSupportedApi()
+    val sources = DictionaryPassage.getDictionariesApi()
     var selectedSourceId: String = ""
 
     private var _indevRetrofitResult = MutableLiveData<String>()

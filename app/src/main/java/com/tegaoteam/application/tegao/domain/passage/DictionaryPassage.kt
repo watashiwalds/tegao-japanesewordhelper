@@ -5,6 +5,6 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 class DictionaryPassage {
     companion object {
         fun getDictionariesList() = DictionaryConfig.getDictionariesList()
-        fun getSupportedApi() = DictionaryConfig.getDictionariesApi()
+        fun getDictionariesApi() = DictionaryConfig.getDictionariesApi()
     }
 }

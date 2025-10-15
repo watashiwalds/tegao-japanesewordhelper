@@ -4,11 +4,13 @@ import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
+import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.data.network.converter.MaziiJsonConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.domain.passing.RepoResult
 
 object MaziiDictionaryApi: DictionaryRepo {
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
@@ -31,21 +33,30 @@ object MaziiDictionaryApi: DictionaryRepo {
         RetrofitMaker.createWithUrl(_url).create(RetrofitApi::class.java)
     }
 
-    override suspend fun searchWord(keyword: String): List<Word> {
+    override suspend fun searchWord(keyword: String): RepoResult<List<Word>> {
         _wordPayloadRequest.addProperty("query", keyword)
-        val data = instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest)
-        return MaziiJsonConverter.toDomainWordList(data)
+        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
+        return when (res) {
+            is RepoResult.Error<*> -> res
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiJsonConverter.toDomainWordList(res.data))
+        }
     }
 
-    override suspend fun searchKanji(keyword: String): List<Kanji> {
+    override suspend fun searchKanji(keyword: String): RepoResult<List<Kanji>> {
         _kanjiPayloadRequest.addProperty("query", keyword)
-        val data = instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest)
-        return MaziiJsonConverter.toDomainKanjiList(data)
+        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest) }
+        return when (res) {
+            is RepoResult.Error<*> -> res
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiJsonConverter.toDomainKanjiList(res.data))
+        }
     }
 
-    override suspend fun indevTest(keyword: String): String {
+    override suspend fun devTest(keyword: String): RepoResult<String> {
         _wordPayloadRequest.addProperty("query", keyword)
-        val data = instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest)
-        return "$data"
+        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
+        return when (res) {
+            is RepoResult.Error<*> -> res
+            is RepoResult.Success<*> -> RepoResult.Success("${res.data}")
+        }
     }
 }

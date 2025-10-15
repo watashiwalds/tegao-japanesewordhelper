@@ -4,11 +4,13 @@ import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
+import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.data.network.converter.MaziiJsonConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.domain.passing.RepoResult
 import com.tegaoteam.application.tegao.utils.toMap
 
 object JishoDictionaryApi: DictionaryRepo {
@@ -32,23 +34,32 @@ object JishoDictionaryApi: DictionaryRepo {
         RetrofitMaker.createWithUrl(_url).create(RetrofitApi::class.java)
     }
 
-    override suspend fun searchWord(keyword: String): List<Word> {
+    override suspend fun searchWord(keyword: String): RepoResult<List<Word>> {
         _wordParams.addProperty("keyword", keyword)
-        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() })
+        val res = RetrofitResult.wrapper { instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() }) }
         //TODO: Change to Jisho Converter
-        return MaziiJsonConverter.toDomainWordList(data)
+        return when (res) {
+            is RepoResult.Error<*> -> res
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiJsonConverter.toDomainWordList(res.data))
+        }
     }
 
-    override suspend fun searchKanji(keyword: String): List<Kanji> {
+    override suspend fun searchKanji(keyword: String): RepoResult<List<Kanji>> {
         _kanjiPathAppend = String.format(_kanjiPathAppend, keyword)
-        val data = instance.postFunctionFetchJson(endpoint = _kanjiPath + _kanjiPathAppend, params = mapOf(), body = JsonObject())
+        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath + _kanjiPathAppend, params = mapOf(), body = JsonObject()) }
         //TODO: Change to Jisho Converter
-        return MaziiJsonConverter.toDomainKanjiList(data)
+        return when (res) {
+            is RepoResult.Error<*> -> res
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiJsonConverter.toDomainKanjiList(res.data))
+        }
     }
 
-    override suspend fun indevTest(keyword: String): String {
+    override suspend fun devTest(keyword: String): RepoResult<String> {
         _wordParams.addProperty("keyword", keyword)
-        val data = instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() })
-        return "$data"
+        val res = RetrofitResult.wrapper { instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() }) }
+        return when (res) {
+            is RepoResult.Error<*> -> res
+            is RepoResult.Success<*> -> RepoResult.Success("${res.data}")
+        }
     }
 }

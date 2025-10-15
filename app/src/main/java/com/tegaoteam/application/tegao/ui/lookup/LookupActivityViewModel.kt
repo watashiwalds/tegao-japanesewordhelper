@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.tegaoteam.application.tegao.domain.passing.DictionaryRelated
+import com.tegaoteam.application.tegao.domain.passing.RepoResult
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,7 +48,10 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
                 //TODO: Word and Kanji mode respectively
                 val result = it.devTest(_userSearchString.value!!)
                 withContext(Dispatchers.Main) {
-                    _indevRetrofitResult.value = result
+                    _indevRetrofitResult.value = when (result) {
+                        is RepoResult.Error<*> -> "ErrorCode: ${result.code}, Reason: ${result.message}"
+                        is RepoResult.Success<*> -> "${result.data}"
+                    }
                 }
             }
             return

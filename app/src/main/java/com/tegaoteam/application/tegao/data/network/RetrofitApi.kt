@@ -1,6 +1,8 @@
 package com.tegaoteam.application.tegao.data.network
 
 import com.google.gson.JsonObject
+import com.tegaoteam.application.tegao.domain.passing.RepoResult
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -16,11 +18,11 @@ interface RetrofitApi {
         @Path("endpoint") endpoint: String = "",
         @QueryMap params: Map<String, String>,
         @Body body: JsonObject
-    ): JsonObject
+    ): Response<JsonObject>
 
     @GET("{endpoint}")
     suspend fun getFunctionFetchJson(
         @Path("endpoint", encoded = true) endpoint: String = "",
         @QueryMap params: Map<String, String>
-    ): JsonObject
+    ): Response<JsonObject>
 }

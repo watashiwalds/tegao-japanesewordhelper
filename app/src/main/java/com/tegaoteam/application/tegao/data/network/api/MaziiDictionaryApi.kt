@@ -5,7 +5,7 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
-import com.tegaoteam.application.tegao.data.network.converter.MaziiJsonConverter
+import com.tegaoteam.application.tegao.data.network.converter.MaziiResponseConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
@@ -38,7 +38,7 @@ object MaziiDictionaryApi: DictionaryRepo {
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiJsonConverter.toDomainWordList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiResponseConverter.toDomainWordList(res.data))
         }
     }
 
@@ -47,7 +47,7 @@ object MaziiDictionaryApi: DictionaryRepo {
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiJsonConverter.toDomainKanjiList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiResponseConverter.toDomainKanjiList(res.data))
         }
     }
 

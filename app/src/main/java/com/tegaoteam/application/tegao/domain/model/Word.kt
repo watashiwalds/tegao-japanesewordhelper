@@ -11,6 +11,6 @@ data class Word(
     data class Definition (
         var tags: MutableList<String>? = null,
         val meaning: String,
-        var expandInfos: MutableList<Pair<MutableList<String>?, String>>? = null
+        var expandInfos: MutableList<Pair<String, String>>? = null
     )
 }

@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.data.network.converter
 import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
+import timber.log.Timber
 
 object MaziiResponseConverter {
     fun toDomainWordList(json: JsonObject): List<Word> {
@@ -23,14 +24,15 @@ object MaziiResponseConverter {
                             tr.asJsonObject.get("romaji").asString
                         }
                     }
+                    Timber.i("$pronuns")
                     val pConcat = ArrayDeque<String>()
                     for (p in pronuns) {
                         var pPopSize = pConcat.size
-                        for (i in (0..pPopSize)) {
-                            val temp = if (pPopSize > 0) pConcat.first() else ""
-                            for (tr in p) pConcat.add(temp.plus(tr))
+                        do {
+                            val temp = if (pPopSize > 0) pConcat.removeFirst() else ""
+                            for (tr in p) pConcat.add("$temp$tr")
                             pPopSize--
-                        }
+                        } while (pPopSize > 0)
                     }
                     val pronunsT = pConcat.joinToString("\n")
 

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="itemChip"
-            type="com.tegaoteam.application.tegao.utils.frontend.ThemedChipItem" />
+            type="com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem" />
     </data>
     
     <FrameLayout

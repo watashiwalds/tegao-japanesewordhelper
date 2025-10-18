@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.ThemedChipItemBinding
 import com.tegaoteam.application.tegao.domain.model.Dictionary
-import com.tegaoteam.application.tegao.utils.frontend.ThemedChipController
-import com.tegaoteam.application.tegao.utils.frontend.ThemedChipItem
+import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipController
+import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 
 class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, DictionaryChipsAdapter.ViewHolder>( DiffCallback() ) {
     override fun onCreateViewHolder(

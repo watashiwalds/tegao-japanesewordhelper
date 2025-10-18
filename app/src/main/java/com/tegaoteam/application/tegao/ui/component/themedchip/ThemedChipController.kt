@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.utils.frontend
+package com.tegaoteam.application.tegao.ui.component.themedchip
 
 class ThemedChipController(
     val chips: List<ThemedChipItem>,

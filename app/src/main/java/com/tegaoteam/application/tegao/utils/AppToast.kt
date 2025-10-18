@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.utils.frontend
+package com.tegaoteam.application.tegao.utils
 
 import android.content.Context
 import android.widget.Toast

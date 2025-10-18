@@ -3,7 +3,6 @@ package com.tegaoteam.application.tegao.data.network.converter
 import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
-import timber.log.Timber
 
 class MaziiResponseConverter: DictionaryResponseConverter {
     override fun <T> toDomainWordList(rawData: T): List<Word> {
@@ -16,7 +15,10 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 var word: Word? = null
                 if (wObj.has("type") && wObj.get("type").asString.equals("word")) {
                     //some default tags
-                    val tagsT = mutableListOf<String>("mazii", wObj.get("label").asString)
+                    val tagsT = mutableListOf(
+                        Pair("source", "mazii"),
+                        Pair("lang", wObj.get("label").asString)
+                    )
 
                     //Mazii word's additionalInfo is all of it's possible pronunciations
                     val pronuns = wObj.getAsJsonArray("pronunciation").map { p ->
@@ -24,7 +26,6 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                             tr.asJsonObject.get("romaji").asString
                         }
                     }
-                    Timber.i("$pronuns")
                     val pConcat = ArrayDeque<String>()
                     for (p in pronuns) {
                         var pPopSize = pConcat.size
@@ -34,7 +35,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                             pPopSize--
                         } while (pPopSize > 0)
                     }
-                    val pronunsT = pConcat.joinToString("\n")
+                    val pronunsT = mutableListOf(Pair("pronunciation", pConcat.joinToString("\n")))
 
                     //convert definitions
                     val means = wObj.getAsJsonArray("means")
@@ -78,16 +79,57 @@ class MaziiResponseConverter: DictionaryResponseConverter {
     }
 
     override fun <T> toDomainKanjiList(rawData: T): List<Kanji> {
-        //TODO
         val kanjis = mutableListOf<Kanji>()
         if (rawData !is JsonObject) return kanjis
-        kanjis.add(Kanji(
-            id = 0,
-            character = "Mazii KANJI fetching success",
-            meaning = "JSON size: ${rawData.size()}",
-            strokeCount = 0,
-            frequency = 0
-        ))
+        try {
+            val kanji = rawData.getAsJsonArray("results")
+            for (k in kanji) {
+                val kObj = k.asJsonObject
+                var kanji: Kanji? = null
+                if (kObj.has("kanji")) {
+                    val compsT: MutableList<Pair<String, String?>>? = kObj.getAsJsonArray("compDetail").map {
+                        Pair<String, String?>(
+                            it.asJsonObject.get("w").asString,
+                            it.asJsonObject.get("h").asString)
+                    }.toMutableList()
+
+                    val detailsT = kObj.get("detail").asString.replace("##", "\n")
+
+                    val tagsT = mutableListOf<Pair<String, String>>().apply {
+                        when {
+                            kObj.has("freq") -> add("frequency" to kObj.get("freq").asString)
+                            kObj.has("stroke_count") -> add("stroke" to kObj.get("stroke_count").asString)
+                            kObj.has("jlpt") -> add("jlpt" to kObj.getAsJsonArray("level").joinToString(", "))
+                        }
+                    }
+
+                    val tipsT = mutableListOf<Pair<String, String>>().apply {
+                        when {
+                            kObj.has("tips") -> add("tips" to kObj.getAsJsonObject("tips").entrySet().map { it.value }.joinToString("\n"))
+                        }
+                    }
+
+                    kanji = Kanji(
+                        id = kObj.get("mobileId").asInt,
+                        character = kObj.get("kanji").asString,
+                        kunyomi = kObj.get("kun").asString,
+                        onyomi = kObj.get("on").asString,
+                        composites = compsT,
+                        meaning = kObj.get("mean").asString,
+                        details = detailsT,
+                        tags = tagsT,
+                        additionalInfo = tipsT
+                    )
+                }
+                if (kanji != null) kanjis.add(kanji)
+            }
+        } catch (e: Exception) {
+            kanjis.add(Kanji(
+                id = -1,
+                character = "Converting error\n",
+                meaning = e.toString()
+            ))
+        }
         return kanjis
     }
 }

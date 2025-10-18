@@ -8,6 +8,6 @@ data class Kanji(
     var composites: MutableList<Pair<String, String?>>? = null,
     val meaning: String,
     var details: String? = null,
-    var tags: MutableList<Pair<String, String>>? = null,
+    var tags: MutableList<Pair<String, String?>>? = null,
     var additionalInfo: MutableList<Pair<String, String>>? = null,
 )

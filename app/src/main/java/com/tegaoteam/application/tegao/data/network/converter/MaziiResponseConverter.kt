@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.data.network.converter
 import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
+import timber.log.Timber
 
 class MaziiResponseConverter: DictionaryResponseConverter {
     override fun <T> toDomainWordList(rawData: T): List<Word> {
@@ -15,7 +16,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 var word: Word? = null
                 if (wObj.has("type") && wObj.get("type").asString.equals("word")) {
                     //some default tags
-                    val tagsT = mutableListOf(
+                    val tagsT = mutableListOf<Pair<String, String?>>(
                         Pair("source", "mazii"),
                         Pair("lang", wObj.get("label").asString)
                     )
@@ -74,6 +75,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 furigana = e.toString(),
                 definitions = mutableListOf()
             ))
+            Timber.e(e, "Error")
         }
         return words
     }
@@ -87,17 +89,18 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 val kObj = k.asJsonObject
                 var kanji: Kanji? = null
                 if (kObj.has("kanji")) {
-                    val compsT: MutableList<Pair<String, String?>>? = kObj.getAsJsonArray("compDetail").map {
-                        Pair<String, String?>(
-                            it.asJsonObject.get("w").asString,
-                            it.asJsonObject.get("h").asString)
-                    }.toMutableList()
+//                    Timber.i("${kObj.get("compDetail")}")
+                    val compsT = if (!kObj.get("compDetail").isJsonNull)
+                        kObj.getAsJsonArray("compDetail").map {
+                            it.asJsonObject.get("w").asString to it.asJsonObject.get("h").takeUnless { t -> t.isJsonNull }?.asString
+                        }.toMutableList()
+                    else mutableListOf()
 
                     val detailsT = kObj.get("detail").asString.replace("##", "\n")
 
-                    val tagsT = mutableListOf<Pair<String, String>>().apply {
+                    val tagsT = mutableListOf<Pair<String, String?>>().apply {
                         when {
-                            kObj.has("freq") -> add("frequency" to kObj.get("freq").asString)
+                            kObj.has("freq") -> add("frequency" to kObj.get("freq").toString())
                             kObj.has("stroke_count") -> add("stroke" to kObj.get("stroke_count").asString)
                             kObj.has("jlpt") -> add("jlpt" to kObj.getAsJsonArray("level").joinToString(", "))
                         }
@@ -112,8 +115,8 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     kanji = Kanji(
                         id = kObj.get("mobileId").asInt,
                         character = kObj.get("kanji").asString,
-                        kunyomi = kObj.get("kun").asString,
-                        onyomi = kObj.get("on").asString,
+                        kunyomi = kObj.get("kun")?.asString,
+                        onyomi = kObj.get("on")?.asString,
                         composites = compsT,
                         meaning = kObj.get("mean").asString,
                         details = detailsT,
@@ -129,6 +132,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 character = "Converting error\n",
                 meaning = e.toString()
             ))
+            Timber.e(e, "Error")
         }
         return kanjis
     }

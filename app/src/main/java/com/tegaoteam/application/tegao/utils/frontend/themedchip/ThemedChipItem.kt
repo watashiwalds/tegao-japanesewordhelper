@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.utils.frontend
+package com.tegaoteam.application.tegao.utils.frontend.themedchip
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

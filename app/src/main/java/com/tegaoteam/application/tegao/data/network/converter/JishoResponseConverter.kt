@@ -5,23 +5,30 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import okhttp3.ResponseBody
 
-object JishoResponseConverter {
-    fun toDomainWordList(json: JsonObject): List<Word> {
+class JishoResponseConverter: DictionaryResponseConverter {
+    override fun <T> toDomainWordList(rawData: T): List<Word> {
         //TODO
-        return listOf(Word(
+        val words = mutableListOf<Word>()
+        if (rawData !is JsonObject) return words
+        words.add(Word(
             id = 0,
             reading = "Jisho WORD fetching success",
-            furigana = "JSON size: ${json.size()}",
-            definitions = mutableListOf()))
+            furigana = "JSON size: ${rawData.size()}",
+            definitions = mutableListOf()
+        ))
+        return words
     }
-    fun toDomainKanjiList(raw: ResponseBody): List<Kanji> {
+    override fun <T> toDomainKanjiList(rawData: T): List<Kanji> {
         //TODO
-        return listOf(Kanji(
+        val kanjis = mutableListOf<Kanji>()
+        if (rawData !is ResponseBody) return kanjis
+        kanjis.add(Kanji(
             id = 0,
             character = "Jisho KANJI fetching success",
-            meaning = "RAW size: ${raw.string().length}",
+            meaning = "RAW size: ${rawData.string().length}",
             strokeCount = 0,
             frequency = 0
         ))
+        return kanjis
     }
 }

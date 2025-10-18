@@ -5,6 +5,7 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
+import com.tegaoteam.application.tegao.data.network.converter.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.converter.MaziiResponseConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
@@ -12,7 +13,14 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 
-object MaziiDictionaryApi: DictionaryRepo {
+class MaziiDictionaryApi private constructor(val converter: DictionaryResponseConverter): DictionaryRepo {
+
+    companion object {
+        val api by lazy {
+            MaziiDictionaryApi(MaziiResponseConverter())
+        }
+    }
+
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
 
     private lateinit var _url: String
@@ -38,7 +46,7 @@ object MaziiDictionaryApi: DictionaryRepo {
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiResponseConverter.toDomainWordList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(converter.toDomainWordList(res.data))
         }
     }
 
@@ -47,7 +55,7 @@ object MaziiDictionaryApi: DictionaryRepo {
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(MaziiResponseConverter.toDomainKanjiList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(converter.toDomainKanjiList(res.data))
         }
     }
 

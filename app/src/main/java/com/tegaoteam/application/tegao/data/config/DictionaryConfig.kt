@@ -53,7 +53,7 @@ class DictionaryConfig {
                 }""".trimIndent()
         )
 
-        val supportedSource = listOf<DictionaryRepo>(MaziiDictionaryApi, JishoDictionaryApi)
+        val supportedSource = listOf<DictionaryRepo>(MaziiDictionaryApi.api, JishoDictionaryApi.api)
 
         fun getDictionariesList() = listOf(
             SIMDICT_MAZII,

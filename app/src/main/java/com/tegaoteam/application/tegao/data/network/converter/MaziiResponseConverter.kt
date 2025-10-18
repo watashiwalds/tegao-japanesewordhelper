@@ -5,12 +5,12 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import timber.log.Timber
 
-object MaziiResponseConverter {
-    fun toDomainWordList(json: JsonObject): List<Word> {
-        //TODO
-        var words = mutableListOf<Word>()
+class MaziiResponseConverter: DictionaryResponseConverter {
+    override fun <T> toDomainWordList(rawData: T): List<Word> {
+        val words = mutableListOf<Word>()
+        if (rawData !is JsonObject) return words
         try {
-            val rawList = json.getAsJsonObject("data").getAsJsonArray("words")
+            val rawList = rawData.getAsJsonObject("data").getAsJsonArray("words")
             for (w in rawList) {
                 val wObj = w.asJsonObject
                 var word: Word? = null
@@ -38,7 +38,7 @@ object MaziiResponseConverter {
 
                     //convert definitions
                     val means = wObj.getAsJsonArray("means")
-                    var meansT = mutableListOf<Word.Definition>()
+                    val meansT = mutableListOf<Word.Definition>()
                     for (m in means) {
                         val mObj = m.asJsonObject
                         val mTags = mObj.get("kind").asString.split(", ").toMutableList()
@@ -76,14 +76,18 @@ object MaziiResponseConverter {
         }
         return words
     }
-    fun toDomainKanjiList(json: JsonObject): List<Kanji> {
+
+    override fun <T> toDomainKanjiList(rawData: T): List<Kanji> {
         //TODO
-        return listOf(Kanji(
+        val kanjis = mutableListOf<Kanji>()
+        if (rawData !is JsonObject) return kanjis
+        kanjis.add(Kanji(
             id = 0,
             character = "Mazii KANJI fetching success",
-            meaning = "JSON size: ${json.size()}",
+            meaning = "JSON size: ${rawData.size()}",
             strokeCount = 0,
             frequency = 0
         ))
+        return kanjis
     }
 }

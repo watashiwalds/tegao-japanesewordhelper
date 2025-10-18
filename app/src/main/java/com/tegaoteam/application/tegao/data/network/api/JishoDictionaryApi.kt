@@ -5,6 +5,7 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
+import com.tegaoteam.application.tegao.data.network.converter.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.converter.JishoResponseConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
@@ -14,7 +15,14 @@ import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.utils.toMap
 import okhttp3.ResponseBody
 
-object JishoDictionaryApi: DictionaryRepo {
+class JishoDictionaryApi private constructor (val converter: DictionaryResponseConverter): DictionaryRepo {
+
+    companion object {
+        val api by lazy {
+            JishoDictionaryApi(JishoResponseConverter())
+        }
+    }
+
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "jisho" }
 
     private lateinit var _url: String
@@ -40,7 +48,7 @@ object JishoDictionaryApi: DictionaryRepo {
         val res = RetrofitResult.wrapper { instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() }) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(JishoResponseConverter.toDomainWordList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(converter.toDomainWordList(res.data))
         }
     }
 
@@ -49,7 +57,7 @@ object JishoDictionaryApi: DictionaryRepo {
         val res = RetrofitResult.wrapper { instance.getFunctionFetchRaw(endpoint = _kanjiPath + _kanjiPathAppend, params = mapOf()) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<ResponseBody> -> RepoResult.Success(JishoResponseConverter.toDomainKanjiList(res.data))
+            is RepoResult.Success<ResponseBody> -> RepoResult.Success(converter.toDomainKanjiList(res.data))
         }
     }
 

@@ -25,9 +25,7 @@ class JishoResponseConverter: DictionaryResponseConverter {
         kanjis.add(Kanji(
             id = 0,
             character = "Jisho KANJI fetching success",
-            meaning = "RAW size: ${rawData.string().length}",
-            strokeCount = 0,
-            frequency = 0
+            meaning = "RAW size: ${rawData.string().length}"
         ))
         return kanjis
     }

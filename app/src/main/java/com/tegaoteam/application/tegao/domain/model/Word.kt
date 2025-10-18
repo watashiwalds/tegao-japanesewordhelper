@@ -4,8 +4,8 @@ data class Word(
     val id: Int,
     val reading: String,
     val furigana: String,
-    var tags: MutableList<String>? = null,
-    var additionalInfo: String? = null,
+    var tags: MutableList<Pair<String, String>>? = null,
+    var additionalInfo: MutableList<Pair<String, String>>? = null,
     val definitions: MutableList<Definition>
 ) {
     data class Definition (

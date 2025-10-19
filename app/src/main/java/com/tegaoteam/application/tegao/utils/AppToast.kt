@@ -10,7 +10,7 @@ class AppToast {
         const val LENGTH_SHORT = 0
         const val LENGTH_LONG = 1
 
-        private var toastInstance = Toast(TegaoApplication.Companion.instance)
+        private var toastInstance = Toast(TegaoApplication.instance.applicationContext)
 
         fun show(context: Context, text: CharSequence, duration: Int) {
             toastInstance.cancel()

@@ -12,8 +12,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 
@@ -120,6 +122,9 @@ class LookupActivity : AppCompatActivity() {
         dictChipAdapter.submitDictList(availableDictionaries) { dictId ->
             _viewModel.selectedDictionaryId = dictId
         }
+        _binding.loDictionaryChipRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(
+            0,
+            TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_tiny)))
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter
     }
 

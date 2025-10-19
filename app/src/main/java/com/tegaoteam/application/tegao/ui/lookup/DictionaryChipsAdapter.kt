@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tegaoteam.application.tegao.databinding.ThemedChipItemBinding
+import com.tegaoteam.application.tegao.databinding.ItemThemedChipBinding
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipController
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
@@ -60,7 +60,7 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
         themedChipController.selectFirst()
     }
 
-    class ViewHolder private constructor (private val binding: ThemedChipItemBinding, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor (private val binding: ItemThemedChipBinding, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ThemedChipItem) {
             binding.itemChip = item
             binding.lifecycleOwner = lifecycleOwner
@@ -68,7 +68,7 @@ class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAd
         }
         companion object {
             fun from(parent: ViewGroup, lifecycleOwner: LifecycleOwner): ViewHolder {
-                val binding = ThemedChipItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemThemedChipBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return ViewHolder(binding, lifecycleOwner)
             }
         }

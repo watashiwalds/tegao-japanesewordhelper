@@ -5,7 +5,7 @@
     <data>
         <variable
             name="infoTag"
-            type="com.tegaoteam.application.tegao.ui.component.infotag.InfoTagItem" />
+            type="com.tegaoteam.application.tegao.ui.component.tag.TagItem" />
     </data>
 
     <TextView

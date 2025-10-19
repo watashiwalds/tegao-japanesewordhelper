@@ -1,6 +1,7 @@
-package com.tegaoteam.application.tegao.ui.component.infotag
+package com.tegaoteam.application.tegao.ui.component.tag
 
-data class InfoTagItem(
+data class TagItem(
+    val id: Int,
     val label: String,
     val color: String,
     val detail: String? = null,

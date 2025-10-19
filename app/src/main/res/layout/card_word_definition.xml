@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_small">
+
+        <TextView
+            android:id="@+id/reading"
+            style="@style/Theme.Tegao.ContentText.Large"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-8dp"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/furigana"
+            tools:text="竜の口" />
+
+        <TextView
+            android:id="@+id/furigana"
+            style="@style/Theme.Tegao.ContentText.Small"
+            android:singleLine="false"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            tools:text="たつのくち, りゅうのくち"
+            />
+
+        <TextView
+            android:id="@+id/additionalInfo"
+            style="@style/Theme.Tegao.ContentText.Normal"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/reading"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+
+            tools:visibility="visible"
+            tools:text="ryu＼–nok(u)／chi‾\nta／tsuno‾k(u)／chi‾"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lo_word_tags_cst"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/additionalInfo">
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/lo_word_tags_flw"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:flow_horizontalAlign="start"
+                app:flow_horizontalGap="@dimen/padding_tiny"
+                app:flow_horizontalStyle="packed"
+
+                app:flow_verticalGap="@dimen/padding_tiny"
+                app:flow_wrapMode="aligned"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:constraint_referenced_ids="lo_test_tag1, lo_test_tag2, lo_test_tag3"
+                />
+
+            <include layout="@layout/item_info_tag" android:id="@+id/lo_test_tag1" android:visibility="gone" tools:visibility="visible"/>
+            <include layout="@layout/item_info_tag" android:id="@+id/lo_test_tag2" android:visibility="gone" tools:visibility="visible"/>
+            <include layout="@layout/item_info_tag" android:id="@+id/lo_test_tag3" android:visibility="gone" tools:visibility="visible"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lo_word_definitions_rcy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lo_word_tags_cst"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/padding_large"
+            android:layout_marginVertical="@dimen/padding_small"
+
+            tools:listitem="@layout/item_definition"
+            tools:itemCount="3"
+            />
+
+        <ImageView
+            android:id="@+id/lo_divider_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_tiny"
+            android:src="@drawable/neutral_stroke_underline"
+            app:layout_constraintTop_toBottomOf="@id/lo_word_definitions_rcy"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

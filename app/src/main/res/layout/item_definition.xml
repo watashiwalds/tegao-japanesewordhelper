@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lo_definition_tags_ctr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/lo_definition_tags_flw"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:flow_horizontalAlign="start"
+                app:flow_horizontalGap="@dimen/padding_tiny"
+                app:flow_horizontalStyle="packed"
+
+                app:flow_verticalGap="@dimen/padding_tiny"
+                app:flow_wrapMode="aligned"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:constraint_referenced_ids="lo_test_tag1, lo_test_tag2"
+                />
+
+            <include layout="@layout/item_info_tag" android:id="@+id/lo_test_tag1" android:visibility="gone" tools:visibility="visible"/>
+            <include layout="@layout/item_info_tag" android:id="@+id/lo_test_tag2" android:visibility="gone" tools:visibility="visible"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/definition"
+            style="@style/Theme.Tegao.ContentText.Normal"
+            android:paddingVertical="@dimen/padding_tiny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lo_definition_tags_ctr"
+            app:layout_constraintStart_toStartOf="parent"
+
+            tools:text="vòi phun nước hình miệng rồng (thường thấy ở bồn rửa tay ở các đền, chùa)"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

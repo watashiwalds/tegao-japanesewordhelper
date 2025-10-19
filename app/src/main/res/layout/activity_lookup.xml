@@ -20,6 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             style="@style/Theme.Tegao.Screen"
+            android:paddingBottom="0dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.lookup.LookupActivity">
@@ -178,13 +179,24 @@
                 android:id="@+id/indevTestRetrofit"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/padding_small"
                 android:isScrollContainer="true"
                 android:text="@{viewModel.indevRetrofitResult}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lo_dictionaryChip_rcy" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/padding_small"
+                app:layout_constraintTop_toBottomOf="@id/lo_dictionaryChip_rcy"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                tools:listitem="@layout/card_word_definition"
+                tools:itemCount="2"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

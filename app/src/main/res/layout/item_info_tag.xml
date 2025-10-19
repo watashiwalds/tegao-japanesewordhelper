@@ -17,6 +17,5 @@
 
         tools:text="gradient"
         tools:backgroundTint="@color/neutral"
-        >
-    </TextView>
+        />
 </layout>

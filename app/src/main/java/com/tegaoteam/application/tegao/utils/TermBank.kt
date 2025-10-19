@@ -3,12 +3,10 @@ package com.tegaoteam.application.tegao.utils
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.TegaoApplication
 
 object TermBank {
-    private lateinit var appContext: Context
-    fun init(context: Context) {
-        appContext = context.applicationContext
-    }
+    private var appContext: Context = TegaoApplication.instance.applicationContext
 
     private fun askCC(resId: Int) = ContextCompat.getString(appContext, resId)
     private val termMap = mapOf<String, String>(

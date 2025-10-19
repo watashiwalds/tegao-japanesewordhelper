@@ -2,11 +2,19 @@ package com.tegaoteam.application.tegao.ui.lookup
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.CardWordDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
+import com.tegaoteam.application.tegao.ui.component.tag.TagItem
+import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
+import com.tegaoteam.application.tegao.utils.AppToast
+import com.tegaoteam.application.tegao.utils.TermBank
 
 class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -32,6 +40,17 @@ class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAda
             binding.additionalInfo.text = word.additionalInfo?.joinToString("\n") { it.second }
 
             //TODO: Write display func for tags / Write a TagGroup maker to inflate to the view
+            val tags = word.tags?.map { (id, label) -> TagItem(
+                label = label?: "",
+                color = ContextCompat.getColor(TegaoApplication.instance.applicationContext, R.color.neutral),
+                detail = TermBank.getByKey(id),
+                clickListener = { tagItem -> AppToast.show(TegaoApplication.instance.applicationContext, tagItem.detail.toString(), AppToast.LENGTH_SHORT)}
+            ) }
+            binding.loWordTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loWordTagsRcy.context)
+            binding.loWordTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(
+                0,
+                TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+            binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitList(tags) }
 
             //TODO: Write DefinitionListAdapter to make definition list for RecyclerView
 

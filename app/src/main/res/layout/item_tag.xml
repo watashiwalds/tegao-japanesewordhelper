@@ -14,6 +14,7 @@
         style="@style/Theme.Tegao.Tag"
         android:text="@{infoTag.label}"
         android:onClick="@{() -> infoTag.onClick()}"
+        android:backgroundTint="@{infoTag.color}"
 
         tools:text="gradient"
         tools:backgroundTint="@color/neutral"

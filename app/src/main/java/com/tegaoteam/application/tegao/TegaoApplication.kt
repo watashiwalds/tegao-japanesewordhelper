@@ -1,7 +1,6 @@
 package com.tegaoteam.application.tegao
 
 import android.app.Application
-import com.tegaoteam.application.tegao.utils.TermBank
 import timber.log.Timber
 
 class TegaoApplication: Application() {
@@ -11,7 +10,6 @@ class TegaoApplication: Application() {
 
         Timber.plant(Timber.DebugTree())
         instance = this
-        TermBank.init(this)
     }
 
     companion object {

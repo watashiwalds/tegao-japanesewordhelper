@@ -7,35 +7,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lo_definition_tags_ctr"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lo_definition_tags_rcy"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.constraintlayout.helper.widget.Flow
-                android:id="@+id/lo_definition_tags_flw"
-                android:layout_width="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
 
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:flow_horizontalAlign="start"
-                app:flow_horizontalGap="@dimen/padding_tiny"
-                app:flow_horizontalStyle="packed"
-
-                app:flow_verticalGap="@dimen/padding_tiny"
-                app:flow_wrapMode="aligned"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                app:constraint_referenced_ids="lo_test_tag1, lo_test_tag2"
-                />
-
-            <include layout="@layout/item_tag" android:id="@+id/lo_test_tag1" android:visibility="gone" tools:visibility="visible"/>
-            <include layout="@layout/item_tag" android:id="@+id/lo_test_tag2" android:visibility="gone" tools:visibility="visible"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:listitem="@layout/item_tag"
+            tools:itemCount="3"
+            />
 
         <TextView
             android:id="@+id/definition"
@@ -43,7 +28,7 @@
             android:paddingVertical="@dimen/padding_tiny"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lo_definition_tags_ctr"
+            app:layout_constraintTop_toBottomOf="@id/lo_definition_tags_rcy"
             app:layout_constraintStart_toStartOf="parent"
 
             tools:text="vòi phun nước hình miệng rồng (thường thấy ở bồn rửa tay ở các đền, chùa)"

@@ -47,51 +47,33 @@
             tools:text="ryu＼–nok(u)／chi‾\nta／tsuno‾k(u)／chi‾"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lo_word_tags_cst"
-            android:layout_marginTop="@dimen/padding_small"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@id/lo_word_tags_rcy"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/additionalInfo">
+            app:layout_constraintTop_toBottomOf="@id/additionalInfo"
 
-            <androidx.constraintlayout.helper.widget.Flow
-                android:id="@+id/lo_word_tags_flw"
-                android:layout_width="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
 
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:flow_horizontalAlign="start"
-                app:flow_horizontalGap="@dimen/padding_tiny"
-                app:flow_horizontalStyle="packed"
-
-                app:flow_verticalGap="@dimen/padding_tiny"
-                app:flow_wrapMode="aligned"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                app:constraint_referenced_ids="lo_test_tag1, lo_test_tag2, lo_test_tag3"
-                />
-
-            <include layout="@layout/item_tag" android:id="@+id/lo_test_tag1" android:visibility="gone" tools:visibility="visible"/>
-            <include layout="@layout/item_tag" android:id="@+id/lo_test_tag2" android:visibility="gone" tools:visibility="visible"/>
-            <include layout="@layout/item_tag" android:id="@+id/lo_test_tag3" android:visibility="gone" tools:visibility="visible"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:listitem="@layout/item_tag"
+            tools:itemCount="3"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lo_word_definitions_rcy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lo_word_tags_cst"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="@dimen/padding_large"
             android:layout_marginVertical="@dimen/padding_small"
+            android:layout_marginStart="@dimen/padding_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
-            tools:listitem="@layout/item_definition"
+            app:layout_constraintTop_toBottomOf="@+id/lo_word_tags_rcy"
             tools:itemCount="3"
-            />
+            tools:listitem="@layout/item_definition" />
 
         <ImageView
             android:id="@+id/lo_divider_img"

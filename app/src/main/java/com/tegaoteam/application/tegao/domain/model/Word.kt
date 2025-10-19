@@ -9,7 +9,7 @@ data class Word(
     val definitions: MutableList<Definition>
 ) {
     data class Definition (
-        var tags: MutableList<String>? = null,
+        var tags: MutableList<Pair<String, String?>>? = null,
         val meaning: String,
         var expandInfos: MutableList<Pair<String, String>>? = null
     )

@@ -5,8 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ItemDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
+import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
 
 class DefinitionListAdapter: ListAdapter<Word.Definition, DefinitionListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -24,8 +28,16 @@ class DefinitionListAdapter: ListAdapter<Word.Definition, DefinitionListAdapter.
     }
 
     class ViewHolder private constructor(private val binding: ItemDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(defy: Word.Definition) {
-            //TODO
+        fun bind(definition: Word.Definition) {
+            binding.loDefinitionTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loDefinitionTagsRcy.context)
+            binding.loDefinitionTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+            binding.loDefinitionTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(definition.tags) }
+
+            binding.definition.text = definition.meaning
+
+            //TODO: Click to show expandInfos, visual clue if have expand infos
+
+            binding.executePendingBindings()
         }
         companion object {
             fun from(parent: ViewGroup): ViewHolder {

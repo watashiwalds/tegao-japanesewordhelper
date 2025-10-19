@@ -2,10 +2,15 @@ package com.tegaoteam.application.tegao.ui.component.tag
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ItemTagBinding
+import com.tegaoteam.application.tegao.utils.AppToast
+import com.tegaoteam.application.tegao.utils.TermBank
 
 class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -20,6 +25,20 @@ class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(
         position: Int
     ) {
         holder.bind(getItem(position))
+    }
+
+    /**
+     * Unused, use
+     */
+    override fun submitList(list: List<TagItem?>?) {}
+    fun submitRawTagList(list: List<Pair<String, String?>>?) {
+        val convertedList = list?.map { (id, label) -> TagItem(
+            label = label?: "",
+            color = ContextCompat.getColor(TegaoApplication.instance.applicationContext, R.color.neutral),
+            detail = TermBank.getTerm(id),
+            clickListener = { tagItem -> AppToast.show(TegaoApplication.instance.applicationContext, tagItem.detail.toString(), AppToast.LENGTH_SHORT)}
+        ) }
+        super.submitList(convertedList)
     }
 
     class ViewHolder private constructor(private val binding: ItemTagBinding): RecyclerView.ViewHolder(binding.root) {

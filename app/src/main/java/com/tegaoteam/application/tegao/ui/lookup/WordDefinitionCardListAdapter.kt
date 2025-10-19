@@ -39,20 +39,13 @@ class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAda
             //TODO: Figured out what was this intended to be for Jitendex and Jisho. For Mazii, it was just pronunciations
             binding.additionalInfo.text = word.additionalInfo?.joinToString("\n") { it.second }
 
-            //TODO: Write display func for tags / Write a TagGroup maker to inflate to the view
-            val tags = word.tags?.map { (id, label) -> TagItem(
-                label = label?: "",
-                color = ContextCompat.getColor(TegaoApplication.instance.applicationContext, R.color.neutral),
-                detail = TermBank.getByKey(id),
-                clickListener = { tagItem -> AppToast.show(TegaoApplication.instance.applicationContext, tagItem.detail.toString(), AppToast.LENGTH_SHORT)}
-            ) }
+            //display func for tags
             binding.loWordTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loWordTagsRcy.context)
-            binding.loWordTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(
-                0,
-                TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
-            binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitList(tags) }
+            binding.loWordTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+            binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(word.tags) }
 
             //TODO: Write DefinitionListAdapter to make definition list for RecyclerView
+            binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter().apply { submitList(word.definitions) }
 
             binding.executePendingBindings()
         }

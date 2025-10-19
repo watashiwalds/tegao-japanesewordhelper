@@ -69,8 +69,10 @@
             android:layout_marginStart="@dimen/padding_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toBottomOf="@+id/lo_word_tags_rcy"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+
             tools:itemCount="3"
             tools:listitem="@layout/item_definition" />
 

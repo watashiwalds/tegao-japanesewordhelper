@@ -1,0 +1,52 @@
+package com.tegaoteam.application.tegao.ui.component.tag
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import com.tegaoteam.application.tegao.databinding.ItemTagBinding
+
+class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(DiffCallback()) {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
+        return ViewHolder.from(parent)
+    }
+
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int
+    ) {
+        holder.bind(getItem(position))
+    }
+
+    class ViewHolder private constructor(private val binding: ItemTagBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: TagItem) {
+            binding.infoTag = data
+        }
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val binding = ItemTagBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                return ViewHolder(binding)
+            }
+        }
+    }
+
+    class DiffCallback: DiffUtil.ItemCallback<TagItem>() {
+        override fun areItemsTheSame(
+            oldItem: TagItem,
+            newItem: TagItem
+        ): Boolean {
+            return oldItem.label == newItem.label
+        }
+
+        override fun areContentsTheSame(
+            oldItem: TagItem,
+            newItem: TagItem
+        ): Boolean {
+            return oldItem == newItem
+        }
+    }
+}

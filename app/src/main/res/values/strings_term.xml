@@ -1,0 +1,4 @@
+<resources>
+    <string name="term_source">Nguồn dữ liệu hay từ điển cung cấp định nghĩa này</string>
+    <string name="term_lang">Ngôn ngữ của định nghĩa này</string>
+</resources>

@@ -65,6 +65,22 @@
         <item name="android:background">@drawable/require_tint_solid_background</item>
         <item name="android:paddingHorizontal">@dimen/padding_small</item>
         <item name="android:paddingVertical">@dimen/padding_tiny</item>
-        <item name="android:layout_marginEnd">@dimen/padding_tiny</item>
+    </style>
+
+    <style name="Theme.Tegao.ContentText"/>
+    <style name="Theme.Tegao.ContentText.Small">
+        <item name="fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">@dimen/textSize_small</item>
+    </style>
+    <style name="Theme.Tegao.ContentText.Large">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/textSize_large</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="android:lineSpacingMultiplier">0.8</item>
+    </style>
+    <style name="Theme.Tegao.ContentText.Normal">
+        <item name="fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">@dimen/textSize_normal</item>
     </style>
 </resources>

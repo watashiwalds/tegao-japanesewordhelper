@@ -53,7 +53,7 @@
         <item name="iconTint">@color/text_normal</item>
     </style>
     <style name="Theme.Tegao.TextButton.Chip.Active">
-        <item name="android:background">@drawable/primary_solid_rad5_background</item>
+        <item name="android:background">@drawable/primary_solid_background</item>
         <item name="icon">@drawable/ftc_round_tick_128</item>
         <item name="iconSize">16dp</item>
         <item name="iconTint">@color/text_reverse</item>

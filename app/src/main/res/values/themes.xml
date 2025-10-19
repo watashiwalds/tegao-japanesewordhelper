@@ -60,4 +60,11 @@
         <item name="android:textColor">@color/text_reverse</item>
     </style>
 
+    <style name="Theme.Tegao.Tag">
+        <item name="fontFamily">@font/roboto_light</item>
+        <item name="android:background">@drawable/require_tint_solid_background</item>
+        <item name="android:paddingHorizontal">@dimen/padding_small</item>
+        <item name="android:paddingVertical">@dimen/padding_tiny</item>
+        <item name="android:layout_marginEnd">@dimen/padding_tiny</item>
+    </style>
 </resources>

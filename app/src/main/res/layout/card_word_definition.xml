@@ -50,7 +50,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lo_word_tags_cst"
             android:layout_marginTop="@dimen/padding_small"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/additionalInfo">

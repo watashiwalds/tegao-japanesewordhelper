@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.CardWordDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 
-class WordDefinitionCardAdapter: ListAdapter<Word, WordDefinitionCardAdapter.ViewHolder>(DiffCallback()) {
+class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

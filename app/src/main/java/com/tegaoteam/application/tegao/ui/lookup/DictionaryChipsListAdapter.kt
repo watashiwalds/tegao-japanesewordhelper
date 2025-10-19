@@ -12,7 +12,7 @@ import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipController
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 
-class DictionaryChipsAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, DictionaryChipsAdapter.ViewHolder>( DiffCallback() ) {
+class DictionaryChipsListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, DictionaryChipsListAdapter.ViewHolder>( DiffCallback() ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

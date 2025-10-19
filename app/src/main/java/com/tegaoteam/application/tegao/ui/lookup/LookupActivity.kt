@@ -21,7 +21,7 @@ class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
     private lateinit var _viewModel: LookupActivityViewModel
 
-    private lateinit var _wordSearchResultListAdapter: WordDefinitionCardAdapter
+    private lateinit var _wordSearchResultListAdapter: WordDefinitionCardListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +69,7 @@ class LookupActivity : AppCompatActivity() {
         _viewModel = ViewModelProvider(this).get(LookupActivityViewModel::class.java)
         _binding.viewModel = _viewModel
 
-        _wordSearchResultListAdapter = WordDefinitionCardAdapter()
+        _wordSearchResultListAdapter = WordDefinitionCardListAdapter()
     }
 
     private fun initListeners() {
@@ -116,7 +116,7 @@ class LookupActivity : AppCompatActivity() {
 
     fun displayDictionaryOptions() {
         val availableDictionaries = _viewModel.availableDictionariesList
-        val dictChipAdapter = DictionaryChipsAdapter(this)
+        val dictChipAdapter = DictionaryChipsListAdapter(this)
         dictChipAdapter.submitDictList(availableDictionaries) { dictId ->
             _viewModel.selectedDictionaryId = dictId
         }

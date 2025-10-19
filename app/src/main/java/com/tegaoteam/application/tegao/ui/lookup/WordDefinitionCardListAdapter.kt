@@ -2,7 +2,6 @@ package com.tegaoteam.application.tegao.ui.lookup
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,10 +10,7 @@ import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.CardWordDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
-import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
-import com.tegaoteam.application.tegao.utils.AppToast
-import com.tegaoteam.application.tegao.utils.TermBank
 
 class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(

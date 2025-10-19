@@ -12,8 +12,8 @@ class JishoResponseConverter: DictionaryResponseConverter {
         if (rawData !is JsonObject) return words
         words.add(Word(
             id = 0,
-            reading = "Jisho WORD fetching success",
-            furigana = "JSON size: ${rawData.size()}",
+            reading = "",
+            furigana = "Jisho WORD fetching success, size: ${rawData.size()}",
             definitions = mutableListOf()
         ))
         return words
@@ -24,8 +24,8 @@ class JishoResponseConverter: DictionaryResponseConverter {
         if (rawData !is ResponseBody) return kanjis
         kanjis.add(Kanji(
             id = 0,
-            character = "Jisho KANJI fetching success",
-            meaning = "RAW size: ${rawData.string().length}"
+            character = "",
+            meaning = "Jisho KANJI fetching success, size: ${rawData.string().length}"
         ))
         return kanjis
     }

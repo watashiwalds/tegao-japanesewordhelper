@@ -5,33 +5,45 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="RtlSymmetry">
+
+        <ImageView
+            android:id="@+id/lo_separator_cue_img"
+            android:layout_width="@dimen/padding_small"
+            android:layout_height="@dimen/padding_normal"
+            android:layout_marginBottom="@dimen/padding_tiny"
+            android:src="@drawable/neutral_stroke_underline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lo_definition_tags_rcy"
-            android:layout_width="match_parent"
+            android:paddingStart="@dimen/padding_small"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lo_separator_cue_img"
 
-            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:orientation="horizontal"
-            tools:listitem="@layout/item_tag"
+            app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="3"
-            />
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_tag"
+            tools:orientation="horizontal" />
 
         <TextView
             android:id="@+id/definition"
             style="@style/Theme.Tegao.ContentText.Normal"
-            android:paddingVertical="@dimen/padding_tiny"
-            android:layout_width="match_parent"
+            android:paddingStart="@dimen/padding_small"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lo_definition_tags_rcy"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingVertical="@dimen/padding_nano"
+            app:layout_constraintEnd_toEndOf="parent"
 
-            tools:text="vòi phun nước hình miệng rồng (thường thấy ở bồn rửa tay ở các đền, chùa)"
-            />
+            app:layout_constraintStart_toStartOf="@+id/lo_definition_tags_rcy"
+            app:layout_constraintTop_toBottomOf="@id/lo_definition_tags_rcy"
+            tools:text="vòi phun nước hình miệng rồng (thường thấy ở bồn rửa tay ở các đền, chùa)" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

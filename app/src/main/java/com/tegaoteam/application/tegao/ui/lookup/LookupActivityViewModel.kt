@@ -72,6 +72,7 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
                                 GlobalState.LookupMode.WORD -> _searchResultList.value = data as List<Word>
                                 GlobalState.LookupMode.KANJI -> _searchResultList.value = data as List<Kanji>
                             }
+                            _indevRetrofitResult.value = "${result.data}"
                         }
                     }
                 }

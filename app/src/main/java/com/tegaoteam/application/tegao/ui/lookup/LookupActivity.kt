@@ -124,9 +124,9 @@ class LookupActivity : AppCompatActivity() {
     }
 
     fun setupAdaptiveViews() {
-        when (GlobalState.lookupMode.value) {
-            GlobalState.LookupMode.WORD -> _binding.loSearchResultCst.adapter = _wordSearchResultListAdapter
-            GlobalState.LookupMode.KANJI -> {}
+        _binding.loSearchResultCst.adapter = when (GlobalState.lookupMode.value) {
+            GlobalState.LookupMode.WORD -> _wordSearchResultListAdapter
+            GlobalState.LookupMode.KANJI -> null
         }
     }
 

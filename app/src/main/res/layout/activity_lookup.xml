@@ -175,18 +175,6 @@
                 tools:itemCount="4"
                 />
 
-            <TextView
-                android:id="@+id/indevTestRetrofit"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/padding_small"
-                android:isScrollContainer="true"
-                android:text="@{viewModel.indevRetrofitResult}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lo_dictionaryChip_rcy" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lo_searchResult_cst"
                 android:layout_width="match_parent"
@@ -200,6 +188,19 @@
                 tools:listitem="@layout/card_word_definition"
                 tools:itemCount="2"
                 />
+
+            <TextView
+                android:id="@+id/indevTestRetrofit"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginTop="@dimen/padding_small"
+                android:isScrollContainer="true"
+                android:text="@{viewModel.indevRetrofitResult}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="alternative to recyclerview"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -13,12 +13,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
+import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
     private lateinit var _viewModel: LookupActivityViewModel
+
+    private lateinit var _wordSearchResultListAdapter: WordDefinitionCardAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,7 @@ class LookupActivity : AppCompatActivity() {
         initObservers()
 
         displayDictionaryOptions()
+        setupAdaptiveViews()
 
         makeStartState()
     }
@@ -64,6 +68,8 @@ class LookupActivity : AppCompatActivity() {
     private fun initVariables() {
         _viewModel = ViewModelProvider(this).get(LookupActivityViewModel::class.java)
         _binding.viewModel = _viewModel
+
+        _wordSearchResultListAdapter = WordDefinitionCardAdapter()
     }
 
     private fun initListeners() {
@@ -96,6 +102,9 @@ class LookupActivity : AppCompatActivity() {
                 GlobalState.setLookupMode(GlobalState.LookupMode.KANJI)
             }
         }
+        _viewModel.searchResultList.observe(this) {
+            updateSearchResultDisplay(it)
+        }
     }
 
     fun updateSearchString() = _viewModel.setSearchString(_binding.keywordInputEdt.text.toString())
@@ -112,6 +121,20 @@ class LookupActivity : AppCompatActivity() {
             _viewModel.selectedDictionaryId = dictId
         }
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter
+    }
+
+    fun setupAdaptiveViews() {
+        when (GlobalState.lookupMode.value) {
+            GlobalState.LookupMode.WORD -> _binding.loSearchResultCst.adapter = _wordSearchResultListAdapter
+            GlobalState.LookupMode.KANJI -> {}
+        }
+    }
+
+    fun updateSearchResultDisplay(list: List<Any>) {
+        when (GlobalState.lookupMode.value) {
+            GlobalState.LookupMode.WORD -> _wordSearchResultListAdapter.submitList(list as List<Word>)
+            GlobalState.LookupMode.KANJI -> {}
+        }
     }
 
     private fun makeStartState() {

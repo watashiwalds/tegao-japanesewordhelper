@@ -43,7 +43,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     val meansT = mutableListOf<Word.Definition>()
                     if (!means.isJsonNull) for (m in means) {
                         val mObj = m.asJsonObject
-                        val mTags = mObj.get("kind").takeUnless { i -> i.isJsonNull }?.asString?.split(", ")?.toMutableList()
+                        val mTags = mObj.get("kind").takeUnless { i -> i != null && i.isJsonNull }?.asString?.split(", ")?.toMutableList()
                         val mXpds = mutableListOf<Pair<String, String>>()
                         if (mObj.has("examples") && !mObj.get("examples").isJsonNull) for (ex in mObj.getAsJsonArray("examples")) {
                             val exObj = ex.asJsonObject

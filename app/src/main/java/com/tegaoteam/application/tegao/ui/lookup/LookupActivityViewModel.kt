@@ -5,8 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.passage.DictionaryPassage
 import com.tegaoteam.application.tegao.domain.model.RepoResult
+import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.CoroutineScope
@@ -35,6 +37,10 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val evChangeToWordMode = EventBeacon()
     val evChangeToKanjiMode = EventBeacon()
 
+    //search result list value holder
+    private var _searchResultList = MutableLiveData<List<Any>>()
+    val searchResultList: LiveData<List<Any>> = _searchResultList
+
     //Dictionary available
     val availableDictionariesList = DictionaryPassage.getDictionariesList()
     var selectedDictionaryId: String = ""
@@ -58,9 +64,15 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
                     else -> dictionaryHub.devTest(_userSearchString.value!!, selectedDictionaryId)
                 }
                 withContext(Dispatchers.Main) {
-                    _indevRetrofitResult.value = when (result) {
-                        is RepoResult.Error<*> -> "ErrorCode: ${result.code}, Reason: ${result.message}"
-                        is RepoResult.Success<*> -> "${result.data}"
+                    when (result) {
+                        is RepoResult.Error<*> -> _indevRetrofitResult.value = "ErrorCode: ${result.code}, Reason: ${result.message}"
+                        is RepoResult.Success<*> -> {
+                            val data = result.data
+                            when (lookupMode.value) {
+                                GlobalState.LookupMode.WORD -> _searchResultList.value = data as List<Word>
+                                GlobalState.LookupMode.KANJI -> _searchResultList.value = data as List<Kanji>
+                            }
+                        }
                     }
                 }
             }

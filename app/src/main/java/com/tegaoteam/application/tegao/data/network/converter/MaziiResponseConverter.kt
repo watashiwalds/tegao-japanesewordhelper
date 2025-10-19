@@ -16,19 +16,19 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 var word: Word? = null
                 if (wObj.has("type") && wObj.get("type").asString.equals("word")) {
                     //some default tags
-                    val tagsT = mutableListOf<Pair<String, String?>>(
+                    val tagsT = mutableListOf(
                         Pair("source", "mazii"),
-                        Pair("lang", wObj.get("label").asString)
+                        Pair("lang", wObj.get("label").takeUnless { it.isJsonNull }?.asString)
                     )
 
                     //Mazii word's additionalInfo is all of it's possible pronunciations
-                    val pronuns = wObj.getAsJsonArray("pronunciation").map { p ->
+                    val pronuns = wObj.getAsJsonArray("pronunciation").takeUnless { it.isJsonNull }?.map { p ->
                         p.asJsonObject.getAsJsonArray("transcriptions").map { tr ->
                             tr.asJsonObject.get("romaji").asString
                         }
                     }
                     val pConcat = ArrayDeque<String>()
-                    for (p in pronuns) {
+                    if (pronuns != null) for (p in pronuns) {
                         var pPopSize = pConcat.size
                         do {
                             val temp = if (pPopSize > 0) pConcat.removeFirst() else ""
@@ -41,11 +41,11 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     //convert definitions
                     val means = wObj.getAsJsonArray("means")
                     val meansT = mutableListOf<Word.Definition>()
-                    for (m in means) {
+                    if (!means.isJsonNull) for (m in means) {
                         val mObj = m.asJsonObject
                         val mTags = mObj.get("kind").takeUnless { i -> i.isJsonNull }?.asString?.split(", ")?.toMutableList()
                         val mXpds = mutableListOf<Pair<String, String>>()
-                        for (ex in mObj.getAsJsonArray("examples")) {
+                        if (mObj.has("examples") && !mObj.get("examples").isJsonNull) for (ex in mObj.getAsJsonArray("examples")) {
                             val exObj = ex.asJsonObject
                             mXpds.add(Pair("example", "${exObj.get("content")}\n${exObj.get("transcription")}\n${exObj.get("mean")}"))
                         }
@@ -57,10 +57,14 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         meansT.add(temp)
                     }
 
+                    val idT = wObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt
+                    val readingT = wObj.get("word").takeUnless { it.isJsonNull }?.asString
+                    val phoneticT = wObj.get("phonetic").takeUnless { it.isJsonNull }?.asString
+
                     word = Word(
-                        id = wObj.get("mobileId").asInt,
-                        reading = wObj.get("word").asString,
-                        furigana = wObj.get("phonetic").asString,
+                        id = idT?: 0,
+                        reading = readingT?: "null",
+                        furigana = phoneticT?: "null",
                         tags = tagsT,
                         additionalInfo = pronunsT,
                         definitions = meansT,
@@ -89,19 +93,18 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 val kObj = k.asJsonObject
                 var kanji: Kanji? = null
                 if (kObj.has("kanji")) {
-//                    Timber.i("${kObj.get("compDetail")}")
                     val compsT = if (!kObj.get("compDetail").isJsonNull)
                         kObj.getAsJsonArray("compDetail").map {
                             it.asJsonObject.get("w").asString to it.asJsonObject.get("h").takeUnless { t -> t.isJsonNull }?.asString
                         }.toMutableList()
                     else mutableListOf()
 
-                    val detailsT = kObj.get("detail").asString.replace("##", "\n")
+                    val detailsT = kObj.get("detail").takeUnless { it.isJsonNull }?.asString?.replace("##", "\n")
 
                     val tagsT = mutableListOf<Pair<String, String?>>().apply {
                         when {
                             kObj.has("freq") -> add("frequency" to kObj.get("freq").toString())
-                            kObj.has("stroke_count") -> add("stroke" to kObj.get("stroke_count").asString)
+                            kObj.has("stroke_count") -> add("stroke" to kObj.get("stroke_count").toString())
                             kObj.has("jlpt") -> add("jlpt" to kObj.getAsJsonArray("level").joinToString(", "))
                         }
                     }
@@ -112,13 +115,19 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         }
                     }
 
+                    val idT = kObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt
+                    val charT = kObj.get("kanji").toString()
+                    val kunyomiT = kObj.get("kun").toString()
+                    val onyomiT = kObj.get("on").toString()
+                    val meaningT = kObj.get("mean").toString()
+
                     kanji = Kanji(
-                        id = kObj.get("mobileId").asInt,
-                        character = kObj.get("kanji").asString,
-                        kunyomi = kObj.get("kun")?.asString,
-                        onyomi = kObj.get("on")?.asString,
+                        id = idT?: 0,
+                        character = charT,
+                        kunyomi = kunyomiT,
+                        onyomi = onyomiT,
                         composites = compsT,
-                        meaning = kObj.get("mean").asString,
+                        meaning = meaningT,
                         details = detailsT,
                         tags = tagsT,
                         additionalInfo = tipsT

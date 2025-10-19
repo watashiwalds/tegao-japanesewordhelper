@@ -17,7 +17,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (wObj.has("type") && wObj.get("type").asString.equals("word")) {
                     //some default tags
                     val tagsT = mutableListOf(
-                        Pair("source", "mazii"),
+                        Pair("source", "Mazii"),
                         Pair("lang", wObj.get("label").takeUnless { it.isJsonNull }?.asString)
                     )
 

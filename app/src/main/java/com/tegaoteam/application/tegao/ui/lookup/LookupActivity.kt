@@ -72,7 +72,7 @@ class LookupActivity : AppCompatActivity() {
         _viewModel = ViewModelProvider(this).get(LookupActivityViewModel::class.java)
         _binding.viewModel = _viewModel
 
-        _wordSearchResultListAdapter = WordDefinitionCardListAdapter()
+        _wordSearchResultListAdapter = WordDefinitionCardListAdapter(this)
     }
 
     private fun initListeners() {

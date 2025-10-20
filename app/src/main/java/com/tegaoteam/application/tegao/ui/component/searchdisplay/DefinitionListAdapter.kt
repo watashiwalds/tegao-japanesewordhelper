@@ -15,7 +15,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
 import timber.log.Timber
 
-class DefinitionListAdapter(): ListAdapter<Word.Definition, DefinitionListAdapter.ViewHolder>(DiffCallback()) {
+class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<Word.Definition, DefinitionListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -27,11 +27,11 @@ class DefinitionListAdapter(): ListAdapter<Word.Definition, DefinitionListAdapte
         holder: ViewHolder,
         position: Int
     ) {
-        holder.bind(position, getItem(position))
+        holder.bind(position, getItem(position), lifecycleOwner)
     }
 
     class ViewHolder private constructor(private val binding: ItemDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(index: Int, definition: Word.Definition) {
+        fun bind(index: Int, definition: Word.Definition, lifecycleOwner: LifecycleOwner) {
             binding.loIndexTxt.text = String.format("${index+1}.")
 
             binding.loDefinitionTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loDefinitionTagsRcy.context)
@@ -52,6 +52,7 @@ class DefinitionListAdapter(): ListAdapter<Word.Definition, DefinitionListAdapte
                     Timber.i("Expand clicked ${isExpanding.value}")
                 }
                 binding.loIndexTxt.setOnClickListener { expandFun() }
+                binding.lifecycleOwner = lifecycleOwner
             }
 
             binding.loDefinitionExpandInfosRcy.adapter = DefinitionExpandInfoListAdapter().apply { submitList(definition.expandInfos) }

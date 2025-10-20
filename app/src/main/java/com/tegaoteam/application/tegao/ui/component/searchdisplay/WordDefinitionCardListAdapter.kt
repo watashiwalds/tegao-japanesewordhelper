@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.ui.component.searchdisplay
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@ import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
 
-class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAdapter.ViewHolder>(DiffCallback()) {
+class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<Word, WordDefinitionCardListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -24,11 +25,11 @@ class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAda
         holder: ViewHolder,
         position: Int
     ) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), lifecycleOwner)
     }
 
     class ViewHolder private constructor(private val binding: CardWordDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(word: Word) {
+        fun bind(word: Word, lifecycleOwner: LifecycleOwner) {
             binding.reading.text = word.reading
             binding.furigana.text = word.furigana
 
@@ -41,7 +42,7 @@ class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAda
             binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(word.tags) }
 
             //TODO: Write DefinitionListAdapter to make definition list for RecyclerView
-            binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter().apply { submitList(word.definitions) }
+            binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter(lifecycleOwner).apply { submitList(word.definitions) }
 
             binding.executePendingBindings()
         }

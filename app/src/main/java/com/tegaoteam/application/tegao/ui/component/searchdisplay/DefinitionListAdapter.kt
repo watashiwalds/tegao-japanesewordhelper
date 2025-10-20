@@ -2,6 +2,8 @@ package com.tegaoteam.application.tegao.ui.component.searchdisplay
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +13,9 @@ import com.tegaoteam.application.tegao.databinding.ItemDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
+import timber.log.Timber
 
-class DefinitionListAdapter: ListAdapter<Word.Definition, DefinitionListAdapter.ViewHolder>(DiffCallback()) {
+class DefinitionListAdapter(): ListAdapter<Word.Definition, DefinitionListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -37,8 +40,19 @@ class DefinitionListAdapter: ListAdapter<Word.Definition, DefinitionListAdapter.
 
             binding.definition.text = definition.meaning
 
-            binding.expandable = definition.expandInfos != null && definition.expandInfos!!.isNotEmpty()
+            val expandable = definition.expandInfos != null && definition.expandInfos!!.isNotEmpty()
+            binding.expandable = expandable
+            val isExpanding = MutableLiveData<Boolean>().apply { value = false }
+            binding.isExpanding = isExpanding
+
             //TODO: Click to show expandInfos, visual clue if have expand infos
+            if (expandable) {
+                val expandFun = {
+                    isExpanding.value = !isExpanding.value!!
+                    Timber.i("Expand clicked ${isExpanding.value}")
+                }
+                binding.loIndexTxt.setOnClickListener { expandFun() }
+            }
 
             binding.loDefinitionExpandInfosRcy.adapter = DefinitionExpandInfoListAdapter().apply { submitList(definition.expandInfos) }
 

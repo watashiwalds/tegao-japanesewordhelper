@@ -9,10 +9,11 @@
             type="Boolean" />
         <variable
             name="isExpanding"
-            type="androidx.lifecycle.LiveData" />
+            type="androidx.lifecycle.LiveData&lt;Boolean&gt;" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lo_definition_cst"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="RtlSymmetry">
@@ -53,16 +54,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/lo_definition_tags_rcy"
             app:layout_constraintTop_toBottomOf="@id/lo_definition_tags_rcy"
+            android:textIsSelectable="true"
 
             tools:text="vòi phun nước hình miệng rồng (thường thấy ở bồn rửa tay ở các đền, chùa)" />
 
         <ImageView
+            android:id="@+id/expand_definition_img"
             android:layout_width="@dimen/textSize_small"
             android:layout_height="@dimen/textSize_small"
             android:theme="@style/Theme.Tegao.ImageIcon.Neutral"
             app:layout_constraintTop_toBottomOf="@id/lo_index_txt"
             app:layout_constraintStart_toStartOf="@id/lo_index_txt"
             android:src="@drawable/ftc_bold_trig_down_128"
+
             app:toggleVisibility="@{expandable}"
             />
         
@@ -77,22 +81,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
+
             app:toggleVisibility="@{expandable}"
+            app:toggleVisibilityByLiveData="@{isExpanding}"
 
             tools:itemCount="2"
             tools:listitem="@layout/item_definition_expansion"
-            />
-
-        <FrameLayout
-            android:id="@+id/lo_clickFrame_frm"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            tools:visibility="gone"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

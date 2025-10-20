@@ -32,12 +32,7 @@ class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(
      */
     override fun submitList(list: List<TagItem?>?) {}
     fun submitRawTagList(list: List<Pair<String, String?>>?) {
-        val convertedList = list?.map { (id, label) -> TagItem(
-            label = label?: "",
-            color = ContextCompat.getColor(TegaoApplication.instance.applicationContext, R.color.neutral),
-            detail = TermBank.getTerm(id),
-            clickListener = { tagItem -> AppToast.show(TegaoApplication.instance.applicationContext, tagItem.detail.toString(), AppToast.LENGTH_SHORT)}
-        ) }
+        val convertedList = list?.map { (termKey, label) -> TagItem.toTagItem(termKey, label?: "") }
         super.submitList(convertedList)
     }
 

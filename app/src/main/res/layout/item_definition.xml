@@ -8,6 +8,8 @@
         android:layout_height="wrap_content"
         tools:ignore="RtlSymmetry">
 
+
+
         <ImageView
             android:id="@+id/lo_separator_cue_img"
             android:layout_width="@dimen/padding_small"
@@ -25,8 +27,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/lo_separator_cue_img"
-
             app:layout_constraintTop_toTopOf="parent"
+
             tools:itemCount="3"
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_tag"
@@ -40,9 +42,9 @@
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/padding_nano"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintStart_toStartOf="@+id/lo_definition_tags_rcy"
             app:layout_constraintTop_toBottomOf="@id/lo_definition_tags_rcy"
+
             tools:text="vòi phun nước hình miệng rồng (thường thấy ở bồn rửa tay ở các đền, chùa)" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,7 +40,6 @@
                     android:layout_height="wrap_content"
                     android:background="#00FFFFFF"
                     android:hint="@string/putJPhere_hint"
-                    android:selectAllOnFocus="true"
                     android:maxLines="1"
                     android:textColorHint="@color/neutral"
                     app:layout_constraintEnd_toStartOf="@+id/inputClear_btn"
@@ -49,7 +48,7 @@
 
                 <ImageButton
                     android:id="@+id/inputClear_btn"
-                    style="@style/Theme.Tegao.ImageButton.HasPadding"
+                    style="@style/Theme.Tegao.ImageButton.HasBigPadding"
                     android:layout_marginEnd="@dimen/padding_small"
                     android:src="@drawable/ftc_round_x_128"
                     app:layout_constraintEnd_toStartOf="@+id/searchStart_btn"

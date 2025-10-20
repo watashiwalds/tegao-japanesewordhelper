@@ -33,6 +33,9 @@
     <style name="Theme.Tegao.ImageButton.HasPadding">
         <item name="android:padding">3dp</item>
     </style>
+    <style name="Theme.Tegao.ImageButton.HasBigPadding">
+        <item name="android:padding">4dp</item>
+    </style>
 
     <style name="Theme.Tegao.TextButton">
         <item name="backgroundTint">@null</item>

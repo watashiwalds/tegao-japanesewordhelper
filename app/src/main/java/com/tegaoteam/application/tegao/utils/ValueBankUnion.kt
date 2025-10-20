@@ -21,3 +21,7 @@ object TermBank {
     )
     fun getTerm(key: String) = termMap[key]?: ""
 }
+
+object placeholder {
+    const val test = 0
+}

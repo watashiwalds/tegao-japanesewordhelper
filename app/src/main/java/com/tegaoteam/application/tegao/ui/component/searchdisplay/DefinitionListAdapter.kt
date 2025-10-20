@@ -24,11 +24,13 @@ class DefinitionListAdapter: ListAdapter<Word.Definition, DefinitionListAdapter.
         holder: ViewHolder,
         position: Int
     ) {
-        holder.bind(getItem(position))
+        holder.bind(position, getItem(position))
     }
 
     class ViewHolder private constructor(private val binding: ItemDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(definition: Word.Definition) {
+        fun bind(index: Int, definition: Word.Definition) {
+            binding.loIndexTxt.text = String.format("${index+1}.")
+
             binding.loDefinitionTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loDefinitionTagsRcy.context)
             if (binding.loDefinitionTagsRcy.itemDecorationCount == 0) binding.loDefinitionTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
             binding.loDefinitionTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(definition.tags) }

@@ -45,13 +45,12 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
             val isExpanding = MutableLiveData<Boolean>().apply { value = false }
             binding.isExpanding = isExpanding
 
-            //TODO: Click to show expandInfos, visual clue if have expand infos
             if (expandable) {
-                val expandFun = {
-                    isExpanding.value = !isExpanding.value!!
-                    Timber.i("Expand clicked ${isExpanding.value}")
-                }
+                val expandFun = { isExpanding.value = !isExpanding.value!! }
                 binding.loIndexTxt.setOnClickListener { expandFun() }
+                binding.expandDefinitionImg.setOnClickListener { expandFun() }
+                binding.collapseDefinitionImg.setOnClickListener { expandFun() }
+                binding.loExpandClickPaddingImg.setOnClickListener { expandFun() }
                 binding.lifecycleOwner = lifecycleOwner
             }
 

@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.lookup
+package com.tegaoteam.application.tegao.ui.component.searchdisplay
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

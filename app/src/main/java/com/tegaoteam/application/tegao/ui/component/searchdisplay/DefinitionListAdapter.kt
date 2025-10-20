@@ -37,7 +37,10 @@ class DefinitionListAdapter: ListAdapter<Word.Definition, DefinitionListAdapter.
 
             binding.definition.text = definition.meaning
 
+            binding.expandable = definition.expandInfos != null && definition.expandInfos!!.isNotEmpty()
             //TODO: Click to show expandInfos, visual clue if have expand infos
+
+            binding.loDefinitionExpandInfosRcy.adapter = DefinitionExpandInfoListAdapter().apply { submitList(definition.expandInfos) }
 
             binding.executePendingBindings()
         }

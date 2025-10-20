@@ -97,4 +97,9 @@
         <item name="android:textSize">@dimen/textSize_normal</item>
         <item name="android:textColor">@color/neutral</item>
     </style>
+
+    <style name="Theme.Tegao.ImageIcon"/>
+    <style name="Theme.Tegao.ImageIcon.Neutral">
+        <item name="tint">@color/neutral</item>
+    </style>
 </resources>

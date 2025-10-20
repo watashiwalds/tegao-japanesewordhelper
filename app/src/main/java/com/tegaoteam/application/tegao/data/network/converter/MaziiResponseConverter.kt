@@ -48,9 +48,9 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         if (mObj.has("examples") && !mObj.get("examples").isJsonNull) for (ex in mObj.getAsJsonArray("examples")) {
                             val exObj = ex.asJsonObject
                             mXpds.add(Pair("example", "" +
-                                    "${exObj.get("mean").takeUnless { it.isJsonNull }?.asString}\n" +
-                                    "${exObj.get("content").takeUnless { it.isJsonNull }?.asString}\n" +
-                                    "${exObj.get("transcription").takeUnless { it.isJsonNull }?.asString}"))
+                                    "\uD83C\uDDFB\uD83C\uDDF3 ${exObj.get("mean").takeUnless { it.isJsonNull }?.asString}\n" +
+                                    "\uD83D\uDD8B\uFE0F ${exObj.get("content").takeUnless { it.isJsonNull }?.asString}\n" +
+                                    "\uD83D\uDDE3 ${exObj.get("transcription").takeUnless { it.isJsonNull }?.asString}"))
                         }
                         val temp = Word.Definition(
                             tags = mTags,

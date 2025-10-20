@@ -43,7 +43,7 @@ class LookupActivity : AppCompatActivity() {
         initObservers()
 
         displayDictionaryOptions()
-        setupAdaptiveViews()
+        updateSearchResultAdapter()
 
         makeStartState()
     }
@@ -97,15 +97,17 @@ class LookupActivity : AppCompatActivity() {
         _viewModel.evChangeToWordMode.beacon.observe(this) {
             if (_viewModel.evChangeToWordMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.WORD)
+                updateSearchResultAdapter()
             }
         }
         _viewModel.evChangeToKanjiMode.beacon.observe(this) {
             if (_viewModel.evChangeToKanjiMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.KANJI)
+                updateSearchResultAdapter()
             }
         }
         _viewModel.searchResultList.observe(this) {
-            updateSearchResultDisplay(it)
+            updateSearchResultValue(it)
         }
     }
 
@@ -128,14 +130,16 @@ class LookupActivity : AppCompatActivity() {
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter
     }
 
-    fun setupAdaptiveViews() {
+    fun updateSearchResultAdapter() {
         _binding.loSearchResultCst.adapter = when (GlobalState.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchResultListAdapter
             GlobalState.LookupMode.KANJI -> null
         }
+        //for testing
+        _viewModel.evIsRcyAdapterAvailable.value = _binding.loSearchResultCst.adapter != null
     }
 
-    fun updateSearchResultDisplay(list: List<Any>) {
+    fun updateSearchResultValue(list: List<Any>) {
         when (GlobalState.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchResultListAdapter.submitList(list as List<Word>)
             GlobalState.LookupMode.KANJI -> {}

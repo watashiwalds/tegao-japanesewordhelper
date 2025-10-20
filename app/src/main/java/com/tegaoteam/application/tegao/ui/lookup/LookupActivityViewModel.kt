@@ -51,6 +51,10 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     //Start search on selected source
     val dictionaryHub = DictionaryPassage.getDictionaryHub()
     val evStartSearch = EventBeacon()
+
+    //show devtest textview in case of
+    val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
+
     fun searchKeyword() {
         if (_userSearchString.value.isNullOrBlank()) return
         //for the test of online api, default to indev
@@ -61,7 +65,6 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
                 val result = when (lookupMode.value) {
                     GlobalState.LookupMode.WORD -> dictionaryHub.searchWord(_userSearchString.value!!, selectedDictionaryId)
                     GlobalState.LookupMode.KANJI -> dictionaryHub.searchKanji(_userSearchString.value!!, selectedDictionaryId)
-                    else -> dictionaryHub.devTest(_userSearchString.value!!, selectedDictionaryId)
                 }
                 withContext(Dispatchers.Main) {
                     when (result) {

@@ -30,7 +30,7 @@ class DefinitionListAdapter: ListAdapter<Word.Definition, DefinitionListAdapter.
     class ViewHolder private constructor(private val binding: ItemDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(definition: Word.Definition) {
             binding.loDefinitionTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loDefinitionTagsRcy.context)
-            binding.loDefinitionTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+            if (binding.loDefinitionTagsRcy.itemDecorationCount == 0) binding.loDefinitionTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
             binding.loDefinitionTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(definition.tags) }
 
             binding.definition.text = definition.meaning

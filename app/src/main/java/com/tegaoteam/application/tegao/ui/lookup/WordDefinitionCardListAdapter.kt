@@ -37,7 +37,7 @@ class WordDefinitionCardListAdapter: ListAdapter<Word, WordDefinitionCardListAda
 
             //display func for tags
             binding.loWordTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loWordTagsRcy.context)
-            binding.loWordTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+            if (binding.loWordTagsRcy.itemDecorationCount == 0) binding.loWordTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
             binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(word.tags) }
 
             //TODO: Write DefinitionListAdapter to make definition list for RecyclerView

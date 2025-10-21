@@ -22,7 +22,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     )
 
                     //Mazii word's additionalInfo is all of it's possible pronunciations
-                    val pronuns = wObj.getAsJsonArray("pronunciation").takeUnless { it.isJsonNull }?.map { p ->
+                    val pronuns = wObj.get("pronunciation").takeUnless { it.isJsonNull }?.asJsonArray?.map { p ->
                         p.asJsonObject.getAsJsonArray("transcriptions").map { tr ->
                             tr.asJsonObject.get("romaji").asString
                         }
@@ -54,7 +54,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         }
                         val temp = Word.Definition(
                             tags = mTags,
-                            meaning = mObj.get("mean").asString,
+                            meaning = mObj.get("mean").takeUnless { it.isJsonNull }?.asString?: "",
                             expandInfos = mXpds
                         )
                         meansT.add(temp)
@@ -66,8 +66,8 @@ class MaziiResponseConverter: DictionaryResponseConverter {
 
                     word = Word(
                         id = idT?: 0,
-                        reading = readingT?: "null",
-                        furigana = phoneticT?: "null",
+                        reading = readingT?: "",
+                        furigana = phoneticT?: "",
                         tags = tagsT,
                         additionalInfo = pronunsT,
                         definitions = meansT,

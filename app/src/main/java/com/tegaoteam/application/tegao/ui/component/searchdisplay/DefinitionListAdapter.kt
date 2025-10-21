@@ -32,7 +32,7 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
 
     class ViewHolder private constructor(private val binding: ItemDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(index: Int, definition: Word.Definition, lifecycleOwner: LifecycleOwner) {
-            binding.loIndexTxt.text = String.format("${index+1}.")
+            binding.loIndexTxt.text = String.format("${index+1}")
 
             binding.loDefinitionTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loDefinitionTagsRcy.context)
             if (binding.loDefinitionTagsRcy.itemDecorationCount == 0) binding.loDefinitionTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))

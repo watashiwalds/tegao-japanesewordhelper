@@ -18,22 +18,30 @@
 
         <Button
             android:id="@+id/chip_button"
+            android:background="@drawable/neutral_stroke_underline"
+            app:iconTint="@color/text_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{itemChip.label}"
             android:onClick="@{() -> itemChip.onClick()}"
             app:toggleVisibility="@{!itemChip.isSelected()}"
             style="@style/Theme.Tegao.TextButton.Chip"
+
             tools:text="Mazii"
             />
 
         <Button
             android:id="@+id/chip_button_selected"
+            android:background="@drawable/primary_solid_background"
+            app:icon="@drawable/ftc_round_tick_128"
+            app:iconSize="@dimen/padding_normal"
+            app:iconTint="@color/text_reverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{itemChip.label}"
+            android:textColor="@color/text_reverse"
             app:toggleVisibility="@{itemChip.isSelected()}"
-            style="@style/Theme.Tegao.TextButton.Chip.Active"
+            style="@style/Theme.Tegao.TextButton.Chip"
             android:clickable="false"
             tools:text="Mazii"
             />

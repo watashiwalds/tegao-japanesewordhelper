@@ -51,21 +51,12 @@
         <item name="iconTint">@color/text_normal</item>
     </style>
     <style name="Theme.Tegao.TextButton.Chip">
-        <item name="android:background">@drawable/neutral_stroke_underline</item>
         <item name="android:paddingHorizontal">@dimen/padding_small</item>
         <item name="android:paddingVertical">@dimen/padding_small</item>
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="iconTint">@color/text_normal</item>
-    </style>
-    <style name="Theme.Tegao.TextButton.Chip.Active">
-        <item name="android:background">@drawable/primary_solid_background</item>
-        <item name="icon">@drawable/ftc_round_tick_128</item>
-        <item name="iconSize">16dp</item>
-        <item name="iconTint">@color/text_reverse</item>
-        <item name="android:textColor">@color/text_reverse</item>
     </style>
 
     <style name="Theme.Tegao.Tag">

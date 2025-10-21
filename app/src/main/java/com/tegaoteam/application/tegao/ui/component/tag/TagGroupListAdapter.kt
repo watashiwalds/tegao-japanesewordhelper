@@ -2,15 +2,10 @@ package com.tegaoteam.application.tegao.ui.component.tag
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.tegaoteam.application.tegao.R
-import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ItemTagBinding
-import com.tegaoteam.application.tegao.utils.AppToast
-import com.tegaoteam.application.tegao.utils.TermBank
 
 class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -28,7 +23,7 @@ class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(
     }
 
     /**
-     * Unused, use
+     * Unused, use submitRawTagList instead
      */
     override fun submitList(list: List<TagItem?>?) {}
     fun submitRawTagList(list: List<Pair<String, String?>>?) {

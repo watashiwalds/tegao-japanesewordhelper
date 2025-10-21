@@ -4,13 +4,13 @@ data class Word(
     val id: Int,
     val reading: String,
     val furigana: List<String>? = null,
-    var tags: MutableList<Pair<String, String?>>? = null,
-    var additionalInfo: MutableList<Pair<String, String>>? = null,
-    val definitions: MutableList<Definition>
+    var tags: List<Pair<String, String?>>? = null,
+    var additionalInfo: List<Pair<String, String>>? = null,
+    val definitions: List<Definition>
 ) {
     data class Definition (
-        var tags: MutableList<Pair<String, String?>>? = null,
+        var tags: List<Pair<String, String?>>? = null,
         val meaning: String,
-        var expandInfos: MutableList<Pair<String, String>>? = null
+        var expandInfos: List<Pair<String, String>>? = null
     )
 }

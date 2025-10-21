@@ -24,8 +24,8 @@ class ThemedChipController(
         }
     }
 
-    fun setSelected(chip: ThemedChipItem) {
-        onSelectedChipChanged(chip)
+    fun setSelected(chip: ThemedChipItem?) {
+        if (chip != null) onSelectedChipChanged(chip)
     }
     fun setSelected(index: Int) {
         if (index in (0..<chips.size)) {

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/lo_kanji_stroke_frm"
+            android:layout_width="@dimen/img_oneKanji"
+            android:layout_height="@dimen/img_oneKanji"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/kanji_stroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/trickMargin_kanjiStrokeOrder"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="@dimen/img_oneKanji"
+                android:fontFamily="@font/kanji_stroke_orders"
+
+                tools:text="竜"
+                />
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lo_tags_rcy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/lo_kanji_stroke_frm"
+            app:layout_constraintStart_toEndOf="@id/lo_kanji_stroke_frm"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+            tools:listitem="@layout/item_tag"
+            tools:itemCount="6"
+            tools:orientation="horizontal"
+            />
+
+        <TextView
+            android:id="@+id/meaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lo_kanji_stroke_frm"
+            app:layout_constraintStart_toStartOf="@id/lo_kanji_stroke_frm"
+            android:layout_marginTop="@dimen/padding_small"
+            style="@style/Theme.Tegao.ContentText.Decent"
+
+            tools:text="LONG"
+            />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/lo_kunyomi_grp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="lo_tag_kunyomi_icl, kunyomi"
+            />
+
+        <include layout="@layout/item_tag"
+            android:id="@+id/lo_tag_kunyomi_icl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/meaning"
+            app:layout_constraintStart_toStartOf="@id/lo_kanji_stroke_frm"
+            android:layout_marginTop="@dimen/padding_tiny"
+            />
+
+        <TextView
+            android:id="@+id/kunyomi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/lo_tag_kunyomi_icl"
+            app:layout_constraintStart_toEndOf="@id/lo_tag_kunyomi_icl"
+            android:layout_marginStart="@dimen/padding_tiny"
+            style="@style/Theme.Tegao.ContentText.Normal"
+
+            tools:text="たつ, いせ"
+            />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/lo_onyomi_grp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="lo_tag_onyomi_icl, onyomi"
+            />
+
+        <include layout="@layout/item_tag"
+            android:id="@+id/lo_tag_onyomi_icl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lo_tag_kunyomi_icl"
+            app:layout_constraintStart_toStartOf="@id/lo_kanji_stroke_frm"
+            android:layout_marginTop="@dimen/padding_tiny"
+            />
+
+        <TextView
+            android:id="@+id/onyomi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/lo_tag_onyomi_icl"
+            app:layout_constraintStart_toEndOf="@id/lo_tag_onyomi_icl"
+            android:layout_marginStart="@dimen/padding_tiny"
+            style="@style/Theme.Tegao.ContentText.Normal"
+
+            tools:text="リュウ, リョウ, ロウ"
+            />
+
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/lo_composite_grp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="lo_tag_composite_icl, composite"
+            />
+
+        <include layout="@layout/item_tag"
+            android:id="@+id/lo_tag_composite_icl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lo_tag_onyomi_icl"
+            app:layout_constraintStart_toStartOf="@id/lo_kanji_stroke_frm"
+            android:layout_marginTop="@dimen/padding_tiny"
+            />
+
+        <TextView
+            android:id="@+id/composite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/lo_tag_composite_icl"
+            app:layout_constraintStart_toEndOf="@id/lo_tag_composite_icl"
+            android:layout_marginStart="@dimen/padding_tiny"
+            style="@style/Theme.Tegao.ContentText.Normal"
+
+            tools:text="[立] LẬP, [电] ĐIỆN"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</layout>

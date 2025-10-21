@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="itemChip"
+            type="com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem" />
+    </data>
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/chip_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{itemChip.label}"
+            android:onClick="@{() -> itemChip.onClick()}"
+            app:toggleVisibility="@{!itemChip.isSelected()}"
+            style="@style/Theme.Tegao.TextButton.Chip.TextChip"
+            android:textSize="@dimen/textSize_large"
+
+            tools:text="㱃"
+            />
+
+        <TextView
+            android:id="@+id/chip_button_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{itemChip.label}"
+            app:toggleVisibility="@{itemChip.isSelected()}"
+            style="@style/Theme.Tegao.TextButton.Chip.TextChip"
+            android:background="@color/secondary"
+            android:textSize="@dimen/textSize_large"
+
+            tools:text="㱃"
+            />
+
+    </FrameLayout>
+
+</layout>

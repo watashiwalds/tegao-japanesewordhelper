@@ -3,6 +3,7 @@
     <dimen name="textSize_normal">16sp</dimen>
     <dimen name="textSize_small">14sp</dimen>
     <dimen name="textSize_large">32sp</dimen>
+    <dimen name="textSize_decent">24sp</dimen>
     <dimen name="padding_large">24dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
     <dimen name="padding_small">8dp</dimen>
@@ -11,4 +12,7 @@
     <dimen name="padding_nano">2dp</dimen>
     <dimen name="img_icon">24dp</dimen>
     <dimen name="img_icon_small">16dp</dimen>
+    <dimen name="img_oneKanji">160sp</dimen>
+    <dimen name="trickMargin_furigana">-8sp</dimen>
+    <dimen name="trickMargin_kanjiStrokeOrder">-24sp</dimen>
 </resources>

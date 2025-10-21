@@ -58,6 +58,10 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
     </style>
+    <style name="Theme.Tegao.TextButton.Chip.TextChip">
+        <item name="android:paddingHorizontal">0dp</item>
+        <item name="android:paddingVertical">0dp</item>
+    </style>
 
     <style name="Theme.Tegao.Tag">
         <item name="fontFamily">@font/roboto_light</item>
@@ -82,6 +86,10 @@
     <style name="Theme.Tegao.ContentText.Normal">
         <item name="fontFamily">@font/roboto_light</item>
         <item name="android:textSize">@dimen/textSize_normal</item>
+    </style>
+    <style name="Theme.Tegao.ContentText.Decent">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/textSize_decent</item>
     </style>
     <style name="Theme.Tegao.ContentText.TitleSecondary">
         <item name="fontFamily">@font/roboto_medium</item>

@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.utils
 
 import android.view.View
 import android.widget.TextView
+import androidx.constraintlayout.widget.Group
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 
@@ -22,5 +23,10 @@ fun View.twoConditionReverseToggleVisibility(allowShow: Boolean, shouldShow: Liv
 
 @BindingAdapter("goneWhenEmpty")
 fun TextView.goneWhenEmpty(enable: Boolean) {
-    if (enable && text.toString().isBlank()) visibility = View.GONE
+    visibility = if (enable && text.toString().isBlank()) View.GONE else View.VISIBLE
+}
+
+@BindingAdapter("goneByTextValue")
+fun Group.goneByStringValue(s: String) {
+    if (s.isBlank()) visibility = View.GONE else View.VISIBLE
 }

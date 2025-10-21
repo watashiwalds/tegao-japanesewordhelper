@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     //Coroutine stuff
@@ -56,6 +57,7 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
 
     fun searchKeyword() {
+        Timber.i("Start searching keyword [${_userSearchString.value}] on [$selectedDictionaryId] dictionary")
         if (_userSearchString.value.isNullOrBlank()) return
         //for the test of online api, default to indev
         if (!selectedDictionaryId.isEmpty()) {

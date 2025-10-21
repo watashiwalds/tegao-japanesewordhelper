@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.ui.component.themedchip
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.tegaoteam.application.tegao.domain.model.Dictionary
 
 /**
  * Holder class for themed_chip_item.xml View
@@ -24,5 +25,16 @@ class ThemedChipItem(
     val isSelected: LiveData<Boolean> = _isSelected
     fun setSelectedState(b: Boolean) {
         _isSelected.value = b
+    }
+
+    companion object {
+        fun fromDictionary(dict: Dictionary): ThemedChipItem {
+            val chip = ThemedChipItem(
+                dict.id,
+                dict.displayName,
+                MutableLiveData<Boolean>()
+            )
+            return chip
+        }
     }
 }

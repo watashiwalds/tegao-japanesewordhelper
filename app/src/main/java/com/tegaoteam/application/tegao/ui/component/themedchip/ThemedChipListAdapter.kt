@@ -1,18 +1,14 @@
-package com.tegaoteam.application.tegao.ui.lookup
+package com.tegaoteam.application.tegao.ui.component.themedchip
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.ItemThemedChipBinding
-import com.tegaoteam.application.tegao.domain.model.Dictionary
-import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipController
-import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 
-class DictionaryChipsListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, DictionaryChipsListAdapter.ViewHolder>( DiffCallback() ) {
+class ThemedChipListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, ThemedChipListAdapter.ViewHolder>( DiffCallback() ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -27,36 +23,18 @@ class DictionaryChipsListAdapter(private val lifecycleOwner: LifecycleOwner): Li
         holder.bind(getItem(position))
     }
 
-    //Convert DictionaryConfig.Dict list to ThemedChipItem list
-    /**
-     * Please use [submitDictList] instead of this
-     */
-    override fun submitList(list: List<ThemedChipItem?>?) {} //emptied the function to swap with DictionaryConfig.Dict submitDictList()
-    private val chipItems = mutableListOf<ThemedChipItem>()
+    //Manage ThemedChipItem list
     //Chip control design for 1 selectable chip in concurrent
     private lateinit var themedChipController: ThemedChipController
 
     /**
-     * Exclusively design for DictionaryChipAdapter
-     *
-     * @param list Typical list of available dict fetch from config
-     * @param clickListener Lambda with ```dictId``` as parameter to run per-dict function
+     * Unused, use submitListWithClickListener instead
      */
-    fun submitDictList(list: List<Dictionary?>?, clickListener: (id: String) -> Unit) {
-        chipItems.clear()
-        themedChipController = ThemedChipController(chipItems as List<ThemedChipItem>, ThemedChipController.MODE_SINGLE)
-        list?.forEach { item ->
-            item?.let {
-                val newChip = ThemedChipItem(
-                    it.id,
-                    it.displayName,
-                    MutableLiveData<Boolean>()
-                )
-                newChip.setOnClickListener { clickListener(newChip.id); themedChipController.setSelected(newChip) }
-                chipItems.add(newChip)
-            }
-        }
-        super.submitList(chipItems)
+    override fun submitList(list: List<ThemedChipItem>?) {}
+    fun submitListWithClickListener(list: List<ThemedChipItem>?, listener: (id: String) -> Unit) {
+        themedChipController = ThemedChipController(list?: listOf(), ThemedChipController.MODE_SINGLE)
+        list?.forEach { it.setOnClickListener { listener(it.id); themedChipController.setSelected(it) } }
+        super.submitList(list)
         themedChipController.selectFirst()
     }
 

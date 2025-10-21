@@ -2,18 +2,26 @@ package com.tegaoteam.application.tegao.ui.component.themedchip
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tegaoteam.application.tegao.databinding.ItemThemedChipBinding
+import com.tegaoteam.application.tegao.BR
 
-class ThemedChipListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<ThemedChipItem, ThemedChipListAdapter.ViewHolder>( DiffCallback() ) {
+/**
+ *  Generic ListAdapter for every kind of ThemedChipItem chip style
+ *
+ *  @param lifecycleOwner Lifecycle owner for controlling chips state
+ *  @param bindingInflater ::inflater of the ViewDataBinding class linked to the desired-to-use chip XML (need to have itemChip variable in order to work)
+ */
+class ThemedChipListAdapter<T: ViewDataBinding>(private val lifecycleOwner: LifecycleOwner, private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T): ListAdapter<ThemedChipItem, ThemedChipListAdapter<T>.ViewHolder>( DiffCallback() ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        return ViewHolder.from(parent, lifecycleOwner)
+        val v = bindingInflater(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(v, lifecycleOwner)
     }
 
     override fun onBindViewHolder(
@@ -31,6 +39,10 @@ class ThemedChipListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
      * Unused, use submitListWithClickListener instead
      */
     override fun submitList(list: List<ThemedChipItem>?) {}
+
+    /**
+     * Pass in a <ThemedChipItem> list with clickListener for wanted picking behavior
+     */
     fun submitListWithClickListener(list: List<ThemedChipItem>?, listener: (id: String) -> Unit) {
         themedChipController = ThemedChipController(list?: listOf(), ThemedChipController.MODE_SINGLE)
         list?.forEach { it.setOnClickListener { listener(it.id); themedChipController.setSelected(it) } }
@@ -38,17 +50,11 @@ class ThemedChipListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
         themedChipController.selectFirst()
     }
 
-    class ViewHolder private constructor (private val binding: ItemThemedChipBinding, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder (private val binding: T, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ThemedChipItem) {
-            binding.itemChip = item
+            binding.setVariable(BR.itemChip, item)
             binding.lifecycleOwner = lifecycleOwner
             binding.executePendingBindings()
-        }
-        companion object {
-            fun from(parent: ViewGroup, lifecycleOwner: LifecycleOwner): ViewHolder {
-                val binding = ItemThemedChipBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return ViewHolder(binding, lifecycleOwner)
-            }
         }
     }
 

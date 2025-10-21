@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
+import com.tegaoteam.application.tegao.databinding.ItemOptionOnlyChipBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
@@ -123,7 +124,7 @@ class LookupActivity : AppCompatActivity() {
 
     fun displayDictionaryOptions() {
         val availableDictionaries = _viewModel.availableDictionariesList
-        val dictChipAdapter = ThemedChipListAdapter(this)
+        val dictChipAdapter = ThemedChipListAdapter(this, ItemOptionOnlyChipBinding::inflate)
         dictChipAdapter.submitListWithClickListener(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) }) { dictId ->
             _viewModel.selectedDictionaryId = dictId
         }

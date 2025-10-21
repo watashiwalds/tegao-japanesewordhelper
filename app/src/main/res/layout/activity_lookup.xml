@@ -168,7 +168,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
 
-                tools:listitem="@layout/item_themed_chip"
+                tools:listitem="@layout/item_option_only_chip"
                 tools:layoutManager="LinearLayoutManager"
                 tools:orientation="horizontal"
                 tools:itemCount="4"

@@ -31,7 +31,7 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
     class ViewHolder private constructor(private val binding: CardWordDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(word: Word, lifecycleOwner: LifecycleOwner) {
             binding.reading.text = word.reading
-            binding.furigana.text = word.furigana
+            binding.furigana.text = word.furigana?.joinToString("、")
 
             //TODO: Figured out what was this intended to be for Jitendex and Jisho. For Mazii, it was just pronunciations
             binding.additionalInfo.text = word.additionalInfo?.joinToString("\n") { it.second }

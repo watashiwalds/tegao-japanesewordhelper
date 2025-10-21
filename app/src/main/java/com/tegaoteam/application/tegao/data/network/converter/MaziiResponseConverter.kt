@@ -62,12 +62,12 @@ class MaziiResponseConverter: DictionaryResponseConverter {
 
                     val idT = wObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt
                     val readingT = wObj.get("word").takeUnless { it.isJsonNull }?.asString
-                    val phoneticT = wObj.get("phonetic").takeUnless { it.isJsonNull }?.asString
+                    val phoneticT = wObj.get("phonetic").takeUnless { it.isJsonNull }?.asString?.split(" ")
 
                     word = Word(
                         id = idT?: 0,
                         reading = readingT?: "",
-                        furigana = phoneticT?: "",
+                        furigana = phoneticT?: listOf(),
                         tags = tagsT,
                         additionalInfo = pronunsT,
                         definitions = meansT,
@@ -79,7 +79,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
             words.add(Word(
                 id = -1,
                 reading = "Converting error\n",
-                furigana = e.toString(),
+                furigana = listOf(e.toString()),
                 definitions = mutableListOf()
             ))
             Timber.e(e, "Error")

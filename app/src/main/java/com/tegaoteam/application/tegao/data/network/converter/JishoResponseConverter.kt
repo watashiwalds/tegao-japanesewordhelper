@@ -13,7 +13,7 @@ class JishoResponseConverter: DictionaryResponseConverter {
         words.add(Word(
             id = 0,
             reading = "",
-            furigana = "Jisho WORD fetching success, size: ${rawData.size()}",
+            furigana = listOf("Jisho WORD fetching success, size: ${rawData.size()}"),
             definitions = mutableListOf()
         ))
         return words

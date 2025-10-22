@@ -105,7 +105,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     val tagsT = mutableListOf<Pair<String, String?>>().apply {
                         if (kObj.has("freq")) add("frequency" to kObj.get("freq").asString)
                         if (kObj.has("stroke_count")) add("stroke" to kObj.get("stroke_count").asString)
-                        if (kObj.has("jlpt")) add("jlpt" to kObj.getAsJsonArray("level").toString())
+                        if (kObj.has("level")) add("jlpt" to kObj.getAsJsonArray("level").joinToString(", ") { it.asString })
                     }
 
                     val additionalT = mutableListOf<Pair<String, String>>().apply {
@@ -119,6 +119,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     val onyomiT = kObj.get("on").takeUnless { it.isJsonNull }?.asString
                     val meaningT = kObj.get("mean").takeUnless { it.isJsonNull }?.asString
 
+                    Timber.i("Fetched kanji $charT, JLPT ${tagsT.firstOrNull{ it.first == "jlpt" }?.second}")
 
                     kanji = Kanji(
                         id = idT?: 0,

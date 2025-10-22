@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.CardKanjiDefinitionBinding
+import com.tegaoteam.application.tegao.databinding.CompFillwidthRecyclerviewBinding
 import com.tegaoteam.application.tegao.databinding.ItemCharacterPickChipBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
@@ -48,30 +49,34 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
     }
 
     override fun getItemCount(): Int {
-        return when {
-            kanjiList.isEmpty() -> 1
-            else -> 2
-        }
+        return 1
+//        return when {
+//            kanjiList.isEmpty() -> 1
+//            else -> 2
+//        }
     }
 
     fun submitList(list: List<Kanji>) {
         kanjiList = list
+        notifyDataSetChanged()
     }
 
     private var currentCharacterTab: Int = 0
 
-    class TabList private constructor(private val lifecycleOwner: LifecycleOwner, itemView: RecyclerView): RecyclerView.ViewHolder(itemView) {
+    class TabList private constructor(private val lifecycleOwner: LifecycleOwner, private val binding: CompFillwidthRecyclerviewBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(kanjiList: List<Kanji>) {
             val adapter = ThemedChipListAdapter(lifecycleOwner, ItemCharacterPickChipBinding::inflate)
             adapter.submitListWithClickListener(kanjiList.map{ ThemedChipItem.fromKanji(it) }) { kanjiId ->
                 //TODO: Notify Adapter of character change when click
                 Timber.i("Kanji selected -> [$kanjiId]")
             }
-            (itemView as RecyclerView).adapter = adapter
+            binding.recyclerview.adapter = adapter
+            binding.executePendingBindings()
         }
         companion object {
             fun from(lifecycleOwner: LifecycleOwner, parent: ViewGroup): TabList {
-                return TabList(lifecycleOwner, RecyclerView(parent.context))
+                val binding = CompFillwidthRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                return TabList(lifecycleOwner, binding)
             }
         }
     }
@@ -87,7 +92,7 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
 
             if (hasAdditionalInfo) {
                 val expandFunc = { isExpanding.value = !isExpanding.value!! }
-                listOf(binding.collapseAdditionalInfoImg, binding.loAdditionalInfoAvailableTxt, binding.loExpandClickPaddingImg).forEach { it.setOnClickListener { expandFunc } }
+                listOf(binding.collapseAdditionalInfoImg, binding.loAdditionalInfoAvailableTxt, binding.loExpandClickPaddingImg).forEach { it.setOnClickListener { expandFunc() } }
                 binding.loAdditionalInfoRcy.adapter = AdditionalInfoListAdapter().apply { submitList(kanji.additionalInfo) }
             }
 

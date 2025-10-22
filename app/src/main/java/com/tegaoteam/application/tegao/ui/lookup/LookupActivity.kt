@@ -24,6 +24,7 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAda
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
+import timber.log.Timber
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
@@ -139,7 +140,7 @@ class LookupActivity : AppCompatActivity() {
     }
 
     fun updateSearchResultAdapter() {
-        _binding.loSearchResultCst.adapter = when (GlobalState.lookupMode.value) {
+        _binding.loSearchResultCst.adapter = when (_viewModel.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchResultAdapter
             GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter
         }

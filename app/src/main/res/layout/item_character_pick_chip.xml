@@ -23,6 +23,7 @@
             android:onClick="@{() -> itemChip.onClick()}"
             app:toggleVisibility="@{!itemChip.isSelected()}"
             style="@style/Theme.Tegao.TextButton.Chip.TextChip"
+            android:background="@drawable/neutral_stroke_underline"
             android:textSize="@dimen/textSize_large"
 
             tools:text="㱃"
@@ -37,6 +38,7 @@
             style="@style/Theme.Tegao.TextButton.Chip.TextChip"
             android:background="@color/secondary"
             android:textSize="@dimen/textSize_large"
+            android:textColor="@color/const_black"
 
             tools:text="㱃"
             />

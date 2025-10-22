@@ -13,7 +13,6 @@ import com.tegaoteam.application.tegao.databinding.ItemDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
-import timber.log.Timber
 
 class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<Word.Definition, DefinitionListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -54,7 +53,7 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
                 binding.lifecycleOwner = lifecycleOwner
             }
 
-            binding.loDefinitionExpandInfosRcy.adapter = DefinitionExpandInfoListAdapter().apply { submitList(definition.expandInfos) }
+            binding.loDefinitionExpandInfosRcy.adapter = AdditionalInfoListAdapter().apply { submitList(definition.expandInfos) }
 
             binding.executePendingBindings()
         }

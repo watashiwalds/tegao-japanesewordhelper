@@ -116,7 +116,7 @@
             app:toggleVisibilityByLiveData="@{isExpanding}"
 
             tools:itemCount="2"
-            tools:listitem="@layout/item_definition_expansion"
+            tools:listitem="@layout/item_additional_info"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

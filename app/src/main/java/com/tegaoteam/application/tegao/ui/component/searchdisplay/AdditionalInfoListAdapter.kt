@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tegaoteam.application.tegao.databinding.ItemDefinitionExpansionBinding
+import com.tegaoteam.application.tegao.databinding.ItemAdditionalInfoBinding
 import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 
-class DefinitionExpandInfoListAdapter: ListAdapter<Pair<String, String>, DefinitionExpandInfoListAdapter.ViewHolder>(DiffCallback()) {
+class AdditionalInfoListAdapter: ListAdapter<Pair<String, String>, AdditionalInfoListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -23,14 +23,14 @@ class DefinitionExpandInfoListAdapter: ListAdapter<Pair<String, String>, Definit
         holder.bind(getItem(position))
     }
 
-    class ViewHolder private constructor(private val binding: ItemDefinitionExpansionBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(private val binding: ItemAdditionalInfoBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Pair<String, String>) {
             binding.expandTag.infoTag = TagItem.toTagItem(data.first, data.first)
             binding.expandContent.text = data.second
         }
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
-                val binding = ItemDefinitionExpansionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemAdditionalInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return ViewHolder(binding)
             }
         }

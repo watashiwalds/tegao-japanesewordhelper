@@ -17,7 +17,7 @@ import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemOptionOnlyChipBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjiDefinitionTabRecyclerAdapter
+import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefinitionWidgetRecyclerAdapter
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
@@ -31,7 +31,7 @@ class LookupActivity : AppCompatActivity() {
     private lateinit var _viewModel: LookupActivityViewModel
 
     private lateinit var _wordSearchResultAdapter: WordDefinitionCardListAdapter
-    private lateinit var _kanjiSearchResultAdapter: KanjiDefinitionTabRecyclerAdapter
+    private lateinit var _kanjiSearchResultAdapter: KanjisDefinitionWidgetRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +80,7 @@ class LookupActivity : AppCompatActivity() {
         _binding.viewModel = _viewModel
 
         _wordSearchResultAdapter = WordDefinitionCardListAdapter(this)
-        _kanjiSearchResultAdapter = KanjiDefinitionTabRecyclerAdapter(this)
+        _kanjiSearchResultAdapter = KanjisDefinitionWidgetRecyclerAdapter(this)
     }
 
     private fun initListeners() {

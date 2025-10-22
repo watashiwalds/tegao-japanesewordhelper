@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ItemCharacterPickChipBinding
 import com.tegaoteam.application.tegao.databinding.WidgetKanjisDefinitionTabBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
@@ -13,6 +15,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
 
@@ -68,7 +71,13 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             }
 
             binding.kanjiStroke.text = kanji.character
-            binding.loTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags) }
+
+            binding.loTagsRcy.apply {
+                layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(context)
+                if (itemDecorationCount == 0) addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+                adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags) }
+            }
+
             binding.meaning.text = kanji.meaning
 
             binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi != null) {

@@ -19,9 +19,5 @@ object TermBank {
         "source" to askCC(R.string.term_source),
         "lang" to askCC(R.string.term_lang)
     )
-    fun getTerm(key: String) = termMap[key]?: ""
-}
-
-object placeholder {
-    const val test = 0
+    fun getTerm(key: String) = termMap[key]?: key
 }

@@ -11,12 +11,17 @@ fun View.toggleVisibility(allowShow: Boolean) {
     visibility = if (allowShow) View.VISIBLE else View.GONE
 }
 
-@BindingAdapter("toggleVisibility", "toggleVisibilityByLiveData")
+@BindingAdapter("toggleVisibilityLiveData")
+fun View.toggleVisibilityLiveData(allowShow: LiveData<Boolean>) {
+    visibility = if (allowShow.value?: false) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("toggleVisibility", "toggleVisibility2ndGateLiveData")
 fun View.twoConditionToggleVisibility(allowShow: Boolean, shouldShow: LiveData<Boolean>) {
     visibility = if (allowShow && shouldShow.value?: false) View.VISIBLE else View.GONE
 }
 
-@BindingAdapter("toggleVisibility", "toggleVisibilityByLiveDataReverse")
+@BindingAdapter("toggleVisibility", "toggleVisibility2ndGateLiveDataReverse")
 fun View.twoConditionReverseToggleVisibility(allowShow: Boolean, shouldShow: LiveData<Boolean>) {
     visibility = if (allowShow && !(shouldShow.value?: false)) View.VISIBLE else View.GONE
 }

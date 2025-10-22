@@ -69,7 +69,7 @@
             android:src="@drawable/ftc_bold_trig_down_128"
 
             app:toggleVisibility="@{expandable}"
-            app:toggleVisibilityByLiveDataReverse="@{isExpanding}"
+            app:toggleVisibility2ndGateLiveDataReverse="@{isExpanding}"
             />
 
         <ImageView
@@ -83,7 +83,7 @@
             android:src="@drawable/ftc_bold_trig_up_128"
 
             app:toggleVisibility="@{expandable}"
-            app:toggleVisibilityByLiveData="@{isExpanding}"
+            app:toggleVisibility2ndGateLiveData="@{isExpanding}"
             />
 
         <ImageView
@@ -97,7 +97,7 @@
             android:paddingStart="12dp"
 
             app:toggleVisibility="@{expandable}"
-            app:toggleVisibilityByLiveData="@{isExpanding}"
+            app:toggleVisibility2ndGateLiveData="@{isExpanding}"
             />
         
         <androidx.recyclerview.widget.RecyclerView
@@ -113,7 +113,7 @@
             android:orientation="vertical"
 
             app:toggleVisibility="@{expandable}"
-            app:toggleVisibilityByLiveData="@{isExpanding}"
+            app:toggleVisibility2ndGateLiveData="@{isExpanding}"
 
             tools:itemCount="2"
             tools:listitem="@layout/item_additional_info"

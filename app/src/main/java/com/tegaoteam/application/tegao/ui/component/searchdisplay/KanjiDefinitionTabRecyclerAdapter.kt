@@ -15,7 +15,7 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAda
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
 
-class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwner, private val kanjiList: List<Kanji>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwner, private var kanjiList: List<Kanji> = listOf()): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val VIEWTYPE_TABLIST = 0
         const val VIEWTYPE_CARD = 1
@@ -37,7 +37,7 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
     ) {
         when (holder) {
             is TabList -> holder.bind(kanjiList)
-            is CardDisplay -> holder.bind(kanjiList.getOrNull(currentCharacterTab))
+            is CardDisplay -> holder.bind(kanjiList.get(currentCharacterTab))
         }
     }
 
@@ -48,7 +48,14 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
     }
 
     override fun getItemCount(): Int {
-        return 2
+        return when {
+            kanjiList.isEmpty() -> 1
+            else -> 2
+        }
+    }
+
+    fun submitList(list: List<Kanji>) {
+        kanjiList = list
     }
 
     private var currentCharacterTab: Int = 0
@@ -70,50 +77,48 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
     }
 
     class CardDisplay private constructor(private val lifecycleOwner: LifecycleOwner, private val binding: CardKanjiDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(kanji: Kanji?) {
-            kanji?.let {
-                binding.lifecycleOwner = lifecycleOwner
+        fun bind(kanji: Kanji) {
+            binding.lifecycleOwner = lifecycleOwner
 
-                binding.kanjiStroke.text = kanji.character
-                binding.loTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags) }
-                binding.meaning.text = kanji.meaning
+            val hasAdditionalInfo = (kanji.additionalInfo != null)
+            binding.hasAdditionalInfo = hasAdditionalInfo
+            val isExpanding = MutableLiveData<Boolean>().apply { value = false }
+            binding.isExpanding = isExpanding
 
-                binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi != null) {
-                    binding.kunyomi.text = kanji.kunyomi
-                    binding.loTagKunyomiIcl.infoTag = TagItem.toTagItem("kunyomi", "Ku")
-                    true
-                } else {
-                    false
-                })
-                binding.loOnyomiGrp.toggleVisibility( if (kanji.onyomi != null) {
-                    binding.onyomi.text = kanji.onyomi
-                    binding.loTagOnyomiIcl.infoTag = TagItem.toTagItem("onyomi", "On")
-                    true
-                } else {
-                    false
-                })
-                binding.loCompositeGrp.toggleVisibility( if (kanji.composites != null) {
-                    binding.composite.text = kanji.composites?.joinToString(", ") { "[${it.first}] ${it.second ?: ""}" }
-                    //TODO: Globalization by using @string value
-                    binding.loTagCompositeIcl.infoTag = TagItem.toTagItem("composite", "Bộ")
-                    true
-                } else {
-                    false
-                })
-
-                val hasAdditionalInfo = (kanji.additionalInfo != null)
-                binding.hasAdditionalInfo = hasAdditionalInfo
-                val isExpanding = MutableLiveData<Boolean>().apply { value = false }
-                binding.isExpanding = isExpanding
-
-                if (hasAdditionalInfo) {
-                    val expandFunc = { isExpanding.value = !isExpanding.value!! }
-                    listOf(binding.collapseAdditionalInfoImg, binding.loAdditionalInfoAvailableTxt, binding.loExpandClickPaddingImg).forEach { it.setOnClickListener { expandFunc } }
-                    binding.loAdditionalInfoRcy.adapter = AdditionalInfoListAdapter().apply { submitList(kanji.additionalInfo) }
-                }
-
-                binding.executePendingBindings()
+            if (hasAdditionalInfo) {
+                val expandFunc = { isExpanding.value = !isExpanding.value!! }
+                listOf(binding.collapseAdditionalInfoImg, binding.loAdditionalInfoAvailableTxt, binding.loExpandClickPaddingImg).forEach { it.setOnClickListener { expandFunc } }
+                binding.loAdditionalInfoRcy.adapter = AdditionalInfoListAdapter().apply { submitList(kanji.additionalInfo) }
             }
+
+            binding.kanjiStroke.text = kanji.character
+            binding.loTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags) }
+            binding.meaning.text = kanji.meaning
+
+            binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi != null) {
+                binding.kunyomi.text = kanji.kunyomi
+                binding.loTagKunyomiIcl.infoTag = TagItem.toTagItem("kunyomi", "Ku")
+                true
+            } else {
+                false
+            })
+            binding.loOnyomiGrp.toggleVisibility( if (kanji.onyomi != null) {
+                binding.onyomi.text = kanji.onyomi
+                binding.loTagOnyomiIcl.infoTag = TagItem.toTagItem("onyomi", "On")
+                true
+            } else {
+                false
+            })
+            binding.loCompositeGrp.toggleVisibility( if (kanji.composites != null) {
+                binding.composite.text = kanji.composites?.joinToString(", ") { "[${it.first}] ${it.second ?: ""}" }
+                //TODO: Globalization by using @string value
+                binding.loTagCompositeIcl.infoTag = TagItem.toTagItem("composite", "Bộ")
+                true
+            } else {
+                false
+            })
+
+            binding.executePendingBindings()
         }
         companion object {
             fun from(lifecycleOwner: LifecycleOwner, parent: ViewGroup): CardDisplay {

@@ -15,7 +15,9 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemOptionOnlyChipBinding
+import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjiDefinitionTabRecyclerAdapter
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
@@ -27,7 +29,8 @@ class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
     private lateinit var _viewModel: LookupActivityViewModel
 
-    private lateinit var _wordSearchResultListAdapter: WordDefinitionCardListAdapter
+    private lateinit var _wordSearchResultAdapter: WordDefinitionCardListAdapter
+    private lateinit var _kanjiSearchResultAdapter: KanjiDefinitionTabRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +78,8 @@ class LookupActivity : AppCompatActivity() {
         _viewModel = ViewModelProvider(this).get(LookupActivityViewModel::class.java)
         _binding.viewModel = _viewModel
 
-        _wordSearchResultListAdapter = WordDefinitionCardListAdapter(this)
+        _wordSearchResultAdapter = WordDefinitionCardListAdapter(this)
+        _kanjiSearchResultAdapter = KanjiDefinitionTabRecyclerAdapter(this)
     }
 
     private fun initListeners() {
@@ -136,8 +140,8 @@ class LookupActivity : AppCompatActivity() {
 
     fun updateSearchResultAdapter() {
         _binding.loSearchResultCst.adapter = when (GlobalState.lookupMode.value) {
-            GlobalState.LookupMode.WORD -> _wordSearchResultListAdapter
-            GlobalState.LookupMode.KANJI -> null
+            GlobalState.LookupMode.WORD -> _wordSearchResultAdapter
+            GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter
         }
         //for testing
         _viewModel.evIsRcyAdapterAvailable.value = _binding.loSearchResultCst.adapter != null
@@ -145,8 +149,8 @@ class LookupActivity : AppCompatActivity() {
 
     fun updateSearchResultValue(list: List<Any>) {
         when (GlobalState.lookupMode.value) {
-            GlobalState.LookupMode.WORD -> _wordSearchResultListAdapter.submitList(list as List<Word>)
-            GlobalState.LookupMode.KANJI -> {}
+            GlobalState.LookupMode.WORD -> _wordSearchResultAdapter.submitList(list as List<Word>)
+            GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter.submitList(list as List<Kanji>)
         }
     }
 

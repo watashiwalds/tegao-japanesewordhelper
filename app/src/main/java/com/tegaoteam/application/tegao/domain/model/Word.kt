@@ -13,4 +13,12 @@ data class Word(
         val meaning: String,
         var expandInfos: List<Pair<String, String>>? = null
     )
+
+    companion object {
+        fun default() = Word(
+            id = 0,
+            reading = "",
+            definitions = listOf()
+        )
+    }
 }

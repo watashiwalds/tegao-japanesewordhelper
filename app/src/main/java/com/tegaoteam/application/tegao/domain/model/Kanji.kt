@@ -10,4 +10,12 @@ data class Kanji(
     var details: String? = null,
     var tags: List<Pair<String, String?>>? = null,
     var additionalInfo: List<Pair<String, String>>? = null,
-)
+) {
+    companion object {
+        fun default() = Kanji(
+            id = 0,
+            character = "",
+            meaning = ""
+        )
+    }
+}

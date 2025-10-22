@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.tegaoteam.application.tegao.databinding.CardKanjiDefinitionBinding
-import com.tegaoteam.application.tegao.databinding.CompFillwidthRecyclerviewBinding
 import com.tegaoteam.application.tegao.databinding.ItemCharacterPickChipBinding
 import com.tegaoteam.application.tegao.databinding.WidgetKanjisDefinitionTabBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji

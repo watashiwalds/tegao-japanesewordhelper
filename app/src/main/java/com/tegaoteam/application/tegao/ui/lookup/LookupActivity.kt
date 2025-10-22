@@ -99,7 +99,7 @@ class LookupActivity : AppCompatActivity() {
         }
         _viewModel.evStartSearch.beacon.observe(this) {
             if (_viewModel.evStartSearch.receive()) {
-                AppToast.show(this, "Search clicked", AppToast.LENGTH_SHORT)
+                clearSearchResult()
                 _viewModel.searchKeyword()
             }
         }
@@ -132,6 +132,7 @@ class LookupActivity : AppCompatActivity() {
         val dictChipAdapter = ThemedChipListAdapter(this, ItemOptionOnlyChipBinding::inflate)
         dictChipAdapter.submitListWithClickListener(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) }) { dictId ->
             _viewModel.selectedDictionaryId = dictId
+            _viewModel.evStartSearch.ignite()
         }
         _binding.loDictionaryChipRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(
             0,
@@ -139,11 +140,19 @@ class LookupActivity : AppCompatActivity() {
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter
     }
 
+    private fun clearSearchResult() {
+        when (_viewModel.lookupMode.value) {
+            GlobalState.LookupMode.WORD -> _wordSearchResultAdapter.submitList(listOf())
+            GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter.submitList(listOf())
+        }
+    }
+
     fun updateSearchResultAdapter() {
         _binding.loSearchResultCst.adapter = when (_viewModel.lookupMode.value) {
-            GlobalState.LookupMode.WORD -> _wordSearchResultAdapter
-            GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter
+            GlobalState.LookupMode.WORD -> _wordSearchResultAdapter.apply { submitList(listOf()) }
+            GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter.apply { submitList(listOf()) }
         }
+        _viewModel.evStartSearch.ignite()
         //for testing
         _viewModel.evIsRcyAdapterAvailable.value = _binding.loSearchResultCst.adapter != null
     }

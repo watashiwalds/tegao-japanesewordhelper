@@ -4,12 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.application
 import androidx.lifecycle.map
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.passage.DictionaryPassage
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
+import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,8 +59,9 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
 
     fun searchKeyword() {
-        Timber.i("Start searching keyword [${_userSearchString.value}] on [$selectedDictionaryId] dictionary")
         if (_userSearchString.value.isNullOrBlank()) return
+        Timber.i("Start searching keyword [${_userSearchString.value}] on [$selectedDictionaryId] dictionary")
+        AppToast.show(application, "Now searching...", AppToast.LENGTH_SHORT)
         //for the test of online api, default to indev
         if (!selectedDictionaryId.isEmpty()) {
             _indevRetrofitResult.value = "Now searching..."

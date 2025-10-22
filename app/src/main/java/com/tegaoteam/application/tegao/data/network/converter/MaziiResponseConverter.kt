@@ -80,10 +80,16 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 id = -1,
                 reading = "Converting error\n",
                 furigana = listOf(e.toString()),
-                definitions = mutableListOf()
+                definitions = listOf()
             ))
             Timber.e(e, "Error")
         }
+        if (words.isEmpty()) words.add(Word(
+            id = -1,
+            reading = "",
+            furigana = listOf("Không tìm thấy kết quả nào"),
+            definitions = listOf()
+        ))
         return words
     }
 
@@ -142,6 +148,11 @@ class MaziiResponseConverter: DictionaryResponseConverter {
             ))
             Timber.e(e, "Error")
         }
+        if (kanjis.isEmpty()) kanjis.add(Kanji(
+            id = 0,
+            character = "",
+            meaning = "Không có kết quả nào khớp"
+        ))
         return kanjis
     }
 }

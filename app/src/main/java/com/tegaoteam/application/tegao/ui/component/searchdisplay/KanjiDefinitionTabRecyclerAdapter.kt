@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.ui.component.searchdisplay
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
@@ -38,7 +39,7 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
     ) {
         when (holder) {
             is TabList -> holder.bind(kanjiList)
-            is CardDisplay -> holder.bind(kanjiList.get(currentCharacterTab))
+            is CardDisplay -> holder.bind(kanjiList[currentCharacterTab])
         }
     }
 
@@ -49,13 +50,13 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
     }
 
     override fun getItemCount(): Int {
-        return 1
-//        return when {
-//            kanjiList.isEmpty() -> 1
-//            else -> 2
-//        }
+        return when {
+            kanjiList.isEmpty() -> 1
+            else -> 2
+        }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(list: List<Kanji>) {
         kanjiList = list
         notifyDataSetChanged()
@@ -83,9 +84,7 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
 
     class CardDisplay private constructor(private val lifecycleOwner: LifecycleOwner, private val binding: CardKanjiDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(kanji: Kanji) {
-            binding.lifecycleOwner = lifecycleOwner
-
-            val hasAdditionalInfo = (kanji.additionalInfo != null)
+            val hasAdditionalInfo = (kanji.additionalInfo != null && !kanji.additionalInfo!!.isEmpty())
             binding.hasAdditionalInfo = hasAdditionalInfo
             val isExpanding = MutableLiveData<Boolean>().apply { value = false }
             binding.isExpanding = isExpanding
@@ -123,6 +122,7 @@ class KanjiDefinitionTabRecyclerAdapter(private val lifecycleOwner: LifecycleOwn
                 false
             })
 
+            binding.lifecycleOwner = lifecycleOwner
             binding.executePendingBindings()
         }
         companion object {

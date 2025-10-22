@@ -112,8 +112,9 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         }
                     }
 
-                    val tipsT = mutableListOf<Pair<String, String>>().apply {
+                    val additionalT = mutableListOf<Pair<String, String>>().apply {
                         when {
+                            kObj.has("detail") -> add("detail" to kObj.get("detail").asString.replace("##", "\n"))
                             kObj.has("tips") -> add("tips" to kObj.getAsJsonObject("tips").entrySet().map { it.value }.joinToString("\n"))
                         }
                     }
@@ -124,6 +125,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     val onyomiT = kObj.get("on").takeUnless { it.isJsonNull }?.asString
                     val meaningT = kObj.get("mean").takeUnless { it.isJsonNull }?.asString
 
+
                     kanji = Kanji(
                         id = idT?: 0,
                         character = charT?: "",
@@ -133,7 +135,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         meaning = meaningT?: "",
                         details = detailsT,
                         tags = tagsT,
-                        additionalInfo = tipsT
+                        additionalInfo = additionalT
                     )
                 }
                 if (kanji != null) kanjis.add(kanji)

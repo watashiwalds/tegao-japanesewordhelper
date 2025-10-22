@@ -20,6 +20,7 @@
             app:layout_constraintTop_toBottomOf="@id/expand_tag"
             app:layout_constraintStart_toStartOf="parent"
             android:paddingVertical="@dimen/padding_nano"
+            android:textIsSelectable="true"
 
             tools:text="Đài phun nước đó thật đẹp! Chính là cái đầu rồng đó!"
             />

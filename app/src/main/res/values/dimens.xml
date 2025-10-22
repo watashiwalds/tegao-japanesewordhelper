@@ -14,5 +14,5 @@
     <dimen name="img_icon_small">16dp</dimen>
     <dimen name="img_oneKanji">160sp</dimen>
     <dimen name="trickMargin_furigana">-8sp</dimen>
-    <dimen name="trickMargin_kanjiStrokeOrder">-24sp</dimen>
+    <dimen name="trickMargin_kanjiStrokeOrder">-28sp</dimen>
 </resources>

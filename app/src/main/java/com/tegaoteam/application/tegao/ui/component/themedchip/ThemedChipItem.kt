@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.ui.component.themedchip
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.domain.model.Dictionary
+import com.tegaoteam.application.tegao.domain.model.Kanji
 
 /**
  * Holder class for themed_chip_item.xml View
@@ -32,6 +33,14 @@ class ThemedChipItem(
             val chip = ThemedChipItem(
                 dict.id,
                 dict.displayName,
+                MutableLiveData<Boolean>()
+            )
+            return chip
+        }
+        fun fromKanji(kanji: Kanji): ThemedChipItem {
+            val chip = ThemedChipItem(
+                kanji.character,
+                kanji.character,
                 MutableLiveData<Boolean>()
             )
             return chip

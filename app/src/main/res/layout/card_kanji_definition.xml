@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="hasAdditionalInfo"
+            type="Boolean" />
+        <variable
+            name="isExpanding"
+            type="androidx.lifecycle.LiveData&lt;Boolean&gt;" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -79,13 +88,13 @@
             android:layout_marginStart="@dimen/padding_tiny"
             style="@style/Theme.Tegao.ContentText.Normal"
 
-            tools:text="たつ, いせ"
+            tools:text="たつ、いせ"
             />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/lo_onyomi_grp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:constraint_referenced_ids="lo_tag_onyomi_icl, onyomi"
             />
 
@@ -107,14 +116,14 @@
             android:layout_marginStart="@dimen/padding_tiny"
             style="@style/Theme.Tegao.ContentText.Normal"
 
-            tools:text="リュウ, リョウ, ロウ"
+            tools:text="リュウ、リョウ、ロウ"
             />
 
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/lo_composite_grp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:constraint_referenced_ids="lo_tag_composite_icl, composite"
             />
 
@@ -137,6 +146,71 @@
             style="@style/Theme.Tegao.ContentText.Normal"
 
             tools:text="[立] LẬP, [电] ĐIỆN"
+            />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="lo_additional_info_available_txt, collapse_additional_info_img, lo_expand_click_padding_img, lo_additional_info_rcy"
+            app:toggleVisibility="@{hasAdditionalInfo}"
+            />
+
+        <TextView
+            android:id="@+id/lo_additional_info_available_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lo_tag_composite_icl"
+            app:layout_constraintStart_toStartOf="@id/lo_kanji_stroke_frm"
+            android:layout_marginTop="@dimen/padding_small"
+            app:drawableStartCompat="@drawable/ftc_bold_trig_down_16"
+            android:drawablePadding="@dimen/padding_small"
+            android:paddingStart="@dimen/padding_tiny"
+            style="@style/Theme.Tegao.ContentText.Normal"
+
+            tools:text="Thông tin thêm"
+            />
+
+        <ImageView
+            android:id="@+id/collapse_additional_info_img"
+            android:layout_width="@dimen/padding_large"
+            android:layout_height="@dimen/padding_normal"
+            android:theme="@style/Theme.Tegao.ImageIcon.Neutral"
+            android:layout_marginBottom="@dimen/padding_nano"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/lo_additional_info_available_txt"
+            android:src="@drawable/ftc_bold_trig_up_128"
+
+            app:toggleVisibilityLiveData="@{isExpanding}"
+            />
+
+        <ImageView
+            android:id="@+id/lo_expand_click_padding_img"
+            android:layout_width="@dimen/padding_large"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/lo_additional_info_available_txt"
+            app:layout_constraintBottom_toTopOf="@id/collapse_additional_info_img"
+            app:layout_constraintStart_toStartOf="@id/lo_additional_info_available_txt"
+            android:src="@drawable/neutral_stroke_start"
+            android:paddingStart="12dp"
+
+            app:toggleVisibilityLiveData="@{isExpanding}"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lo_additional_info_rcy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lo_additional_info_available_txt"
+            app:layout_constraintStart_toEndOf="@id/lo_expand_click_padding_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/padding_tiny"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            app:toggleVisibilityLiveData="@{isExpanding}"
+
+            tools:itemCount="2"
+            tools:listitem="@layout/item_additional_info"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

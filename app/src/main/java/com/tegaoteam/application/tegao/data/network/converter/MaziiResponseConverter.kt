@@ -119,18 +119,18 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     }
 
                     val idT = kObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt
-                    val charT = kObj.get("kanji").toString()
-                    val kunyomiT = kObj.get("kun").toString()
-                    val onyomiT = kObj.get("on").toString()
-                    val meaningT = kObj.get("mean").toString()
+                    val charT = kObj.get("kanji").takeUnless { it.isJsonNull }?.asString
+                    val kunyomiT = kObj.get("kun").takeUnless { it.isJsonNull }?.asString
+                    val onyomiT = kObj.get("on").takeUnless { it.isJsonNull }?.asString
+                    val meaningT = kObj.get("mean").takeUnless { it.isJsonNull }?.asString
 
                     kanji = Kanji(
                         id = idT?: 0,
-                        character = charT,
+                        character = charT?: "",
                         kunyomi = kunyomiT,
                         onyomi = onyomiT,
                         composites = compsT,
-                        meaning = meaningT,
+                        meaning = meaningT?: "",
                         details = detailsT,
                         tags = tagsT,
                         additionalInfo = tipsT

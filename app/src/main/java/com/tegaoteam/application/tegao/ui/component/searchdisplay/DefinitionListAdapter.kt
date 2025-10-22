@@ -46,10 +46,14 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
 
             if (expandable) {
                 val expandFun = { isExpanding.value = !isExpanding.value!! }
-                binding.loIndexTxt.setOnClickListener { expandFun() }
-                binding.expandDefinitionImg.setOnClickListener { expandFun() }
-                binding.collapseDefinitionImg.setOnClickListener { expandFun() }
-                binding.loExpandClickPaddingImg.setOnClickListener { expandFun() }
+                listOf(
+                    binding.loIndexTxt,
+                    binding.expandDefinitionImg,
+                    binding.collapseDefinitionImg,
+                    binding.loExpandClickPaddingImg,
+                    binding.definition,
+                    binding.loDefinitionTagsRcy
+                ).forEach { it.setOnClickListener { expandFun() } }
                 binding.lifecycleOwner = lifecycleOwner
             }
 

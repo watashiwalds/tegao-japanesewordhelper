@@ -102,21 +102,15 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         }.toMutableList()
                     else mutableListOf()
 
-                    val detailsT = kObj.get("detail").takeUnless { it.isJsonNull }?.asString?.replace("##", "\n")
-
                     val tagsT = mutableListOf<Pair<String, String?>>().apply {
-                        when {
-                            kObj.has("freq") -> add("frequency" to kObj.get("freq").toString())
-                            kObj.has("stroke_count") -> add("stroke" to kObj.get("stroke_count").toString())
-                            kObj.has("jlpt") -> add("jlpt" to kObj.getAsJsonArray("level").joinToString(", "))
-                        }
+                        if (kObj.has("freq")) add("frequency" to kObj.get("freq").toString())
+                        if (kObj.has("stroke_count")) add("stroke" to kObj.get("stroke_count").toString())
+                        if (kObj.has("jlpt")) add("jlpt" to kObj.getAsJsonArray("level").joinToString(", "))
                     }
 
                     val additionalT = mutableListOf<Pair<String, String>>().apply {
-                        when {
-                            kObj.has("detail") -> add("detail" to kObj.get("detail").asString.replace("##", "\n"))
-                            kObj.has("tips") -> add("tips" to kObj.getAsJsonObject("tips").entrySet().map { it.value }.joinToString("\n"))
-                        }
+                        if (kObj.has("detail")) add("detail" to kObj.get("detail").asString.replace("##", "\n"))
+                        if (kObj.has("tips")) add("tips" to kObj.getAsJsonObject("tips").entrySet().map { it.value }.joinToString("\n"))
                     }
 
                     val idT = kObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt
@@ -133,7 +127,6 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         onyomi = onyomiT,
                         composites = compsT,
                         meaning = meaningT?: "",
-                        details = detailsT,
                         tags = tagsT,
                         additionalInfo = additionalT
                     )

@@ -35,6 +35,7 @@
                 android:textSize="@dimen/img_oneKanji"
                 android:fontFamily="@font/kanji_stroke_orders"
                 android:textIsSelectable="true"
+                app:goneWhenEmpty="@{true}"
 
                 tools:text="竜"
                 />
@@ -64,6 +65,7 @@
             android:layout_marginTop="@dimen/padding_small"
             style="@style/Theme.Tegao.ContentText.Decent"
             android:textIsSelectable="true"
+            app:goneWhenEmpty="@{true}"
 
             tools:text="LONG"
             />
@@ -93,6 +95,7 @@
             android:layout_marginStart="@dimen/padding_tiny"
             style="@style/Theme.Tegao.ContentText.Normal"
             android:textIsSelectable="true"
+            app:goneWhenEmpty="@{true}"
 
             tools:text="たつ、いせ"
             />
@@ -122,6 +125,7 @@
             android:layout_marginStart="@dimen/padding_tiny"
             style="@style/Theme.Tegao.ContentText.Normal"
             android:textIsSelectable="true"
+            app:goneWhenEmpty="@{true}"
 
             tools:text="リュウ、リョウ、ロウ"
             />
@@ -152,6 +156,7 @@
             android:layout_marginStart="@dimen/padding_tiny"
             style="@style/Theme.Tegao.ContentText.Normal"
             android:textIsSelectable="true"
+            app:goneWhenEmpty="@{true}"
 
             tools:text="[立] LẬP, [电] ĐIỆN"
             />

@@ -33,7 +33,7 @@ fun View.twoConditionReverseToggleVisibility(allowShow: Boolean, shouldShow: Liv
 
 @BindingAdapter("goneWhenEmpty")
 fun TextView.goneWhenEmpty(enable: Boolean) {
-    visibility = if (enable && text.toString().isBlank()) View.GONE else View.VISIBLE
+    visibility = if (enable && text.toString().isEmpty()) View.GONE else View.VISIBLE
 }
 
 @BindingAdapter("goneByTextValue")

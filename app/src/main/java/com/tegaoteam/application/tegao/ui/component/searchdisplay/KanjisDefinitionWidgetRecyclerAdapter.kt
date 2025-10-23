@@ -16,6 +16,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
+import com.tegaoteam.application.tegao.utils.setTextWithVisibility
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
 
@@ -70,7 +71,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
                 binding.loAdditionalInfoRcy.adapter = AdditionalInfoListAdapter().apply { submitList(kanji.additionalInfo) }
             }
 
-            binding.kanjiStroke.text = kanji.character
+            binding.kanjiStroke.setTextWithVisibility(kanji.character)
 
             binding.loTagsRcy.apply {
                 layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(context)
@@ -78,24 +79,24 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
                 adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags) }
             }
 
-            binding.meaning.text = kanji.meaning
+            binding.meaning.setTextWithVisibility(kanji.meaning)
 
             binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi != null) {
-                binding.kunyomi.text = kanji.kunyomi
+                binding.kunyomi.setTextWithVisibility(kanji.kunyomi)
                 binding.loTagKunyomiIcl.infoTag = TagItem.toTagItem("kunyomi", "Ku")
                 true
             } else {
                 false
             })
             binding.loOnyomiGrp.toggleVisibility( if (kanji.onyomi != null) {
-                binding.onyomi.text = kanji.onyomi
+                binding.onyomi.setTextWithVisibility(kanji.onyomi)
                 binding.loTagOnyomiIcl.infoTag = TagItem.toTagItem("onyomi", "On")
                 true
             } else {
                 false
             })
             binding.loCompositeGrp.toggleVisibility( if (kanji.composites != null) {
-                binding.composite.text = kanji.composites?.joinToString(", ") { "[${it.first}] ${it.second ?: ""}" }
+                binding.composite.setTextWithVisibility(kanji.composites?.joinToString(", ") { "[${it.first}] ${it.second ?: ""}" })
                 //TODO: Globalization by using @string value
                 binding.loTagCompositeIcl.infoTag = TagItem.toTagItem("composite", "Bộ")
                 true

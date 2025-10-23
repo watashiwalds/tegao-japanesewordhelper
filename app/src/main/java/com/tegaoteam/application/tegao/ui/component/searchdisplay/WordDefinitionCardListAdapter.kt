@@ -12,6 +12,7 @@ import com.tegaoteam.application.tegao.databinding.CardWordDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
+import com.tegaoteam.application.tegao.utils.setTextWithVisibility
 
 class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<Word, WordDefinitionCardListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -30,11 +31,11 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
 
     class ViewHolder private constructor(private val binding: CardWordDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(word: Word, lifecycleOwner: LifecycleOwner) {
-            binding.reading.text = word.reading
-            binding.furigana.text = word.furigana?.joinToString("、")
+            binding.reading.setTextWithVisibility(word.reading)
+            binding.furigana.setTextWithVisibility(word.furigana?.joinToString("、"))
 
             //TODO: Figured out what was this intended to be for Jitendex and Jisho. For Mazii, it was just pronunciations
-            binding.additionalInfo.text = word.additionalInfo?.joinToString("\n") { it.second }
+            binding.additionalInfo.setTextWithVisibility(word.additionalInfo?.joinToString("\n") { it.second })
 
             //display func for tags
             binding.loWordTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loWordTagsRcy.context)

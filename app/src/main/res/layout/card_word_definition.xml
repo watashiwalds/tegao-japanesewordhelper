@@ -12,14 +12,13 @@
             android:id="@+id/reading"
             style="@style/Theme.Tegao.ContentText.Large"
 
+            android:textIsSelectable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/trickMargin_furigana"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/furigana"
-            app:goneWhenEmpty="@{true}"
 
-            android:textIsSelectable="true"
             tools:text="竜の口" />
 
         <TextView
@@ -31,7 +30,6 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:goneWhenEmpty="@{true}"
 
             tools:text="たつのくち, りゅうのくち"
             />
@@ -45,7 +43,6 @@
             android:paddingBottom="@dimen/padding_small"
             app:layout_constraintTop_toBottomOf="@id/reading"
             app:layout_constraintStart_toStartOf="parent"
-            app:goneWhenEmpty="@{true}"
 
             tools:visibility="visible"
             tools:text="ryu＼–nok(u)／chi‾\nta／tsuno‾k(u)／chi‾"

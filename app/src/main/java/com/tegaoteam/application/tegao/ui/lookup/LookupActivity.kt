@@ -23,8 +23,7 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
-import com.tegaoteam.application.tegao.utils.AppToast
-import timber.log.Timber
+import com.tegaoteam.application.tegao.utils.toggleVisibility
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
@@ -148,9 +147,18 @@ class LookupActivity : AppCompatActivity() {
     }
 
     fun updateSearchResultAdapter() {
-        _binding.loSearchResultCst.adapter = when (_viewModel.lookupMode.value) {
-            GlobalState.LookupMode.WORD -> _wordSearchResultAdapter.apply { submitList(listOf()) }
-            GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter.apply { submitList(listOf()) }
+        val toAdapter = when (_viewModel.lookupMode.value) {
+            GlobalState.LookupMode.WORD -> _wordSearchResultAdapter
+            GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter
+        }
+        _binding.loSearchResultCst.apply {
+            if (adapter != toAdapter) {
+                adapter = null
+                recycledViewPool.clear()
+                adapter = toAdapter
+                requestLayout()
+            }
+            toggleVisibility(false)
         }
         _viewModel.evStartSearch.ignite()
         //for testing
@@ -158,6 +166,7 @@ class LookupActivity : AppCompatActivity() {
     }
 
     fun updateSearchResultValue(list: List<Any>) {
+        _binding.loSearchResultCst.toggleVisibility(true)
         when (GlobalState.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchResultAdapter.submitList(list as List<Word>)
             GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter.submitList(list as List<Kanji>)

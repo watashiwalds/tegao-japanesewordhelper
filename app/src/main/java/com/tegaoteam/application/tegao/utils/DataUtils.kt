@@ -8,3 +8,8 @@ fun JsonObject.toMap(): Map<String, Any> {
     val typeToken = object: TypeToken<Map<String, Any>>() {}.type
     return Gson().fromJson(this, typeToken)
 }
+
+fun String.toSafeQueryString(): String {
+    val regex = "[^\\p{L}\\p{Nd}\\s]+"
+    return this.replace(Regex(regex), "")
+}

@@ -13,7 +13,7 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 
-class MaziiDictionaryApi private constructor(val converter: DictionaryResponseConverter): DictionaryRepo {
+class MaziiDictionaryApi private constructor(private val converter: DictionaryResponseConverter): DictionaryRepo {
 
     companion object {
         val api by lazy {

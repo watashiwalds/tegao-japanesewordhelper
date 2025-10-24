@@ -15,7 +15,7 @@ import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.utils.toMap
 import okhttp3.ResponseBody
 
-class JishoDictionaryApi private constructor (val converter: DictionaryResponseConverter): DictionaryRepo {
+class JishoDictionaryApi private constructor (private val converter: DictionaryResponseConverter): DictionaryRepo {
 
     companion object {
         val api by lazy {

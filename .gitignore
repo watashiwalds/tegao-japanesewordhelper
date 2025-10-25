@@ -28,3 +28,6 @@ yarn-error.log*
 # --- Others ---
 *.log
 *.tmp
+
+JMdict
+JMdict_e.gz

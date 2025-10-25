@@ -6,14 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryDAO
-import com.tegaoteam.application.tegao.data.database.DatabaseConst as Const
 
-@Database(entities = [SearchHistoryEntity::class], version = Const.DATABASE_VERSION, exportSchema = false)
+@Database(entities = [SearchHistoryEntity::class], version = SQLiteDatabase.Companion.DATABASE_VERSION, exportSchema = false)
 abstract class SQLiteDatabase: RoomDatabase() {
 
     abstract val searchHistoryDAO: SearchHistoryDAO
 
     companion object {
+        const val DATABASE_NAME = "tegao_sqlite_db"
+        const val DATABASE_VERSION = 1
+
         @Volatile
         private var _instance: SQLiteDatabase? = null
 
@@ -21,7 +23,7 @@ abstract class SQLiteDatabase: RoomDatabase() {
             synchronized(this) {
                 var instance = _instance
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.applicationContext, SQLiteDatabase::class.java, Const.DATABASE_NAME)
+                    instance = Room.databaseBuilder(context.applicationContext, SQLiteDatabase::class.java, DATABASE_NAME)
                         .fallbackToDestructiveMigration(true) //TODO: Change this to a migratable function to keep user data after upgrade
                         .build()
                     _instance = instance

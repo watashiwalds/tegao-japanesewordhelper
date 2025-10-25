@@ -2,14 +2,18 @@ package com.tegaoteam.application.tegao.data.hub
 
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
-import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity
+import com.tegaoteam.application.tegao.domain.interf.SearchHistoryRepo
+import com.tegaoteam.application.tegao.domain.model.SearchHistory
+import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
-object SearchHistoryHub {
+class SearchHistoryHub: SearchHistoryRepo {
     private val historyDb = SQLiteDatabase.getInstance(TegaoApplication.instance.applicationContext).searchHistoryDAO
 
-    fun getSearchedWords() = historyDb.getSearchedWords()
-    fun getSearchedKanjis() = historyDb.getSearchedKanjis()
-    fun upsertEntity(entity: SearchHistoryEntity) {
-        historyDb.upsert(entity)
+    override fun getSearchedWords() = historyDb.getSearchedWords().map { it.map { entity -> entity.toDomainSearchHistory() } }
+    override fun getSearchedKanjis() = historyDb.getSearchedKanjis().map { it.map { entity -> entity.toDomainSearchHistory() } }
+    override fun logSearch(entry: SearchHistory) {
+        Timber.i("logSearch success with value $entry")
+//        historyDb.upsert(SearchHistoryEntity.fromDomainSearchHistory(entry))
     }
 }

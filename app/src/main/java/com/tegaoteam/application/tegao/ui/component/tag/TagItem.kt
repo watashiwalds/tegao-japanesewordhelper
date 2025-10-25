@@ -22,7 +22,7 @@ data class TagItem(
                 label = label,
                 color = ContextCompat.getColor(TegaoApplication.instance.applicationContext, R.color.neutral),
                 detail = TermBank.getTerm(termKey?: ""),
-                clickListener = { tagItem -> AppToast.show(TegaoApplication.instance.applicationContext, tagItem.detail.toString(), AppToast.LENGTH_SHORT)}
+                clickListener = { tagItem -> AppToast.show(tagItem.detail.toString(), AppToast.LENGTH_SHORT)}
             )
         }
     }

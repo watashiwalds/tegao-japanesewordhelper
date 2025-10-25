@@ -75,8 +75,7 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
         Timber.i("Start searching keyword [${_userSearchString.value}] on [$selectedDictionaryId] dictionary")
 
         //TODO: Proper displaying onSearch status in Activity, not by toasting text
-        AppToast.show(application, "Now searching...", AppToast.LENGTH_SHORT)
-
+        AppToast.show("Now searching...", AppToast.LENGTH_SHORT)
         _indevRetrofitResult.value = "Now searching..."
         searchJob = viewModelScope.launch(Dispatchers.IO) {
             val result = when (lookupMode.value) {

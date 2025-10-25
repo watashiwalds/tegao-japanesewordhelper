@@ -167,6 +167,7 @@ class LookupActivity : AppCompatActivity() {
 
     fun updateSearchResultValue(list: List<Any>) {
         _binding.loSearchResultCst.toggleVisibility(true)
+        @Suppress("unchecked_cast")
         when (GlobalState.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchResultAdapter.submitList(list as List<Word>)
             GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter.submitList(list as List<Kanji>)

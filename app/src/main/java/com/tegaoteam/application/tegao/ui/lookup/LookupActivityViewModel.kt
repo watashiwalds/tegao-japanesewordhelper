@@ -86,11 +86,15 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
                 when (result) {
                     is RepoResult.Error<*> -> _indevRetrofitResult.value = "ErrorCode: ${result.code}, Reason: ${result.message}"
                     is RepoResult.Success<*> -> {
+                        //return search result to activity
                         val data = result.data
-                        when (lookupMode.value) {
-                            //TODO: How to fix Unchecked cast warning? sealed class maybe?
-                            GlobalState.LookupMode.WORD -> _searchResultList.value = data as List<Word>
-                            GlobalState.LookupMode.KANJI -> _searchResultList.value = data as List<Kanji>
+                        @Suppress("unchecked_cast")
+                        if (data is List<*>) {
+                            when (data.firstOrNull()) {
+                                is Word -> _searchResultList.value = data as List<Word>
+                                is Kanji -> _searchResultList.value = data as List<Kanji>
+                                else -> {}
+                            }
                         }
                         _indevRetrofitResult.value = "${result.data}"
                     }

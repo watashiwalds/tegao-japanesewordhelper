@@ -27,7 +27,7 @@ class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(
      */
     override fun submitList(list: List<TagItem?>?) {}
     fun submitRawTagList(list: List<Pair<String, String?>>?) {
-        val convertedList = list?.map { (termKey, label) -> TagItem.toTagItem(termKey, label?: "") }
+        val convertedList = list?.filter { it.second?.isNotBlank()?: false }?.map { (termKey, label) -> TagItem.toTagItem(termKey, label?: "") }
         super.submitList(convertedList)
     }
 

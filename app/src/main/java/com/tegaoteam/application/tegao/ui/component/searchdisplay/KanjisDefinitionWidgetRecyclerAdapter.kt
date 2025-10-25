@@ -81,21 +81,21 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
 
             binding.meaning.setTextWithVisibility(kanji.meaning)
 
-            binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi != null) {
+            binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi?.isNotBlank()?: false) {
                 binding.kunyomi.setTextWithVisibility(kanji.kunyomi)
                 binding.loTagKunyomiIcl.infoTag = TagItem.toTagItem("kunyomi", "Ku")
                 true
             } else {
                 false
             })
-            binding.loOnyomiGrp.toggleVisibility( if (kanji.onyomi != null) {
+            binding.loOnyomiGrp.toggleVisibility( if (kanji.onyomi?.isNotBlank()?: false) {
                 binding.onyomi.setTextWithVisibility(kanji.onyomi)
                 binding.loTagOnyomiIcl.infoTag = TagItem.toTagItem("onyomi", "On")
                 true
             } else {
                 false
             })
-            binding.loCompositeGrp.toggleVisibility( if (kanji.composites != null) {
+            binding.loCompositeGrp.toggleVisibility( if (kanji.composites?.joinToString { it.second?: "" }?.isNotBlank()?: false) {
                 binding.composite.setTextWithVisibility(kanji.composites?.joinToString(", ") { "[${it.first}] ${it.second ?: ""}" })
                 //TODO: Globalization by using @string value
                 binding.loTagCompositeIcl.infoTag = TagItem.toTagItem("composite", "Bộ")

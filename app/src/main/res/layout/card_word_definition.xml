@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/additionalInfo"
-            style="@style/Theme.Tegao.ContentText.Normal"
+            style="@style/Theme.Tegao.ContentText.Small"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

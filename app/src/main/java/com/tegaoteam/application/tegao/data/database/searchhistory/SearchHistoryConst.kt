@@ -6,7 +6,4 @@ object SearchHistoryConst {
     const val COL_TYPE = "type"
     const val COL_KEYWORD = "keyword"
     const val COL_SEARCHDATE = "searchDate"
-
-    const val TYPE_WORD = 0
-    const val TYPE_KANJI = 1
 }

@@ -1,17 +1,11 @@
 package com.tegaoteam.application.tegao.domain.model
 
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-
 class Dictionary(
     val id: String,
     val displayName: String,
     val type: Int,
-    jsonInfos: String
+    val jsonInfos: String
 ) {
-    //parse to default JsonObject (JsonObject::class.java)
-    var jsonObject: JsonObject = Gson().fromJson(jsonInfos, JsonObject::class.java)
-
     companion object {
         const val ONL_URL = "url"
 

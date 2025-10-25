@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.data.network.api
 
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
@@ -23,18 +24,18 @@ class MaziiDictionaryApi private constructor(private val converter: DictionaryRe
 
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
 
-    private lateinit var _url: String
-    private lateinit var _wordPath: String
-    private lateinit var _wordPayloadRequest: JsonObject
-    private lateinit var _kanjiPath: String
-    private lateinit var _kanjiPayloadRequest: JsonObject
+    private var _url: String
+    private var _wordPath: String
+    private var _wordPayloadRequest: JsonObject
+    private var _kanjiPath: String
+    private var _kanjiPayloadRequest: JsonObject
     init {
-        dict?.let {
-            _url = it.jsonObject.get(Dictionary.ONL_URL).asString
-            _wordPath = it.jsonObject.get(Dictionary.ONL_WORD_URLPATH).asString
-            _wordPayloadRequest = it.jsonObject.get(Dictionary.ONL_WORD_PAYLOADREQUEST).asJsonObject
-            _kanjiPath = it.jsonObject.get(Dictionary.ONL_KANJI_URLPATH).asString
-            _kanjiPayloadRequest = it.jsonObject.get(Dictionary.ONL_KANJI_PAYLOADREQUEST).asJsonObject
+        Gson().fromJson(dict?.jsonInfos, JsonObject::class.java).let {
+            _url = it.get(Dictionary.ONL_URL).asString
+            _wordPath = it.get(Dictionary.ONL_WORD_URLPATH).asString
+            _wordPayloadRequest = it.get(Dictionary.ONL_WORD_PAYLOADREQUEST).asJsonObject
+            _kanjiPath = it.get(Dictionary.ONL_KANJI_URLPATH).asString
+            _kanjiPayloadRequest = it.get(Dictionary.ONL_KANJI_PAYLOADREQUEST).asJsonObject
         }
     }
     private val instance: RetrofitApi by lazy {

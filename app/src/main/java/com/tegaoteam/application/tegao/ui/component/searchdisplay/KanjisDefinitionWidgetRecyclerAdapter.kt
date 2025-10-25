@@ -20,7 +20,7 @@ import com.tegaoteam.application.tegao.utils.setTextWithVisibility
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
 
-class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: LifecycleOwner, private var kanjiList: List<Kanji> = listOf()): RecyclerView.Adapter<KanjisDefinitionWidgetRecyclerAdapter.WidgetManager>() {
+class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: LifecycleOwner, private var kanjiList: List<Kanji> = listOf(), private val onTabChangedListener: (String) -> Unit = {}): RecyclerView.Adapter<KanjisDefinitionWidgetRecyclerAdapter.WidgetManager>() {
     private val charPickAdapter = ThemedChipListAdapter(lifecycleOwner, ItemCharacterPickChipBinding::inflate)
 
     override fun onCreateViewHolder(
@@ -34,7 +34,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
         holder: WidgetManager,
         position: Int
     ) {
-        holder.initBind(kanjiList)
+        holder.initBind(kanjiList, onTabChangedListener)
     }
 
     override fun getItemCount(): Int {
@@ -48,10 +48,11 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
     }
 
     class WidgetManager private constructor(private val lifecycleOwner: LifecycleOwner, private val binding: WidgetKanjisDefinitionTabBinding, private val chipAdapter: ThemedChipListAdapter<ItemCharacterPickChipBinding>): RecyclerView.ViewHolder(binding.root) {
-        fun initBind(list: List<Kanji>) {
+        fun initBind(list: List<Kanji>, onTabChangedListener: (String) -> Unit) {
             chipAdapter.submitListWithClickListener(list.map{ ThemedChipItem.fromKanji(it) }) { kanjiId ->
                 //TODO: Notify Adapter of character change when click
                 updateBind(list.find { it.character == kanjiId }?: Kanji.default())
+                onTabChangedListener.invoke(kanjiId)
                 Timber.i("Kanji selected -> [$kanjiId]")
             }
             binding.ctrlKanjisTabPickRcy.adapter = chipAdapter

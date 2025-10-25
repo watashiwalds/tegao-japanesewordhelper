@@ -1,28 +1,29 @@
 package com.tegaoteam.application.tegao.ui.lookup
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.application
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.tegaoteam.application.tegao.domain.interf.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.passage.DictionaryPassage
 import com.tegaoteam.application.tegao.domain.model.RepoResult
+import com.tegaoteam.application.tegao.domain.model.SearchHistory
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.EventBeacon
+import com.tegaoteam.application.tegao.utils.getCurrentTimestamp
 import com.tegaoteam.application.tegao.utils.toSafeQueryString
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
+class LookupActivityViewModel(private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
     //Coroutine stuff
     //old way (?)
 //    private var viewModelJob = Job()
@@ -31,7 +32,8 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
     private var searchJob: Job? = null
 
     //Search string using when tap Search button
-    private var _userSearchString = MutableLiveData<String>()
+    private val _userSearchString = MutableLiveData<String>().apply { value = "" }
+    val userSearchString: LiveData<String> = _userSearchString
     fun setSearchString(s: String) {
         _userSearchString.value = s.toSafeQueryString()
         Timber.i("Safe string query return ${_userSearchString.value}")
@@ -77,6 +79,7 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
         //TODO: Proper displaying onSearch status in Activity, not by toasting text
         AppToast.show("Now searching...", AppToast.LENGTH_SHORT)
         _indevRetrofitResult.value = "Now searching..."
+
         searchJob = viewModelScope.launch(Dispatchers.IO) {
             val result = when (lookupMode.value) {
                 GlobalState.LookupMode.WORD -> dictionaryHub.searchWord(_userSearchString.value!!, selectedDictionaryId)
@@ -103,9 +106,36 @@ class LookupActivityViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    fun logSearch(keyword: String) {
+        when (lookupMode.value) {
+            GlobalState.LookupMode.WORD -> searchHistoryRepo.logSearch(SearchHistory(
+                type = SearchHistory.TYPE_WORD,
+                keyword = keyword,
+                searchDate = getCurrentTimestamp().toString()
+            ))
+            GlobalState.LookupMode.KANJI -> searchHistoryRepo.logSearch(SearchHistory(
+                type = SearchHistory.TYPE_KANJI,
+                keyword = keyword,
+                searchDate = getCurrentTimestamp().toString()
+            ))
+        }
+    }
+
     //when viewModel being cleared (activity dismiss)
     override fun onCleared() {
         super.onCleared()
         searchJob?.cancel()
+    }
+
+    companion object {
+        class ViewModelFactory(private val repo: SearchHistoryRepo) : ViewModelProvider.Factory {
+            @Suppress("unchecked_cast")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(LookupActivityViewModel::class.java)) {
+                    return LookupActivityViewModel(repo) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class")
+            }
+        }
     }
 }

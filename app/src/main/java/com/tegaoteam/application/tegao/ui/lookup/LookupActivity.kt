@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemOptionOnlyChipBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
@@ -75,11 +76,13 @@ class LookupActivity : AppCompatActivity() {
     }
 
     private fun initVariables() {
-        _viewModel = ViewModelProvider(this).get(LookupActivityViewModel::class.java)
+        _viewModel = ViewModelProvider(this, LookupActivityViewModel.Companion.ViewModelFactory(SearchHistoryHub()))[LookupActivityViewModel::class.java]
         _binding.viewModel = _viewModel
 
         _wordSearchResultAdapter = WordDefinitionCardListAdapter(this)
-        _kanjiSearchResultAdapter = KanjisDefinitionWidgetRecyclerAdapter(this)
+        _kanjiSearchResultAdapter = KanjisDefinitionWidgetRecyclerAdapter(this) { kanjiId ->
+            _viewModel.logSearch(kanjiId)
+        }
     }
 
     private fun initListeners() {
@@ -169,7 +172,10 @@ class LookupActivity : AppCompatActivity() {
         _binding.loSearchResultCst.toggleVisibility(true)
         @Suppress("unchecked_cast")
         when (GlobalState.lookupMode.value) {
-            GlobalState.LookupMode.WORD -> _wordSearchResultAdapter.submitList(list as List<Word>)
+            GlobalState.LookupMode.WORD -> {
+                _wordSearchResultAdapter.submitList(list as List<Word>)
+                _viewModel.logSearch(_viewModel.userSearchString.value!!)
+            }
             GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter.submitList(list as List<Kanji>)
         }
     }

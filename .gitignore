@@ -1,0 +1,30 @@
+# --- System files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- IDE & Editor ---
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+
+# --- NodeJS ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Others ---
+*.log
+*.tmp

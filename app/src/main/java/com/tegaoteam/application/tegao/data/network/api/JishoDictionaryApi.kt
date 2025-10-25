@@ -8,7 +8,6 @@ import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.data.network.converter.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.converter.JishoResponseConverter
-import com.tegaoteam.application.tegao.domain.interf.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
@@ -16,7 +15,7 @@ import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.utils.toMap
 import okhttp3.ResponseBody
 
-class JishoDictionaryApi private constructor (private val converter: DictionaryResponseConverter): DictionaryRepo {
+class JishoDictionaryApi private constructor (private val converter: DictionaryResponseConverter): DictionaryNetworkApi {
 
     companion object {
         val api by lazy {

@@ -5,5 +5,5 @@ import com.tegaoteam.application.tegao.data.hub.DictionaryHub
 
 object DictionaryPassage {
     fun getDictionariesList() = DictionaryConfig.getDictionariesList()
-    fun getDictionaryHub() = DictionaryHub
+    fun getDictionaryHub() = DictionaryHub()
 }

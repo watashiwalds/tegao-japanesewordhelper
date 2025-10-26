@@ -12,7 +12,7 @@ import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ItemDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
-import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
+import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 
 class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<Word.Definition, DefinitionListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -33,8 +33,8 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
         fun bind(index: Int, definition: Word.Definition, lifecycleOwner: LifecycleOwner) {
             binding.loIndexTxt.text = String.format("${index+1}")
 
-            binding.loDefinitionTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loDefinitionTagsRcy.context)
-            if (binding.loDefinitionTagsRcy.itemDecorationCount == 0) binding.loDefinitionTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+            binding.loDefinitionTagsRcy.layoutManager = DisplayHelper.makeRowFlexboxLayoutManager(binding.loDefinitionTagsRcy.context)
+            if (binding.loDefinitionTagsRcy.itemDecorationCount == 0) binding.loDefinitionTagsRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
             binding.loDefinitionTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(definition.tags) }
 
             binding.definition.text = definition.meaning

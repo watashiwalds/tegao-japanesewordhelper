@@ -15,7 +15,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
-import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
+import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.utils.setTextWithVisibility
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
@@ -75,8 +75,8 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             binding.kanjiStroke.setTextWithVisibility(kanji.character)
 
             binding.loTagsRcy.apply {
-                layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(context)
-                if (itemDecorationCount == 0) addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+                layoutManager = DisplayHelper.makeRowFlexboxLayoutManager(context)
+                if (itemDecorationCount == 0) addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
                 adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags) }
             }
 

@@ -11,7 +11,7 @@ import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.CardWordDefinitionBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
-import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
+import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.utils.setTextWithVisibility
 
 class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<Word, WordDefinitionCardListAdapter.ViewHolder>(DiffCallback()) {
@@ -38,8 +38,8 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
             binding.additionalInfo.setTextWithVisibility(word.additionalInfo?.joinToString("\n") { it.second })
 
             //display func for tags
-            binding.loWordTagsRcy.layoutManager = DisplayFunctionMaker.makeRowFlexboxLayoutManager(binding.loWordTagsRcy.context)
-            if (binding.loWordTagsRcy.itemDecorationCount == 0) binding.loWordTagsRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
+            binding.loWordTagsRcy.layoutManager = DisplayHelper.makeRowFlexboxLayoutManager(binding.loWordTagsRcy.context)
+            if (binding.loWordTagsRcy.itemDecorationCount == 0) binding.loWordTagsRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
             binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(word.tags) }
 
             //TODO: Write DefinitionListAdapter to make definition list for RecyclerView

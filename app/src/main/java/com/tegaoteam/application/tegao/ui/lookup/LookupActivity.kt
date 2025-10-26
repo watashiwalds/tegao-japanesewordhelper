@@ -27,7 +27,7 @@ import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefiniti
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
-import com.tegaoteam.application.tegao.ui.shared.DisplayFunctionMaker
+import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 
@@ -149,7 +149,7 @@ class LookupActivity : AppCompatActivity() {
             _viewModel.selectedDictionaryId = dictId
             _viewModel.evStartSearch.ignite()
         }
-        _binding.loDictionaryChipRcy.addItemDecoration(DisplayFunctionMaker.LinearDividerItemDecoration.make(
+        _binding.loDictionaryChipRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(
             0,
             TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_tiny)))
         _binding.loDictionaryChipRcy.adapter = dictChipAdapter

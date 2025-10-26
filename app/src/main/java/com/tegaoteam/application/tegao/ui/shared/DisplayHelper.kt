@@ -23,6 +23,14 @@ object DisplayHelper {
                 alignItems = AlignItems.FLEX_START
             }
         }
+        fun gridEven(context: Context): FlexboxLayoutManager {
+            return FlexboxLayoutManager(context).apply {
+                flexDirection = FlexDirection.ROW
+                flexWrap = FlexWrap.WRAP
+                justifyContent = JustifyContent.SPACE_EVENLY
+                alignItems = AlignItems.FLEX_START
+            }
+        }
     }
 
     class LinearDividerItemDecoration private constructor(

@@ -5,13 +5,25 @@ import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
 class SearchHistoryHub: SearchHistoryRepo {
     private val historyDb = SQLiteDatabase.getInstance(TegaoApplication.instance.applicationContext).searchHistoryDAO
 
-    override fun getSearchedWords() = historyDb.getSearchedWords().map { it.map { entity -> entity.toDomainSearchHistory() } }
-    override fun getSearchedKanjis() = historyDb.getSearchedKanjis().map { it.map { entity -> entity.toDomainSearchHistory() } }
-    override suspend fun logSearch(entry: SearchHistory) { historyDb.upsert(SearchHistoryEntity.fromDomainSearchHistory(entry)) }
+    override fun getSearchedWords(): Flow<List<SearchHistory>> {
+        val flow = historyDb.getSearchedWords().map { it.map { entity -> entity.toDomainSearchHistory() } }
+        Timber.i("Repo return Flow<Word History>")
+        return flow
+    }
+    override fun getSearchedKanjis(): Flow<List<SearchHistory>> {
+        val flow = historyDb.getSearchedKanjis().map { it.map { entity -> entity.toDomainSearchHistory() } }
+        Timber.i("Repo return Flow<Kanji History>")
+        return flow
+    }
+    override suspend fun logSearch(entry: SearchHistory) {
+        Timber.i("Perform Room history logging $entry")
+        historyDb.upsert(SearchHistoryEntity.fromDomainSearchHistory(entry))
+    }
 }

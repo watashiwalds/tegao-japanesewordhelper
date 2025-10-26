@@ -108,20 +108,19 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, config
     }
 
     fun logSearch(keyword: String) {
-        logJob = viewModelScope.launch(Dispatchers.IO) {
+        logJob =
             when (lookupMode.value) {
-                GlobalState.LookupMode.WORD -> searchHistoryRepo.logSearch(SearchHistory(
+                GlobalState.LookupMode.WORD -> viewModelScope.launch(Dispatchers.IO) { searchHistoryRepo.logSearch(SearchHistory(
                     type = SearchHistory.TYPE_WORD,
                     keyword = keyword,
                     searchDate = getCurrentTimestamp().toString()
-                ))
-                GlobalState.LookupMode.KANJI -> searchHistoryRepo.logSearch(SearchHistory(
+                )) }
+                GlobalState.LookupMode.KANJI -> viewModelScope.launch(Dispatchers.IO) { searchHistoryRepo.logSearch(SearchHistory(
                     type = SearchHistory.TYPE_KANJI,
                     keyword = keyword,
                     searchDate = getCurrentTimestamp().toString()
-                ))
+                )) }
             }
-        }
     }
 
     //when viewModel being cleared (activity dismiss)

@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val configRepo: ConfigRepo, private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
+class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, configRepo: ConfigRepo, private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
     //Coroutine stuff
     //old way (?)
 //    private var viewModelJob = Job()

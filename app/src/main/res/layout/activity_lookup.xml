@@ -15,7 +15,8 @@
     <FrameLayout
         android:id="@+id/before_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background_fill">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"

@@ -46,7 +46,7 @@ class SearchHistoryListAdapter<T: ViewDataBinding>(
             oldItem: SearchHistoryItem,
             newItem: SearchHistoryItem
         ): Boolean {
-            return oldItem.keyword == newItem.keyword
+            return oldItem.searchDate == newItem.searchDate
         }
 
         override fun areContentsTheSame(

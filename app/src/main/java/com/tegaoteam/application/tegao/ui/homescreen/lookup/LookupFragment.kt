@@ -16,7 +16,6 @@ import com.tegaoteam.application.tegao.databinding.FragmentLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryKanjiBinding
 import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryWordBinding
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
-import com.tegaoteam.application.tegao.ui.homescreen.lookup.searchhistory.SearchHistoryItem
 import com.tegaoteam.application.tegao.ui.homescreen.lookup.searchhistory.SearchHistoryListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
@@ -42,6 +41,8 @@ class LookupFragment : Fragment() {
         initVariables()
         initObservers()
 
+        makeStartState()
+
         return _binding.root
     }
 
@@ -55,12 +56,12 @@ class LookupFragment : Fragment() {
         _wordSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryWordBinding::inflate) { keyword ->
             Timber.i("Word history search $keyword")
         }.apply {
-            submitList(_viewModel.wordSearchHistories.value?.map { entry -> SearchHistoryItem.fromDomainSearchHistory(entry) })
+//            submitList(_viewModel.wordSearchHistories.value?.map { entry -> SearchHistoryItem.fromDomainSearchHistory(entry) })
         }
         _kanjiSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryKanjiBinding::inflate) { keyword ->
             Timber.i("Kanji history search $keyword")
         }.apply {
-            submitList(_viewModel.kanjiSearchHistories.value?.map { entry -> SearchHistoryItem.fromDomainSearchHistory(entry) })
+//            submitList(_viewModel.kanjiSearchHistories.value?.map { entry -> SearchHistoryItem.fromDomainSearchHistory(entry) })
         }
 
         _searchHistoryLinearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -85,6 +86,12 @@ class LookupFragment : Fragment() {
                 updateSearchHistoryAdapter()
             }
         }
+        _viewModel.wordSearchHistories.observe(viewLifecycleOwner) { list ->
+            _wordSearchHistoryAdapter.submitList(list)
+        }
+        _viewModel.kanjiSearchHistories.observe(viewLifecycleOwner) { list ->
+            _kanjiSearchHistoryAdapter.submitList(list)
+        }
     }
 
     private fun updateSearchHistoryAdapter() {
@@ -107,6 +114,10 @@ class LookupFragment : Fragment() {
             }
             toggleVisibility(true)
         }
+    }
+
+    private fun makeStartState() {
+        _binding.historyListRcy.adapter = _wordSearchHistoryAdapter
     }
 
     private fun navigatingToLookup() {

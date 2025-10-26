@@ -32,4 +32,4 @@ yarn-error.log*
 JMdict
 JMdict_e.gz
 
-.evn
+.env

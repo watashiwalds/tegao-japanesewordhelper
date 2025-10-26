@@ -75,7 +75,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             binding.kanjiStroke.setTextWithVisibility(kanji.character)
 
             binding.loTagsRcy.apply {
-                layoutManager = DisplayHelper.makeRowFlexboxLayoutManager(context)
+                layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(context)
                 if (itemDecorationCount == 0) addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
                 adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags) }
             }

@@ -13,12 +13,15 @@ import com.google.android.flexbox.JustifyContent
 import com.tegaoteam.application.tegao.TegaoApplication
 
 object DisplayHelper {
-    fun makeRowFlexboxLayoutManager(context: Context): FlexboxLayoutManager {
-        return FlexboxLayoutManager(context).apply {
-            flexDirection = FlexDirection.ROW
-            flexWrap = FlexWrap.WRAP
-            justifyContent = JustifyContent.FLEX_START
-            alignItems = AlignItems.FLEX_START
+
+    object FlexboxLayoutManagerMaker {
+        fun rowStart(context: Context): FlexboxLayoutManager {
+            return FlexboxLayoutManager(context).apply {
+                flexDirection = FlexDirection.ROW
+                flexWrap = FlexWrap.WRAP
+                justifyContent = JustifyContent.FLEX_START
+                alignItems = AlignItems.FLEX_START
+            }
         }
     }
 

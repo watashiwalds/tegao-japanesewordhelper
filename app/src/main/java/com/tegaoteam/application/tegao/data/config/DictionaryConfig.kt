@@ -1,6 +1,6 @@
 package com.tegaoteam.application.tegao.data.config
 
-import com.tegaoteam.application.tegao.data.network.api.DictionaryNetworkApi
+import com.tegaoteam.application.tegao.domain.interf.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.data.network.api.JishoDictionaryApi
 import com.tegaoteam.application.tegao.data.network.api.MaziiDictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary

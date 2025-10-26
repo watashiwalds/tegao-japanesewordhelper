@@ -2,7 +2,7 @@ package com.tegaoteam.application.tegao.data.hub
 
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
-import com.tegaoteam.application.tegao.domain.interf.SearchHistoryRepo
+import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
 import kotlinx.coroutines.flow.map
 import timber.log.Timber

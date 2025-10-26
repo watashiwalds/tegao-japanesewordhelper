@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.domain.interf
+package com.tegaoteam.application.tegao.domain.repo
 
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
 import kotlinx.coroutines.flow.Flow

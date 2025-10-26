@@ -6,12 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.tegaoteam.application.tegao.domain.interf.SearchHistoryRepo
+import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.model.Kanji
-import com.tegaoteam.application.tegao.domain.passage.DictionaryPassage
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.domain.repo.ConfigRepo
+import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.EventBeacon
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class LookupActivityViewModel(private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
+class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val configRepo: ConfigRepo, private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
     //Coroutine stuff
     //old way (?)
 //    private var viewModelJob = Job()
@@ -53,14 +54,13 @@ class LookupActivityViewModel(private val searchHistoryRepo: SearchHistoryRepo):
     val searchResultList: LiveData<List<Any>> = _searchResultList
 
     //Dictionary available
-    val availableDictionariesList = DictionaryPassage.getDictionariesList()
+    val availableDictionariesList = configRepo.getAvailableDictionariesList()
     var selectedDictionaryId: String = ""
 
     private var _indevRetrofitResult = MutableLiveData<String>()
     val indevRetrofitResult: LiveData<String> = _indevRetrofitResult
 
     //Start search on selected source
-    val dictionaryHub = DictionaryPassage.getDictionaryHub()
     val evStartSearch = EventBeacon()
 
     //show devtest textview in case of
@@ -82,8 +82,8 @@ class LookupActivityViewModel(private val searchHistoryRepo: SearchHistoryRepo):
 
         searchJob = viewModelScope.launch(Dispatchers.IO) {
             val result = when (lookupMode.value) {
-                GlobalState.LookupMode.WORD -> dictionaryHub.searchWord(_userSearchString.value!!, selectedDictionaryId)
-                GlobalState.LookupMode.KANJI -> dictionaryHub.searchKanji(_userSearchString.value!!, selectedDictionaryId)
+                GlobalState.LookupMode.WORD -> dictionaryRepo.searchWord(_userSearchString.value!!, selectedDictionaryId)
+                GlobalState.LookupMode.KANJI -> dictionaryRepo.searchKanji(_userSearchString.value!!, selectedDictionaryId)
             }
             withContext(Dispatchers.Main) {
                 when (result) {
@@ -128,11 +128,15 @@ class LookupActivityViewModel(private val searchHistoryRepo: SearchHistoryRepo):
     }
 
     companion object {
-        class ViewModelFactory(private val repo: SearchHistoryRepo) : ViewModelProvider.Factory {
+        class ViewModelFactory(
+            private val dictionaryRepo: DictionaryRepo,
+            private val configRepo: ConfigRepo,
+            private val searchHistoryRepo: SearchHistoryRepo
+        ) : ViewModelProvider.Factory {
             @Suppress("unchecked_cast")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(LookupActivityViewModel::class.java)) {
-                    return LookupActivityViewModel(repo) as T
+                    return LookupActivityViewModel(dictionaryRepo, configRepo, searchHistoryRepo) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

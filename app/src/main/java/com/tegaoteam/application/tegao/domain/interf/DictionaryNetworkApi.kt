@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.data.network.api
+package com.tegaoteam.application.tegao.domain.interf
 
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji

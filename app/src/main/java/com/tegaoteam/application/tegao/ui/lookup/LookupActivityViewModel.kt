@@ -31,6 +31,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, config
 //    private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
     //switch to use viewModelScope instead
     private var searchJob: Job? = null
+    private var logJob: Job? = null
 
     //Search string using when tap Search button
     private val _userSearchString = MutableLiveData<String>().apply { value = "" }
@@ -107,17 +108,19 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, config
     }
 
     fun logSearch(keyword: String) {
-        when (lookupMode.value) {
-            GlobalState.LookupMode.WORD -> searchHistoryRepo.logSearch(SearchHistory(
-                type = SearchHistory.TYPE_WORD,
-                keyword = keyword,
-                searchDate = getCurrentTimestamp().toString()
-            ))
-            GlobalState.LookupMode.KANJI -> searchHistoryRepo.logSearch(SearchHistory(
-                type = SearchHistory.TYPE_KANJI,
-                keyword = keyword,
-                searchDate = getCurrentTimestamp().toString()
-            ))
+        logJob = viewModelScope.launch(Dispatchers.IO) {
+            when (lookupMode.value) {
+                GlobalState.LookupMode.WORD -> searchHistoryRepo.logSearch(SearchHistory(
+                    type = SearchHistory.TYPE_WORD,
+                    keyword = keyword,
+                    searchDate = getCurrentTimestamp().toString()
+                ))
+                GlobalState.LookupMode.KANJI -> searchHistoryRepo.logSearch(SearchHistory(
+                    type = SearchHistory.TYPE_KANJI,
+                    keyword = keyword,
+                    searchDate = getCurrentTimestamp().toString()
+                ))
+            }
         }
     }
 

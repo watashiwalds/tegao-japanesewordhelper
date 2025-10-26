@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SearchHistoryDAO {
-    @Upsert fun upsert(entry: SearchHistoryEntity)
+    @Upsert suspend fun upsert(entry: SearchHistoryEntity)
 
     @Query("select * from ${SearchHistoryEntity.TABLE_NAME} " +
             "where ${SearchHistoryEntity.COL_TYPE} = ${SearchHistory.TYPE_WORD} " +

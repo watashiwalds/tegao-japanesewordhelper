@@ -13,5 +13,5 @@ class SearchHistoryHub: SearchHistoryRepo {
 
     override fun getSearchedWords() = historyDb.getSearchedWords().map { it.map { entity -> entity.toDomainSearchHistory() } }
     override fun getSearchedKanjis() = historyDb.getSearchedKanjis().map { it.map { entity -> entity.toDomainSearchHistory() } }
-    override fun logSearch(entry: SearchHistory) { historyDb.upsert(SearchHistoryEntity.fromDomainSearchHistory(entry)) }
+    override suspend fun logSearch(entry: SearchHistory) { historyDb.upsert(SearchHistoryEntity.fromDomainSearchHistory(entry)) }
 }

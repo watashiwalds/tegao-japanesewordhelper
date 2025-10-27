@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Tegao</string>
-    <string name="putJPhere_hint">日本語, にほんご, nihongo, …</string>
+    <string name="hint_example_keyword">日本語, にほんご, nihongo, …</string>
     <string name="title_words">Từ vựng</string>
     <string name="title_kanji">Hán tự</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_search_history_empty">Chưa có lịch sử tìm kiếm</string>
     <string name="title_more_info">Thông tin thêm</string>
     <string name="title_search_history_count">Đã tìm kiếm %d từ khoá</string>
+    <string name="hint_enter_search_keyword_here">Nhập từ khoá 漢字, かな, romaji, ...</string>
 </resources>

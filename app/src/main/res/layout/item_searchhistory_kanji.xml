@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/Theme.Tegao.ContentText.Large"
+            style="@style/Theme.Tegao.ContentText.ThinlyLarge"
             android:singleLine="true"
             android:lineSpacingMultiplier="0.8"
             android:text="@{searchedKeyword}"

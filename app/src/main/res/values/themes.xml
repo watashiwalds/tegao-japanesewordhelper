@@ -95,6 +95,10 @@
         <item name="android:lineSpacingExtra">0dp</item>
         <item name="android:lineSpacingMultiplier">0.8</item>
     </style>
+    <style name="Theme.Tegao.ContentText.ThinlyLarge">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/textSize_large</item>
+    </style>
     <style name="Theme.Tegao.ContentText.Normal">
         <item name="fontFamily">@font/roboto_light</item>
         <item name="android:textSize">@dimen/textSize_normal</item>

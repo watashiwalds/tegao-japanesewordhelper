@@ -4,6 +4,7 @@
     <string name="title_words">Từ vựng</string>
     <string name="title_kanji">Hán tự</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_search_recently">Tra cứu gần đây</string>
+    <string name="title_search_history_empty">Chưa có lịch sử tìm kiếm</string>
     <string name="title_more_info">Thông tin thêm</string>
+    <string name="title_search_history_count">Đã tìm kiếm %d từ khoá</string>
 </resources>

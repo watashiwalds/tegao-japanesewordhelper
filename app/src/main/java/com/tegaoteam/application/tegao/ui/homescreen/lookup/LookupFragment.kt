@@ -41,7 +41,7 @@ class LookupFragment : Fragment() {
         initVariables()
         initObservers()
 
-        updateSearchHistoryAdapter()
+        updateSearchHistoryDisplay()
 
         return _binding.root
     }
@@ -73,30 +73,32 @@ class LookupFragment : Fragment() {
         _viewModel.evChangeToWordMode.beacon.observe(viewLifecycleOwner) {
             if (_viewModel.evChangeToWordMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.WORD)
-                updateSearchHistoryAdapter()
+                updateSearchHistoryDisplay()
             }
         }
         _viewModel.evChangeToKanjiMode.beacon.observe(viewLifecycleOwner) {
             if (_viewModel.evChangeToKanjiMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.KANJI)
-                updateSearchHistoryAdapter()
+                updateSearchHistoryDisplay()
             }
         }
         _viewModel.wordSearchHistories.observe(viewLifecycleOwner) { list ->
             Timber.i("WordHistory changed, size = ${list.size}")
             _wordSearchHistoryAdapter.submitList(list)
+            if (_viewModel.lookupMode.value == GlobalState.LookupMode.WORD) updateSearchHistoryCount(list.size)
         }
         _viewModel.kanjiSearchHistories.observe(viewLifecycleOwner) { list ->
             Timber.i("KanjiHistory changed, size = ${list.size}")
             _kanjiSearchHistoryAdapter.submitList(list)
+            if (_viewModel.lookupMode.value == GlobalState.LookupMode.KANJI) updateSearchHistoryCount(list.size)
         }
         _viewModel.lookupMode.observe(viewLifecycleOwner) { value ->
-            updateSearchHistoryAdapter()
+            updateSearchHistoryDisplay()
         }
     }
 
-    private fun updateSearchHistoryAdapter() {
-        Timber.i("Updating historyAdapter according with mode ${_viewModel.lookupMode.value}")
+    private fun updateSearchHistoryDisplay() {
+        Timber.i("Updating search history display according with mode ${_viewModel.lookupMode.value}")
         val toAdapter = when (_viewModel.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchHistoryAdapter
             GlobalState.LookupMode.KANJI -> _kanjiSearchHistoryAdapter
@@ -114,7 +116,14 @@ class LookupFragment : Fragment() {
                 requestLayout()
             }
             toggleVisibility(true)
+            updateSearchHistoryCount(adapter?.itemCount?: 0)
         }
+    }
+
+    private fun updateSearchHistoryCount(count: Int) {
+        _binding.loTitleHistoryTxt.text =
+            if (count > 0) getString(R.string.title_search_history_count, count)
+            else getString(R.string.title_search_history_empty)
     }
 
     private fun navigatingToLookup() {

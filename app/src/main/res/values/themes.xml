@@ -41,12 +41,19 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="android:background">@null</item>
         <item name="tint">@color/text_normal</item>
+        <item name="android:clipToPadding">false</item>
     </style>
     <style name="Theme.Tegao.ImageButton.HasPadding">
-        <item name="android:padding">3dp</item>
+        <item name="android:paddingStart">3dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingEnd">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
     </style>
     <style name="Theme.Tegao.ImageButton.HasBigPadding">
-        <item name="android:padding">4dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
     </style>
 
     <style name="Theme.Tegao.TextButton">

@@ -90,6 +90,9 @@ class LookupFragment : Fragment() {
             Timber.i("KanjiHistory changed, size = ${list.size}")
             _kanjiSearchHistoryAdapter.submitList(list)
         }
+        _viewModel.lookupMode.observe(viewLifecycleOwner) { value ->
+            updateSearchHistoryAdapter()
+        }
     }
 
     private fun updateSearchHistoryAdapter() {

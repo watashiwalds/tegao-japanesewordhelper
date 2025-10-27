@@ -41,7 +41,7 @@ class LookupFragment : Fragment() {
         initVariables()
         initObservers()
 
-        makeStartState()
+        updateSearchHistoryAdapter()
 
         return _binding.root
     }
@@ -55,13 +55,9 @@ class LookupFragment : Fragment() {
 
         _wordSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryWordBinding::inflate) { keyword ->
             Timber.i("Word history search $keyword")
-        }.apply {
-//            submitList(_viewModel.wordSearchHistories.value?.map { entry -> SearchHistoryItem.fromDomainSearchHistory(entry) })
         }
         _kanjiSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryKanjiBinding::inflate) { keyword ->
             Timber.i("Kanji history search $keyword")
-        }.apply {
-//            submitList(_viewModel.kanjiSearchHistories.value?.map { entry -> SearchHistoryItem.fromDomainSearchHistory(entry) })
         }
 
         _searchHistoryLinearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -87,9 +83,11 @@ class LookupFragment : Fragment() {
             }
         }
         _viewModel.wordSearchHistories.observe(viewLifecycleOwner) { list ->
+            Timber.i("WordHistory changed, size = ${list.size}")
             _wordSearchHistoryAdapter.submitList(list)
         }
         _viewModel.kanjiSearchHistories.observe(viewLifecycleOwner) { list ->
+            Timber.i("KanjiHistory changed, size = ${list.size}")
             _kanjiSearchHistoryAdapter.submitList(list)
         }
     }
@@ -114,10 +112,6 @@ class LookupFragment : Fragment() {
             }
             toggleVisibility(true)
         }
-    }
-
-    private fun makeStartState() {
-        _binding.historyListRcy.adapter = _wordSearchHistoryAdapter
     }
 
     private fun navigatingToLookup() {

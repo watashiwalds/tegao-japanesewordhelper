@@ -1,9 +1,12 @@
 package com.tegaoteam.application.tegao.ui.homescreen.lookup
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +20,8 @@ import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryKanjiBinding
 import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryWordBinding
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.ui.homescreen.lookup.searchhistory.SearchHistoryListAdapter
+import com.tegaoteam.application.tegao.ui.lookup.LookupActivity
+import com.tegaoteam.application.tegao.ui.lookup.LookupActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.toggleVisibility
@@ -55,9 +60,11 @@ class LookupFragment : Fragment() {
 
         _wordSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryWordBinding::inflate) { keyword ->
             Timber.i("Word history search $keyword")
+            startActivity(LookupActivityGate.departIntent(requireContext(), keyword))
         }
         _kanjiSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryKanjiBinding::inflate) { keyword ->
             Timber.i("Kanji history search $keyword")
+            startActivity(LookupActivityGate.departIntent(requireContext(), keyword))
         }
 
         _searchHistoryLinearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -127,6 +134,11 @@ class LookupFragment : Fragment() {
     }
 
     private fun navigatingToLookup() {
-        findNavController().navigate(LookupFragmentDirections.actionLookupFragmentToLookupActivity())
+        val anim = ActivityOptionsCompat.makeCustomAnimation(
+            requireContext(),
+            R.anim.instant,
+            R.anim.instant
+        )
+        startActivity(LookupActivityGate.departIntent(requireContext(), ""), anim.toBundle())
     }
 }

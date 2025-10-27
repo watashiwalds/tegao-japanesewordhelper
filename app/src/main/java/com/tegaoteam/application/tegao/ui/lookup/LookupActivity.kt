@@ -62,7 +62,12 @@ class LookupActivity : AppCompatActivity() {
         displayDictionaryOptions()
         updateSearchResultAdapter()
 
-        makeStartState()
+        getActivityLaunchArgument().let {
+            if (it.isNullOrBlank())
+                makeCleanStartState()
+            else
+                makeRequestedSearchState(it)
+        }
     }
 
     // UX: User click outside the input box -> Input box lose focus
@@ -193,7 +198,16 @@ class LookupActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeStartState() {
+    private fun getActivityLaunchArgument(): String? {
+        return LookupActivityGate.arriveIntent(intent)
+    }
+
+    private fun makeCleanStartState() {
         _binding.keywordInputEdt.requestFocus()
+    }
+    private fun makeRequestedSearchState(keyword: String) {
+        _binding.keywordInputEdt.setText(keyword)
+        updateSearchString()
+        _viewModel.evStartSearch.ignite()
     }
 }

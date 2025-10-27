@@ -10,14 +10,6 @@
         android:name="com.tegaoteam.application.tegao.ui.homescreen.lookup.LookupFragment"
         android:label="fragment_lookup"
         tools:layout="@layout/fragment_lookup" >
-        <action
-            android:id="@+id/action_lookupFragment_to_lookupActivity"
-            app:destination="@id/lookupActivity"
-            app:enterAnim="@anim/instant"
-            app:exitAnim="@anim/instant" />
     </fragment>
-    <activity
-        android:id="@+id/lookupActivity"
-        android:name="com.tegaoteam.application.tegao.ui.lookup.LookupActivity"
-        android:label="LookupActivity" />
+
 </navigation>

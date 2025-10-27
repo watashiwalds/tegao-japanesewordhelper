@@ -184,7 +184,7 @@ class LookupActivity : AppCompatActivity() {
     fun updateSearchResultValue(list: List<Any>) {
         _binding.loSearchResultCst.toggleVisibility(true)
         @Suppress("unchecked_cast")
-        when (GlobalState.lookupMode.value) {
+        when (_viewModel.lookupMode.value) {
             GlobalState.LookupMode.WORD -> {
                 _wordSearchResultAdapter.submitList(list as List<Word>)
                 _viewModel.logSearch(_viewModel.userSearchString.value!!)

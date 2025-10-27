@@ -24,6 +24,7 @@ class SearchHistoryHub: SearchHistoryRepo {
     }
     override suspend fun logSearch(entry: SearchHistory) {
         Timber.i("Perform Room history logging $entry")
+        if (entry.keyword.isBlank() || entry.searchDate.isBlank()) return
         historyDb.upsert(SearchHistoryEntity.fromDomainSearchHistory(entry))
     }
 }

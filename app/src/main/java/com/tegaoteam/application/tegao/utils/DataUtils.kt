@@ -12,7 +12,7 @@ fun JsonObject.toMap(): Map<String, Any> {
 
 fun String.toSafeQueryString(): String {
     val regex = "[^\\p{L}\\p{Nd}\\s]+"
-    return this.replace(Regex(regex), "")
+    return this.replace(Regex(regex), "").trim()
 }
 
 fun getCurrentTimestamp(): Instant? = Instant.now()

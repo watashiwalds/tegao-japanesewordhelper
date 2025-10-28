@@ -17,6 +17,7 @@ import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.EventBeacon
+import com.tegaoteam.application.tegao.utils.HepburnStringConvert
 import com.tegaoteam.application.tegao.utils.getCurrentTimestamp
 import com.tegaoteam.application.tegao.utils.toSafeQueryString
 import kotlinx.coroutines.Dispatchers
@@ -38,8 +39,9 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     private val _userSearchString = MutableLiveData<String>().apply { value = "" }
     val userSearchString: LiveData<String> = _userSearchString
     fun setSearchString(s: String) {
-
-        _userSearchString.value = s.toSafeQueryString()
+        var t = s.toSafeQueryString()
+        if (settingRepo.isHepburnConverterEnable()) t = HepburnStringConvert.toHiragana(s)
+        _userSearchString.value = t
         Timber.i("Safe string query return ${_userSearchString.value}")
     }
 

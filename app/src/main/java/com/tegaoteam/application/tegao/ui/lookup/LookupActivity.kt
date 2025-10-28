@@ -116,6 +116,9 @@ class LookupActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
+        _viewModel.userSearchString.observe(this) { value ->
+            _binding.keywordInputEdt.setText(value)
+        }
         _viewModel.evClearSearchString.beacon.observe(this) {
             if (_viewModel.evClearSearchString.receive()) {
                 clearSearchString()

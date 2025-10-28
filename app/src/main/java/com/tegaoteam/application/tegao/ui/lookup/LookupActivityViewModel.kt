@@ -11,6 +11,7 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
 import com.tegaoteam.application.tegao.domain.model.Word
+import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
+class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val searchHistoryRepo: SearchHistoryRepo, private val addonRepo: AddonRepo): ViewModel() {
     //Coroutine stuff
     //old way (?)
 //    private var viewModelJob = Job()
@@ -65,6 +66,9 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
 
     //show devtest textview in case of
     val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
+
+    //pass addon state to xml
+    val isHandwritingAvailable = addonRepo.isHandwritingAvailable()
 
     fun searchKeyword() {
         //no keyword to search? bye
@@ -131,12 +135,13 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     companion object {
         class ViewModelFactory(
             private val dictionaryRepo: DictionaryRepo,
-            private val searchHistoryRepo: SearchHistoryRepo
+            private val searchHistoryRepo: SearchHistoryRepo,
+            private val addonRepo: AddonRepo
         ) : ViewModelProvider.Factory {
             @Suppress("unchecked_cast")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(LookupActivityViewModel::class.java)) {
-                    return LookupActivityViewModel(dictionaryRepo, searchHistoryRepo) as T
+                    return LookupActivityViewModel(dictionaryRepo, searchHistoryRepo, addonRepo) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

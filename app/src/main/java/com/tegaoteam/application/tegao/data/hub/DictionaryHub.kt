@@ -1,14 +1,18 @@
 package com.tegaoteam.application.tegao.data.hub
 
+import com.tegaoteam.application.tegao.data.config.DictionaryConfig
+import com.tegaoteam.application.tegao.domain.interf.DictionaryNetworkApi
+import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.domain.repo.ExtensionRepo
 
-class DictionaryHub(extensionRepo: ExtensionRepo): DictionaryRepo {
-    private val availApis = extensionRepo.getAvailableDictionaryNetworkApis()
-    private fun getDictionaryApiById(dictId: String) = availApis.firstOrNull() { it.dict?.id == dictId }
+class DictionaryHub: DictionaryRepo {
+    private fun getDictionaryApiById(dictId: String) = getAvailableDictionaryNetworkApis().firstOrNull() { it.dict?.id == dictId }
+
+    override fun getAvailableDictionariesList(): List<Dictionary> = DictionaryConfig.getDictionariesList()
+    override fun getAvailableDictionaryNetworkApis(): List<DictionaryNetworkApi> = DictionaryConfig.getDictionariesApi()
 
     override suspend fun searchWord(keyword: String, dictionaryId: String): RepoResult<List<Word>> {
         val requestedApi = getDictionaryApiById(dictionaryId)

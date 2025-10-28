@@ -11,7 +11,6 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.domain.repo.ExtensionRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
@@ -24,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, extensionRepo: ExtensionRepo, private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
+class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
     //Coroutine stuff
     //old way (?)
 //    private var viewModelJob = Job()
@@ -55,7 +54,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, extens
     val searchResultList: LiveData<List<Any>> = _searchResultList
 
     //Dictionary available
-    val availableDictionariesList = extensionRepo.getAvailableDictionariesList()
+    val availableDictionariesList = dictionaryRepo.getAvailableDictionariesList()
     var selectedDictionaryId: String = ""
 
     private var _indevRetrofitResult = MutableLiveData<String>()
@@ -132,13 +131,12 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, extens
     companion object {
         class ViewModelFactory(
             private val dictionaryRepo: DictionaryRepo,
-            private val extensionRepo: ExtensionRepo,
             private val searchHistoryRepo: SearchHistoryRepo
         ) : ViewModelProvider.Factory {
             @Suppress("unchecked_cast")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(LookupActivityViewModel::class.java)) {
-                    return LookupActivityViewModel(dictionaryRepo, extensionRepo, searchHistoryRepo) as T
+                    return LookupActivityViewModel(dictionaryRepo, searchHistoryRepo) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

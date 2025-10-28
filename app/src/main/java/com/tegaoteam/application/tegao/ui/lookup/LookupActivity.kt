@@ -13,14 +13,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
-import com.tegaoteam.application.tegao.data.hub.ExtensionHub
 import com.tegaoteam.application.tegao.data.hub.DictionaryHub
 import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemOptionOnlyChipBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.domain.repo.ExtensionRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefinitionWidgetRecyclerAdapter
@@ -39,7 +37,6 @@ class LookupActivity : AppCompatActivity() {
     private lateinit var _kanjiSearchResultAdapter: KanjisDefinitionWidgetRecyclerAdapter
 
     private lateinit var _dictionaryRepo: DictionaryRepo
-    private lateinit var _extensionRepo: ExtensionRepo
     private lateinit var _searchHistoryRepo: SearchHistoryRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,11 +87,10 @@ class LookupActivity : AppCompatActivity() {
     }
 
     private fun initVariables() {
-        _extensionRepo = ExtensionHub()
-        _dictionaryRepo = DictionaryHub(_extensionRepo)
+        _dictionaryRepo = DictionaryHub()
         _searchHistoryRepo = SearchHistoryHub()
 
-        _viewModel = ViewModelProvider(this, LookupActivityViewModel.Companion.ViewModelFactory(_dictionaryRepo, _extensionRepo, _searchHistoryRepo))[LookupActivityViewModel::class.java]
+        _viewModel = ViewModelProvider(this, LookupActivityViewModel.Companion.ViewModelFactory(_dictionaryRepo, _searchHistoryRepo))[LookupActivityViewModel::class.java]
         _binding.viewModel = _viewModel
 
         _wordSearchResultAdapter = WordDefinitionCardListAdapter(this)

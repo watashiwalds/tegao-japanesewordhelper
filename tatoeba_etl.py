@@ -1,97 +1,114 @@
 import sys
 import pandas as pd
-from db_config import get_connection
 import re
-from jmdict_etl import insert_example
 from tqdm import tqdm
+from janome.tokenizer import Tokenizer
+import psycopg2
+from io import StringIO
+from db_config import get_connection
 
-def get_or_create_source(cursor, name, update_date=None, description=None, version=None):
-    cursor.execute("""
-        INSERT INTO Sources (source_name, update_date, description, version)
-        VALUES (%s, %s, %s, %s)
-        ON CONFLICT (source_name) DO UPDATE
-            SET update_date = COALESCE(EXCLUDED.update_date, Sources.update_date),
-                description = COALESCE(EXCLUDED.description, Sources.description),
-                version = COALESCE(EXCLUDED.version, Sources.version)
-        RETURNING source_id
-    """, (name, update_date, description, version))
-    return cursor.fetchone()[0]
+tokenizer = Tokenizer()
 
-def load_tatoeba(tsv_path):
-    conn = get_connection()
-    if not conn:
-        print("Cannot proceed: Database connection failed.")
+def load_word_map(cursor):
+    cursor.execute("SELECT word_id, primary_reading, primary_writing FROM Words")
+    rows = cursor.fetchall()
+
+    word_map = {}
+    for word_id, reading, writing in rows:
+        if writing:
+            word_map[writing] = word_id
+        if reading and reading != writing:
+            word_map[reading] = word_id
+
+    return word_map
+
+def tokenize_japanese(sentence):
+    tokens = []
+    for token in tokenizer.tokenize(sentence):
+        lemma = token.base_form if token.base_form != '*' else token.surface
+        if lemma:
+            tokens.append(lemma)
+    return tokens
+
+def bulk_insert_examples(conn, data):
+    if not data:
         return
-
-    cur = conn.cursor()
-    src_id = get_or_create_source(cur, 'Tatoeba', update_date=None, description='Tatoeba sentences', version=None)
+    buffer = StringIO()
+    for row in data:
+        cleaned = []
+        for value in row:
+            if value is None:
+                cleaned.append('\\N')
+            else:
+                s = str(value)
+                s = s.replace('\r','\\r').replace('\n','\\n').replace('\t',' ')
+                cleaned.append(s)
+        buffer.write('\t'.join(cleaned) + '\n')
+    buffer.seek(0)
+    with conn.cursor() as cur:
+        cur.copy_from(buffer, 'examples', columns=('sense_id', 'sentence_jp', 'sentence_en'))
     conn.commit()
 
-    try:
-        df = pd.read_csv(tsv_path, sep='\t', header=None, names=['id_jp', 'sentence_jp', 'id_en', 'sentence_en'],
-                         on_bad_lines='skip')
-    except Exception as e:
-        print(f"Error loading TSV file: {e}")
+
+def load_tatoeba_optimized(tsv_path, batch_size = 5000):
+    conn = get_connection()
+    if not conn:
+        print('Database connection failed')
         sys.exit(1)
-    print(f"Loaded {len(df)} rows from TSV.")
+    cur = conn.cursor()
 
-    df_pairs = df[['sentence_jp', 'sentence_en']].rename(columns={'sentence_jp': 'jp', 'sentence_en': 'en'})
-    print(f"Found {len(df_pairs)} jp-en pairs.")
+    cur.execute("""
+        INSERT INTO Sources(source_name,description)
+        VALUES('Tatoeba', 'Optimized Tatoeba sentences')
+        ON CONFLICT (source_name) DO UPDATE SET description = excluded.description
+        RETURNING source_id
+    """)
+    src_id = cur.fetchone()[0]
+    conn.commit()
 
-    cur.execute("SELECT word_id, primary_reading, primary_writing FROM Words")
-    rows = cur.fetchall()
-    word_index = {}
-    for wid, read, write in rows:
-        if write:
-            word_index.setdefault(write, []).append(wid)
-        if read and read != write:
-            word_index.setdefault(read, []).append(wid)
-    print(f"Loaded {len(word_index)} unique words from Words table.")
-    if not word_index:
-        print("Warning: No words found in Words table, attempting to proceed anyway.")
+    word_map = load_word_map(cur)
 
     cur.execute("SELECT sense_id, word_id FROM Senses")
     senses = cur.fetchall()
     word_to_senses = {}
     for sense_id, word_id in senses:
         word_to_senses.setdefault(word_id, []).append(sense_id)
-    print(f"Loaded {len(senses)} senses from Senses table.")
+    print(f"Loaded {len(word_to_senses)} senses from DB")
 
-    pbar = tqdm(total=len(df_pairs), desc="Loading Tatoeba")
-    inserted_examples = 0
-    for idx, row in df_pairs.iterrows():
-        jp = str(row['jp']) if 'jp' in row else ''
-        en = str(row['en']) if 'en' in row else None
+    df = pd.read_csv(tsv_path, sep='\t', header=None,names=['id_jp','sentence_jp', 'id_en', 'sentence_en'],
+                     on_bad_lines='skip',dtype=str)
 
-        matched_word_ids = set()
-        for word, wids in word_index.items():
-            if re.search(r'\b' + re.escape(word) + r'\b', jp):
-                matched_word_ids.update(wids)
+    examples_to_insert =[]
+    total_inserted = 0
 
-        if matched_word_ids:
-            print(f"Matched {len(matched_word_ids)} words for sentence: {jp}")
+    for _, row in tqdm(df.iterrows(),total=len(df), desc='Processing Tatoeba'):
+        jp = str(row['sentence_jp']) if row['sentence_jp'] else ''
+        en = str(row['sentence_en']) if row['sentence_en'] else None
+        if not re.search(r'[ぁ-んァ-ン一-龥]',jp):
+            continue
+        tokens = tokenize_japanese(jp)
+        matched_word_ids = set(word_map.get(tok) for tok in tokens if tok in word_map)
 
-        for matched_word_id in matched_word_ids:
-            sense_ids = word_to_senses.get(matched_word_id, [])
+        for word_id in matched_word_ids:
+            if not word_id:
+                continue
+            sense_ids = word_to_senses.get(word_id)
             if not sense_ids:
                 cur.execute("""
-                            INSERT INTO Senses (word_id, definition_en, definition_vi, gloss, sense_number)
-                            VALUES (%s, %s, %s, %s, %s) RETURNING sense_id
-                            """, (matched_word_id, None, None, 'example_inserted', 1))
+                    INSERT INTO senses (word_id, definition_en, gloss,sense_number)
+                    VALUES (%s, %s, %s, %s)
+                    RETURNING sense_id
+                """, (word_id, None, 'example_inserted',1))
                 sense_id = cur.fetchone()[0]
-                word_to_senses.setdefault(matched_word_id, []).append(sense_id)
+                word_to_senses.setdefault(word_id,[]).append(sense_id)
             else:
                 sense_id = sense_ids[0]
+            examples_to_insert.append((sense_id, jp,en))
+            total_inserted += 1
 
-            insert_example(cur, sense_id, jp, en)
-            inserted_examples += 1
-        pbar.update(1)
-        if (idx + 1) % 500 == 0:
-            conn.commit()
-            print(f"Processed {idx + 1} pairs, inserted {inserted_examples} examples...")
-
-    pbar.close()
-    conn.commit()
+        if len(examples_to_insert) >= batch_size:
+            bulk_insert_examples(conn, examples_to_insert)
+            examples_to_insert.clear()
+    bulk_insert_examples(conn, examples_to_insert)
     cur.close()
     conn.close()
-    print("Tatoeba load completed.")

@@ -80,13 +80,11 @@ class LookupFragment : Fragment() {
         _viewModel.evChangeToWordMode.beacon.observe(viewLifecycleOwner) {
             if (_viewModel.evChangeToWordMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.WORD)
-                updateSearchHistoryDisplay()
             }
         }
         _viewModel.evChangeToKanjiMode.beacon.observe(viewLifecycleOwner) {
             if (_viewModel.evChangeToKanjiMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.KANJI)
-                updateSearchHistoryDisplay()
             }
         }
         _viewModel.wordSearchHistories.observe(viewLifecycleOwner) { list ->

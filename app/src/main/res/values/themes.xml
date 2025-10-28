@@ -18,8 +18,6 @@
 <!--        <item name="colorOnSurface">@color/const_black</item>-->
 <!--        <item name="colorError">@color/const_black</item>-->
 <!--        <item name="colorOnError">@color/const_black</item>-->
-
-        <item name="android:windowEnterTransition">@anim/instant</item>
     </style>
 
     <style name="Theme.Tegao" parent="Base.Theme.Tegao" >

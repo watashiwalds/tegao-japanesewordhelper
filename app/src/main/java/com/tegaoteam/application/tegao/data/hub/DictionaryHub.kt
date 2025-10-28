@@ -4,10 +4,10 @@ import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.domain.repo.ConfigRepo
+import com.tegaoteam.application.tegao.domain.repo.ExtensionRepo
 
-class DictionaryHub(configRepo: ConfigRepo): DictionaryRepo {
-    private val availApis = configRepo.getAvailableDictionaryNetworkApis()
+class DictionaryHub(extensionRepo: ExtensionRepo): DictionaryRepo {
+    private val availApis = extensionRepo.getAvailableDictionaryNetworkApis()
     private fun getDictionaryApiById(dictId: String) = availApis.firstOrNull() { it.dict?.id == dictId }
 
     override suspend fun searchWord(keyword: String, dictionaryId: String): RepoResult<List<Word>> {

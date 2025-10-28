@@ -15,7 +15,6 @@ def get_or_create_source(cursor, name, update_date=None, description=None, versi
     return cursor.fetchone()[0]
 
 def upsert_kanji(cursor, character, stroke, radical, on_reading, kun_reading, meaning, grade, jlpt, freq):
-    # Truncate fields to avoid 'value too long' error
     max_length = 100
     on_reading = on_reading[:max_length] if on_reading else None
     kun_reading = kun_reading[:max_length] if kun_reading else None
@@ -39,7 +38,7 @@ def upsert_kanji(cursor, character, stroke, radical, on_reading, kun_reading, me
         return cursor.fetchone()[0] if cursor.rowcount else character
     except Exception as e:
         print(f"Error inserting kanji {character}: {e}")
-        raise  # Re-raise to debug
+        raise
 
 def parse_kanjidic(xml_path):
     conn = get_connection()

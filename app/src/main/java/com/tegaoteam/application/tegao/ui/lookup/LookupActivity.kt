@@ -16,6 +16,7 @@ import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.data.hub.DictionaryHub
 import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
+import com.tegaoteam.application.tegao.data.hub.SettingHub
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemOptionOnlyChipBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
@@ -23,6 +24,7 @@ import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
+import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefinitionWidgetRecyclerAdapter
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
@@ -41,6 +43,7 @@ class LookupActivity : AppCompatActivity() {
     private lateinit var _dictionaryRepo: DictionaryRepo
     private lateinit var _searchHistoryRepo: SearchHistoryRepo
     private lateinit var _addonRepo: AddonRepo
+    private lateinit var _settingRepo: SettingRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +96,9 @@ class LookupActivity : AppCompatActivity() {
         _dictionaryRepo = DictionaryHub()
         _searchHistoryRepo = SearchHistoryHub()
         _addonRepo = AddonHub()
+        _settingRepo = SettingHub()
 
-        _viewModel = ViewModelProvider(this, LookupActivityViewModel.Companion.ViewModelFactory(_dictionaryRepo, _searchHistoryRepo, _addonRepo))[LookupActivityViewModel::class.java]
+        _viewModel = ViewModelProvider(this, LookupActivityViewModel.Companion.ViewModelFactory(_dictionaryRepo, _searchHistoryRepo, _addonRepo, _settingRepo))[LookupActivityViewModel::class.java]
         _binding.viewModel = _viewModel
 
         _wordSearchResultAdapter = WordDefinitionCardListAdapter(this)

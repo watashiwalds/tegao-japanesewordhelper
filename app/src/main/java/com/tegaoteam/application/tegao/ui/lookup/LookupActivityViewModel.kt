@@ -13,6 +13,7 @@ import com.tegaoteam.application.tegao.domain.model.SearchHistory
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
+import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.EventBeacon
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val searchHistoryRepo: SearchHistoryRepo, private val addonRepo: AddonRepo): ViewModel() {
+class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val searchHistoryRepo: SearchHistoryRepo, private val addonRepo: AddonRepo, private val settingRepo: SettingRepo): ViewModel() {
     //Coroutine stuff
     //old way (?)
 //    private var viewModelJob = Job()
@@ -37,6 +38,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     private val _userSearchString = MutableLiveData<String>().apply { value = "" }
     val userSearchString: LiveData<String> = _userSearchString
     fun setSearchString(s: String) {
+
         _userSearchString.value = s.toSafeQueryString()
         Timber.i("Safe string query return ${_userSearchString.value}")
     }
@@ -136,12 +138,13 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
         class ViewModelFactory(
             private val dictionaryRepo: DictionaryRepo,
             private val searchHistoryRepo: SearchHistoryRepo,
-            private val addonRepo: AddonRepo
+            private val addonRepo: AddonRepo,
+            private val settingRepo: SettingRepo
         ) : ViewModelProvider.Factory {
             @Suppress("unchecked_cast")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(LookupActivityViewModel::class.java)) {
-                    return LookupActivityViewModel(dictionaryRepo, searchHistoryRepo, addonRepo) as T
+                    return LookupActivityViewModel(dictionaryRepo, searchHistoryRepo, addonRepo, settingRepo) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

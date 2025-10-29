@@ -1,64 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_fill"
-    tools:context=".ui.homescreen.MainActivity">
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/main_navigation"
-        tools:layout="@layout/fragment_lookup"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/lo_bottomNavbar"/>
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/lo_bottomNavbar"
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_normal"
-        android:paddingBottom="@dimen/padding_normal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent"
+        android:background="@color/background_fill"
+        tools:context=".ui.homescreen.MainActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/navItems_rcy"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/optionMenu_btn"
-            app:layout_constraintTop_toTopOf="parent"
-
-            tools:itemCount="3"
-            tools:listitem="@layout/item_navbar_icon_n_label_chip"
-            tools:orientation="horizontal"
-            tools:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
-
-            />
-
-        <ImageButton
-            android:id="@+id/optionMenu_btn"
-            style="@style/Theme.Tegao.TextButton.Neutral"
-            android:layout_width="@dimen/img_navbar3Strike"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_navigation"
+            tools:layout="@layout/fragment_lookup"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/neutral_stroke_flatend"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/lo_bottomNavbar"/>
 
-            android:src="@drawable/ftc_round_option3strike_128"
-            android:padding="@dimen/padding_normal"
-            app:tint="@color/text_normal"
-            />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lo_bottomNavbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingBottom="@dimen/padding_normal"
+            app:layout_constraintBottom_toBottomOf="parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/navItems_rcy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/optionMenu_btn"
+                app:layout_constraintTop_toTopOf="parent"
+
+                tools:itemCount="3"
+                tools:listitem="@layout/item_navbar_icon_n_label_chip"
+                tools:orientation="horizontal"
+                tools:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+
+                />
+
+            <ImageButton
+                android:id="@+id/optionMenu_btn"
+                style="@style/Theme.Tegao.TextButton.Neutral"
+                android:layout_width="@dimen/img_navbar3Strike"
+                android:layout_height="0dp"
+                android:background="@drawable/neutral_stroke_flatend"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:src="@drawable/ftc_round_option3strike_128"
+                android:padding="@dimen/padding_normal"
+                app:tint="@color/text_normal"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -55,7 +55,7 @@ class LookupFragment : Fragment() {
         _searchHistoryRepo = SearchHistoryHub()
 
         _viewModel = ViewModelProvider(this, LookupFragmentViewModel.Companion.ViewModelFactory(_searchHistoryRepo)).get(LookupFragmentViewModel::class.java)
-        _binding.lifecycleOwner = this
+        _binding.lifecycleOwner = viewLifecycleOwner
         _binding.viewModel = _viewModel
 
         _wordSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryWordBinding::inflate) { keyword ->

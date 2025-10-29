@@ -118,6 +118,7 @@
                         android:onClick="@{() -> viewModel.evChangeToWordMode.ignite()}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         tools:visibility="gone"/>
 
                     <Button
@@ -151,6 +152,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/title_kanji"
                         app:icon="@drawable/ftc_bold_jp_char_go_128"
+                        android:foreground="?android:attr/selectableItemBackground"
                         app:toggleVisibility="@{viewModel.lookupMode != LookupMode.KANJI}"
                         android:onClick="@{() -> viewModel.evChangeToKanjiMode.ignite()}"
                         app:layout_constraintEnd_toEndOf="parent"

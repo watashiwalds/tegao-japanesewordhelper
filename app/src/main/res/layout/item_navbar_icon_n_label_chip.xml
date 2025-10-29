@@ -23,6 +23,7 @@
             android:paddingHorizontal="@dimen/padding_normal"
             android:paddingTop="@dimen/padding_small"
             android:paddingBottom="@dimen/padding_tiny"
+            android:foreground="?android:attr/selectableItemBackground"
 
             app:toggleVisibilityLiveDataReverse="@{itemChip.isSelected()}"
             android:onClick="@{() -> itemChip.onClick()}"

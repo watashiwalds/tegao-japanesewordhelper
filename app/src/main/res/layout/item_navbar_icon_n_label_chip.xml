@@ -23,6 +23,7 @@
             android:padding="@dimen/padding_small"
 
             app:toggleVisibilityLiveDataReverse="@{itemChip.isSelected()}"
+            android:onClick="@{() -> itemChip.onClick()}"
 
             tools:visibility="visible"
             >

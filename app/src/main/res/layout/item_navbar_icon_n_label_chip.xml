@@ -20,7 +20,9 @@
             android:id="@+id/lo_inactive_cst"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingTop="@dimen/padding_small"
+            android:paddingBottom="@dimen/padding_tiny"
 
             app:toggleVisibilityLiveDataReverse="@{itemChip.isSelected()}"
             android:onClick="@{() -> itemChip.onClick()}"
@@ -30,8 +32,8 @@
 
             <ImageView
                 android:id="@+id/icon"
-                android:layout_width="@dimen/img_icon"
-                android:layout_height="@dimen/img_icon"
+                android:layout_width="@dimen/img_icon_small"
+                android:layout_height="@dimen/img_icon_small"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,9 +49,10 @@
                 app:layout_constraintTop_toBottomOf="@id/icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/padding_tiny"
+                android:layout_marginTop="@dimen/padding_nano"
                 android:maxLines="1"
                 android:text="@{itemChip.label}"
+                android:textSize="@dimen/textSize_small"
 
                 tools:text="Tra cứu"
                 />
@@ -59,7 +62,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingTop="@dimen/padding_small"
+            android:paddingBottom="@dimen/padding_tiny"
             android:background="@drawable/primary_solid_background"
 
             app:toggleVisibilityLiveData="@{itemChip.isSelected()}"
@@ -69,8 +74,8 @@
 
             <ImageView
                 android:id="@+id/icon2"
-                android:layout_width="@dimen/img_icon"
-                android:layout_height="@dimen/img_icon"
+                android:layout_width="@dimen/img_icon_small"
+                android:layout_height="@dimen/img_icon_small"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +93,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/padding_tiny"
                 android:maxLines="1"
-                android:textSize="@dimen/textSize_normal"
+                android:textSize="@dimen/textSize_small"
                 android:textColor="@color/const_white"
                 android:text="@{itemChip.label}"
 

@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.utils
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.databinding.BindingAdapter
@@ -41,7 +42,7 @@ fun TextView.setTextWithVisibility(textValue: String?) {
     }
 }
 
-@BindingAdapter("goneByTextValue")
-fun Group.goneByStringValue(s: String) {
-    if (s.isBlank()) visibility = View.GONE else View.VISIBLE
+@BindingAdapter("srcResId")
+fun ImageView.setSrcWithResId(drawableResId: Int) {
+    if (drawableResId != 0) setImageResource(drawableResId)
 }

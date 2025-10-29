@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@{itemChip.iconResId}"
+                app:srcResId="@{itemChip.iconResId}"
                 app:tint="@color/text_normal"
 
                 tools:src="@drawable/ftc_round_search_128"
@@ -73,7 +73,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@{itemChip.iconResId}"
+                app:srcResId="@{itemChip.iconResId}"
                 app:tint="@color/const_white"
 
                 tools:src="@drawable/ftc_round_search_128"

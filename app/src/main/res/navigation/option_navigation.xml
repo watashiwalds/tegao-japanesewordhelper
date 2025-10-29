@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/option_navigation"
-    app:startDestination="@id/optionActivity">
+    app:startDestination="@id/optionDashboardFragment">
 
-<!--    TODO: Remove this <activity> tag -->
-    <activity
-        android:id="@+id/optionActivity"
-        android:name="com.tegaoteam.application.tegao.ui.option.OptionActivity"
-        android:label="OptionActivity" />
+    <fragment
+        android:id="@+id/optionDashboardFragment"
+        android:name="com.tegaoteam.application.tegao.ui.option.OptionDashboardFragment"
+        android:label="fragment_option_dashboard"
+        tools:layout="@layout/fragment_option_dashboard" />
 </navigation>

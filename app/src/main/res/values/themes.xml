@@ -112,7 +112,7 @@
     </style>
     <style name="Theme.Tegao.ContentText.Decent">
         <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:textSize">@dimen/textSize_decent</item>
+        <item name="android:textSize">@dimen/textSize_big</item>
     </style>
     <style name="Theme.Tegao.ContentText.TitleSecondary">
         <item name="fontFamily">@font/roboto_medium</item>

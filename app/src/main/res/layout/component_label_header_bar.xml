@@ -6,27 +6,12 @@
     <data>
         <variable
             name="headerBarInfo"
-            type="com.tegaoteam.application.tegao.ui.component.HeaderBarInfo" />
+            type="com.tegaoteam.application.tegao.ui.component.headerbar.HeaderBarInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_normal">
-
-        <ImageButton
-            android:id="@+id/back_btn"
-            android:layout_width="@dimen/img_icon_large"
-            android:layout_height="@dimen/img_icon_large"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/ftc_round_arrow_left_128"
-            android:scaleType="fitCenter"
-            android:background="?android:selectableItemBackground"
-            android:padding="@dimen/padding_tiny"
-            android:onClick="@{() -> headerBarInfo.backOnClickListener.invoke()}"
-            />
+        android:layout_height="wrap_content">
 
         <TextView
             style="@style/Theme.Tegao.Label.Large"
@@ -35,11 +20,26 @@
             android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/back_btn"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{headerBarInfo.label}"
 
-            tools:text="Lựa chọn là của bạn thôi" />
+            tools:text="Tiêu đề của màn hình (<30-40 char)" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="@dimen/img_headerBackButton"
+            android:layout_height="@dimen/img_headerBackButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ftc_round_arrow_left_128"
+            android:scaleType="fitCenter"
+            android:background="?android:selectableItemBackground"
+            android:padding="@dimen/padding_large"
+            app:toggleVisibility="@{headerBarInfo.backOnClickListener != null}"
+            android:onClick="@{() -> headerBarInfo.backOnClickListener.invoke()}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

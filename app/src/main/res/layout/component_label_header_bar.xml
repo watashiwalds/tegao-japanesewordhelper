@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{headerBarInfo.label}"
 
-            tools:text="Tiêu đề của màn hình (<30-40 char)" />
+            tools:text="Tiêu đề của màn hình (~30-40 char)" />
 
         <ImageButton
             android:id="@+id/back_btn"

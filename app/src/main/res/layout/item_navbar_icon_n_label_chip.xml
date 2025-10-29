@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="itemChip"
+            type="com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lo_inactive_cst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_small"
+
+            app:toggleVisibilityLiveDataReverse="@{itemChip.isSelected()}"
+
+            tools:visibility="gone"
+            >
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="@dimen/img_icon"
+                android:layout_height="@dimen/img_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@{itemChip.iconResId}"
+
+                tools:src="@drawable/ftc_round_search_128"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/padding_tiny"
+                android:maxLines="1"
+                android:text="@{itemChip.label}"
+
+                tools:text="Tra cứu"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_small"
+            android:background="@drawable/primary_solid_background"
+
+            app:toggleVisibilityLiveData="@{itemChip.isSelected()}"
+            >
+
+            <ImageView
+                android:id="@+id/icon2"
+                android:layout_width="@dimen/img_icon"
+                android:layout_height="@dimen/img_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@{itemChip.iconResId}"
+                app:tint="@color/const_white"
+
+                tools:src="@drawable/ftc_round_search_128"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/icon2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/padding_tiny"
+                android:maxLines="1"
+                android:textSize="@dimen/textSize_normal"
+                android:textColor="@color/const_white"
+                android:text="@{itemChip.label}"
+
+                tools:text="Tra cứu"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</layout>

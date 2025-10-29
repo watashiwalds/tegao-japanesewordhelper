@@ -53,7 +53,6 @@
                 android:layout_width="@dimen/img_navbar3Strike"
                 android:layout_height="0dp"
                 android:background="@drawable/neutral_stroke_flatend"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

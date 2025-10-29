@@ -9,6 +9,8 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
  * Holder class for themed_chip_item.xml View
  *
  * Require manual selecting control logic to correctly display (hold on to MutableLiveData<Boolean> or ```selected``` references)
+ *
+ * Require manual binding onClick() in item's XML to activate onClick() function of chip
  */
 class ThemedChipItem(
     val id: String,

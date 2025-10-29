@@ -13,7 +13,8 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 class ThemedChipItem(
     val id: String,
     val label: String,
-    private val _isSelected: MutableLiveData<Boolean>
+    private val _isSelected: MutableLiveData<Boolean>,
+    val iconResId: Int? = null
 ) {
     init {
         _isSelected.value = false

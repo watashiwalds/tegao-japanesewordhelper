@@ -125,6 +125,11 @@
         <item name="tint">@color/neutral</item>
     </style>
 
+    <style name="Theme.Tegao.Label"/>
+    <style name="Theme.Tegao.Label.Large">
+        <item name="android:textSize">@dimen/textSize_average</item>
+    </style>
+
     <style name="Theme.Tegao.RemoveDefaultTextPad">
         <item name="android:includeFontPadding">false</item>
         <item name="android:lineSpacingExtra">0dp</item>

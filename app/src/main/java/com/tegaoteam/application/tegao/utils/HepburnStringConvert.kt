@@ -33,6 +33,7 @@ object HepburnStringConvert {
         "si" to "し", "ti" to "ち", "tu" to "つ", "hu" to "ふ", "di" to "ぢ", "du" to "づ", "zi" to "じ",
         "zya" to "じゃ", "zyu" to "じゅ", "zyo" to "じょ",
         "dya" to "じゃ", "dyu" to "じゅ", "dyo" to "じょ",
+        "short" to "っ"
     )
     private val stopWords = listOf('a', 'i', 'u', 'e', 'o')
 
@@ -51,6 +52,8 @@ object HepburnStringConvert {
                         hina.append(hepburnTable.getOrDefault(assembly.toString(), assembly.toString()))
                         assembly.clear()
                         if (char != 'n') assembly.append(char)
+                    } else if (assembly.lastOrNull() == char){
+                        hina.append(hepburnTable["short"])
                     } else {
                         assembly.append(char)
                     }

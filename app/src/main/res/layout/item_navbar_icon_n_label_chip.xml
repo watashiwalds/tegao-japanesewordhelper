@@ -24,7 +24,7 @@
 
             app:toggleVisibilityLiveDataReverse="@{itemChip.isSelected()}"
 
-            tools:visibility="gone"
+            tools:visibility="visible"
             >
 
             <ImageView
@@ -35,6 +35,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@{itemChip.iconResId}"
+                app:tint="@color/text_normal"
 
                 tools:src="@drawable/ftc_round_search_128"
                 />
@@ -61,6 +62,8 @@
             android:background="@drawable/primary_solid_background"
 
             app:toggleVisibilityLiveData="@{itemChip.isSelected()}"
+
+            tools:visibility="gone"
             >
 
             <ImageView

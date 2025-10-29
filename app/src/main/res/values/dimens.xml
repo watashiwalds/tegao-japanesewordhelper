@@ -14,6 +14,7 @@
     <dimen name="img_icon">24dp</dimen>
     <dimen name="img_icon_small">16dp</dimen>
     <dimen name="img_icon_large">32dp</dimen>
+    <dimen name="img_navbar3Strike">64dp</dimen>
     <dimen name="img_oneKanji">160sp</dimen>
     <dimen name="trickMargin_furigana">-8sp</dimen>
     <dimen name="trickMargin_kanjiStrokeOrder">-28sp</dimen>

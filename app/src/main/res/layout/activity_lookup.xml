@@ -17,12 +17,13 @@
         android:id="@+id/before_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/Theme.Tegao.Screen.PaddingBorder">
+        android:theme="@style/Theme.Tegao.Screen">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/Theme.Tegao.Screen.PaddingBorder"
             tools:context=".ui.lookup.LookupActivity">
 
             <androidx.constraintlayout.widget.ConstraintLayout

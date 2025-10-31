@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
@@ -38,12 +39,6 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     //Search string using when tap Search button
     private val _userSearchString = MutableLiveData<String>().apply { value = "" }
     val userSearchString: LiveData<String> = _userSearchString
-    fun setSearchString(s: String) {
-        var t = s.toSafeQueryString()
-        if (settingRepo.isHepburnConverterEnable()) t = HepburnStringConvert.toHiragana(s)
-        _userSearchString.value = t
-        Timber.i("Safe string query return ${_userSearchString.value}")
-    }
 
     //Clear search string QOL function
     val evClearSearchString = EventBeacon()
@@ -73,6 +68,25 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
 
     //pass addon state to xml
     val isHandwritingAvailable = addonRepo.isHandwritingAvailable()
+
+    //preference values
+    private var _useHepburnConverter = false
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            settingRepo.isHepburnConverterEnable().collect { value ->
+                withContext(Dispatchers.Main) {
+                    _useHepburnConverter = value
+                }
+            }
+        }
+    }
+
+    fun setSearchString(s: String) {
+        var t = s.toSafeQueryString()
+        if (_useHepburnConverter) t = HepburnStringConvert.toHiragana(s)
+        _userSearchString.value = t
+        Timber.i("Safe string query return ${_userSearchString.value}")
+    }
 
     fun searchKeyword() {
         //no keyword to search? bye

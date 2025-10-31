@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
@@ -23,6 +22,7 @@ import com.tegaoteam.application.tegao.utils.getCurrentTimestamp
 import com.tegaoteam.application.tegao.utils.toSafeQueryString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -70,16 +70,14 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     val isHandwritingAvailable = addonRepo.isHandwritingAvailable()
 
     //preference values
-    private var _useHepburnConverter = false
+    private var _useHepburnConverter = true
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            settingRepo.isHepburnConverterEnable().collect { value ->
-                withContext(Dispatchers.Main) {
-                    _useHepburnConverter = value
-                }
-            }
+        viewModelScope.launch {
+            _useHepburnConverter = settingRepo.isHepburnConverterEnable().first()
         }
     }
+
+    //TODO: Refactor _Config object to use DataStore
 
     fun setSearchString(s: String) {
         var t = s.toSafeQueryString()

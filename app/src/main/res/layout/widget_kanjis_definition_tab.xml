@@ -189,7 +189,7 @@
             android:id="@+id/collapse_additional_info_img"
             android:layout_width="@dimen/padding_large"
             android:layout_height="@dimen/padding_normal"
-            android:theme="@style/Theme.Tegao.ImageIcon.Neutral"
+            style="@style/Theme.Tegao.ImageIcon.Neutral"
             android:layout_marginBottom="@dimen/padding_nano"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/lo_additional_info_available_txt"

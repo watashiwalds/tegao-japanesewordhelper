@@ -6,7 +6,7 @@
     <data>
         <variable
             name="headerBarInfo"
-            type="com.tegaoteam.application.tegao.ui.component.headerbar.HeaderBarInfo" />
+            type="com.tegaoteam.application.tegao.ui.component.generics.HeaderBarInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

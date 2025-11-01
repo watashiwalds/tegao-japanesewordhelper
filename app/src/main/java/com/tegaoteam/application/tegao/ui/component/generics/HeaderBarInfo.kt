@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.component.headerbar
+package com.tegaoteam.application.tegao.ui.component.generics
 
 data class HeaderBarInfo(
     val label: String,

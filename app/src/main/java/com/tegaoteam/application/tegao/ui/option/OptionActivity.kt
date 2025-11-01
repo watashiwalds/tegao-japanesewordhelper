@@ -8,7 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ActivityOptionBinding
-import com.tegaoteam.application.tegao.ui.component.headerbar.HeaderBarBindingHelper
+import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
 
 class OptionActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityOptionBinding

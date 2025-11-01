@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.component.headerbar
+package com.tegaoteam.application.tegao.ui.component.generics
 
 import androidx.databinding.ViewDataBinding
 import com.tegaoteam.application.tegao.BR

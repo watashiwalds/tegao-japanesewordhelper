@@ -35,8 +35,9 @@
             app:layout_constraintStart_toStartOf="parent"
             android:src="@drawable/ftc_round_arrow_left_128"
             android:scaleType="fitCenter"
+            app:tint="@color/text_normal"
             android:background="?android:selectableItemBackground"
-            android:padding="@dimen/padding_large"
+            android:padding="26dp"
             app:toggleVisibility="@{headerBarInfo.backOnClickListener != null}"
             android:onClick="@{() -> headerBarInfo.backOnClickListener.invoke()}"
             />

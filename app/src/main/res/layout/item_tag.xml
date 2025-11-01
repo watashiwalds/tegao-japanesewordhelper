@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Theme.Tegao.Tag"
+        style="@style/Theme.Tegao.ThemedTag"
         android:text="@{infoTag.label}"
         android:onClick="@{() -> infoTag.onClick()}"
         android:backgroundTint="@{infoTag.color}"

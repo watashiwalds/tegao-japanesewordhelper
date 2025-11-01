@@ -59,7 +59,7 @@
 
                 <Button
                     android:id="@+id/stringHistory_btn"
-                    style="@style/Theme.Tegao.TextButton.Neutral"
+                    style="@style/Theme.Tegao.LabelButton.Neutral"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/title_words"
@@ -73,7 +73,7 @@
 
                 <Button
                     android:id="@+id/lo_stringHistory_active_btn"
-                    style="@style/Theme.Tegao.TextButton.Primary"
+                    style="@style/Theme.Tegao.LabelButton.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/title_words"
@@ -97,7 +97,7 @@
 
                 <Button
                     android:id="@+id/kanjiHistory_btn"
-                    style="@style/Theme.Tegao.TextButton.Neutral"
+                    style="@style/Theme.Tegao.LabelButton.Neutral"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/title_kanji"
@@ -110,7 +110,7 @@
 
                 <Button
                     android:id="@+id/lo_kanjiHistory_active_btn"
-                    style="@style/Theme.Tegao.TextButton.Primary"
+                    style="@style/Theme.Tegao.LabelButton.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/title_kanji"

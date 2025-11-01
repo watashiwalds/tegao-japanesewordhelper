@@ -50,7 +50,7 @@
 
             <ImageButton
                 android:id="@+id/optionMenu_btn"
-                style="@style/Theme.Tegao.TextButton.Neutral"
+                style="@style/Theme.Tegao.LabelButton.Neutral"
                 android:layout_width="@dimen/img_navbar3Strike"
                 android:layout_height="0dp"
                 android:background="@drawable/neutral_stroke_flatend"

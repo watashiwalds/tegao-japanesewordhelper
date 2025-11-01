@@ -17,7 +17,7 @@
         android:id="@+id/before_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:theme="@style/Theme.Tegao.Screen">
+        style="@style/Theme.Tegao.Screen">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"

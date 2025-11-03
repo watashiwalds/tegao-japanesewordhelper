@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.option.OptionDashboardFragment">
+    tools:context=".ui.setting.SettingListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/lo_setting_list_lst"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
+        tools:listitem="@layout/component_listview_navigation_item"
+        />
 
 </FrameLayout>

@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/icon"
-            style="@style/Theme.Tegao.ImageIcon.Large"
+            style="@style/Theme.Tegao.ImageIcon.Label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/label"
             android:layout_marginEnd="@dimen/padding_normal"

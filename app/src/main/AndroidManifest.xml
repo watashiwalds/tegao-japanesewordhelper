@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tegao">
         <activity
-            android:name=".ui.option.OptionActivity"
+            android:name=".ui.setting.SettingActivity"
             android:exported="false" />
         <activity
             android:name=".ui.lookup.LookupActivity"

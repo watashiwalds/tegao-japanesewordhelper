@@ -14,7 +14,7 @@ import com.tegaoteam.application.tegao.data.hub.SettingHub
 import com.tegaoteam.application.tegao.databinding.ActivityMainBinding
 import com.tegaoteam.application.tegao.databinding.ItemNavbarIconNLabelChipBinding
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
-import com.tegaoteam.application.tegao.ui.option.OptionActivity
+import com.tegaoteam.application.tegao.ui.setting.SettingActivity
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.IdTranslator
 
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindOptionButton() {
         _binding.optionMenuBtn.setOnClickListener {
-            val intent = Intent(this, OptionActivity::class.java)
+            val intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
         }
     }

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         style="@style/Theme.Tegao.Screen"
-        tools:context=".ui.option.OptionActivity">
+        tools:context=".ui.setting.SettingActivity">
 
         <include layout="@layout/component_label_header_bar"
             android:id="@+id/lo_headerBar_icl"

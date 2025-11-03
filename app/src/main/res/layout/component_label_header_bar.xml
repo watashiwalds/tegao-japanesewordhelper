@@ -37,7 +37,9 @@
             android:scaleType="fitCenter"
             app:tint="@color/text_normal"
             android:background="?android:selectableItemBackground"
-            android:padding="26dp"
+            android:paddingVertical="26dp"
+            android:paddingEnd="26dp"
+            android:paddingStart="@dimen/padding_normal"
             app:toggleVisibility="@{headerBarInfo.backOnClickListener != null}"
             android:onClick="@{() -> headerBarInfo.backOnClickListener.invoke()}"
             />

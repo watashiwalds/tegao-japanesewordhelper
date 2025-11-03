@@ -10,4 +10,5 @@
     <string name="hint_enter_search_keyword_here">Nhập từ khoá 漢字, かな, romaji, ...</string>
     <string name="title_label_lookup">Tra cứu</string>
     <string name="title_label_option">Lựa chọn</string>
+    <string name="title_label_setting">Cài đặt</string>
 </resources>

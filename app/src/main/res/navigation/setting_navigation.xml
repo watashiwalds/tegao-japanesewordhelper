@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setting_navigation"
+    app:startDestination="@id/settingListFragment">
+
+    <fragment
+        android:id="@+id/settingListFragment"
+        android:name="com.tegaoteam.application.tegao.ui.setting.main.SettingListFragment"
+        android:label="fragment_setting_list"
+        tools:layout="@layout/fragment_setting_list" >
+        <action
+            android:id="@+id/action_settingListFragment_to_settingLookupFragment"
+            app:destination="@id/settingLookupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingLookupFragment"
+        android:name="com.tegaoteam.application.tegao.ui.setting.lookup.SettingLookupFragment"
+        android:label="fragment_setting_lookup"
+        tools:layout="@layout/fragment_setting_lookup" />
+</navigation>

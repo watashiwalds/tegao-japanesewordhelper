@@ -7,11 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.tegaoteam.application.tegao.R
-import com.tegaoteam.application.tegao.databinding.ActivityOptionBinding
+import com.tegaoteam.application.tegao.databinding.ActivitySettingBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
 
 class SettingActivity : AppCompatActivity() {
-    private lateinit var _binding: ActivityOptionBinding
+    private lateinit var _binding: ActivitySettingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class SettingActivity : AppCompatActivity() {
     private fun setupHeaderBar() {
         HeaderBarBindingHelper.bind(
             _binding.loHeaderBarIcl,
-            getString(R.string.title_label_option),
+            getString(R.string.title_label_setting),
             backOnClickListener = { finish() } //TODO: Make NavHostFragment to nav options and replace this listener with proper NavUI managing code
         )
     }

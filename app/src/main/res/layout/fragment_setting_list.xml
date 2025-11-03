@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.setting.SettingListFragment">
-
-    <ListView
-        android:id="@+id/lo_setting_list_lst"
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.setting.main.SettingListFragment">
 
-        tools:listitem="@layout/component_listview_navigation_item"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lo_setting_list_lst"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-</FrameLayout>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+
+            tools:listitem="@layout/component_listview_navigation_item"
+            />
+
+    </FrameLayout>
+</layout>

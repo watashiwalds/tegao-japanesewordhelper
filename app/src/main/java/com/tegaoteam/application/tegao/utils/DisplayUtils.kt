@@ -44,5 +44,5 @@ fun TextView.setTextWithVisibility(textValue: String?) {
 
 @BindingAdapter("srcResId")
 fun ImageView.setSrcWithResId(drawableResId: Int) {
-    if (drawableResId != 0) setImageResource(drawableResId)
+    if (drawableResId != 0) setImageResource(drawableResId) else visibility = View.GONE
 }

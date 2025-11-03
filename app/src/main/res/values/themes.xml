@@ -127,8 +127,15 @@
     <style name="Theme.Tegao.ImageIcon.Neutral">
         <item name="tint">@color/neutral</item>
     </style>
+    <style name="Theme.Tegao.ImageIcon.Large">
+        <item name="android:layout_width">@dimen/img_icon_large</item>
+        <item name="android:layout_height">@dimen/img_icon_large</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
 
-    <style name="Theme.Tegao.Label"/>
+    <style name="Theme.Tegao.Label">
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
     <style name="Theme.Tegao.Label.Large">
         <item name="android:textSize">@dimen/textSize_average</item>
     </style>

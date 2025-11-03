@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +26,13 @@ class SettingListFragment : Fragment() {
     ): View? {
         _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting_list, container, false)
 
-        _listAdapter = SettingListAdapter().apply { submitList(settingNavigations) }
+        val navController = findNavController()
+        _listAdapter = SettingListAdapter().apply {
+            navigatingFunction = { actionId ->
+                navController.navigate(actionId)
+            }
+            submitList(settingNavigations)
+        }
         _binding.loSettingListLst.adapter = _listAdapter
 
         return _binding.root

@@ -20,12 +20,15 @@ class SettingListAdapter: ListAdapter<ListNavigationItemInfo, SettingListAdapter
         holder: ViewHolder,
         position: Int
     ) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), navigatingFunction)
     }
 
+    lateinit var navigatingFunction: (directionId: Int) -> Unit
+
     class ViewHolder private constructor (private val binding: ComponentListviewNavigationItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(info: ListNavigationItemInfo) {
+        fun bind(info: ListNavigationItemInfo, navFunc: (Int) -> Unit) {
             binding.listNavInfo = info
+            binding.root.setOnClickListener { navFunc(info.directionId) }
             binding.executePendingBindings()
         }
         companion object {

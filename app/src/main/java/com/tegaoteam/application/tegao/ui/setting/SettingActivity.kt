@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ActivitySettingBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 
 class SettingActivity : AppCompatActivity() {
     private lateinit var _binding: ActivitySettingBinding
@@ -28,10 +30,11 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun setupHeaderBar() {
+        val navController = (supportFragmentManager.findFragmentById(R.id.mainActFragmentContainerView) as NavHostFragment).navController
         HeaderBarBindingHelper.bind(
             _binding.loHeaderBarIcl,
             getString(R.string.title_label_setting),
-            backOnClickListener = { finish() } //TODO: Make NavHostFragment to nav options and replace this listener with proper NavUI managing code
+            backOnClickListener = { if (!navController.popBackStack()) finish() }
         )
     }
 }

@@ -76,7 +76,7 @@
             android:orientation="vertical"
 
             tools:itemCount="3"
-            tools:listitem="@layout/item_definition_single_word" />
+            tools:listitem="@layout/subitem_definition_single_word" />
 
         <ImageView
             android:id="@+id/lo_divider_img"

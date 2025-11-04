@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
-import com.tegaoteam.application.tegao.databinding.ItemDefinitionSingleWordBinding
+import com.tegaoteam.application.tegao.databinding.SubitemDefinitionSingleWordBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
@@ -29,7 +29,7 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
         holder.bind(position, getItem(position), lifecycleOwner)
     }
 
-    class ViewHolder private constructor(private val binding: ItemDefinitionSingleWordBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(private val binding: SubitemDefinitionSingleWordBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(index: Int, definition: Word.Definition, lifecycleOwner: LifecycleOwner) {
             binding.loIndexTxt.text = String.format("${index+1}")
 
@@ -63,7 +63,7 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
         }
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
-                val binding = ItemDefinitionSingleWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = SubitemDefinitionSingleWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return ViewHolder(binding)
             }
         }

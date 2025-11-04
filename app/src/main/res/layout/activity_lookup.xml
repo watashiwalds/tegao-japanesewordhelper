@@ -200,7 +200,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
 
-                tools:listitem="@layout/card_definition_word"
+                tools:listitem="@layout/item_definition_word"
                 tools:itemCount="2"
                 />
 

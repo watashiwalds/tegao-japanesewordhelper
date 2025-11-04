@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentSettingListBinding
-import com.tegaoteam.application.tegao.ui.component.generics.ListNavigationItemInfo
 
 class SettingListFragment : Fragment() {
+    private lateinit var _viewModel: SettingListViewModel
     private lateinit var _binding: FragmentSettingListBinding
     private lateinit var _listAdapter: SettingListAdapter
 
@@ -19,6 +20,8 @@ class SettingListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _viewModel = ViewModelProvider(this)[SettingListViewModel::class]
+
         _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting_list, container, false)
 
         val navController = findNavController()
@@ -26,20 +29,11 @@ class SettingListFragment : Fragment() {
             navigatingFunction = { actionId ->
                 if (actionId != 0) navController.navigate(actionId)
             }
-            submitList(settingNavigations)
+            submitList(_viewModel.settingNavigations)
         }
         _binding.loSettingListLst.adapter = _listAdapter
 
         return _binding.root
     }
-
-    private val settingNavigations = listOf(
-        ListNavigationItemInfo(
-            labelResId = R.string.setting_search_label,
-            directionId = SettingListFragmentDirections.actionSettingListFragmentToSettingLookupFragment().actionId,
-            detailResId = R.string.setting_search_detail,
-            iconResId = R.drawable.ftc_round_search_128
-        )
-    )
 
 }

@@ -21,22 +21,29 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         Pair("lang", wObj.get("label").takeUnless { it.isJsonNull }?.asString)
                     )
 
+                    //  TODO: adapt to the change of pronunciation info of Mazii (not urgent)
+                    //  Mazii changed the structure of pronunciation information
+                    //  Now: [{
+                    //      "kana": "<kana reading>"
+                    //      "accent": "<pitch encode L(low) H(high) -(mid)>"
+                    //  }, {}, ...]
                     //Mazii word's additionalInfo is all of it's possible pronunciations
-                    val pronuns = wObj.get("pronunciation").takeUnless { it.isJsonNull }?.asJsonArray?.map { p ->
-                        p.asJsonObject.getAsJsonArray("transcriptions").map { tr ->
-                            tr.asJsonObject.get("romaji").asString
-                        }
-                    }
-                    val pConcat = ArrayDeque<String>()
-                    if (pronuns != null) for (p in pronuns) {
-                        var pPopSize = pConcat.size
-                        do {
-                            val temp = if (pPopSize > 0) pConcat.removeFirst() else ""
-                            for (tr in p) pConcat.add("$temp$tr")
-                            pPopSize--
-                        } while (pPopSize > 0)
-                    }
-                    val pronunsT = mutableListOf(Pair("pronunciation", pConcat.joinToString("\n")))
+//                    val pronuns = wObj.get("pronunciation").takeUnless { it.isJsonNull }?.asJsonArray?.map { p ->
+//                        p.asJsonObject.get("transcriptions").takeUnless { it.isJsonNull }?.asJsonArray?.map { tr ->
+//                            tr.asJsonObject.get("romaji").asString
+//                        }
+//                    }
+//                    val pConcat = ArrayDeque<String>()
+//                    if (pronuns != null) for (p in pronuns) {
+//                        var pPopSize = pConcat.size
+//                        do {
+//                            val temp = if (pPopSize > 0) pConcat.removeFirst() else ""
+//                            if (p != null) for (tr in p) pConcat.add("$temp$tr")
+//                            pPopSize--
+//                        } while (pPopSize > 0)
+//                    }
+//                    val pronunsT = mutableListOf(Pair("pronunciation", pConcat.joinToString("\n")))
+//                    val pronunsT = listOf<Pair<String, String>>()
 
                     //convert definitions
                     val means = wObj.getAsJsonArray("means")
@@ -69,7 +76,6 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         reading = readingT?: "",
                         furigana = phoneticT?: listOf(),
                         tags = tagsT,
-                        additionalInfo = pronunsT,
                         definitions = meansT,
                     )
                 }

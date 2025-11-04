@@ -4,11 +4,14 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primary_dark</item>
-        <item name="colorOnPrimary">@color/text_reverse</item>
+        <item name="colorOnPrimary">@color/const_white</item>
         <item name="colorSecondary">@color/secondary</item>
-        <item name="colorSecondaryVariant">@color/secondary_light</item>
         <item name="colorOnSecondary">@color/const_black</item>
+
+        <item name="colorPrimaryContainer">@color/primary_dark</item>
+        <item name="colorOnPrimaryContainer">@color/const_white</item>
+        <item name="colorSecondaryContainer">@color/secondary_light</item>
+        <item name="colorOnSecondaryContainer">@color/const_black</item>
 
         <item name="android:colorBackground">@color/background_fill</item>
         <item name="colorOnBackground">@color/text_normal</item>

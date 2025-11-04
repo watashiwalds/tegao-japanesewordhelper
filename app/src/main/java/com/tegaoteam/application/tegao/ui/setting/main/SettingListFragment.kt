@@ -29,7 +29,7 @@ class SettingListFragment : Fragment() {
         val navController = findNavController()
         _listAdapter = SettingListAdapter().apply {
             navigatingFunction = { actionId ->
-                navController.navigate(actionId)
+                if (actionId != 0) navController.navigate(actionId)
             }
             submitList(settingNavigations)
         }

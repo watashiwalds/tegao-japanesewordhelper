@@ -153,4 +153,10 @@
         <item name="android:lineSpacingExtra">0dp</item>
         <item name="android:lineSpacingMultiplier">0.8</item>
     </style>
+
+    <style name="Theme.Tegao.RecyclerViewFadeEdge">
+        <item name="android:requiresFadingEdge">vertical</item>
+        <item name="android:fadingEdgeLength">32dp</item>
+        <item name="android:overScrollMode">ifContentScrolls</item>
+    </style>
 </resources>

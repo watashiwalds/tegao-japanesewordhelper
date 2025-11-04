@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="info"
+            type="com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/padding_normal">
+
+        <TextView
+            android:id="@+id/label"
+            style="@style/Theme.Tegao.Label.Normal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/lo_lateinit_setting_frm"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/padding_small"
+
+            app:textResId="@{info.labelResId}"
+
+            tools:text="Chuyển đổi Hepburn"
+            />
+
+        <TextView
+            android:id="@+id/detail"
+            style="@style/Theme.Tegao.Label.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/label"
+            app:layout_constraintEnd_toEndOf="@id/label"
+            app:layout_constraintTop_toBottomOf="@id/label"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:textResId="@{info.descriptionResId}"
+
+            tools:text="Tự động chuyển đổi từ khoá từ định dạng Romaji sang Hiragana trên thanh tìm kiếm"
+            />
+
+        <FrameLayout
+            android:id="@+id/lo_lateinit_setting_frm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

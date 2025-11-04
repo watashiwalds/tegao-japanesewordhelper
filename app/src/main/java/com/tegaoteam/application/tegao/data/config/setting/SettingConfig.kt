@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.data.config.setting
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.config.settingDataStore
 import kotlinx.coroutines.flow.map
@@ -11,7 +12,10 @@ object SettingConfig {
 
     //setting preference keys
     private val USE_HEPBURN_CONVERTER = booleanPreferencesKey("use_hepburn_converter")
-
     val enableHepburnConverter = app.settingDataStore.data.map { prefs -> prefs[USE_HEPBURN_CONVERTER] ?: DefaultSettingValue.USE_HEPBURN_CONVERTER }
+    suspend fun toggleHepburnConverter() {
+        app.settingDataStore.edit { settings -> settings[USE_HEPBURN_CONVERTER] = !(settings[USE_HEPBURN_CONVERTER]?: true) }
+    }
+
     val mainNavbarItemIds = listOf("lookup")
 }

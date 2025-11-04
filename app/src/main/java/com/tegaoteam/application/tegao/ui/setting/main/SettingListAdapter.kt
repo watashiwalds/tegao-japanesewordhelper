@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tegaoteam.application.tegao.databinding.ComponentListviewNavigationItemBinding
+import com.tegaoteam.application.tegao.databinding.ItemVerticalNavigationBinding
 import com.tegaoteam.application.tegao.ui.component.generics.ListNavigationItemInfo
 
 class SettingListAdapter: ListAdapter<ListNavigationItemInfo, SettingListAdapter.ViewHolder>(DiffCallback()) {
@@ -25,7 +25,7 @@ class SettingListAdapter: ListAdapter<ListNavigationItemInfo, SettingListAdapter
 
     lateinit var navigatingFunction: (directionId: Int) -> Unit
 
-    class ViewHolder private constructor (private val binding: ComponentListviewNavigationItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor (private val binding: ItemVerticalNavigationBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(info: ListNavigationItemInfo, navFunc: (Int) -> Unit) {
             binding.listNavInfo = info
             binding.root.setOnClickListener { navFunc(info.directionId) }
@@ -33,7 +33,7 @@ class SettingListAdapter: ListAdapter<ListNavigationItemInfo, SettingListAdapter
         }
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
-                val binding = ComponentListviewNavigationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemVerticalNavigationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return ViewHolder(binding)
             }
         }

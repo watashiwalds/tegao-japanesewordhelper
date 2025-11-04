@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent"
 
                 tools:itemCount="3"
-                tools:listitem="@layout/item_navbar_icon_n_label_chip"
+                tools:listitem="@layout/item_chip_navbar_icon_n_label"
                 tools:orientation="horizontal"
                 tools:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
 

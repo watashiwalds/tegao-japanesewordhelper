@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
-import com.tegaoteam.application.tegao.databinding.CardWordDefinitionBinding
+import com.tegaoteam.application.tegao.databinding.CardDefinitionWordBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
@@ -29,7 +29,7 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
         holder.bind(getItem(position), lifecycleOwner)
     }
 
-    class ViewHolder private constructor(private val binding: CardWordDefinitionBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(private val binding: CardDefinitionWordBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(word: Word, lifecycleOwner: LifecycleOwner) {
             binding.reading.setTextWithVisibility(word.reading)
             binding.furigana.setTextWithVisibility(word.furigana?.joinToString("、"))
@@ -50,7 +50,7 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
-                val binding = CardWordDefinitionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = CardDefinitionWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return ViewHolder(binding)
             }
         }

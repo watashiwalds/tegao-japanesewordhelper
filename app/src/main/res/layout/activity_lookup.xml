@@ -183,7 +183,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
 
-                tools:listitem="@layout/item_option_only_chip"
+                tools:listitem="@layout/item_chip_dictionary_pick"
                 tools:layoutManager="LinearLayoutManager"
                 tools:orientation="horizontal"
                 tools:itemCount="4"
@@ -200,7 +200,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
 
-                tools:listitem="@layout/card_word_definition"
+                tools:listitem="@layout/card_definition_word"
                 tools:itemCount="2"
                 />
 

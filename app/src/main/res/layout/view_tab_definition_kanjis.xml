@@ -18,11 +18,25 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding_normal">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ctrl_kanjis_tab_pick_rcy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+
+            tools:listitem="@layout/item_chip_character_pick"
+            tools:itemCount="3"
+            />
+
         <FrameLayout
             android:id="@+id/lo_kanji_stroke_frm"
             android:layout_width="@dimen/img_oneKanji"
             android:layout_height="@dimen/img_oneKanji"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ctrl_kanjis_tab_pick_rcy"
+            android:layout_marginTop="@dimen/padding_small"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
@@ -49,7 +63,6 @@
             app:layout_constraintStart_toEndOf="@id/lo_kanji_stroke_frm"
             app:layout_constraintEnd_toEndOf="parent"
 
-            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
             tools:listitem="@layout/item_tag"
             tools:itemCount="6"
             tools:orientation="horizontal"
@@ -216,7 +229,7 @@
             app:toggleVisibility2ndGateLiveData="@{isExpanding}"
 
             tools:itemCount="2"
-            tools:listitem="@layout/item_additional_info"
+            tools:listitem="@layout/item_definition_additional_info"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

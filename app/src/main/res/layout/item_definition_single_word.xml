@@ -116,7 +116,7 @@
             app:toggleVisibility2ndGateLiveData="@{isExpanding}"
 
             tools:itemCount="2"
-            tools:listitem="@layout/item_additional_info"
+            tools:listitem="@layout/item_definition_additional_info"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

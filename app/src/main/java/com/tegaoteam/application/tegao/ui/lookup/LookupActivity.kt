@@ -18,7 +18,7 @@ import com.tegaoteam.application.tegao.data.hub.DictionaryHub
 import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
 import com.tegaoteam.application.tegao.data.hub.SettingHub
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
-import com.tegaoteam.application.tegao.databinding.ItemOptionOnlyChipBinding
+import com.tegaoteam.application.tegao.databinding.ItemChipDictionaryPickBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
@@ -156,7 +156,7 @@ class LookupActivity : AppCompatActivity() {
 
     fun displayDictionaryOptions() {
         val availableDictionaries = _viewModel.availableDictionariesList
-        val dictChipAdapter = ThemedChipListAdapter(this, ItemOptionOnlyChipBinding::inflate)
+        val dictChipAdapter = ThemedChipListAdapter(this, ItemChipDictionaryPickBinding::inflate)
         dictChipAdapter.submitListWithClickListener(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) }) { dictId ->
             _viewModel.selectedDictionaryId = dictId
             _viewModel.evStartSearch.ignite()

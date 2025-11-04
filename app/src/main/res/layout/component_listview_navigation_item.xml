@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/label"
-            style="@style/Theme.Tegao.Label"
+            style="@style/Theme.Tegao.Label.Normal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/detail"
-            style="@style/Theme.Tegao.ContentText.Normal"
+            style="@style/Theme.Tegao.Label.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLines="1"

@@ -134,10 +134,17 @@
         <item name="android:scaleType">fitCenter</item>
     </style>
 
-    <style name="Theme.Tegao.Label">
-        <item name="fontFamily">@font/roboto_bold</item>
+    <style name="Theme.Tegao.Label"/>
+    <style name="Theme.Tegao.Label.Small">
+        <item name="fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">@dimen/textSize_small</item>
+    </style>
+    <style name="Theme.Tegao.Label.Normal">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/textSize_normal</item>
     </style>
     <style name="Theme.Tegao.Label.Large">
+        <item name="fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">@dimen/textSize_average</item>
     </style>
 

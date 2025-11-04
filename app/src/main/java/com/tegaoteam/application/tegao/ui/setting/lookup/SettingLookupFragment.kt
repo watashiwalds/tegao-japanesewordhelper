@@ -28,7 +28,7 @@ class SettingLookupFragment : Fragment() {
         _viewModel = ViewModelProvider(this, SettingLookupViewModel.Companion.ViewModelFactory(_settingRepo))[SettingLookupViewModel::class]
 
         _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting_lookup, container, false)
-        _adapter = SettingEntryListAdapter().apply {
+        _adapter = SettingEntryListAdapter(viewLifecycleOwner).apply {
             submitList(_viewModel.lookupSettings)
         }
         _binding.loSettingListLst.adapter = _adapter

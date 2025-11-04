@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.ui.setting
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,12 +13,12 @@ import com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem
 import com.tegaoteam.application.tegao.ui.setting.model.ConfigType
 
 @Suppress("unchecked_cast")
-class SettingEntryListAdapter: ListAdapter<ConfigEntryItem, SettingEntryListAdapter.ViewHolder>(DiffCallback()) {
+class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): ListAdapter<ConfigEntryItem, SettingEntryListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        return ViewHolder.from(parent)
+        return ViewHolder.from(parent, lifecyclerOwner)
     }
 
     override fun onBindViewHolder(
@@ -27,14 +28,16 @@ class SettingEntryListAdapter: ListAdapter<ConfigEntryItem, SettingEntryListAdap
         holder.bind(getItem(position))
     }
 
-    class ViewHolder private constructor (private val binding: ItemSettingConfigDisplayBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor (private val binding: ItemSettingConfigDisplayBinding, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
         fun bind(info: ConfigEntryItem) {
+            val lcO = lifecycleOwner
             binding.info = info
             when (info.type) {
                 ConfigType.BOOLEAN -> binding.loLateinitSettingFrm.apply {
                     removeAllViews()
                     val subBinding = SubitemSettingConfigBtnBooleanBinding.inflate(LayoutInflater.from(context), this, false).apply {
                         liveData = info.liveData as LiveData<Boolean>
+                        lifecycleOwner = lcO
                         executePendingBindings()
                     }
                     addView(subBinding.root)
@@ -43,9 +46,9 @@ class SettingEntryListAdapter: ListAdapter<ConfigEntryItem, SettingEntryListAdap
             binding.executePendingBindings()
         }
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(parent: ViewGroup, lifecyclerOwner: LifecycleOwner): ViewHolder {
                 val binding = ItemSettingConfigDisplayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return ViewHolder(binding)
+                return ViewHolder(binding, lifecyclerOwner)
             }
         }
     }

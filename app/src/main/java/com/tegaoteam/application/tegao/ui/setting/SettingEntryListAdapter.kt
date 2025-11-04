@@ -40,7 +40,6 @@ class SettingEntryListAdapter: ListAdapter<ConfigEntryItem, SettingEntryListAdap
                     addView(subBinding.root)
                 }
             }
-            binding.root.setOnClickListener { info.clickListener }
             binding.executePendingBindings()
         }
         companion object {

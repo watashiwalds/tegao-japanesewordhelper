@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="dev_setting_label">Developer Text</string>
+    <string name="dev_setting_detail">It\'s a playground… for dev =)</string>
+
     <string name="setting_search_label">Tìm kiếm</string>
     <string name="setting_search_detail">Chuyển đổi Hepburn</string>
 

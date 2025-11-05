@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_settingListFragment_to_settingLookupFragment"
             app:destination="@id/settingLookupFragment" />
+        <action
+            android:id="@+id/action_settingListFragment_to_devPlaygroundFragment"
+            app:destination="@id/devPlaygroundFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingLookupFragment"
         android:name="com.tegaoteam.application.tegao.ui.setting.lookup.SettingLookupFragment"
         android:label="fragment_setting_lookup"
         tools:layout="@layout/fragment_setting_lookup" />
+    <fragment
+        android:id="@+id/devPlaygroundFragment"
+        android:name="com.tegaoteam.application.tegao.ui.setting.devmode.DevPlaygroundFragment"
+        android:label="fragment_dev_playground"
+        tools:layout="@layout/fragment_dev_playground" />
 </navigation>

@@ -11,6 +11,12 @@ class SettingListViewModel: ViewModel() {
             directionId = SettingListFragmentDirections.actionSettingListFragmentToSettingLookupFragment().actionId,
             detailResId = R.string.setting_search_detail,
             iconResId = R.drawable.ftc_round_search_128
-        )
+        ),
+        ListNavigationItemInfo(
+            labelResId = R.string.dev_setting_label,
+            directionId = SettingListFragmentDirections.actionSettingListFragmentToDevPlaygroundFragment().actionId,
+            detailResId = R.string.dev_setting_detail,
+            iconResId = R.drawable.ftc_bold_lab_128
+        ),
     )
 }

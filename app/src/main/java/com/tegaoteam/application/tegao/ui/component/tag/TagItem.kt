@@ -17,11 +17,11 @@ data class TagItem(
     }
 
     companion object {
-        fun toTagItem(termKey: String? = null, label: String = "", detail: String = ""): TagItem {
+        fun toTagItem(termKey: String, label: String? = null, detail: String? = null): TagItem {
             return TagItem(
-                label = label.takeUnless { label.isEmpty() }?: TermBank.getTermLabel(termKey?: ""),
+                label = label.takeUnless { label.isNullOrBlank() }?: TermBank.getTermLabel(termKey),
                 color = ContextCompat.getColor(TegaoApplication.instance.applicationContext, R.color.neutral),
-                detail = detail.takeUnless { detail.isEmpty() }?: TermBank.getTermDescription(termKey?: ""),
+                detail = detail.takeUnless { detail.isNullOrBlank() }?: TermBank.getTermDescription(termKey),
                 clickListener = { tagItem -> AppToast.show(tagItem.detail.toString(), AppToast.LENGTH_SHORT)}
             )
         }

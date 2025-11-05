@@ -13,6 +13,7 @@ data class Word(
         // converter-handle tags, (termKey, (label, description))
         var tags: List<Pair<String, Pair<String, String>>>? = null,
         val meaning: String,
+        // (additional tag key, additional info by string)
         var expandInfos: List<Pair<String, String>>? = null
     )
 

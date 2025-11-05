@@ -84,14 +84,14 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
 
             binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi?.isNotBlank()?: false) {
                 binding.kunyomi.setTextWithVisibility(kanji.kunyomi)
-                binding.loTagKunyomiIcl.infoTag = TagItem.toTagItem("kunyomi", "Ku")
+                binding.loTagKunyomiIcl.infoTag = TagItem.toTagItem("kunyomi")
                 true
             } else {
                 false
             })
             binding.loOnyomiGrp.toggleVisibility( if (kanji.onyomi?.isNotBlank()?: false) {
                 binding.onyomi.setTextWithVisibility(kanji.onyomi)
-                binding.loTagOnyomiIcl.infoTag = TagItem.toTagItem("onyomi", "On")
+                binding.loTagOnyomiIcl.infoTag = TagItem.toTagItem("onyomi")
                 true
             } else {
                 false
@@ -99,7 +99,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             binding.loCompositeGrp.toggleVisibility( if (kanji.composites?.joinToString { it.second?: "" }?.isNotBlank()?: false) {
                 binding.composite.setTextWithVisibility(kanji.composites?.joinToString(", ") { "[${it.first}] ${it.second ?: ""}" })
                 //TODO: Globalization by using @string value
-                binding.loTagCompositeIcl.infoTag = TagItem.toTagItem("composite", "Bộ")
+                binding.loTagCompositeIcl.infoTag = TagItem.toTagItem("composite")
                 true
             } else {
                 false

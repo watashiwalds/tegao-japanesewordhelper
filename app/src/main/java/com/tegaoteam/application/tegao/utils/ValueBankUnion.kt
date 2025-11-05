@@ -17,6 +17,7 @@ object TermBank {
     }
 
     //TODO: Chuyển qua string resource để làm multi-language
+
     private val termLabels = mapOf(
         "source" to "Nguồn",
         "lang" to "Ngôn ngữ",
@@ -31,7 +32,16 @@ object TermBank {
 
     private val termDescriptions = mapOf(
         "source" to askCC(R.string.term_source),
-        "lang" to askCC(R.string.term_lang)
+        "lang" to askCC(R.string.term_lang),
+        "kunyomi" to "Cách đọc thuần Nhật",
+        "onyomi" to "Cách đọc theo âm Hán tự",
+        "composite" to "Phân giải cấu trúc của Hán tự",
+        "detail" to "Giải nghĩa của Hán tự theo lịch sử",
+        "example" to "Mẫu câu có sử dụng từ vựng này",
+        "tips" to "Cách nhớ nhanh không theo quy tắc",
+        "frequency" to "Xếp hạng mức độ sử dụng trong văn bản tiếng Nhật thực tế",
+        "stroke" to "Số nét tạo thành",
+        "jlpt" to "Cấp độ xếp loại theo thang N-level tiếng Nhật"
     )
     fun getTermDescription(key: String) = termDescriptions[key]?: key
 }

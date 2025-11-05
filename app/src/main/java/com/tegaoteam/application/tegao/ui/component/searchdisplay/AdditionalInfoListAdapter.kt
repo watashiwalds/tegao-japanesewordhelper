@@ -25,7 +25,7 @@ class AdditionalInfoListAdapter: ListAdapter<Pair<String, String>, AdditionalInf
 
     class ViewHolder private constructor(private val binding: SubitemDefinitionAdditionalInfoBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Pair<String, String>) {
-            binding.expandTag.infoTag = TagItem.toTagItem(data.first, data.first)
+            binding.expandTag.infoTag = TagItem.toTagItem(data.first)
             binding.expandContent.text = data.second
         }
         companion object {

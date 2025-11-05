@@ -7,7 +7,7 @@
     <color name="text_normal">#FF000000</color>
     <color name="text_reverse">#FFFFFFFF</color>
     <color name="primary">#FFB31B1B</color>
-    <color name="primary_light">#FFEDD0D0</color>
+    <color name="primary_light">#FFD97474</color>
     <color name="primary_dark">#FF550000</color>
     <color name="secondary">#FFFFE100</color>
     <color name="secondary_light">#FFFAFEBE</color>

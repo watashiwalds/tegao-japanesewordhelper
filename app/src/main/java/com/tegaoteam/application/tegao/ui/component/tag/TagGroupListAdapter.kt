@@ -26,8 +26,21 @@ class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(
      * Unused, use submitRawTagList instead
      */
     override fun submitList(list: List<TagItem?>?) {}
-    fun submitRawTagList(list: List<Pair<String, String?>>?) {
-        val convertedList = list?.filter { it.second?.isNotBlank()?: false }?.map { (termKey, label) -> TagItem.toTagItem(termKey, label?: "") }
+    fun submitRawTagList(list: List<Pair<String, Any>>?) {
+        var convertedList: MutableList<TagItem>? = null
+        if (list != null) {
+            convertedList = mutableListOf()
+            for (tag in list) {
+                val termKey = tag.first
+                val tagInfo = tag.second
+                when (tagInfo) {
+                    is Pair<*, *> -> convertedList.add(TagItem.toTagItem(termKey, tagInfo.first as String, tagInfo.second as String))
+                    else -> convertedList.add(TagItem.toTagItem(termKey, tagInfo as String))
+                }
+            }
+        }
+            
+//        convertedList = list?.filter { it.second?.isNotBlank()?: false }?.map { (termKey, label) -> TagItem.toTagItem(termKey, label?: "") }
         super.submitList(convertedList)
     }
 

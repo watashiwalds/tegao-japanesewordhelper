@@ -5,6 +5,7 @@ import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryRespo
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import timber.log.Timber
+import kotlin.collections.toList
 
 class MaziiResponseConverter: DictionaryResponseConverter {
     override fun <T> toDomainWordList(rawData: T): List<Word> {
@@ -19,7 +20,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     //some default tags
                     val tagsT = mutableListOf(
                         Pair("source", "Mazii"),
-                        Pair("lang", wObj.get("label").takeUnless { it.isJsonNull }?.asString)
+                        Pair("lang", wObj.get("label").takeUnless { it.isJsonNull }?.asString?: "")
                     )
 
                     //  TODO: adapt to the change of pronunciation info of Mazii (not urgent)
@@ -51,7 +52,11 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                     val meansT = mutableListOf<Word.Definition>()
                     if (!means.isJsonNull) for (m in means) {
                         val mObj = m.asJsonObject
-                        val mTags = mObj.get("kind").takeUnless { i -> i != null && i.isJsonNull }?.asString?.split(", ")?.map { "kind" to it }?.toMutableList<Pair<String, String?>>()
+                        val mTags = mObj.get("kind").takeUnless { i -> i != null && i.isJsonNull }
+                            ?.asString
+                            ?.split(", ")
+                            ?.map { "kind" to Pair(it, MaziiTagValues.getTagDescription(it)) }
+                            ?.toList<Pair<String, Pair<String, String>>>()
                         val mXpds = mutableListOf<Pair<String, String>>()
                         if (mObj.has("examples") && !mObj.get("examples").isJsonNull) for (ex in mObj.getAsJsonArray("examples")) {
                             val exObj = ex.asJsonObject
@@ -115,10 +120,10 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         }.toMutableList()
                     else mutableListOf()
 
-                    val tagsT = mutableListOf<Pair<String, String?>>().apply {
-                        if (kObj.has("freq")) add("frequency" to kObj.get("freq").takeUnless { it.isJsonNull }?.asString)
-                        if (kObj.has("stroke_count")) add("stroke" to kObj.get("stroke_count").takeUnless { it.isJsonNull }?.asString)
-                        if (kObj.has("level")) add("jlpt" to kObj.get("level").takeUnless { it.isJsonNull }?.asJsonArray?.joinToString(", ") { it.asString })
+                    val tagsT = mutableListOf<Pair<String, String>>().apply {
+                        if (kObj.has("freq")) add("frequency" to (kObj.get("freq").takeUnless { it.isJsonNull }?.asString?: ""))
+                        if (kObj.has("stroke_count")) add("stroke" to (kObj.get("stroke_count").takeUnless { it.isJsonNull }?.asString?: ""))
+                        if (kObj.has("level")) add("jlpt" to (kObj.get("level").takeUnless { it.isJsonNull }?.asJsonArray?.joinToString(", ") { it.asString }?: ""))
                     }
 
                     val additionalT = mutableListOf<Pair<String, String>>().apply {

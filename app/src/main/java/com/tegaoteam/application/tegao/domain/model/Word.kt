@@ -4,12 +4,14 @@ data class Word(
     val id: Int,
     val reading: String,
     val furigana: List<String>? = null,
-    var tags: List<Pair<String, String?>>? = null,
+    // app-handle tags, (termKey, display label)
+    var tags: List<Pair<String, String>>? = null,
     var additionalInfo: List<Pair<String, String>>? = null,
     val definitions: List<Definition>
 ) {
     data class Definition (
-        var tags: List<Pair<String, String?>>? = null,
+        // converter-handle tags, (termKey, (label, description))
+        var tags: List<Pair<String, Pair<String, String>>>? = null,
         val meaning: String,
         var expandInfos: List<Pair<String, String>>? = null
     )

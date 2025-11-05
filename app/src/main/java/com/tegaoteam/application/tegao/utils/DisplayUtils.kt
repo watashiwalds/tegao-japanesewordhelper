@@ -3,7 +3,6 @@ package com.tegaoteam.application.tegao.utils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.Group
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 

@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.data.network.api
+package com.tegaoteam.application.tegao.data.network.dictionaries.mazii
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -6,16 +6,14 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
-import com.tegaoteam.application.tegao.data.network.converter.DictionaryResponseConverter
-import com.tegaoteam.application.tegao.data.network.converter.MaziiResponseConverter
+import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.domain.interf.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.model.RepoResult
 
-class MaziiDictionaryApi private constructor(private val converter: DictionaryResponseConverter):
-    DictionaryNetworkApi {
+class MaziiDictionaryApi private constructor(private val converter: DictionaryResponseConverter): DictionaryNetworkApi {
 
     companion object {
         val api by lazy {

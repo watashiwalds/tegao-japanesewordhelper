@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.data.network.converter
+package com.tegaoteam.application.tegao.data.network.dictionaries
 
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word

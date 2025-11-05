@@ -1,6 +1,7 @@
-package com.tegaoteam.application.tegao.data.network.converter
+package com.tegaoteam.application.tegao.data.network.dictionaries.mazii
 
 import com.google.gson.JsonObject
+import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import timber.log.Timber

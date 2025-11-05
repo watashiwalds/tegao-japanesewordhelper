@@ -1,8 +1,8 @@
 package com.tegaoteam.application.tegao.data.config
 
 import com.tegaoteam.application.tegao.domain.interf.DictionaryNetworkApi
-import com.tegaoteam.application.tegao.data.network.api.JishoDictionaryApi
-import com.tegaoteam.application.tegao.data.network.api.MaziiDictionaryApi
+import com.tegaoteam.application.tegao.data.network.dictionaries.jisho.JishoDictionaryApi
+import com.tegaoteam.application.tegao.data.network.dictionaries.mazii.MaziiDictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 
 //TODO: Config placeholder, change when doing actual work

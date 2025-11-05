@@ -36,7 +36,7 @@ object TermBank {
         "example" to "Ví dụ",
         "tips" to "Mẹo"
     )
-    fun getTermLabel(key: String) = termLabels[key]?: key
+    fun getTermLabel(key: String) = termLabels[key]?: ""
 
     private val termDescriptions = mapOf(
         "source" to askCC(R.string.term_source),
@@ -51,5 +51,5 @@ object TermBank {
         "stroke" to "Số nét tạo thành",
         "jlpt" to "Cấp độ xếp loại theo thang N-level tiếng Nhật"
     )
-    fun getTermDescription(key: String) = termDescriptions[key]?: key
+    fun getTermDescription(key: String) = termDescriptions[key]?: ""
 }

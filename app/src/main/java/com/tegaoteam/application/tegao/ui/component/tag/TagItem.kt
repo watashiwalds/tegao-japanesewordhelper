@@ -4,7 +4,7 @@ import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.TermBank
 
 data class TagItem(
-    val label: String,
+    val label: String? = null,
     val backgroundColor: Int,
     val textColor: Int,
     val detail: String? = null,

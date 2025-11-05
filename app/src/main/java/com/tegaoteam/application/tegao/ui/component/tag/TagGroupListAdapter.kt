@@ -35,7 +35,7 @@ class TagGroupListAdapter: ListAdapter<TagItem, TagGroupListAdapter.ViewHolder>(
                 val tagInfo = tag.second
                 when (tagInfo) {
                     is Pair<*, *> -> convertedList.add(TagItem.toTagItem(termKey, tagInfo.first as String, tagInfo.second as String))
-                    else -> convertedList.add(TagItem.toTagItem(termKey, tagInfo as String))
+                    else -> if (tagInfo.toString().isNotBlank()) convertedList.add(TagItem.toTagItem(termKey, tagInfo as String))
                 }
             }
         }

@@ -133,8 +133,8 @@ class MaziiResponseConverter: DictionaryResponseConverter {
 
                     val idT = kObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt
                     val charT = kObj.get("kanji").takeUnless { it.isJsonNull }?.asString
-                    val kunyomiT = kObj.get("kun").takeUnless { it.isJsonNull }?.asString
-                    val onyomiT = kObj.get("on").takeUnless { it.isJsonNull }?.asString
+                    val kunyomiT = kObj.get("kun").takeUnless { it.isJsonNull }?.asString?.split(' ')
+                    val onyomiT = kObj.get("on").takeUnless { it.isJsonNull }?.asString?.split(' ')
                     val meaningT = kObj.get("mean").takeUnless { it.isJsonNull }?.asString
 
                     kanji = Kanji(

@@ -3,8 +3,8 @@ package com.tegaoteam.application.tegao.domain.model
 data class Kanji(
     val id: Int,
     val character: String,
-    var kunyomi: String? = null,
-    var onyomi: String? = null,
+    var kunyomi: List<String>? = null,
+    var onyomi: List<String>? = null,
     var composites: List<Pair<String, String?>>? = null,
     val meaning: String,
     var tags: List<Pair<String, String>>? = null,

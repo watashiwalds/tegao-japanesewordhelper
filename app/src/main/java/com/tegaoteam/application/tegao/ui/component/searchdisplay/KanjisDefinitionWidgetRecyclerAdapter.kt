@@ -82,15 +82,15 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
 
             binding.meaning.setTextWithVisibility(kanji.meaning)
 
-            binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi?.isNotBlank()?: false) {
-                binding.kunyomi.setTextWithVisibility(kanji.kunyomi)
+            binding.loKunyomiGrp.toggleVisibility( if (kanji.kunyomi != null) {
+                binding.kunyomi.setTextWithVisibility(kanji.kunyomi?.joinToString("、"))
                 binding.loTagKunyomiIcl.infoTag = TagItem.toTagItem("kunyomi")
                 true
             } else {
                 false
             })
-            binding.loOnyomiGrp.toggleVisibility( if (kanji.onyomi?.isNotBlank()?: false) {
-                binding.onyomi.setTextWithVisibility(kanji.onyomi)
+            binding.loOnyomiGrp.toggleVisibility( if (kanji.onyomi != null) {
+                binding.onyomi.setTextWithVisibility(kanji.onyomi?.joinToString("、"))
                 binding.loTagOnyomiIcl.infoTag = TagItem.toTagItem("onyomi")
                 true
             } else {

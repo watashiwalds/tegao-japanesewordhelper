@@ -15,9 +15,23 @@ object TermBank {
             e.toString()
         }
     }
-    private val termMap = mapOf(
+
+    //TODO: Chuyển qua string resource để làm multi-language
+    private val termLabels = mapOf(
+        "source" to "Nguồn",
+        "lang" to "Ngôn ngữ",
+        "kunyomi" to "Ku",
+        "onyomi" to "On",
+        "composite" to "Bộ",
+        "detail" to "Chi tiết",
+        "example" to "Ví dụ",
+        "tips" to "Mẹo"
+    )
+    fun getTermLabel(key: String) = termLabels[key]?: key
+
+    private val termDescriptions = mapOf(
         "source" to askCC(R.string.term_source),
         "lang" to askCC(R.string.term_lang)
     )
-    fun getTerm(key: String) = termMap[key]?: key
+    fun getTermDescription(key: String) = termDescriptions[key]?: key
 }

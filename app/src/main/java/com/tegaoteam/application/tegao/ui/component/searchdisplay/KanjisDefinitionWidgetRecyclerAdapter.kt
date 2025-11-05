@@ -61,7 +61,13 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
         }
 
         fun updateBind(kanji: Kanji) {
-            val hasAdditionalInfo = (kanji.additionalInfo != null && !kanji.additionalInfo!!.isEmpty())
+            var hasAdditionalInfo = (kanji.additionalInfo != null)
+            for (item in kanji.additionalInfo?: listOf()) {
+                if (item.second.isBlank()) {
+                    hasAdditionalInfo = false
+                    break
+                }
+            }
             binding.hasAdditionalInfo = hasAdditionalInfo
             val isExpanding = MutableLiveData<Boolean>().apply { value = false }
             binding.isExpanding = isExpanding

@@ -51,12 +51,13 @@ object DictionaryConfig {
             }""".trimIndent()
     )
 
-    val supportedSource = listOf<DictionaryNetworkApi>(MaziiDictionaryApi.api, JishoDictionaryApi.api)
-
     fun getDictionariesList() = listOf(
         SIMDICT_MAZII,
-        SIMDICT_JISHO
+//        SIMDICT_JISHO
     )
 
-    fun getDictionariesApi() = supportedSource
+    fun getDictionariesApi() = listOf<DictionaryNetworkApi>(
+        MaziiDictionaryApi.api,
+//        JishoDictionaryApi.api
+    )
 }

@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.RectF
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -27,9 +28,10 @@ import kotlin.math.min
  */
 class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) {
     // overhead prevention for attributes (default background, square display,...)
-    init {
-        if (isInEditMode) setBackgroundResource(R.drawable.view_writing_pad) else
-        if (background == null) setBackgroundResource(R.drawable.view_writing_pad)
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        val isBackgroundNotSet = (background as? ColorDrawable)?.color == Color.TRANSPARENT || background == null
+        if (isBackgroundNotSet) setBackgroundResource(R.drawable.view_writing_pad)
     }
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = MeasureSpec.getSize(widthMeasureSpec)

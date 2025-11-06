@@ -20,6 +20,7 @@
         <com.tegaoteam.application.tegao.ui.component.handwriting.WritingView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/ftc_round_search_128"
             />
 
     </FrameLayout>

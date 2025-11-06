@@ -17,6 +17,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.tegaoteam.application.tegao.ui.component.handwriting.WritingView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
     </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatEditText

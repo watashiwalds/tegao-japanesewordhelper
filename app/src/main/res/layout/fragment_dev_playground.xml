@@ -13,10 +13,8 @@
         android:id="@+id/testview"
         android:layout_width="240dp"
         android:layout_height="240dp"
-        android:background="@drawable/drawingpad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>

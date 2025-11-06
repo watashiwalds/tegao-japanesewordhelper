@@ -14,6 +14,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.tegaoteam.application.tegao.R
 import androidx.core.graphics.createBitmap
+import timber.log.Timber
 import kotlin.math.min
 
 /**
@@ -59,6 +60,9 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     // Bitmap for storing the whole handwriting
     private lateinit var bitmapBuffer: Bitmap
 
+    // qol, smooth writing w/o sudden teleport line drawing
+    private var isInsideWriteRegionWhenWrite = false
+
     var onStrokeFinished: ((Bitmap) -> Unit)? = null
 
     // called when the View finalize it creation and have a value for it dimension on the screen
@@ -78,18 +82,23 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
         val x = event.x
         val y = event.y
 
-        // if event is outside of writeRegion, simply ignore it
-        if (writeRegion?.contains(x, y) == false) return false
+        if (writeRegion?.contains(x, y) == false) isInsideWriteRegionWhenWrite = false
 
         when (event.action) {
             // the hand start it stroke by touching down the writeRegion
             MotionEvent.ACTION_DOWN -> {
+                isInsideWriteRegionWhenWrite = true
                 currentStroke.moveTo(x, y) // stroke start, teleport to the start point to tract the stroke
             }
 
             // hand moving while still touching the screen -> user is writing
             MotionEvent.ACTION_MOVE -> {
-                currentStroke.lineTo(x, y) // drag the cursor to the now location of the hand (higher fps, smoother the line)
+                if (isInsideWriteRegionWhenWrite)
+                    currentStroke.lineTo(x, y) // drag the cursor to the now location of the hand (higher fps, smoother the line)
+                else {
+                    isInsideWriteRegionWhenWrite = true
+                    currentStroke.moveTo(x, y) // teleport the cursor (without drawing) when going outside the writeRegion
+                }
                 invalidate() // redraw the View to show this new trail of currentStroke
             }
 
@@ -138,6 +147,7 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     // TODO: onTouchEvent scream about override performClick for accessibility. No idea of doing this
     override fun performClick(): Boolean {
         super.performClick()
+        Timber.i("Stroke count: ${strokeStack.size}")
         return true
     }
 }

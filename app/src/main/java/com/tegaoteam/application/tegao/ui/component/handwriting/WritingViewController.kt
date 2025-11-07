@@ -7,11 +7,12 @@ import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
 
 class WritingViewController(
     private val writingView: WritingView,
-    onStrokeFinished: ((Bitmap) -> Unit)? = null,
+    onStrokeFinished: ((Bitmap?) -> Unit)? = null,
     private val binding: ViewDataBinding? = null,
     private val editText: EditText? = null
 ) {
     init {
+        onStrokeFinished?.let { bindingWriteOutputFunction(it) }
         binding?.let { bindingNotNull ->
             if (binding is ViewWritingBoardFullBinding) {
                 if (editText != null)
@@ -21,7 +22,6 @@ class WritingViewController(
             }
             binding.executePendingBindings()
         }
-        onStrokeFinished?.let { bindingWriteOutputFunction(it) }
     }
 
     private fun linkViewToBinding(mode: Int) {
@@ -39,6 +39,7 @@ class WritingViewController(
 
     private fun bindingEditTextControlFunctions(binding: ViewWritingBoardFullBinding, editText: EditText) {
         //TODO: Do binding when EditText is presented
+        //include: enterBtn, backspaceBtn, next/prevBtn
     }
 
     private fun bindingWriteHelperFunctions(binding: ViewWritingBoardFullBinding) {
@@ -46,7 +47,7 @@ class WritingViewController(
         binding.undoStrokeBtn.setOnClickListener { writingView.undoStroke() }
     }
 
-    private fun bindingWriteOutputFunction(onStrokeFinished: ((Bitmap) -> Unit)) {
+    private fun bindingWriteOutputFunction(onStrokeFinished: ((Bitmap?) -> Unit)) {
         writingView.onStrokeFinished = onStrokeFinished
     }
 

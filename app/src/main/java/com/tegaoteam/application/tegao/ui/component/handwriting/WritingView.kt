@@ -65,7 +65,7 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     // qol, smooth writing w/o sudden teleport line drawing
     private var isInsideWriteRegionWhenWrite = false
 
-    var onStrokeFinished: ((Bitmap) -> Unit)? = null
+    var onStrokeFinished: ((Bitmap?) -> Unit)? = null
 
     // called when the View finalize it creation and have a value for it dimension on the screen
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -106,10 +106,14 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
 
             // hand is leaving the screen, suggest a finish in this stroke
             MotionEvent.ACTION_UP -> {
-                strokeStack.add(Pair(currentStroke, penPaint)) // add stroke to list
+                // fix dot don't show up until new line wrote
+                currentStroke.lineTo(x+0.1f, y+0.1f)
+                invalidate()
+
+                strokeStack.add(Pair(Path(currentStroke), penPaint)) // add stroke to list
                 bufferCanvas.drawPath(currentStroke, penPaint) // long-term draw the stroke onto Canvas
                 currentStroke.reset() // clear out value for the next stroke (if have)
-                onStrokeFinished?.invoke(bitmapBuffer) // send the current bitmap to listener
+                onStrokeFinished?.invoke(exportBitmap()) // send the current bitmap to listener
                 // accessibility things. might look upon if have time
                 performClick()
             }
@@ -118,7 +122,7 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     }
 
     // get a copy of the current bitmap (with all the strokes draw on it)
-    fun exportBitmap() = bitmapBuffer.copy(Bitmap.Config.ARGB_8888, false)
+    fun exportBitmap(): Bitmap? = bitmapBuffer.copy(Bitmap.Config.ARGB_8888, false)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -130,20 +134,21 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     fun undoStroke() {
         strokeStack.removeLastOrNull()
         redrawBuffer()
-        invalidate()
+        Timber.i("Undo stroke, remaining count: ${strokeStack.size}")
     }
 
     // clear strokes make all strokes cleared, return to a blank canvas
     fun clearStrokes() {
         strokeStack.clear()
         redrawBuffer()
-        invalidate()
+        Timber.i("Clear strokes, remaining count: ${strokeStack.size}")
     }
 
     //
     private fun redrawBuffer() {
         bufferCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR) // clear the canvas of all long-term stroke
         strokeStack.forEach { (stroke, paint) -> bufferCanvas.drawPath(stroke, paint) }
+        invalidate()
     }
 
     // TODO: onTouchEvent scream about override performClick for accessibility. No idea of doing this

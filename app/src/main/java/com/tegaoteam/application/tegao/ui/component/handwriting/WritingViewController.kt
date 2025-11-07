@@ -56,7 +56,7 @@ class WritingViewController(
         binding.cursorToRightBtn.setOnClickListener {
             editText.setSelection(
                 (editText.selectionEnd + 1).let {
-                    if (it >= editText.text.length-1) editText.text.length else it
+                    if (it > editText.text.length) editText.text.length else it
                 }
             )
         }

@@ -16,7 +16,7 @@ object TermBank {
         }
     }
 
-    private val yellowTerms = listOf("source", "kunyomi", "onyomi", "composite", "jlpt", "frequency")
+    private val yellowTerms = listOf("source", "jlpt", "frequency")
     fun getTermColor(key: String): Pair<Int, Int> {
         return when (key) {
             in yellowTerms -> Pair(ContextCompat.getColor(appContext, R.color.secondary), ContextCompat.getColor(appContext, R.color.const_black))

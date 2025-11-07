@@ -50,7 +50,8 @@
 
                 <ImageButton
                     android:id="@+id/inputClear_btn"
-                    style="@style/Theme.Tegao.IconButton.HasBigPadding"
+                    style="@style/Theme.Tegao.IconButton"
+                    android:padding="4dp"
                     android:src="@drawable/ftc_round_x_128"
                     app:layout_constraintEnd_toStartOf="@+id/inputHandwriting_btn"
                     app:layout_constraintTop_toTopOf="parent"
@@ -77,7 +78,8 @@
 
                 <ImageButton
                     android:id="@+id/searchStart_btn"
-                    style="@style/Theme.Tegao.IconButton.HasPadding"
+                    style="@style/Theme.Tegao.IconButton"
+                    android:padding="3dp"
                     android:src="@drawable/ftc_round_search_128"
                     android:onClick="@{() -> viewModel.evStartSearch.ignite()}"
                     app:layout_constraintEnd_toEndOf="parent"

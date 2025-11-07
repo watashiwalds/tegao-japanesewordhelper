@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/writing_boardPadding"
+        >
+
+        <ImageButton
+            android:id="@+id/clear_strokes_btn"
+
+            style="@style/Theme.Tegao.IconButton"
+            android:padding="12dp"
+            android:background="@drawable/neutral_stroke_background"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="@dimen/img_icon_large"
+            android:src="@drawable/material3_round_eraser_24px"
+
+            app:layout_constraintTop_toTopOf="@id/writing_pad_wrv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/writing_pad_wrv"
+
+            />
+
+        <ImageButton
+            android:id="@+id/undo_stroke_btn"
+
+            style="@style/Theme.Tegao.IconButton"
+            android:padding="10dp"
+            android:background="@drawable/neutral_stroke_background"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="@dimen/img_icon_large"
+            android:src="@drawable/material3_round_undo_24px"
+
+            app:layout_constraintBottom_toBottomOf="@id/writing_pad_wrv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/writing_pad_wrv"
+
+            />
+
+        <ImageButton
+            android:id="@+id/backspace_char_btn"
+
+            style="@style/Theme.Tegao.IconButton"
+            android:padding="12dp"
+            android:background="@drawable/neutral_stroke_background"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="@dimen/img_icon_large"
+            android:src="@drawable/material3_round_backspace_24px"
+
+            app:layout_constraintTop_toTopOf="@id/writing_pad_wrv"
+            app:layout_constraintStart_toEndOf="@id/writing_pad_wrv"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+
+        <ImageButton
+            android:id="@+id/enter_btn"
+
+            style="@style/Theme.Tegao.IconButton.SecondaryContrast"
+            android:background="@drawable/secondary_solid_background"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="@dimen/img_icon_large"
+            android:src="@drawable/material3_round_keyboard_return_24px"
+            android:padding="10dp"
+
+            app:layout_constraintBottom_toBottomOf="@id/writing_pad_wrv"
+            app:layout_constraintStart_toEndOf="@id/writing_pad_wrv"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+
+        <ImageButton
+            android:id="@+id/cursor_to_left_btn"
+
+            style="@style/Theme.Tegao.IconButton"
+            android:padding="4dp"
+            android:background="@drawable/neutral_stroke_background"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/padding_normal"
+            android:src="@drawable/material3_round_chevron_backward_24px"
+
+            app:layout_constraintTop_toBottomOf="@id/clear_strokes_btn"
+            app:layout_constraintBottom_toTopOf="@id/undo_stroke_btn"
+            app:layout_constraintStart_toStartOf="@id/clear_strokes_btn"
+            />
+
+        <ImageButton
+            android:id="@+id/cursor_to_right_btn"
+
+            style="@style/Theme.Tegao.IconButton"
+            android:padding="4dp"
+            android:background="@drawable/neutral_stroke_background"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/padding_normal"
+            android:src="@drawable/material3_round_chevron_forward_24px"
+
+            app:layout_constraintTop_toBottomOf="@id/backspace_char_btn"
+            app:layout_constraintBottom_toTopOf="@id/enter_btn"
+            app:layout_constraintEnd_toEndOf="@id/backspace_char_btn"
+            />
+
+        <com.tegaoteam.application.tegao.ui.component.handwriting.WritingView
+            android:id="@+id/writing_pad_wrv"
+
+            android:layout_width="@dimen/writing_writeRegion"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_writing_pad"
+
+            app:layout_constraintTop_toBottomOf="@id/recognized_chars_rcy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/padding_normal"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recognized_chars_rcy"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/primary_solid_hardedge_background"
+
+            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+            android:orientation="horizontal"
+
+            tools:listitem="@layout/item_searchhistory_kanji"
+            tools:itemCount="5"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</layout>

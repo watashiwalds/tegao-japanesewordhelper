@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.ui.component.handwriting
 
 import android.graphics.Bitmap
+import android.view.View
 import android.widget.EditText
 import androidx.databinding.ViewDataBinding
 import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
@@ -9,10 +10,9 @@ class WritingViewController(
     private val writingView: WritingView,
     onStrokeFinished: ((Bitmap?) -> Unit)? = null,
     private val binding: ViewDataBinding? = null,
-    private val editText: EditText? = null,
-    onViewToggled: (() -> Unit)? = null //todo: Hide softKeyboard (if currently show) and do display of the writing view when this invoked
+    private val editText: EditText? = null
 ) {
-    var nowWriting: Boolean = false
+    var isWritingEnabled: Boolean = false
         private set
 
     init {
@@ -42,6 +42,10 @@ class WritingViewController(
     }
 
     private fun bindingEditTextControlFunctions(binding: ViewWritingBoardFullBinding, editText: EditText) {
+        editText.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+            //TODO: Write show/hide function of writing keyboard here (remember: check for the enable state of writing mode)
+        }
+
         binding.cursorToLeftBtn.setOnClickListener {
             editText.setSelection(
                 (editText.selectionStart - 1).let {
@@ -82,9 +86,10 @@ class WritingViewController(
         writingView.onStrokeFinished = onStrokeFinished
     }
 
-    fun toggleWritingView() {
-        nowWriting = !nowWriting
-        editText?.apply{ showSoftInputOnFocus = !nowWriting }
+    // handle writing mode toggle and prevent edittext to call for softKeyboard when focus
+    fun toggleWritingMode() {
+        isWritingEnabled = !isWritingEnabled
+        editText?.apply{ showSoftInputOnFocus = !isWritingEnabled }
     }
 
     companion object {

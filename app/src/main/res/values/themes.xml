@@ -50,6 +50,12 @@
         <item name="android:clipToPadding">false</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
+    <style name="Theme.Tegao.IconButton.PrimaryContrast">
+        <item name="tint">@color/const_white</item>
+    </style>
+    <style name="Theme.Tegao.IconButton.SecondaryContrast">
+        <item name="tint">@color/const_black</item>
+    </style>
 
     <style name="Theme.Tegao.LabelButton">
         <item name="backgroundTint">@null</item>

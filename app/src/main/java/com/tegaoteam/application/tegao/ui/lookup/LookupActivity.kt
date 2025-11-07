@@ -79,16 +79,15 @@ class LookupActivity : AppCompatActivity() {
         if (focusedView != null && ev?.action == MotionEvent.ACTION_DOWN) {
             val focusRect = Rect()
             focusedView.getGlobalVisibleRect(focusRect)
+            // if the now focusedView (in this activity: edittext) region (exported into focusRect) isn't the target of this down event (event coordinate not in focusRect)
             if (!focusRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                // strip the focus out of edittext
                 focusedView.clearFocus()
-
                 // Hide virtual keyboard 'cause Android don't do it automatically
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(focusedView.windowToken, 0)
-
             }
         }
-
         return super.dispatchTouchEvent(ev)
     }
 

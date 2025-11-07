@@ -10,8 +10,8 @@
     <color name="primary_light">#FFD97474</color>
     <color name="primary_dark">#FF550000</color>
     <color name="secondary">#FFFFE100</color>
-    <color name="secondary_light">#FFFAFEBE</color>
-    <color name="secondary_dark">#FFCEA021</color>
+    <color name="secondary_light">#FFFFFA85</color>
+    <color name="secondary_dark">#FFFFC21F</color>
     <color name="const_black">#FF000000</color>
     <color name="const_white">#FFFFFFFF</color>
 </resources>

@@ -17,8 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-
-        android:background="@drawable/neutral_stroke_background"
         >
 
         <include layout="@layout/view_writing_board_full" />

@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
 
-    style="@style/Theme.Tegao.Screen.PaddingBorder"
+    style="@style/Theme.Tegao.Screen"
 
     tools:context=".ui.setting.devmode.DevPlaygroundFragment">
 
     <FrameLayout
         android:id="@+id/testview"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
 
-        <com.tegaoteam.application.tegao.ui.component.handwriting.WritingView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/view_writing_pad"
-            />
+        android:background="@drawable/neutral_stroke_background"
+        >
+
+        <include layout="@layout/view_writing_board_full" />
 
     </FrameLayout>
+
 
     <androidx.appcompat.widget.AppCompatEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_normal"
-        app:layout_constraintTop_toBottomOf="@id/testview"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="Show keyboard"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -74,7 +74,7 @@ class WritingViewController(
             // codes for show/hide the writing board
             if (hasFocus && isWritingEnabled) showWritingView()
             else showWritingView(false)
-            originalOnFocusChangedListener.onFocusChange(view, hasFocus)
+            originalOnFocusChangedListener?.onFocusChange(view, hasFocus)
         }
 
         binding.cursorToLeftBtn.setOnClickListener {

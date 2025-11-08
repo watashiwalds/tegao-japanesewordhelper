@@ -19,12 +19,14 @@ import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
 import com.tegaoteam.application.tegao.data.hub.SettingHub
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipDictionaryPickBinding
+import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
+import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewController
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefinitionWidgetRecyclerAdapter
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
@@ -45,6 +47,8 @@ class LookupActivity : AppCompatActivity() {
     private lateinit var _addonRepo: AddonRepo
     private lateinit var _settingRepo: SettingRepo
 
+    private lateinit var _writingViewController: WritingViewController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -61,7 +65,7 @@ class LookupActivity : AppCompatActivity() {
         initVariables()
         initListeners()
         initObservers()
-        initAddonsDisplay()
+        initAddons()
 
         displayDictionaryOptions()
         updateSearchResultAdapter()
@@ -147,12 +151,38 @@ class LookupActivity : AppCompatActivity() {
         }
     }
 
-    private fun initAddonsDisplay() {
+    private fun initAddons() {
         // handwriting addon switch init
-        _binding.switchHandwritingModeIcl.apply {
-            switchInfo = _viewModel.handwritingSwitchInfo
-            lifecycleOwner = this@LookupActivity
-            executePendingBindings()
+        if (_addonRepo.isHandwritingAvailable()) {
+            val handwritingBoardBinding = ViewWritingBoardFullBinding.inflate(layoutInflater).apply {
+                root.id = R.id.addons_writingView_fullBoard_ifl
+            }
+            _binding.loSpecialistInputBoardHolderFrm.addView(handwritingBoardBinding.root)
+
+            _writingViewController = WritingViewController(
+                writingView = handwritingBoardBinding.writingPadWrv,
+                writingBinding = handwritingBoardBinding,
+                editText = _binding.keywordInputEdt,
+                onStrokeFinished = null,
+                onEnterKeyPressed = null
+            )
+
+            _binding.switchHandwritingModeIcl.apply {
+                switchInfo = _viewModel.handwritingSwitchInfo.apply {
+                    onStateChangedListener = { switchState ->
+                        _writingViewController.toggleWritingMode(switchState)
+                        this@LookupActivity.apply {
+                            if (_writingViewController.isEditTextEqual(currentFocus))
+                                (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+                                    if (switchState) hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+                                    else showSoftInput(currentFocus, 0)
+                                }
+                        }
+                    }
+                }
+                lifecycleOwner = this@LookupActivity
+                executePendingBindings()
+            }
         }
     }
 

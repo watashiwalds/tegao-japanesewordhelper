@@ -78,24 +78,6 @@ class LookupActivity : AppCompatActivity() {
         }
     }
 
-    // UX: User click outside the input box -> Input box lose focus
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        val focusedView = currentFocus
-        if (focusedView != null && ev?.action == MotionEvent.ACTION_DOWN) {
-            val focusRect = Rect()
-            focusedView.getGlobalVisibleRect(focusRect)
-            // if the now focusedView (in this activity: edittext) region (exported into focusRect) isn't the target of this down event (event coordinate not in focusRect)
-            if (!focusRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
-                // strip the focus out of edittext
-                focusedView.clearFocus()
-                // Hide virtual keyboard 'cause Android don't do it automatically
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(focusedView.windowToken, 0)
-            }
-        }
-        return super.dispatchTouchEvent(ev)
-    }
-
     private fun initVariables() {
         _dictionaryRepo = DictionaryHub()
         _searchHistoryRepo = SearchHistoryHub()
@@ -256,4 +238,43 @@ class LookupActivity : AppCompatActivity() {
         updateSearchString()
         _viewModel.evStartSearch.ignite()
     }
+
+    // UX: User click outside the input box -> Input box lose focus
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val focusedView = currentFocus
+        if (focusedView == _binding.keywordInputEdt && ev?.action == MotionEvent.ACTION_DOWN) {
+            //all Rect involved with editText and input event
+            val excludedRects = mutableListOf<Rect>()
+            val exportedRect = Rect()
+
+            // editText focus rectangle
+            focusedView.getGlobalVisibleRect(exportedRect)
+            excludedRects.add(Rect(exportedRect))
+            // clear text button
+            _binding.inputClearBtn.getGlobalVisibleRect(exportedRect)
+            excludedRects.add(Rect(exportedRect))
+
+            // only when handwriting mode is available
+            if (_addonRepo.isHandwritingAvailable()) {
+                // special input board rectangle
+                _binding.loSpecialistInputBoardHolderFrm.getGlobalVisibleRect(exportedRect)
+                excludedRects.add(Rect(exportedRect))
+                // switch input mode button
+                _binding.switchHandwritingModeIcl.root.getGlobalVisibleRect(exportedRect)
+                excludedRects.add(Rect(exportedRect))
+            }
+
+            // check if touch event is inside the excluded zone
+            val touchEventOutsideExcludedZones = excludedRects.none { it.contains(ev.rawX.toInt(), ev.rawY.toInt()) }
+            if (touchEventOutsideExcludedZones) {
+                // strip the focus out of edittext
+                focusedView.clearFocus()
+                // Hide virtual keyboard 'cause Android don't do it automatically
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(focusedView.windowToken, 0)
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
 }

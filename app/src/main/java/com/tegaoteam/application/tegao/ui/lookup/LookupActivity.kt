@@ -61,6 +61,7 @@ class LookupActivity : AppCompatActivity() {
         initVariables()
         initListeners()
         initObservers()
+        initAddonsDisplay()
 
         displayDictionaryOptions()
         updateSearchResultAdapter()
@@ -143,6 +144,15 @@ class LookupActivity : AppCompatActivity() {
         }
         _viewModel.searchResultList.observe(this) {
             updateSearchResultValue(it)
+        }
+    }
+
+    private fun initAddonsDisplay() {
+        // handwriting addon switch init
+        _binding.switchHandwritingModeIcl.apply {
+            switchInfo = _viewModel.handwritingSwitchInfo
+            lifecycleOwner = this@LookupActivity
+            executePendingBindings()
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.RepoResult
@@ -14,6 +15,7 @@ import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
+import com.tegaoteam.application.tegao.ui.component.generics.SwitchButtonInfo
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.EventBeacon
@@ -76,8 +78,6 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
             _useHepburnConverter = settingRepo.isHepburnConverterEnable().first()
         }
     }
-
-    //TODO: Refactor _Config object to use DataStore
 
     fun setSearchString(s: String) {
         var t = s.toSafeQueryString()
@@ -146,6 +146,15 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     override fun onCleared() {
         super.onCleared()
         searchJob?.cancel()
+    }
+
+    // handle state display things
+    val handwritingSwitchInfo by lazy {
+        SwitchButtonInfo(
+            iconResId = R.drawable.ftc_round_handwriting_128,
+            onStateChangedListener = { },
+            switchState = MutableLiveData<Boolean>().apply { value = false }
+        )
     }
 
     companion object {

@@ -16,6 +16,8 @@
         android:minHeight="@dimen/img_icon"
         android:foreground="?android:attr/selectableItemBackground"
 
+        android:onClick="@{() -> switchInfo.push()}"
+
         tools:layout_width="32dp"
         tools:layout_height="32dp"
         >
@@ -25,7 +27,6 @@
 
             app:srcResId="@{switchInfo.iconResId}"
             app:toggleVisibilityLiveDataReverse="@{switchInfo.stateLiveData}"
-            android:onClick="@{() -> switchInfo.push()}"
 
             tools:src="@drawable/ftc_round_handwriting_128"
             tools:visibility="gone"
@@ -37,7 +38,6 @@
 
             app:srcResId="@{switchInfo.iconResId}"
             app:toggleVisibilityLiveData="@{switchInfo.stateLiveData}"
-            android:onClick="@{() -> switchInfo.push()}"
 
             tools:src="@drawable/ftc_round_handwriting_128"
             />

@@ -64,6 +64,12 @@
         <item name="tint">@color/text_normal</item>
         <item name="android:clipToPadding">false</item>
     </style>
+    <style name="Theme.Tegao.IconImage.PrimaryContrast">
+        <item name="tint">@color/const_white</item>
+    </style>
+    <style name="Theme.Tegao.IconImage.SecondaryContrast">
+        <item name="tint">@color/const_black</item>
+    </style>
 
     <style name="Theme.Tegao.LabelButton">
         <item name="backgroundTint">@null</item>

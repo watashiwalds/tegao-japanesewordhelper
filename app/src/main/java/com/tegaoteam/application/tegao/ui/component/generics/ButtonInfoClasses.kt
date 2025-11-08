@@ -16,15 +16,15 @@ open class ButtonInfo(
 class SwitchButtonInfo(
     labelResId: Int = 0,
     iconResId: Int = 0,
-    onClickListener: (() -> Unit)? = null,
+    private val onStateChangedListener: ((state: Boolean) -> Unit)? = null,
     private val switchState: MutableLiveData<Boolean>
-): ButtonInfo(labelResId, iconResId, onClickListener) {
+): ButtonInfo(labelResId, iconResId) {
     val stateLiveData: LiveData<Boolean> = switchState
     override fun push() {
-        super.push()
         if (switchState.value == null)
             switchState.value = true
         else
             switchState.value = !(switchState.value!!)
+        onStateChangedListener?.invoke(stateLiveData.value?: false)
     }
 }

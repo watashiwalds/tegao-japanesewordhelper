@@ -87,8 +87,8 @@ class WritingViewController(
     }
 
     // handle writing mode toggle and prevent edittext to call for softKeyboard when focus
-    fun toggleWritingMode() {
-        isWritingEnabled = !isWritingEnabled
+    fun toggleWritingMode(value: Boolean? = null) {
+        isWritingEnabled = value?: !isWritingEnabled
         editText?.apply{ showSoftInputOnFocus = !isWritingEnabled }
     }
 

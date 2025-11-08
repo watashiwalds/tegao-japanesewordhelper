@@ -152,7 +152,6 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     val handwritingSwitchInfo by lazy {
         SwitchButtonInfo(
             iconResId = R.drawable.ftc_round_handwriting_128,
-            onStateChangedListener = { },
             switchState = MutableLiveData<Boolean>().apply { value = false }
         )
     }

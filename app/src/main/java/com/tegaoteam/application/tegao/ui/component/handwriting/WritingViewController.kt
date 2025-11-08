@@ -2,11 +2,14 @@ package com.tegaoteam.application.tegao.ui.component.handwriting
 
 import android.graphics.Bitmap
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.EditText
+import androidx.core.view.isGone
 import androidx.databinding.ViewDataBinding
 import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
-import com.tegaoteam.application.tegao.utils.toggleVisibility
 import androidx.core.view.isVisible
+import com.tegaoteam.application.tegao.R
 
 class WritingViewController(
     private val writingView: WritingView,
@@ -18,17 +21,62 @@ class WritingViewController(
     var isWritingEnabled: Boolean = false
         private set
 
+    private lateinit var _inAnim: Animation
+    private lateinit var _outAnim: Animation
+    private val animatingView = writingBinding.root
+
     init {
         onStrokeFinished?.let { bindingWriteOutputFunction(it) }
         writingBinding.let {
             if (writingBinding is ViewWritingBoardFullBinding) {
-                if (editText != null)
+                if (editText != null) {
+                    setAnimation(BINDING_FULL)
                     linkViewToBinding(BINDING_FULL)
-                else
+                }
+                else {
+                    setAnimation(BINDING_WRITE)
                     linkViewToBinding(BINDING_WRITE)
+                }
             }
             writingBinding.root.visibility = View.GONE
             writingBinding.executePendingBindings()
+        }
+    }
+
+    private fun setAnimation(mode: Int) {
+        when (mode) {
+            BINDING_FULL -> {
+                _inAnim = AnimationUtils.loadAnimation(animatingView.context, R.anim.slidein_bottomup_easein).apply {
+                    setAnimationListener(object: Animation.AnimationListener {
+                        override fun onAnimationEnd(p0: Animation?) {}
+                        override fun onAnimationRepeat(p0: Animation?) {}
+                        override fun onAnimationStart(p0: Animation?) { animatingView.visibility = View.VISIBLE }
+                    })
+                }
+                _outAnim = AnimationUtils.loadAnimation(animatingView.context, R.anim.slideout_topdown_easeout).apply {
+                    setAnimationListener(object: Animation.AnimationListener {
+                        override fun onAnimationEnd(p0: Animation?) { animatingView.visibility = View.GONE }
+                        override fun onAnimationRepeat(p0: Animation?) {}
+                        override fun onAnimationStart(p0: Animation?) {}
+                    })
+                }
+            }
+            else -> { //todo: change to something better than instant cause I can't think straight at 11pm
+                _inAnim = AnimationUtils.loadAnimation(animatingView.context, R.anim.instant).apply {
+                    setAnimationListener(object: Animation.AnimationListener {
+                        override fun onAnimationEnd(p0: Animation?) {}
+                        override fun onAnimationRepeat(p0: Animation?) {}
+                        override fun onAnimationStart(p0: Animation?) { animatingView.visibility = View.VISIBLE }
+                    })
+                }
+                _outAnim = AnimationUtils.loadAnimation(animatingView.context, R.anim.instant).apply {
+                    setAnimationListener(object: Animation.AnimationListener {
+                        override fun onAnimationEnd(p0: Animation?) { animatingView.visibility = View.GONE }
+                        override fun onAnimationRepeat(p0: Animation?) {}
+                        override fun onAnimationStart(p0: Animation?) {}
+                    })
+                }
+            }
         }
     }
 
@@ -105,17 +153,24 @@ class WritingViewController(
     }
 
     fun showWritingView(really: Boolean = true) {
-        if (!isWritingEnabled) {
-            if (writingBinding.root.isVisible) {
-                writingBinding.root.visibility = View.GONE
+        animatingView.apply {
+            if (!isWritingEnabled && isVisible) {
+                startAnimation(_outAnim)
+                return
             }
-            return
+            editText?.let {
+                val showing = (really && editText.isFocused)
+                if (showing && isGone)
+                    startAnimation(_inAnim)
+                if (!showing && isVisible)
+                    startAnimation(_outAnim)
+                return
+            }
+            if (really)
+                startAnimation(_inAnim)
+            else
+                startAnimation(_outAnim)
         }
-        editText?.let {
-            writingBinding.root.toggleVisibility(really && editText.isFocused)
-            return
-        }
-        writingBinding.root.toggleVisibility(really)
     }
 
     fun isWritingViewEqual(v: View?) = writingView == v

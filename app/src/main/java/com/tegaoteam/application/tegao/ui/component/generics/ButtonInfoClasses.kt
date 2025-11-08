@@ -16,7 +16,7 @@ open class ButtonInfo(
 class SwitchButtonInfo(
     labelResId: Int = 0,
     iconResId: Int = 0,
-    private val onStateChangedListener: ((state: Boolean) -> Unit)? = null,
+    var onStateChangedListener: ((state: Boolean) -> Unit)? = null,
     private val switchState: MutableLiveData<Boolean>
 ): ButtonInfo(labelResId, iconResId) {
     val stateLiveData: LiveData<Boolean> = switchState

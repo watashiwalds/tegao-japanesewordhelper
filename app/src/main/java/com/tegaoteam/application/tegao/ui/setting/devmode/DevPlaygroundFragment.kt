@@ -27,7 +27,7 @@ class DevPlaygroundFragment : Fragment() {
         _writingController = WritingViewController(
             writingView = _binding.loWritingViewIcl.writingPadWrv,
             onStrokeFinished = { bitmap -> Timber.i("Bitmap received with value ${bitmap}") },
-            writingBoard = _binding.loWritingViewIcl,
+            writingBinding = _binding.loWritingViewIcl,
             editText = _binding.testEdittextEdt
         )
 

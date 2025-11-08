@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 
 class WritingViewController(
     private val writingView: WritingView,
-    private val writingBoard: ViewDataBinding,
+    private val writingBinding: ViewDataBinding,
     private val editText: EditText? = null,
     onStrokeFinished: ((Bitmap?) -> Unit)? = null,
     private val onEnterKeyPressed: (() -> Unit)? = null
@@ -20,26 +20,26 @@ class WritingViewController(
 
     init {
         onStrokeFinished?.let { bindingWriteOutputFunction(it) }
-        writingBoard.let {
-            if (writingBoard is ViewWritingBoardFullBinding) {
+        writingBinding.let {
+            if (writingBinding is ViewWritingBoardFullBinding) {
                 if (editText != null)
                     linkViewToBinding(BINDING_FULL)
                 else
                     linkViewToBinding(BINDING_WRITE)
             }
-            writingBoard.root.visibility = View.GONE
-            writingBoard.executePendingBindings()
+            writingBinding.root.visibility = View.GONE
+            writingBinding.executePendingBindings()
         }
     }
 
     private fun linkViewToBinding(mode: Int) {
         when (mode) {
             BINDING_FULL -> {
-                bindingEditTextControlFunctions(writingBoard as ViewWritingBoardFullBinding, editText!!)
-                bindingWriteHelperFunctions(writingBoard)
+                bindingEditTextControlFunctions(writingBinding as ViewWritingBoardFullBinding, editText!!)
+                bindingWriteHelperFunctions(writingBinding)
             }
             BINDING_WRITE -> {
-                bindingWriteHelperFunctions(writingBoard as ViewWritingBoardFullBinding)
+                bindingWriteHelperFunctions(writingBinding as ViewWritingBoardFullBinding)
             }
             else -> return
         }
@@ -103,17 +103,21 @@ class WritingViewController(
 
     fun showWritingView(really: Boolean = true) {
         if (!isWritingEnabled) {
-            if (writingBoard.root.isVisible) {
-                writingBoard.root.visibility = View.GONE
+            if (writingBinding.root.isVisible) {
+                writingBinding.root.visibility = View.GONE
             }
             return
         }
         editText?.let {
-            writingBoard.root.toggleVisibility(really && editText.isFocused)
+            writingBinding.root.toggleVisibility(really && editText.isFocused)
             return
         }
-        writingBoard.root.toggleVisibility(really)
+        writingBinding.root.toggleVisibility(really)
     }
+
+    fun isWritingViewEqual(v: View?) = writingView == v
+    fun isWritingBindingEqual(b: ViewDataBinding?) = writingBinding == b
+    fun isEditTextEqual(v: View?) = editText == v
 
     companion object {
         private const val BINDING_FULL = 0

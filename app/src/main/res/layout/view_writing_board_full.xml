@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_fill"
+        android:background="@drawable/layerlist_themed_solid_neutral_stroke_overline"
         android:paddingBottom="@dimen/writing_boardPadding"
         >
 

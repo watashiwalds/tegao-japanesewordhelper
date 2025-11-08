@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="switchInfo"
+            type="com.tegaoteam.application.tegao.ui.component.generics.SwitchButtonInfo" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:minWidth="@dimen/img_icon"
+        android:minHeight="@dimen/img_icon"
+        android:foreground="?android:attr/selectableItemBackground"
+
+        tools:layout_width="32dp"
+        tools:layout_height="32dp"
+        >
+        <ImageView
+            style="@style/Theme.Tegao.IconImage"
+            android:layout_gravity="center"
+
+            app:srcResId="@{switchInfo.iconResId}"
+            app:toggleVisibilityLiveDataReverse="@{switchInfo.stateLiveData}"
+            android:onClick="@{() -> switchInfo.push()}"
+
+            tools:src="@drawable/ftc_round_handwriting_128"
+            />
+        <ImageView
+            style="@style/Theme.Tegao.IconImage.SecondaryContrast"
+            android:layout_gravity="center"
+            android:background="@drawable/secondary_solid_background"
+
+            app:srcResId="@{switchInfo.iconResId}"
+            app:toggleVisibilityLiveData="@{switchInfo.stateLiveData}"
+            android:onClick="@{() -> switchInfo.push()}"
+
+            tools:src="@drawable/ftc_round_handwriting_128"
+            />
+    </FrameLayout>
+
+</layout>

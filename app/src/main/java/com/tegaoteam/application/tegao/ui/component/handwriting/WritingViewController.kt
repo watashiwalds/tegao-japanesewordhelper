@@ -5,11 +5,13 @@ import android.view.View
 import android.widget.EditText
 import androidx.databinding.ViewDataBinding
 import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
+import com.tegaoteam.application.tegao.utils.toggleVisibility
+import androidx.core.view.isVisible
 
 class WritingViewController(
     private val writingView: WritingView,
+    private val writingBoard: ViewDataBinding,
     onStrokeFinished: ((Bitmap?) -> Unit)? = null,
-    private val binding: ViewDataBinding? = null,
     private val editText: EditText? = null
 ) {
     var isWritingEnabled: Boolean = false
@@ -17,25 +19,26 @@ class WritingViewController(
 
     init {
         onStrokeFinished?.let { bindingWriteOutputFunction(it) }
-        binding?.let { bindingNotNull ->
-            if (binding is ViewWritingBoardFullBinding) {
+        writingBoard.let {
+            if (writingBoard is ViewWritingBoardFullBinding) {
                 if (editText != null)
                     linkViewToBinding(BINDING_FULL)
                 else
                     linkViewToBinding(BINDING_WRITE)
             }
-            binding.executePendingBindings()
+            writingBoard.root.visibility = View.GONE
+            writingBoard.executePendingBindings()
         }
     }
 
     private fun linkViewToBinding(mode: Int) {
         when (mode) {
             BINDING_FULL -> {
-                bindingEditTextControlFunctions(binding as ViewWritingBoardFullBinding, editText!!)
-                bindingWriteHelperFunctions(binding)
+                bindingEditTextControlFunctions(writingBoard as ViewWritingBoardFullBinding, editText!!)
+                bindingWriteHelperFunctions(writingBoard)
             }
             BINDING_WRITE -> {
-                bindingWriteHelperFunctions(binding as ViewWritingBoardFullBinding)
+                bindingWriteHelperFunctions(writingBoard as ViewWritingBoardFullBinding)
             }
             else -> return
         }
@@ -44,6 +47,8 @@ class WritingViewController(
     private fun bindingEditTextControlFunctions(binding: ViewWritingBoardFullBinding, editText: EditText) {
         editText.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             //TODO: Write show/hide function of writing keyboard here (remember: check for the enable state of writing mode)
+            if (hasFocus && isWritingEnabled) showWritingView()
+            else showWritingView(false)
         }
 
         binding.cursorToLeftBtn.setOnClickListener {
@@ -88,8 +93,24 @@ class WritingViewController(
 
     // handle writing mode toggle and prevent edittext to call for softKeyboard when focus
     fun toggleWritingMode(value: Boolean? = null) {
+        //todo: smoother writing keyboard hiding/showing
         isWritingEnabled = value?: !isWritingEnabled
         editText?.apply{ showSoftInputOnFocus = !isWritingEnabled }
+        showWritingView(isWritingEnabled)
+    }
+
+    fun showWritingView(really: Boolean = true) {
+        if (!isWritingEnabled) {
+            if (writingBoard.root.isVisible) {
+                writingBoard.root.visibility = View.GONE
+            }
+            return
+        }
+        editText?.let {
+            writingBoard.root.toggleVisibility(really && editText.isFocused)
+            return
+        }
+        writingBoard.root.toggleVisibility(really)
     }
 
     companion object {

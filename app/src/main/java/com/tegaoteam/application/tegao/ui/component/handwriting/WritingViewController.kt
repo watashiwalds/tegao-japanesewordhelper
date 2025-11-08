@@ -11,8 +11,9 @@ import androidx.core.view.isVisible
 class WritingViewController(
     private val writingView: WritingView,
     private val writingBoard: ViewDataBinding,
+    private val editText: EditText? = null,
     onStrokeFinished: ((Bitmap?) -> Unit)? = null,
-    private val editText: EditText? = null
+    private val onEnterKeyPressed: (() -> Unit)? = null
 ) {
     var isWritingEnabled: Boolean = false
         private set
@@ -78,6 +79,7 @@ class WritingViewController(
         }
         binding.enterBtn.setOnClickListener {
             //TODO: Think about what the enter button should do...
+            onEnterKeyPressed?.invoke()
             editText.clearFocus()
         }
     }

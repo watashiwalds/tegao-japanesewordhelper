@@ -1,0 +1,54 @@
+import cv2
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+import json
+import time
+from matplotlib import pyplot as plt
+
+print("TensorFlow version:", tf.__version__)
+print("GPU Available:", tf.config.list_physical_devices('GPU'))
+
+IMG_SIZE = 96
+
+def process_image(image_path):
+    img = cv2.imread(image_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
+    img = np.expand_dims(img, axis=0).astype(np.float32)
+    return img
+
+interpreter = tf.lite.Interpreter(model_path="model_float16.tflite")
+interpreter.allocate_tensors()
+
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+
+with open("class.json", "r", encoding="utf-8") as f:
+    class_indices = json.load(f)
+idx_to_class = {v: k for k, v in class_indices.items()}
+
+img_path = "img_1.png"
+img = process_image(img_path)
+plt.imshow(img[0].astype(np.uint8))
+plt.show()
+
+start_time = time.perf_counter()
+
+interpreter.set_tensor(input_details[0]['index'], img)
+interpreter.invoke()
+pred = interpreter.get_tensor(output_details[0]['index'])[0]
+
+pred_class = np.argmax(pred)
+pred_label = idx_to_class[pred_class]
+
+print("Ảnh:", img_path)
+print("Dự đoán:", pred_label, "(xác suất:", pred[pred_class], ")")
+
+top10 = np.argsort(pred)[-10:][::-1]
+print("\nTop-10 dự đoán:")
+for i in top10:
+    print(f"{idx_to_class[i]} : {pred[i]:.4f}")
+
+end_time = time.perf_counter()
+print("⏱️ Thời gian xử lý:", end_time - start_time, "giây")

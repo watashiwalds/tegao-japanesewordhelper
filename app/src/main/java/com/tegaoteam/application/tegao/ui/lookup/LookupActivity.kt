@@ -149,7 +149,7 @@ class LookupActivity : AppCompatActivity() {
     fun updateSearchString() = _viewModel.setSearchString(_binding.keywordInputEdt.text.toString())
 
     fun clearSearchString() {
-        _binding.keywordInputEdt.text.clear()
+        _binding.keywordInputEdt.text?.clear()
         updateSearchString()
     }
 

@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:paddingEnd="@dimen/padding_normal">
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/keywordInput_edt"
                     android:paddingVertical="@dimen/padding_large"
                     android:paddingStart="@dimen/padding_large"

@@ -46,10 +46,13 @@ class WritingViewController(
     }
 
     private fun bindingEditTextControlFunctions(binding: ViewWritingBoardFullBinding, editText: EditText) {
+        // retain original onFocus function then inject new codes into it
+        val originalOnFocusChangedListener = editText.onFocusChangeListener
         editText.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
-            //TODO: Write show/hide function of writing keyboard here (remember: check for the enable state of writing mode)
+            // codes for show/hide the writing board
             if (hasFocus && isWritingEnabled) showWritingView()
             else showWritingView(false)
+            originalOnFocusChangedListener.onFocusChange(view, hasFocus)
         }
 
         binding.cursorToLeftBtn.setOnClickListener {

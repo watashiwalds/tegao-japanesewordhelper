@@ -32,7 +32,18 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:hint="Show keyboard"
+            android:inputType="text"
+            android:maxLines="1"
             tools:ignore="HardcodedText" />
+
+        <include
+            android:id="@+id/test_pushswitch"
+            layout="@layout/view_button_pushswitch_icononly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/test_edittext_Edt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

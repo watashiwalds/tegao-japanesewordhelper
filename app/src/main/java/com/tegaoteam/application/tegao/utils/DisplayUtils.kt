@@ -12,11 +12,17 @@ fun View.toggleVisibility(allowShow: Boolean) {
 }
 
 @BindingAdapter("toggleVisibilityLiveData")
+        /**
+         * If LiveData.value true then VISIBLE, else GONE
+         */
 fun View.toggleVisibilityLiveData(allowShow: LiveData<Boolean>) {
     visibility = if (allowShow.value?: false) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("toggleVisibilityLiveDataReverse")
+        /**
+         * If LiveData.value false then VISIBLE, else GONE
+         */
 fun View.toggleVisibilityLiveDataReverse(allowShow: LiveData<Boolean>) {
     visibility = if (allowShow.value?: false) View.GONE else View.VISIBLE
 }

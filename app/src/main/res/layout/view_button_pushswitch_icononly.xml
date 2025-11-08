@@ -28,6 +28,7 @@
             android:onClick="@{() -> switchInfo.push()}"
 
             tools:src="@drawable/ftc_round_handwriting_128"
+            tools:visibility="gone"
             />
         <ImageView
             style="@style/Theme.Tegao.IconImage.SecondaryContrast"

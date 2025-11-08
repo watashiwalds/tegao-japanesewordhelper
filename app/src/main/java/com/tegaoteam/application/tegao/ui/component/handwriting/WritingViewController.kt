@@ -2,14 +2,12 @@ package com.tegaoteam.application.tegao.ui.component.handwriting
 
 import android.graphics.Bitmap
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.EditText
 import androidx.core.view.isGone
 import androidx.databinding.ViewDataBinding
 import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
 import androidx.core.view.isVisible
-import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.utils.AnimationPreset
 
 class WritingViewController(
     private val writingView: WritingView,
@@ -21,8 +19,8 @@ class WritingViewController(
     var isWritingEnabled: Boolean = false
         private set
 
-    private lateinit var _inAnim: Animation
-    private lateinit var _outAnim: Animation
+    private lateinit var _inAnim: () -> Unit
+    private lateinit var _outAnim: () -> Unit
     private val animatingView = writingBinding.root
 
     init {
@@ -46,36 +44,12 @@ class WritingViewController(
     private fun setAnimation(mode: Int) {
         when (mode) {
             BINDING_FULL -> {
-                _inAnim = AnimationUtils.loadAnimation(animatingView.context, R.anim.slidein_bottomup_easein).apply {
-                    setAnimationListener(object: Animation.AnimationListener {
-                        override fun onAnimationEnd(p0: Animation?) {}
-                        override fun onAnimationRepeat(p0: Animation?) {}
-                        override fun onAnimationStart(p0: Animation?) { animatingView.visibility = View.VISIBLE }
-                    })
-                }
-                _outAnim = AnimationUtils.loadAnimation(animatingView.context, R.anim.slideout_topdown_easeout).apply {
-                    setAnimationListener(object: Animation.AnimationListener {
-                        override fun onAnimationEnd(p0: Animation?) { animatingView.visibility = View.GONE }
-                        override fun onAnimationRepeat(p0: Animation?) {}
-                        override fun onAnimationStart(p0: Animation?) {}
-                    })
-                }
+                _inAnim = { AnimationPreset.inSlideFromBottom(animatingView) }
+                _outAnim = { AnimationPreset.outSlideToBottom(animatingView) }
             }
             else -> { //todo: change to something better than instant cause I can't think straight at 11pm
-                _inAnim = AnimationUtils.loadAnimation(animatingView.context, R.anim.instant).apply {
-                    setAnimationListener(object: Animation.AnimationListener {
-                        override fun onAnimationEnd(p0: Animation?) {}
-                        override fun onAnimationRepeat(p0: Animation?) {}
-                        override fun onAnimationStart(p0: Animation?) { animatingView.visibility = View.VISIBLE }
-                    })
-                }
-                _outAnim = AnimationUtils.loadAnimation(animatingView.context, R.anim.instant).apply {
-                    setAnimationListener(object: Animation.AnimationListener {
-                        override fun onAnimationEnd(p0: Animation?) { animatingView.visibility = View.GONE }
-                        override fun onAnimationRepeat(p0: Animation?) {}
-                        override fun onAnimationStart(p0: Animation?) {}
-                    })
-                }
+                _inAnim = { AnimationPreset.inInstant(animatingView) }
+                _outAnim = { AnimationPreset.outInstant(animatingView) }
             }
         }
     }
@@ -155,21 +129,21 @@ class WritingViewController(
     fun showWritingView(really: Boolean = true) {
         animatingView.apply {
             if (!isWritingEnabled && isVisible) {
-                startAnimation(_outAnim)
+                _outAnim.invoke()
                 return
             }
             editText?.let {
                 val showing = (really && editText.isFocused)
                 if (showing && isGone)
-                    startAnimation(_inAnim)
+                    _inAnim.invoke()
                 if (!showing && isVisible)
-                    startAnimation(_outAnim)
+                    _outAnim.invoke()
                 return
             }
             if (really)
-                startAnimation(_inAnim)
+                _inAnim.invoke()
             else
-                startAnimation(_outAnim)
+                _outAnim.invoke()
         }
     }
 

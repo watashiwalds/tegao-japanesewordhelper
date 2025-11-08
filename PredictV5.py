@@ -28,7 +28,7 @@ idx_to_class = {v: k for k, v in class_indices.items()}
 
 start_time = time.perf_counter()
 
-img_path = "img_7.png"
+img_path = "img_11.png"
 img = process_image(img_path)
 plt.imshow(img[0], cmap="gray")
 plt.show()

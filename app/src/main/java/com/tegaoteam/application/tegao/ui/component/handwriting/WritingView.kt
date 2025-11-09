@@ -134,7 +134,7 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     fun undoStroke() {
         strokeStack.removeLastOrNull()
         redrawBuffer()
-        onStrokeFinished?.invoke(exportBitmap())
+        onStrokeFinished?.invoke(exportBitmap()) //every time strokeStack changed, onStrokeFinished need to be alerted
         Timber.i("Undo stroke, remaining count: ${strokeStack.size}")
     }
 

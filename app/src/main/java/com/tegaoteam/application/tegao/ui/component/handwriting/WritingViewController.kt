@@ -171,6 +171,13 @@ class WritingViewController(
         }
     }
 
+    /**
+     * Update the suggestion list for current writing
+     *
+     * Require running in asynchronous to avoid UI blocking (cause recognition could be demanding and lengthy)
+     *
+     * @param bitmap Can left blank, automatically pickup writing view's exportBitmap to use
+     */
     suspend fun updateSuggestions(bitmap: Bitmap? = null) {
         val inpBitmap = bitmap?: writingView.exportBitmap()
         val newSuggestions = recognitionFunction.invoke(inpBitmap)

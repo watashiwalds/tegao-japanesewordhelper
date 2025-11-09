@@ -12,6 +12,8 @@
     <color name="secondary">#FFFFE100</color>
     <color name="secondary_light">#FFFFFA85</color>
     <color name="secondary_dark">#FFFFC21F</color>
+
     <color name="const_black">#FF000000</color>
     <color name="const_white">#FFFFFFFF</color>
+    <color name="secondary_halfAlpha">#4DFFE100</color>
 </resources>

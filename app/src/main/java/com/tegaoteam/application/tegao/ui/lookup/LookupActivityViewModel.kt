@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.RepoResult
@@ -75,7 +76,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     private var _useHepburnConverter = true
     init {
         viewModelScope.launch {
-            _useHepburnConverter = settingRepo.isHepburnConverterEnable().first()
+            _useHepburnConverter = settingRepo.isHepburnConverterEnable().asFlow().first()
         }
     }
 

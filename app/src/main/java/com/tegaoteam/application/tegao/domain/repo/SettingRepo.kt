@@ -1,9 +1,9 @@
 package com.tegaoteam.application.tegao.domain.repo
 
-import kotlinx.coroutines.flow.Flow
+import com.tegaoteam.application.tegao.domain.interf.Stream
 
 interface SettingRepo {
-    fun isHepburnConverterEnable(): Flow<Boolean>
+    fun isHepburnConverterEnable(): Stream<Boolean>
     suspend fun toggleHepburnConverter()
 
     fun getMainNavbarItemIds(): List<String>

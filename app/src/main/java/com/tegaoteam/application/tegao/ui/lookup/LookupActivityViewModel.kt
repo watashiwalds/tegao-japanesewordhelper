@@ -152,6 +152,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
         searchJob?.cancel()
     }
 
+    // todo: add some kind of cooldown for the switch of input mode for best animation transition
     // handle state display things
     val handwritingSwitchInfo by lazy {
         SwitchButtonInfo(

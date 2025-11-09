@@ -161,6 +161,17 @@
         <item name="android:textSize">@dimen/textSize_average</item>
     </style>
 
+    <style name="Theme.Tegao.SuggestText">
+        <item name="fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">@dimen/textSize_big</item>
+    </style>
+    <style name="Theme.Tegao.SuggestText.PrimaryContrast">
+        <item name="android:textColor">@color/const_white</item>
+    </style>
+    <style name="Theme.Tegao.SuggestText.SecondaryContrast">
+        <item name="android:textColor">@color/const_black</item>
+    </style>
+
     <style name="Theme.Tegao.RemoveDefaultTextPad">
         <item name="android:includeFontPadding">false</item>
         <item name="android:lineSpacingExtra">0dp</item>

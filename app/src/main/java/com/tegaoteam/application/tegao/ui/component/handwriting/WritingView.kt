@@ -134,6 +134,7 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     fun undoStroke() {
         strokeStack.removeLastOrNull()
         redrawBuffer()
+        onStrokeFinished?.invoke(exportBitmap())
         Timber.i("Undo stroke, remaining count: ${strokeStack.size}")
     }
 
@@ -141,6 +142,7 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     fun clearStrokes() {
         strokeStack.clear()
         redrawBuffer()
+        onStrokeFinished?.invoke(exportBitmap())
         Timber.i("Clear strokes, remaining count: ${strokeStack.size}")
     }
 

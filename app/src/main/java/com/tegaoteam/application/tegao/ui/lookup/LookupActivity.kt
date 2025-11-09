@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.hub.AddonHub
@@ -34,6 +35,8 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAda
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.toggleVisibility
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
@@ -146,7 +149,11 @@ class LookupActivity : AppCompatActivity() {
                 writingBinding = handwritingBoardBinding,
                 recognitionFunction = { bitmap -> _addonRepo.handwritingAddonApi?.requestInputSuggestions(bitmap)?: listOf() },
                 editText = _binding.keywordInputEdt,
-                onStrokeFinished = null,
+                onStrokeFinished = { bitmap ->
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        _writingViewController.updateSuggestions(bitmap)
+                    }
+                },
                 onEnterKeyPressed = null
             )
 

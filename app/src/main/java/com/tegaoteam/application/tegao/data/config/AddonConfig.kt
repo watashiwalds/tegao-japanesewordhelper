@@ -14,7 +14,8 @@ object AddonConfig {
         } catch (_: PackageManager.NameNotFoundException) {
             false
         }
-        return result
+//        return result
+        return true
     }
 
     val isHandwritingAvailable = checkHandwritingAvailability()

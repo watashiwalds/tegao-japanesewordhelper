@@ -72,8 +72,6 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     //handwriting addon variables
     val isHandwritingAvailable = addonRepo.isHandwritingAvailable()
     private val _handwritingAddonApi = addonRepo.handwritingAddonApi
-    private val _handwritingAddonCharSuggestions = MutableLiveData<List<String>>()
-    val handwritingAddonCharSuggestions: LiveData<List<String>> = _handwritingAddonCharSuggestions
 
     //preference values
     private var _useHepburnConverter = true

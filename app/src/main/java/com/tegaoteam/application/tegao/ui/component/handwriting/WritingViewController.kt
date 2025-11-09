@@ -8,11 +8,13 @@ import androidx.databinding.ViewDataBinding
 import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
 import androidx.core.view.isVisible
 import com.tegaoteam.application.tegao.utils.AnimationPreset
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class WritingViewController(
     private val writingView: WritingView,
     private val writingBinding: ViewDataBinding,
-    private val recognitionFunction: suspend (Bitmap) -> List<String>,
+    private val recognitionFunction: suspend (Bitmap?) -> List<String>,
     private val editText: EditText? = null,
     onStrokeFinished: ((Bitmap?) -> Unit)? = null,
     private val onEnterKeyPressed: (() -> Unit)? = null,
@@ -20,6 +22,8 @@ class WritingViewController(
 ) {
     var isWritingEnabled: Boolean = false
         private set
+
+    private lateinit var _suggestionsListAdapter: WritingViewCharacterSuggestionsListAdapter
 
     private lateinit var _inAnim: () -> Unit
     private lateinit var _outAnim: () -> Unit
@@ -61,11 +65,30 @@ class WritingViewController(
             BINDING_FULL -> {
                 bindingEditTextControlFunctions(writingBinding as ViewWritingBoardFullBinding, editText!!)
                 bindingWriteHelperFunctions(writingBinding)
+                bindingSuggestionFunction(writingBinding)
             }
             BINDING_WRITE -> {
                 bindingWriteHelperFunctions(writingBinding as ViewWritingBoardFullBinding)
             }
             else -> return
+        }
+    }
+
+    private fun bindingSuggestionFunction(binding: ViewDataBinding) {
+        when (binding) {
+            is ViewWritingBoardFullBinding -> {
+                _suggestionsListAdapter = WritingViewCharacterSuggestionsListAdapter { selected ->
+                    editText?.let {
+                        if (it.selectionStart >= 0) {
+                            if (it.selectionEnd != it.selectionStart)
+                                it.editableText.replace(it.selectionStart, it.selectionEnd-1, selected)
+                            else
+                                it.editableText.insert(it.selectionStart, selected)
+                        }
+                    }
+                }.apply { submitList( listOf<String>() ) }
+                binding.recognizedCharsRcy.adapter = _suggestionsListAdapter
+            }
         }
     }
 
@@ -148,13 +171,13 @@ class WritingViewController(
         }
     }
 
-    fun updateSuggestions(bitmap: Bitmap? = null) {
+    suspend fun updateSuggestions(bitmap: Bitmap? = null) {
         val inpBitmap = bitmap?: writingView.exportBitmap()
-        //todo: run recognition function and pass result to list adapter
+        val newSuggestions = recognitionFunction.invoke(inpBitmap)
+        withContext(Dispatchers.Main) {
+            _suggestionsListAdapter.submitList(newSuggestions)
+        }
     }
-
-    //todo: make a list adapter binding function for full board (and other mode)
-    //todo: make and maintain a list adapter for suggestion
 
     fun isWritingViewEqual(v: View?) = writingView == v
     fun isWritingBindingEqual(b: ViewDataBinding?) = writingBinding == b

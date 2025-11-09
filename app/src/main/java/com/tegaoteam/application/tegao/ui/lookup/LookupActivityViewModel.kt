@@ -10,7 +10,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.model.Kanji
-import com.tegaoteam.application.tegao.domain.model.RepoResult
+import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo

@@ -1,6 +1,6 @@
 package com.tegaoteam.application.tegao.data.model
 
-import com.tegaoteam.application.tegao.domain.interf.Stream
+import com.tegaoteam.application.tegao.domain.independency.Stream
 import kotlinx.coroutines.flow.Flow
 
 class FlowStream<T>(val flow: Flow<T>): Stream<T> {

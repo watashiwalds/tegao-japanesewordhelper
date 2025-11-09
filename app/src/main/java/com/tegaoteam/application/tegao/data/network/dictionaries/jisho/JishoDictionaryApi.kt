@@ -11,7 +11,7 @@ import com.tegaoteam.application.tegao.domain.interf.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.domain.model.RepoResult
+import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.utils.toMap
 import okhttp3.ResponseBody
 

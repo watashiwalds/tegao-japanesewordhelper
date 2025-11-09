@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.domain.model
+package com.tegaoteam.application.tegao.domain.independency
 
 sealed class RepoResult<out T> {
     data class Success<T>(val data: T): RepoResult<T>()

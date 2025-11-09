@@ -1,6 +1,6 @@
 package com.tegaoteam.application.tegao.data.network
 
-import com.tegaoteam.application.tegao.domain.model.RepoResult
+import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import retrofit2.Response
 
 class RetrofitResult {

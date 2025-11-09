@@ -2,7 +2,7 @@ package com.tegaoteam.application.tegao.domain.interf
 
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
-import com.tegaoteam.application.tegao.domain.model.RepoResult
+import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.model.Word
 
 interface DictionaryNetworkApi {

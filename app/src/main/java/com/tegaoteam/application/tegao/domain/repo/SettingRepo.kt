@@ -1,6 +1,6 @@
 package com.tegaoteam.application.tegao.domain.repo
 
-import com.tegaoteam.application.tegao.domain.interf.Stream
+import com.tegaoteam.application.tegao.domain.independency.Stream
 
 interface SettingRepo {
     fun isHepburnConverterEnable(): Stream<Boolean>

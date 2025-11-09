@@ -11,7 +11,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.databinding.FragmentDevPlaygroundBinding
+import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.ui.component.generics.SwitchButtonInfo
 import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewController
 import timber.log.Timber
@@ -20,12 +22,14 @@ import java.io.ByteArrayOutputStream
 class DevPlaygroundFragment : Fragment() {
     private lateinit var _binding: FragmentDevPlaygroundBinding
     private lateinit var _writingController: WritingViewController
+    private lateinit var _addonRepo: AddonRepo
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_dev_playground, container, false)
+        _addonRepo = AddonHub()
         _writingController = WritingViewController(
             writingView = _binding.loWritingViewIcl.writingPadWrv,
             onStrokeFinished = { bitmap ->
@@ -34,6 +38,7 @@ class DevPlaygroundFragment : Fragment() {
                 Timber.i("Current handwriting byteCount: ${bytearrayForm.size()}")
                                },
             writingBinding = _binding.loWritingViewIcl,
+            recognitionFunction = { bitmap -> _addonRepo.handwritingAddonApi?.requestInputSuggestions(bitmap)?: listOf() },
             editText = _binding.testEdittextEdt
         )
 

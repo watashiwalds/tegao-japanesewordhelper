@@ -12,9 +12,11 @@ import com.tegaoteam.application.tegao.utils.AnimationPreset
 class WritingViewController(
     private val writingView: WritingView,
     private val writingBinding: ViewDataBinding,
+    private val recognitionFunction: (Bitmap) -> List<String>,
     private val editText: EditText? = null,
     onStrokeFinished: ((Bitmap?) -> Unit)? = null,
-    private val onEnterKeyPressed: (() -> Unit)? = null
+    private val onEnterKeyPressed: (() -> Unit)? = null,
+    private val onSuggestionSelected: ((String) -> Unit)? = null
 ) {
     var isWritingEnabled: Boolean = false
         private set
@@ -146,6 +148,14 @@ class WritingViewController(
                 _outAnim.invoke()
         }
     }
+
+    fun updateSuggestions(bitmap: Bitmap? = null) {
+        val inpBitmap = bitmap?: writingView.exportBitmap()
+        //todo: run recognition function and pass result to list adapter
+    }
+
+    //todo: make a list adapter binding function for full board (and other mode)
+    //todo: make and maintain a list adapter for suggestion
 
     fun isWritingViewEqual(v: View?) = writingView == v
     fun isWritingBindingEqual(b: ViewDataBinding?) = writingBinding == b

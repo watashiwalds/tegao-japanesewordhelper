@@ -144,6 +144,7 @@ class LookupActivity : AppCompatActivity() {
             _writingViewController = WritingViewController(
                 writingView = handwritingBoardBinding.writingPadWrv,
                 writingBinding = handwritingBoardBinding,
+                recognitionFunction = { bitmap -> _addonRepo.handwritingAddonApi?.requestInputSuggestions(bitmap)?: listOf() },
                 editText = _binding.keywordInputEdt,
                 onStrokeFinished = null,
                 onEnterKeyPressed = null

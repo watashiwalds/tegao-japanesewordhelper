@@ -122,7 +122,7 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
     }
 
     // get a copy of the current bitmap (with all the strokes draw on it)
-    fun exportBitmap(): Bitmap? = bitmapBuffer.copy(Bitmap.Config.ARGB_8888, false)
+    fun exportBitmap(): Bitmap? = if (strokeStack.isEmpty()) null else bitmapBuffer.copy(Bitmap.Config.ARGB_8888, false)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

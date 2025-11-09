@@ -12,7 +12,7 @@ import com.tegaoteam.application.tegao.utils.AnimationPreset
 class WritingViewController(
     private val writingView: WritingView,
     private val writingBinding: ViewDataBinding,
-    private val recognitionFunction: (Bitmap) -> List<String>,
+    private val recognitionFunction: suspend (Bitmap) -> List<String>,
     private val editText: EditText? = null,
     onStrokeFinished: ((Bitmap?) -> Unit)? = null,
     private val onEnterKeyPressed: (() -> Unit)? = null,
@@ -122,7 +122,6 @@ class WritingViewController(
 
     // handle writing mode toggle and prevent edittext to call for softKeyboard when focus
     fun toggleWritingMode(value: Boolean? = null) {
-        //todo: smoother writing keyboard hiding/showing
         isWritingEnabled = value?: !isWritingEnabled
         editText?.apply{ showSoftInputOnFocus = !isWritingEnabled }
         showWritingView(isWritingEnabled)

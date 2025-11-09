@@ -6,7 +6,7 @@ import com.tegaoteam.application.tegao.domain.interf.AlternativeInputApi
 class HandwritingAddonApi private constructor(): AlternativeInputApi {
 
     //todo: link function to actual handwriting addon after complete the addon apk
-    override fun requestInputSuggestions(input: Any?): List<String> {
+    override suspend fun requestInputSuggestions(input: Any?): List<String> {
         if (input !is Bitmap) return listOf()
         //for display testing
         return getSomeRandomChars()

@@ -69,8 +69,11 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     //show devtest textview in case of
     val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
 
-    //pass addon state to xml
+    //handwriting addon variables
     val isHandwritingAvailable = addonRepo.isHandwritingAvailable()
+    private val _handwritingAddonApi = addonRepo.handwritingAddonApi
+    private val _handwritingAddonCharSuggestions = MutableLiveData<List<String>>()
+    val handwritingAddonCharSuggestions: LiveData<List<String>> = _handwritingAddonCharSuggestions
 
     //preference values
     private var _useHepburnConverter = true

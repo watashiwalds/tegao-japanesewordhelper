@@ -3,6 +3,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <package android:name="com.tegaoteam.addon.tegao.handwritingrecognition" />
+    </queries>
+
     <application
         android:name=".TegaoApplication"
         android:allowBackup="true"

@@ -2,20 +2,23 @@ package com.tegaoteam.application.tegao.data.config
 
 import android.content.pm.PackageManager
 import com.tegaoteam.application.tegao.TegaoApplication
+import timber.log.Timber
 
 object AddonConfig {
     private fun checkHandwritingAvailability(): Boolean {
+        Timber.i("Check for appearance of Handwriting Recognition")
         val result = try {
-            TegaoApplication.instance.applicationContext.packageManager.getPackageInfo(
+            val info = TegaoApplication.instance.applicationContext.packageManager.getPackageInfo(
                 "com.tegaoteam.addon.tegao.handwritingrecognition",
                 0
             )
+            Timber.i("Found Handwriting Recognition addon: $info")
             true
         } catch (_: PackageManager.NameNotFoundException) {
+            Timber.i("Not found Handwriting Recognition addon")
             false
         }
-//        return result
-        return true
+        return result
     }
 
     val isHandwritingAvailable = checkHandwritingAvailability()

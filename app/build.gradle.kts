@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.moshi.kotlin)
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.core)
     ksp(libs.moshi.kotlin.codegen)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

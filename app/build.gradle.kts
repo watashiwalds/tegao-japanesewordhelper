@@ -39,7 +39,7 @@ android {
 
     buildFeatures {
         dataBinding = true
-        viewBinding = true
+        aidl = true
     }
 
     kapt {

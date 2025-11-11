@@ -5,11 +5,13 @@ import com.tegaoteam.application.tegao.TegaoApplication
 import timber.log.Timber
 
 object AddonConfig {
+    const val handwritingPackagePath = "com.tegaoteam.addon.tegao.handwritingrecognition"
+
     private fun checkHandwritingAvailability(): Boolean {
         Timber.i("Check for appearance of Handwriting Recognition")
         val result = try {
             val info = TegaoApplication.instance.applicationContext.packageManager.getPackageInfo(
-                "com.tegaoteam.addon.tegao.handwritingrecognition",
+                handwritingPackagePath,
                 0
             )
             Timber.i("Found Handwriting Recognition addon: $info")

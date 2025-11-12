@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.graphics.Bitmap
 import android.os.IBinder
+import com.tegaoteam.addon.tegao.handwritingrecognition.IRecognitionCallback
 import com.tegaoteam.addon.tegao.handwritingrecognition.IRecognitionService
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.config.AddonConfig
@@ -17,8 +18,9 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
     private var recognitionService: IRecognitionService? = null
     private val packageName = AddonConfig.handwritingPackagePath
 
-    private val conn = object: ServiceConnection {
+    private var recognitionCallback: ((List<String?>?) -> Unit)? = null
 
+    private val conn = object: ServiceConnection {
         override fun onServiceConnected(
             p0: ComponentName?,
             p1: IBinder?
@@ -32,6 +34,7 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
+            recognitionService = null
             Timber.i("Unlinked with HandwritingRecognition addon")
         }
     }
@@ -44,17 +47,29 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
         )
     }
 
-    //todo: link function to actual handwriting addon after complete the addon apk
-    override suspend fun requestInputSuggestions(input: Any?): List<String> {
-        if (input !is Bitmap) return listOf()
+    override fun requestInputSuggestions(input: Any?) {
+        if (recognitionCallback == null) {
+            Timber.w("No callback present, this request is promptly rejected. Do .registerCallback() properly to perform this action.")
+            return
+        }
+        if (input !is Bitmap) {
+            recognitionCallback?.invoke(null)
+            return
+        }
 
         val imgCompressed = ByteArrayOutputStream()
         input.compress(Bitmap.CompressFormat.PNG, 100, imgCompressed)
+        recognitionService?.requestInputSuggestions(imgCompressed.toByteArray())
+    }
 
-        val result = recognitionService?.requestInputSuggestions(imgCompressed.toByteArray())
-        var transformedResult = listOf<String>()
-        result?.let { transformedResult = it.toList() }
-        return transformedResult
+    override fun registerCallback(callback: (List<String?>?) -> Unit) {
+        recognitionCallback = callback
+        recognitionService?.registerCallback(object: IRecognitionCallback.Stub() {
+            override fun onRecognized(suggestions: List<String?>?) {
+                recognitionCallback?.invoke(suggestions)
+            }
+        })
+        Timber.i("Callback registered $recognitionCallback")
     }
 
     companion object {

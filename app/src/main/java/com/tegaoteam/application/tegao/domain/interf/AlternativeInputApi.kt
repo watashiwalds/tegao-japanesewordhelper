@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.domain.interf
 
 interface AlternativeInputApi {
-    suspend fun requestInputSuggestions(input: Any?): List<String>
+    fun requestInputSuggestions(input: Any?)
+    fun registerCallback(callback: (List<String?>?) -> Unit)
 }

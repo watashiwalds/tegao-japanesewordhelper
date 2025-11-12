@@ -8,13 +8,12 @@ import androidx.databinding.ViewDataBinding
 import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
 import androidx.core.view.isVisible
 import com.tegaoteam.application.tegao.utils.AnimationPreset
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class WritingViewController(
     private val writingView: WritingView,
     private val writingBinding: ViewDataBinding,
-    private val recognitionFunction: suspend (Bitmap?) -> List<String>,
+    private val onRequestRecognition: (Bitmap?) -> Unit,
     private val editText: EditText? = null,
     onStrokeFinished: ((Bitmap?) -> Unit)? = null,
     private val onEnterKeyPressed: (() -> Unit)? = null,
@@ -172,18 +171,23 @@ class WritingViewController(
     }
 
     /**
-     * Update the suggestion list for current writing
-     *
-     * Require running in asynchronous to avoid UI blocking (cause recognition could be demanding and lengthy)
+     * Request for suggestion list with current writing via defined onRequestRecognition lambda
      *
      * @param bitmap Can left blank, automatically pickup writing view's exportBitmap to use
      */
-    suspend fun updateSuggestions(bitmap: Bitmap? = null) {
+    fun requestSuggestions(bitmap: Bitmap? = null) {
         val inpBitmap = bitmap?: writingView.exportBitmap()
-        val newSuggestions = recognitionFunction.invoke(inpBitmap)
-        withContext(Dispatchers.Main) {
-            _suggestionsListAdapter.submitList(newSuggestions)
-        }
+        onRequestRecognition.invoke(inpBitmap)
+    }
+
+    /**
+     * Update the suggestion list manually (this is because of using Service as the recognition method)
+     *
+     * Just pass the List<String?>? and the suggestion list would update
+     */
+    fun updateSuggestionsList(suggestions: List<String?>?) {
+        _suggestionsListAdapter.submitList(suggestions)
+        Timber.i("Suggestion list updating...")
     }
 
     fun isWritingViewEqual(v: View?) = writingView == v

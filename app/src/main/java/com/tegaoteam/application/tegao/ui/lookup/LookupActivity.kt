@@ -147,15 +147,12 @@ class LookupActivity : AppCompatActivity() {
             _writingViewController = WritingViewController(
                 writingView = handwritingBoardBinding.writingPadWrv,
                 writingBinding = handwritingBoardBinding,
-                recognitionFunction = { bitmap -> _addonRepo.handwritingAddonApi?.requestInputSuggestions(bitmap)?: listOf() },
+                onRequestRecognition = { bitmap -> _addonRepo.handwritingAddonApi?.requestInputSuggestions(bitmap) },
                 editText = _binding.keywordInputEdt,
-                onStrokeFinished = {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        _writingViewController.updateSuggestions()
-                    }
-                },
+                onStrokeFinished = { _writingViewController.requestSuggestions() },
                 onEnterKeyPressed = null
             )
+            _addonRepo.handwritingAddonApi?.registerCallback { suggestions -> _writingViewController.updateSuggestionsList(suggestions) }
 
             _binding.switchHandwritingModeIcl.apply {
                 switchInfo = _viewModel.handwritingSwitchInfo.apply {

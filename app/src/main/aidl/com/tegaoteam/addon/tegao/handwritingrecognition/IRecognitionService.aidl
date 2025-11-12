@@ -2,7 +2,9 @@
 package com.tegaoteam.addon.tegao.handwritingrecognition;
 
 import java.util.List;
+import com.tegaoteam.addon.tegao.handwritingrecognition.IRecognitionCallback;
 
 interface IRecognitionService {
-    List<String> requestInputSuggestions(in byte[] input);
+    void requestInputSuggestions(in byte[] input);
+    void registerCallback(IRecognitionCallback callback);
 }

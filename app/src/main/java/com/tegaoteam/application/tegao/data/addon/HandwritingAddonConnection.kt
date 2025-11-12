@@ -30,6 +30,11 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
                 p1?.let { context.unbindService(this) }
             }
             recognitionService = IRecognitionService.Stub.asInterface(p1)
+            if (recognitionCallback != null) recognitionService?.registerCallback(object: IRecognitionCallback.Stub() {
+                override fun onRecognized(suggestions: List<String?>?) {
+                    recognitionCallback?.invoke(suggestions)
+                }
+            })
             Timber.i("Linked with HandwritingRecognition addon")
         }
 
@@ -67,9 +72,10 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
         recognitionService?.registerCallback(object: IRecognitionCallback.Stub() {
             override fun onRecognized(suggestions: List<String?>?) {
                 recognitionCallback?.invoke(suggestions)
+                Timber.i("Receive callback result: $suggestions")
             }
         })
-        Timber.i("Callback registered $recognitionCallback")
+        Timber.i("Callback registered $recognitionCallback when service $recognitionService")
     }
 
     companion object {

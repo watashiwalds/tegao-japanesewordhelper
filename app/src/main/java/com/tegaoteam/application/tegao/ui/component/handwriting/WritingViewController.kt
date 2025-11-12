@@ -187,7 +187,7 @@ class WritingViewController(
      */
     fun updateSuggestionsList(suggestions: List<String?>?) {
         _suggestionsListAdapter.submitList(suggestions)
-        Timber.i("Suggestion list updating...")
+        Timber.i("Suggestion list updating: $suggestions")
     }
 
     fun isWritingViewEqual(v: View?) = writingView == v

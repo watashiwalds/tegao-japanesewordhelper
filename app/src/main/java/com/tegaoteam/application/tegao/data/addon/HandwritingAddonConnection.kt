@@ -16,9 +16,8 @@ import java.io.ByteArrayOutputStream
 
 class HandwritingAddonConnection private constructor (context: Context): AlternativeInputApi {
     private var recognitionService: IRecognitionService? = null
+    private var recognitionCallback: IRecognitionCallback? = null
     private val packageName = AddonConfig.handwritingPackagePath
-
-    private var recognitionCallback: ((List<String?>?) -> Unit)? = null
 
     private val conn = object: ServiceConnection {
         override fun onServiceConnected(
@@ -30,11 +29,7 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
                 p1?.let { context.unbindService(this) }
             }
             recognitionService = IRecognitionService.Stub.asInterface(p1)
-            if (recognitionCallback != null) recognitionService?.registerCallback(object: IRecognitionCallback.Stub() {
-                override fun onRecognized(suggestions: List<String?>?) {
-                    recognitionCallback?.invoke(suggestions)
-                }
-            })
+            if (recognitionCallback != null) recognitionService?.registerCallback(recognitionCallback)
             Timber.i("Linked with HandwritingRecognition addon")
         }
 
@@ -58,7 +53,7 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
             return
         }
         if (input !is Bitmap) {
-            recognitionCallback?.invoke(null)
+            Timber.w("Not Bitmap wanting to request suggestion. The model accept only Bitmap")
             return
         }
 
@@ -67,15 +62,15 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
         recognitionService?.requestInputSuggestions(imgCompressed.toByteArray())
     }
 
-    override fun registerCallback(callback: (List<String?>?) -> Unit) {
-        recognitionCallback = callback
-        recognitionService?.registerCallback(object: IRecognitionCallback.Stub() {
-            override fun onRecognized(suggestions: List<String?>?) {
-                recognitionCallback?.invoke(suggestions)
-                Timber.i("Receive callback result: $suggestions")
+    override fun registerCallback(callback: (List<String>) -> Unit) {
+        recognitionCallback = object: IRecognitionCallback.Stub() {
+            override fun onRecognized(suggestions: Array<String>) {
+                callback.invoke(suggestions.toList())
+                Timber.i("Receive callback result: ${suggestions.toList()}")
             }
-        })
-        Timber.i("Callback registered $recognitionCallback when service $recognitionService")
+        }
+        recognitionService?.registerCallback(recognitionCallback)
+        Timber.i("Callback registered $callback when service $recognitionService")
     }
 
     companion object {

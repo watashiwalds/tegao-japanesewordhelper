@@ -134,8 +134,14 @@ class WritingViewController(
     }
 
     private fun bindingWriteHelperFunctions(binding: ViewWritingBoardFullBinding) {
-        binding.clearStrokesBtn.setOnClickListener { writingView.clearStrokes() }
-        binding.undoStrokeBtn.setOnClickListener { writingView.undoStroke() }
+        binding.clearStrokesBtn.setOnClickListener {
+            writingView.clearStrokes()
+            updateSuggestionsList(listOf())
+        }
+        binding.undoStrokeBtn.setOnClickListener {
+            writingView.undoStroke()
+            if (writingView.getStrokeCount() > 0) requestSuggestions() else updateSuggestionsList(listOf())
+        }
     }
 
     private fun bindingWriteOutputFunction(onStrokeFinished: ((Bitmap?) -> Unit)) {

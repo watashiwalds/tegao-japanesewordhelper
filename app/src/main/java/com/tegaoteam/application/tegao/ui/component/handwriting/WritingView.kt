@@ -159,4 +159,6 @@ class WritingView(context: Context, attrs: AttributeSet?): View(context, attrs) 
         Timber.i("Stroke count: ${strokeStack.size}")
         return true
     }
+
+    fun getStrokeCount() = strokeStack.size
 }

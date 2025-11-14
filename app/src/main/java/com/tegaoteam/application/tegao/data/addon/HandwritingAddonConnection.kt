@@ -31,6 +31,7 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
             recognitionService = IRecognitionService.Stub.asInterface(p1)
             if (recognitionCallback != null) recognitionService?.registerCallback(recognitionCallback)
             Timber.i("Linked with HandwritingRecognition addon")
+            Timber.i("Callback registered $recognitionCallback when service $recognitionService")
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
@@ -40,6 +41,7 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
     }
 
     init {
+        Timber.i("Start binding with HandwritingRecognition addon")
         context.bindService(
             Intent().setComponent(ComponentName(packageName, "$packageName.RecognitionService")),
             conn,
@@ -57,6 +59,7 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
             return
         }
 
+        Timber.w("Requesting for new suggestion... Model ready: ${recognitionService != null}")
         val imgCompressed = ByteArrayOutputStream()
         input.compress(Bitmap.CompressFormat.PNG, 100, imgCompressed)
         recognitionService?.requestInputSuggestions(imgCompressed.toByteArray())

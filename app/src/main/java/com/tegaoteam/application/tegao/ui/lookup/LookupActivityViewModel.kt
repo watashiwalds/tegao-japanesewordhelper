@@ -70,7 +70,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
 
     //handwriting addon variables
-    private val _isHandwritingEnabled = MutableLiveData<Boolean>().apply { value = false }
+    private val _isHandwritingEnabled = MutableLiveData<Boolean>().apply { value = true }
     val isHandwritingEnabled: LiveData<Boolean> = _isHandwritingEnabled
 
     //preference values

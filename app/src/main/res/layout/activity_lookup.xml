@@ -89,7 +89,7 @@
                     app:layout_constraintEnd_toStartOf="@id/lo_searchStartBtn_frm"
                     app:layout_constraintWidth_percent="0.1"
 
-                    app:toggleVisibility="@{viewModel.handwritingEnabled}"
+                    app:toggleVisibility="@{viewModel.isHandwritingEnabled}"
                     />
 
                 <FrameLayout

@@ -35,7 +35,7 @@ class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): List
                 ConfigEntryItem.Companion.Type.BOOLEAN -> binding.loLateinitSettingFrm.apply {
                     removeAllViews()
                     val subBinding = SubitemSettingConfigBtnBooleanBinding.inflate(LayoutInflater.from(context), this, false).apply {
-                        liveData = info.liveData as LiveData<Boolean>
+                        liveData = info.liveData as LiveData<Boolean>?
                         lifecycleOwner = lcO
                         executePendingBindings()
                     }

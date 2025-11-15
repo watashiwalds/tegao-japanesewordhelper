@@ -5,7 +5,14 @@ import androidx.lifecycle.LiveData
 data class ConfigEntryItem(
     val labelResId: Int,
     val descriptionResId: Int,
-    val type: ConfigType,
+    val type: Type,
     val liveData: LiveData<Any>? = null,
     val clickListener: (() -> Unit)? = null
-)
+) {
+    companion object {
+        enum class Type {
+            BOOLEAN,
+            NON_CONTROL
+        }
+    }
+}

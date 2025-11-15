@@ -8,7 +8,6 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem
-import com.tegaoteam.application.tegao.ui.setting.model.ConfigType
 import kotlinx.coroutines.launch
 
 class SettingLookupViewModel(private val settingRepo: SettingRepo): ViewModel() {
@@ -16,7 +15,7 @@ class SettingLookupViewModel(private val settingRepo: SettingRepo): ViewModel() 
         ConfigEntryItem(
             labelResId = R.string.setting_lookup_label_hepburnConverter_toggle,
             descriptionResId = R.string.setting_lookup_description_hepburnConverter_toggle,
-            type = ConfigType.BOOLEAN,
+            type = ConfigEntryItem.Companion.Type.BOOLEAN,
             liveData = settingRepo.isHepburnConverterEnable().asFlow().asLiveData(),
             clickListener = { viewModelScope.launch { settingRepo.toggleHepburnConverter() } }
         )

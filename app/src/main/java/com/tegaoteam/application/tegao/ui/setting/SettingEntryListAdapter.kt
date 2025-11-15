@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.ItemSettingConfigDisplayBinding
 import com.tegaoteam.application.tegao.databinding.SubitemSettingConfigBtnBooleanBinding
 import com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem
-import com.tegaoteam.application.tegao.ui.setting.model.ConfigType
 
 @Suppress("unchecked_cast")
 class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): ListAdapter<ConfigEntryItem, SettingEntryListAdapter.ViewHolder>(DiffCallback()) {
@@ -33,7 +32,7 @@ class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): List
             val lcO = lifecycleOwner
             binding.info = info
             when (info.type) {
-                ConfigType.BOOLEAN -> binding.loLateinitSettingFrm.apply {
+                ConfigEntryItem.Companion.Type.BOOLEAN -> binding.loLateinitSettingFrm.apply {
                     removeAllViews()
                     val subBinding = SubitemSettingConfigBtnBooleanBinding.inflate(LayoutInflater.from(context), this, false).apply {
                         liveData = info.liveData as LiveData<Boolean>
@@ -42,6 +41,7 @@ class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): List
                     }
                     addView(subBinding.root)
                 }
+                ConfigEntryItem.Companion.Type.NON_CONTROL -> {}
             }
             binding.executePendingBindings()
         }

@@ -29,7 +29,7 @@
 
             app:textResId="@{info.labelResId}"
 
-            tools:text="Chuyển đổi Hepburn"
+            tools:text="Setting's label"
             />
 
         <TextView
@@ -44,7 +44,7 @@
 
             app:textResId="@{info.descriptionResId}"
 
-            tools:text="Tự động chuyển đổi từ khoá từ định dạng Romaji sang Hiragana trên thanh tìm kiếm"
+            tools:text="Description for what this setting controls and what happens when tapping it"
             />
 
         <FrameLayout

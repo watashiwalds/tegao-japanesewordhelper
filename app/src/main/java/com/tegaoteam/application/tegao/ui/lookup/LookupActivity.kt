@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.hub.AddonHub
@@ -35,8 +34,6 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAda
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.toggleVisibility
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
@@ -68,7 +65,6 @@ class LookupActivity : AppCompatActivity() {
         initVariables()
         initListeners()
         initObservers()
-        initAddons()
 
         displayDictionaryOptions()
         updateSearchResultAdapter()
@@ -134,10 +130,14 @@ class LookupActivity : AppCompatActivity() {
         _viewModel.searchResultList.observe(this) {
             updateSearchResultValue(it)
         }
+        _viewModel.isHandwritingEnabled.observe(this) {
+            if (it && _addonRepo.isHandwritingAvailable()) initHandwritingFunction()
+        }
     }
 
-    private fun initAddons() {
-        // handwriting addon switch init
+    private fun initHandwritingFunction() {
+        // handwriting addon components init
+        // todo: changes switch and view inflation enact factor to using values from viewmodel
         if (_addonRepo.isHandwritingAvailable()) {
             val handwritingBoardBinding = ViewWritingBoardFullBinding.inflate(layoutInflater).apply {
                 root.id = R.id.addons_writingView_fullBoard_ifl

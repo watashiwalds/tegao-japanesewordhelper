@@ -70,14 +70,16 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
 
     //handwriting addon variables
-    val isHandwritingAvailable = addonRepo.isHandwritingAvailable()
-    private val _handwritingAddonApi = addonRepo.handwritingAddonApi
+    private val _isHandwritingEnabled = MutableLiveData<Boolean>().apply { value = false }
+    val isHandwritingEnabled: LiveData<Boolean> = _isHandwritingEnabled
 
     //preference values
     private var _useHepburnConverter = true
+
     init {
         viewModelScope.launch {
             _useHepburnConverter = settingRepo.isHepburnConverterEnable().asFlow().first()
+            _isHandwritingEnabled.value = settingRepo.isHandwritingAddonEnable().asFlow().first()
         }
     }
 

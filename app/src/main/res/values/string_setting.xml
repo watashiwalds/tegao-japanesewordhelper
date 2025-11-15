@@ -10,6 +10,8 @@
 
     <string name="setting_addon_label">Phần mở rộng</string>
     <string name="setting_addon_detail">Chữ viết tay • More coming soon…</string>
+    <string name="setting_addon_label_section_toggle">Kích hoạt</string>
+    <string name="setting_addon_label_section_status">Trạng thái cài đặt</string>
     <string name="setting_addon_label_handwriting">Nhập liệu bằng chữ viết tay</string>
     <string name="setting_addon_detail_handwriting_toggle">Hỗ trợ nhập kí tự tiếng Nhật phổ thông bằng cách viết trên bảng viết riêng của Tegao. Không yêu cầu kết nối mạng trong quá trình sử dụng</string>
     <string name="setting_addon_status_notInstalled">Chưa cài đặt, nhấp để đến trang tải xuống</string>

@@ -36,6 +36,15 @@ class SettingAddonFragment : Fragment() {
         }
         _binding.loSettingListLst.adapter = _adapter
         _binding.executePendingBindings()
+
+        initObservers()
+
         return _binding.root
+    }
+
+    private fun initObservers() {
+        _viewModel.evLaunchIntent.observe(viewLifecycleOwner) { intent ->
+            intent?.let { startActivity(it) }
+        }
     }
 }

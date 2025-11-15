@@ -1,5 +1,10 @@
 package com.tegaoteam.application.tegao.ui.setting.addon
 
+import android.content.Intent
+import android.provider.Settings
+import androidx.core.net.toUri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -12,6 +17,9 @@ import com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem
 import kotlinx.coroutines.launch
 
 class SettingAddonViewModel(private val _settingRepo: SettingRepo, private val _addonRepo: AddonRepo) : ViewModel() {
+    private val _evLaunchIntent = MutableLiveData<Intent>().apply { value = null }
+    val evLaunchIntent: LiveData<Intent> = _evLaunchIntent
+
     val addonSettings = listOf(
         ConfigEntryItem(
             labelResId = R.string.setting_addon_label_section_toggle,
@@ -34,7 +42,12 @@ class SettingAddonViewModel(private val _settingRepo: SettingRepo, private val _
             labelResId = R.string.setting_addon_label_handwriting,
             descriptionResId = if (_addonRepo.isHandwritingAvailable()) R.string.setting_addon_status_isInstalled else R.string.setting_addon_status_notInstalled,
             type = ConfigEntryItem.Companion.Type.PENDING_INTENT,
-            clickListener = null //todo: external link when not installed, setting intent when installed
+            clickListener = {
+                _evLaunchIntent.value = if (_addonRepo.isHandwritingAvailable())
+                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:com.tegaoteam.addon.tegao.handwritingrecognition".toUri())
+                else
+                    Intent(Intent.ACTION_VIEW, "https://github.com/watashiwalds/tegaoaddon-handwritingrecognition/releases/".toUri())
+            }
         )
     )
 

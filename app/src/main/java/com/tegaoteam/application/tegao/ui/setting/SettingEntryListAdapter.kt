@@ -2,11 +2,13 @@ package com.tegaoteam.application.tegao.ui.setting
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ItemSettingConfigDisplayBinding
 import com.tegaoteam.application.tegao.databinding.SubitemSettingConfigBtnBooleanBinding
 import com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem
@@ -41,7 +43,10 @@ class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): List
                     }
                     addView(subBinding.root)
                 }
-                ConfigEntryItem.Companion.Type.NON_CONTROL -> {}
+                ConfigEntryItem.Companion.Type.DECORATIVE_LABEL -> binding.label.apply {
+                    background = AppCompatResources.getDrawable(context, R.drawable.neutral_stroke_end)
+                }
+                ConfigEntryItem.Companion.Type.PENDING_INTENT -> {}
             }
             binding.executePendingBindings()
         }

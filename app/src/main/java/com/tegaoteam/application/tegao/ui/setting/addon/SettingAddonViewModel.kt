@@ -16,7 +16,7 @@ class SettingAddonViewModel(private val _settingRepo: SettingRepo, private val _
         ConfigEntryItem(
             labelResId = R.string.setting_addon_label_section_toggle,
             descriptionResId = 0,
-            type = ConfigEntryItem.Companion.Type.NON_CONTROL
+            type = ConfigEntryItem.Companion.Type.DECORATIVE_LABEL
         ),
         ConfigEntryItem(
             labelResId = R.string.setting_addon_label_handwriting,
@@ -28,12 +28,12 @@ class SettingAddonViewModel(private val _settingRepo: SettingRepo, private val _
         ConfigEntryItem(
             labelResId = R.string.setting_addon_label_section_status,
             descriptionResId = 0,
-            type = ConfigEntryItem.Companion.Type.NON_CONTROL
+            type = ConfigEntryItem.Companion.Type.DECORATIVE_LABEL
         ),
         ConfigEntryItem(
             labelResId = R.string.setting_addon_label_handwriting,
             descriptionResId = if (_addonRepo.isHandwritingAvailable()) R.string.setting_addon_status_isInstalled else R.string.setting_addon_status_notInstalled,
-            type = ConfigEntryItem.Companion.Type.NON_CONTROL,
+            type = ConfigEntryItem.Companion.Type.PENDING_INTENT,
             clickListener = null //todo: external link when not installed, setting intent when installed
         )
     )

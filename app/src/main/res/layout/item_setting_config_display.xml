@@ -26,6 +26,7 @@
             app:layout_constraintEnd_toStartOf="@id/lo_lateinit_setting_frm"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="@dimen/padding_small"
+            android:paddingBottom="@dimen/padding_tiny"
 
             app:textResId="@{info.labelResId}"
 

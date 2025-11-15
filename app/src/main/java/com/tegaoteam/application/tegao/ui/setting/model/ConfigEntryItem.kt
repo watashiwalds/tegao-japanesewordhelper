@@ -12,7 +12,8 @@ data class ConfigEntryItem(
     companion object {
         enum class Type {
             BOOLEAN,
-            NON_CONTROL
+            PENDING_INTENT,
+            DECORATIVE_LABEL
         }
     }
 }

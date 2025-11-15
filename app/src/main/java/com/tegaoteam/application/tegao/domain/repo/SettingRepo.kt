@@ -6,5 +6,9 @@ interface SettingRepo {
     fun isHepburnConverterEnable(): Stream<Boolean>
     suspend fun toggleHepburnConverter()
 
+
+    fun isHandwritingAddonEnable(): Stream<Boolean>
+    suspend fun toggleHandwritingAddon()
+
     fun getMainNavbarItemIds(): List<String>
 }

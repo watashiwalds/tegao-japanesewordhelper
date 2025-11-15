@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_settingListFragment_to_devPlaygroundFragment"
             app:destination="@id/devPlaygroundFragment" />
+        <action
+            android:id="@+id/action_settingListFragment_to_settingAddonFragment"
+            app:destination="@id/settingAddonFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingLookupFragment"
@@ -27,4 +30,9 @@
         android:name="com.tegaoteam.application.tegao.ui.setting.devmode.DevPlaygroundFragment"
         android:label="fragment_dev_playground"
         tools:layout="@layout/fragment_dev_playground" />
+    <fragment
+        android:id="@+id/settingAddonFragment"
+        android:name="com.tegaoteam.application.tegao.ui.setting.addon.SettingAddonFragment"
+        android:label="fragment_setting_addon"
+        tools:layout="@layout/fragment_setting_addon" />
 </navigation>

@@ -6,6 +6,6 @@ data class ConfigEntryItem(
     val labelResId: Int,
     val descriptionResId: Int,
     val type: ConfigType,
-    val liveData: LiveData<Any>,
-    val clickListener: () -> Unit
+    val liveData: LiveData<Any>? = null,
+    val clickListener: (() -> Unit)? = null
 )

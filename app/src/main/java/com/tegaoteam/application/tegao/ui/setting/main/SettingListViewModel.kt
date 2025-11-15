@@ -7,9 +7,15 @@ import com.tegaoteam.application.tegao.ui.component.generics.ListNavigationItemI
 class SettingListViewModel: ViewModel() {
     val settingNavigations = listOf(
         ListNavigationItemInfo(
-            labelResId = R.string.setting_search_label,
+            labelResId = R.string.setting_lookup_label,
             directionId = SettingListFragmentDirections.actionSettingListFragmentToSettingLookupFragment().actionId,
-            detailResId = R.string.setting_search_detail,
+            detailResId = R.string.setting_lookup_detail,
+            iconResId = R.drawable.ftc_round_search_128
+        ),
+        ListNavigationItemInfo(
+            labelResId = R.string.setting_addon_label,
+            directionId = SettingListFragmentDirections.actionSettingListFragmentToSettingLookupFragment().actionId,
+            detailResId = R.string.setting_lookup_detail,
             iconResId = R.drawable.ftc_round_search_128
         ),
         ListNavigationItemInfo(

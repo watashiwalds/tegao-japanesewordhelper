@@ -15,7 +15,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
 
-            tools:listitem="@layout/item_vertical_navigation"
+            tools:listitem="@layout/item_list_navigation"
             />
 
     </FrameLayout>

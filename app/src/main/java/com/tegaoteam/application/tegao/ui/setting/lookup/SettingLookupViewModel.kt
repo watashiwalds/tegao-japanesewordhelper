@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 class SettingLookupViewModel(private val settingRepo: SettingRepo): ViewModel() {
     val lookupSettings = listOf(
         ConfigEntryItem(
-            labelResId = R.string.setting_lookup_label_hepburn_converter,
-            descriptionResId = R.string.setting_lookup_description_hepburn_converter,
+            labelResId = R.string.setting_lookup_label_hepburnConverter_toggle,
+            descriptionResId = R.string.setting_lookup_description_hepburnConverter_toggle,
             type = ConfigType.BOOLEAN,
             liveData = settingRepo.isHepburnConverterEnable().asFlow().asLiveData(),
             clickListener = { viewModelScope.launch { settingRepo.toggleHepburnConverter() } }

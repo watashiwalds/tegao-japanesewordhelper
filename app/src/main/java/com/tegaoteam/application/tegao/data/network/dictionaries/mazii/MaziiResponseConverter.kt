@@ -19,8 +19,8 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (wObj.has("type") && wObj.get("type").asString.equals("word")) {
                     //some default tags
                     val tagsT = mutableListOf(
-                        Pair("source", "Mazii"),
-                        Pair("lang", wObj.get("label").takeUnless { it.isJsonNull }?.asString?: "")
+                        Word.Tag("source", "Mazii"),
+                        Word.Tag("lang", wObj.get("label").takeUnless { it.isJsonNull }?.asString?: "")
                     )
 
                     //  TODO: adapt to the change of pronunciation info of Mazii (not urgent)
@@ -55,15 +55,22 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         val mTags = mObj.get("kind").takeUnless { i -> i != null && i.isJsonNull }
                             ?.asString
                             ?.split(", ")
-                            ?.map { "kind" to Pair(it, MaziiTagValues.getTagDescription(it)) }
-                            ?.toList<Pair<String, Pair<String, String>>>()
-                        val mXpds = mutableListOf<Pair<String, String>>()
+                            ?.map { Word.Definition.Tag(it, it, MaziiTagValues.getTagDescription(it)) }
+                            ?.toList()
+                        val mXpds = mutableListOf<Word.Definition.ExpandInfo>()
                         if (mObj.has("examples") && !mObj.get("examples").isJsonNull) for (ex in mObj.getAsJsonArray("examples")) {
                             val exObj = ex.asJsonObject
-                            mXpds.add(Pair("example", "" +
-                                    "\uD83C\uDDFB\uD83C\uDDF3 ${exObj.get("mean").takeUnless { it.isJsonNull }?.asString}\n" +
-                                    "\uD83D\uDD8B\uFE0F ${exObj.get("content").takeUnless { it.isJsonNull }?.asString}\n" +
-                                    "\uD83D\uDDE3 ${exObj.get("transcription").takeUnless { it.isJsonNull }?.asString}"))
+//                            mXpds.add(Pair("example", "" +
+//                                    "\uD83C\uDDFB\uD83C\uDDF3 ${exObj.get("mean").takeUnless { it.isJsonNull }?.asString}\n" +
+//                                    "\uD83D\uDD8B\uFE0F ${exObj.get("content").takeUnless { it.isJsonNull }?.asString}\n" +
+//                                    "\uD83D\uDDE3 ${exObj.get("transcription").takeUnless { it.isJsonNull }?.asString}"))
+                            mXpds.add(Word.Definition.ExpandInfo(
+                                termKey = "example",
+                                content = "" +
+                                        "\uD83C\uDDFB\uD83C\uDDF3 ${exObj.get("mean").takeUnless { it.isJsonNull }?.asString}\n" +
+                                        "\uD83D\uDD8B\uFE0F ${exObj.get("content").takeUnless { it.isJsonNull }?.asString}\n" +
+                                        "\uD83D\uDDE3 ${exObj.get("transcription").takeUnless { it.isJsonNull }?.asString}"))
+
                         }
                         val temp = Word.Definition(
                             tags = mTags,

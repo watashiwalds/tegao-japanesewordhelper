@@ -1,20 +1,48 @@
 package com.tegaoteam.application.tegao.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Word(
     val id: Int,
     val reading: String,
     val furigana: List<String>? = null,
-    // app-handle tags, (termKey, display label)
-    var tags: List<Pair<String, String>>? = null,
-    var additionalInfo: List<Pair<String, String>>? = null,
+    var tags: List<Tag>? = null,
+    var additionalInfo: List<AdditionalInfo>? = null,
     val definitions: List<Definition>
 ) {
-    data class Definition (
-        // converter-handle tags, (termKey, (label, description))
-        var tags: List<Pair<String, Pair<String, String>>>? = null,
+
+    @Serializable
+    data class Definition(
+        var tags: List<Tag>? = null,
         val meaning: String,
-        // (additional tag key, additional info by string)
-        var expandInfos: List<Pair<String, String>>? = null
+        var expandInfos: List<ExpandInfo>? = null
+    ) {
+
+        @Serializable
+        data class Tag(
+            val termKey: String,
+            val label: String,
+            val description: String
+        )
+
+        @Serializable
+        data class ExpandInfo(
+            val termKey: String,
+            val content: String
+        )
+    }
+
+    @Serializable
+    data class Tag(
+        val termKey: String,
+        val label: String
+    )
+
+    @Serializable
+    data class AdditionalInfo(
+        val termKey: String,
+        val content: String
     )
 
     companion object {

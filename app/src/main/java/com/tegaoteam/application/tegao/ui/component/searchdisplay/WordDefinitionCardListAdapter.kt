@@ -35,12 +35,12 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
             binding.furigana.setTextWithVisibility(word.furigana?.joinToString("、"))
 
             //TODO: Figured out what was this intended to be for Jitendex and Jisho. For Mazii, it was just pronunciations
-            binding.additionalInfo.setTextWithVisibility(word.additionalInfo?.joinToString("\n") { it.second })
+            binding.additionalInfo.setTextWithVisibility(word.additionalInfo?.joinToString("\n") { it.content })
 
             //display func for tags
             binding.loWordTagsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(binding.loWordTagsRcy.context)
             if (binding.loWordTagsRcy.itemDecorationCount == 0) binding.loWordTagsRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
-            binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(word.tags) }
+            binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(word.tags?.map { it.termKey to it.label }) }
 
             //TODO: Write DefinitionListAdapter to make definition list for RecyclerView
             binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter(lifecycleOwner).apply { submitList(word.definitions) }

@@ -35,7 +35,7 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
 
             binding.loDefinitionTagsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(binding.loDefinitionTagsRcy.context)
             if (binding.loDefinitionTagsRcy.itemDecorationCount == 0) binding.loDefinitionTagsRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
-            binding.loDefinitionTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(definition.tags) }
+            binding.loDefinitionTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(definition.tags?.map{ it.termKey to (it.label to it.description) }) }
 
             binding.definition.text = definition.meaning
 
@@ -57,7 +57,7 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
                 binding.lifecycleOwner = lifecycleOwner
             }
 
-            binding.loDefinitionExpandInfosRcy.adapter = AdditionalInfoListAdapter().apply { submitList(definition.expandInfos) }
+            binding.loDefinitionExpandInfosRcy.adapter = AdditionalInfoListAdapter().apply { submitList(definition.expandInfos?.map { it.termKey to it.content }) }
 
             binding.executePendingBindings()
         }

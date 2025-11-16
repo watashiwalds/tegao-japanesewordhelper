@@ -25,7 +25,7 @@ interface SearchHistoryDAO {
     fun deleteAll(): Int
 
     @Delete
-    fun deleteEntry(entry: SearchHistoryEntity)
+    fun deleteEntry(entry: SearchHistoryEntity): Int
 
     @Query("delete from ${SearchHistoryEntity.TABLE_NAME} where ${SearchHistoryEntity.COL_TYPE} = :type")
     fun deleteType(type: Int)

@@ -32,4 +32,8 @@ class SearchHistoryHub: SearchHistoryRepo {
         Timber.i("Delete all search history in Room...")
         return historyDb.deleteAll()
     }
+
+    override suspend fun deleteEntry(entry: SearchHistory): Int {
+        return historyDb.deleteEntry(SearchHistoryEntity.fromDomainSearchHistory(entry))
+    }
 }

@@ -8,4 +8,5 @@ interface SearchHistoryRepo {
     fun getSearchedKanjis(): Stream<List<SearchHistory>>
     suspend fun logSearch(entry: SearchHistory)
     suspend fun deleteAll(): Int
+    suspend fun deleteEntry(entry: SearchHistory): Int
 }

@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity.Companion
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
 
-@Entity(tableName = Companion.TABLE_NAME)
+@Entity(tableName = Companion.TABLE_NAME, primaryKeys = [Companion.COL_TYPE, Companion.COL_KEYWORD])
 data class SearchHistoryEntity(
     @ColumnInfo(name = COL_TYPE) val type: Int,
-    @PrimaryKey() val keyword: String,
+    @ColumnInfo(name = COL_KEYWORD) val keyword: String,
     @ColumnInfo(name = COL_SEARCHDATE) val searchDate: String
 ) {
     fun toDomainSearchHistory() = SearchHistory(type, keyword, searchDate)

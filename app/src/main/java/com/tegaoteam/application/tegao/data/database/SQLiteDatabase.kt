@@ -14,7 +14,7 @@ abstract class SQLiteDatabase: RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "tegao_sqlite_db"
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
 
         @Volatile
         private var _instance: SQLiteDatabase? = null

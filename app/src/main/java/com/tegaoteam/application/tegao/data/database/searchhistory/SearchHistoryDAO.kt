@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.data.database.searchhistory
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
@@ -19,4 +20,13 @@ interface SearchHistoryDAO {
             "where ${SearchHistoryEntity.COL_TYPE} = ${SearchHistory.TYPE_KANJI} " +
             "order by ${SearchHistoryEntity.COL_SEARCHDATE} desc")
     fun getSearchedKanjis(): Flow<List<SearchHistoryEntity>>
+
+    @Query("delete from ${SearchHistoryEntity.TABLE_NAME}")
+    fun deleteAll(): Int
+
+    @Delete
+    fun deleteEntry(entry: SearchHistoryEntity)
+
+    @Query("delete from ${SearchHistoryEntity.TABLE_NAME} where ${SearchHistoryEntity.COL_TYPE} = :type")
+    fun deleteType(type: Int)
 }

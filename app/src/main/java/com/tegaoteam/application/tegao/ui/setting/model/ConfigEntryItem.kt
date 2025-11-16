@@ -6,14 +6,15 @@ data class ConfigEntryItem(
     val labelResId: Int,
     val descriptionResId: Int,
     val type: Type,
-    val liveData: LiveData<Any>? = null,
-    val clickListener: (() -> Unit)? = null
+    var liveData: LiveData<Any>? = null,
+    var clickListener: (() -> Unit)? = null
 ) {
     companion object {
         enum class Type {
             BOOLEAN,
+            CONFIRMATION,
             PENDING_INTENT,
-            DECORATIVE_LABEL
+            DECORATIVE_LABEL,
         }
     }
 }

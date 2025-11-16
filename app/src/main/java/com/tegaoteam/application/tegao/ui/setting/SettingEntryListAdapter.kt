@@ -12,6 +12,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ItemSettingConfigDisplayBinding
 import com.tegaoteam.application.tegao.databinding.SubitemSettingConfigBtnBooleanBinding
 import com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem
+import com.tegaoteam.application.tegao.utils.QuickPreset
 
 @Suppress("unchecked_cast")
 class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): ListAdapter<ConfigEntryItem, SettingEntryListAdapter.ViewHolder>(DiffCallback()) {
@@ -32,7 +33,6 @@ class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): List
     class ViewHolder private constructor (private val binding: ItemSettingConfigDisplayBinding, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
         fun bind(info: ConfigEntryItem) {
             val lcO = lifecycleOwner
-            binding.info = info
             when (info.type) {
                 ConfigEntryItem.Companion.Type.BOOLEAN -> binding.loLateinitSettingFrm.apply {
                     removeAllViews()
@@ -43,11 +43,23 @@ class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): List
                     }
                     addView(subBinding.root)
                 }
+                ConfigEntryItem.Companion.Type.CONFIRMATION -> {
+                    val original = info.clickListener
+                    info.clickListener = {
+                        QuickPreset.requestConfirmation(
+                            binding.root.context,
+                            R.string.setting_history_label_deleteAll,
+                            R.string.setting_history_detail_deleteAll,
+                            original
+                        )
+                    }
+                }
                 ConfigEntryItem.Companion.Type.DECORATIVE_LABEL -> binding.label.apply {
                     background = AppCompatResources.getDrawable(context, R.drawable.neutral_stroke_end)
                 }
                 ConfigEntryItem.Companion.Type.PENDING_INTENT -> {}
             }
+            binding.info = info
             binding.executePendingBindings()
         }
         companion object {

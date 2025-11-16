@@ -11,4 +11,7 @@
     <string name="title_label_lookup">Tra cứu</string>
     <string name="title_label_option">Lựa chọn</string>
     <string name="title_label_setting">Cài đặt</string>
+
+    <string name="phrase_confirm">Xác nhận</string>
+    <string name="phrase_cancel">Huỷ</string>
 </resources>

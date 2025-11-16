@@ -13,6 +13,7 @@
     <string name="setting_history_label_deleteAll">Xoá toàn bộ lịch sử tra cứu</string>
     <string name="setting_history_detail_deleteAll">Xoá tất cả bản ghi liên quan đến lịch sử tra cứu từ điển, bao gồm lịch sử tra cứu từ vựng và tra cứu Hán tự</string>
     <string name="setting_history_result_deleteAll">Đã xoá tất cả %d bản ghi lịch sử</string>
+    <string name="quicksetting_history_label_deleteEntry">Xoá bản ghi "%s"</string>
 
     <string name="setting_addon_label">Phần mở rộng</string>
     <string name="setting_addon_detail">Chữ viết tay • More coming soon…</string>

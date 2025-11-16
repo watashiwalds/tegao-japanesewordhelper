@@ -10,6 +10,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -24,7 +25,10 @@ import com.tegaoteam.application.tegao.ui.lookup.LookupActivity
 import com.tegaoteam.application.tegao.ui.lookup.LookupActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
+import com.tegaoteam.application.tegao.utils.QuickPreset
 import com.tegaoteam.application.tegao.utils.toggleVisibility
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class LookupFragment : Fragment() {
@@ -58,14 +62,42 @@ class LookupFragment : Fragment() {
         _binding.lifecycleOwner = viewLifecycleOwner
         _binding.viewModel = _viewModel
 
-        _wordSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryWordBinding::inflate) { keyword ->
-            Timber.i("Word history search $keyword")
-            startActivity(LookupActivityGate.departIntent(requireContext(), keyword))
-        }
-        _kanjiSearchHistoryAdapter = SearchHistoryListAdapter(ItemSearchhistoryKanjiBinding::inflate) { keyword ->
-            Timber.i("Kanji history search $keyword")
-            startActivity(LookupActivityGate.departIntent(requireContext(), keyword))
-        }
+        _wordSearchHistoryAdapter = SearchHistoryListAdapter(
+            ItemSearchhistoryWordBinding::inflate,
+            { keyword ->
+                Timber.i("Word history search $keyword")
+                startActivity(LookupActivityGate.departIntent(requireContext(), keyword))
+            },
+            { item ->
+                QuickPreset.requestConfirmation(
+                    requireContext(),
+                    getString(R.string.quicksetting_history_label_deleteEntry, item.keyword),
+                    lambdaRun = {
+                        lifecycleScope.launch(Dispatchers.Default) {
+                            _searchHistoryRepo.deleteEntry(item.toDomainSearchHistory())
+                        }
+                    }
+                )
+            }
+        )
+        _kanjiSearchHistoryAdapter = SearchHistoryListAdapter(
+            ItemSearchhistoryKanjiBinding::inflate,
+            { keyword ->
+                Timber.i("Kanji history search $keyword")
+                startActivity(LookupActivityGate.departIntent(requireContext(), keyword))
+            },
+            { item ->
+                QuickPreset.requestConfirmation(
+                    requireContext(),
+                    getString(R.string.quicksetting_history_label_deleteEntry, item.keyword),
+                    lambdaRun = {
+                        lifecycleScope.launch(Dispatchers.Default) {
+                            _searchHistoryRepo.deleteEntry(item.toDomainSearchHistory())
+                        }
+                    }
+                )
+            }
+        )
 
         _searchHistoryLinearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         _searchHistoryGridLayoutManager = DisplayHelper.FlexboxLayoutManagerMaker.gridEven(context?: requireContext())

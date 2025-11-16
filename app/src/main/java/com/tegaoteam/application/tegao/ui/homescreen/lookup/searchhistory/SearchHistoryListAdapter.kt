@@ -11,7 +11,8 @@ import timber.log.Timber
 
 class SearchHistoryListAdapter<T: ViewDataBinding>(
     private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T,
-    private val clickListener: (keywork: String) -> Unit
+    private val clickListener: ((keywork: String) -> Unit)? = null,
+    private val longClickListener: ((SearchHistoryItem) -> Unit)? = null
 ): ListAdapter<SearchHistoryItem, SearchHistoryListAdapter<T>.ViewHolder>( DiffCallback() ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -35,9 +36,12 @@ class SearchHistoryListAdapter<T: ViewDataBinding>(
 
     inner class ViewHolder(val binding: T): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SearchHistoryItem) {
-            binding.setVariable(BR.searchedKeyword, item.keyword)
-            binding.root.setOnClickListener { clickListener(item.keyword) }
-            binding.executePendingBindings()
+            binding.apply {
+                setVariable(BR.searchedKeyword, item.keyword)
+                root.setOnClickListener { clickListener?.invoke(item.keyword) }
+                root.setOnLongClickListener { longClickListener?.invoke(item); true }
+                executePendingBindings()
+            }
         }
     }
 

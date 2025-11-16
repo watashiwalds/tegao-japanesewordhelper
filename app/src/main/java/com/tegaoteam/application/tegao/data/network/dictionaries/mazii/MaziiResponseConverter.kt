@@ -60,10 +60,6 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         val mXpds = mutableListOf<Word.Definition.ExpandInfo>()
                         if (mObj.has("examples") && !mObj.get("examples").isJsonNull) for (ex in mObj.getAsJsonArray("examples")) {
                             val exObj = ex.asJsonObject
-//                            mXpds.add(Pair("example", "" +
-//                                    "\uD83C\uDDFB\uD83C\uDDF3 ${exObj.get("mean").takeUnless { it.isJsonNull }?.asString}\n" +
-//                                    "\uD83D\uDD8B\uFE0F ${exObj.get("content").takeUnless { it.isJsonNull }?.asString}\n" +
-//                                    "\uD83D\uDDE3 ${exObj.get("transcription").takeUnless { it.isJsonNull }?.asString}"))
                             mXpds.add(Word.Definition.ExpandInfo(
                                 termKey = "example",
                                 content = "" +
@@ -123,19 +119,19 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (kObj.has("kanji")) {
                     val compsT = if (!kObj.get("compDetail").isJsonNull)
                         kObj.getAsJsonArray("compDetail").map {
-                            it.asJsonObject.get("w").asString to it.asJsonObject.get("h").takeUnless { t -> t.isJsonNull }?.asString
-                        }.toMutableList()
-                    else mutableListOf()
+                            Kanji.Composite(it.asJsonObject.get("w").asString, it.asJsonObject.get("h").takeUnless { t -> t.isJsonNull }?.asString)
+                        }
+                    else listOf()
 
-                    val tagsT = mutableListOf<Pair<String, String>>().apply {
-                        if (kObj.has("freq")) add("frequency" to (kObj.get("freq").takeUnless { it.isJsonNull }?.asString?: ""))
-                        if (kObj.has("stroke_count")) add("stroke" to (kObj.get("stroke_count").takeUnless { it.isJsonNull }?.asString?: ""))
-                        if (kObj.has("level")) add("jlpt" to (kObj.get("level").takeUnless { it.isJsonNull }?.asJsonArray?.joinToString(", ") { it.asString }?: ""))
+                    val tagsT = mutableListOf<Kanji.Tag>().apply {
+                        if (kObj.has("freq")) add(Kanji.Tag("frequency", kObj.get("freq").takeUnless { it.isJsonNull }?.asString?: ""))
+                        if (kObj.has("stroke_count")) add(Kanji.Tag("stroke", kObj.get("stroke_count").takeUnless { it.isJsonNull }?.asString?: ""))
+                        if (kObj.has("level")) add(Kanji.Tag("jlpt", kObj.get("level").takeUnless { it.isJsonNull }?.asJsonArray?.joinToString(", ") { it.asString }?: ""))
                     }
 
-                    val additionalT = mutableListOf<Pair<String, String>>().apply {
-                        if (kObj.has("detail")) add("detail" to kObj.get("detail").asString.replace("##", "\n"))
-                        if (kObj.has("tips")) add("tips" to kObj.getAsJsonObject("tips").entrySet().map { it.value }.joinToString("\n"))
+                    val additionalT = mutableListOf<Kanji.AdditionalInfo>().apply {
+                        if (kObj.has("detail")) add(Kanji.AdditionalInfo("detail", kObj.get("detail").asString.replace("##", "\n")))
+                        if (kObj.has("tips")) add(Kanji.AdditionalInfo("tips", kObj.getAsJsonObject("tips").entrySet().map { it.value }.joinToString("\n")))
                     }
 
                     val idT = kObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt

@@ -63,7 +63,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
         fun updateBind(kanji: Kanji) {
             var hasAdditionalInfo = (kanji.additionalInfo != null)
             for (item in kanji.additionalInfo?: listOf()) {
-                if (item.second.isBlank()) {
+                if (item.content.isBlank()) {
                     hasAdditionalInfo = false
                     break
                 }
@@ -75,7 +75,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             if (hasAdditionalInfo) {
                 val expandFunc = { isExpanding.value = !isExpanding.value!! }
                 listOf(binding.collapseAdditionalInfoImg, binding.loAdditionalInfoAvailableTxt, binding.loExpandClickPaddingImg).forEach { it.setOnClickListener { expandFunc() } }
-                binding.loAdditionalInfoRcy.adapter = AdditionalInfoListAdapter().apply { submitList(kanji.additionalInfo) }
+                binding.loAdditionalInfoRcy.adapter = AdditionalInfoListAdapter().apply { submitList(kanji.additionalInfo?.map { it.termKey to it.content }) }
             }
 
             binding.kanjiStroke.setTextWithVisibility(kanji.character)
@@ -83,7 +83,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             binding.loTagsRcy.apply {
                 layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(context)
                 if (itemDecorationCount == 0) addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
-                adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags) }
+                adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags?.map { it.termKey to it.label }) }
             }
 
             binding.meaning.setTextWithVisibility(kanji.meaning)
@@ -102,8 +102,8 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             } else {
                 false
             })
-            binding.loCompositeGrp.toggleVisibility( if (kanji.composites?.joinToString { it.second?: "" }?.isNotBlank()?: false) {
-                binding.composite.setTextWithVisibility(kanji.composites?.joinToString(", ") { "[${it.first}] ${it.second ?: ""}" })
+            binding.loCompositeGrp.toggleVisibility( if (kanji.composites?.joinToString { it.hanji?: "" }?.isNotBlank()?: false) {
+                binding.composite.setTextWithVisibility(kanji.composites?.joinToString(", ") { "[${it.character}] ${it.hanji ?: ""}" })
                 //TODO: Globalization by using @string value
                 binding.loTagCompositeIcl.infoTag = TagItem.toTagItem("composite")
                 true

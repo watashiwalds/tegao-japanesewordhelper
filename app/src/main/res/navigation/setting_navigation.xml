@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_settingListFragment_to_settingAddonFragment"
             app:destination="@id/settingAddonFragment" />
+        <action
+            android:id="@+id/action_settingListFragment_to_settingHistoryFragment"
+            app:destination="@id/settingHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingLookupFragment"
@@ -35,4 +38,9 @@
         android:name="com.tegaoteam.application.tegao.ui.setting.addon.SettingAddonFragment"
         android:label="fragment_setting_addon"
         tools:layout="@layout/fragment_setting_addon" />
+    <fragment
+        android:id="@+id/settingHistoryFragment"
+        android:name="com.tegaoteam.application.tegao.ui.setting.history.SettingHistoryFragment"
+        android:label="fragment_setting_history"
+        tools:layout="@layout/fragment_setting_history" />
 </navigation>

@@ -9,14 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.SettingHub
-import com.tegaoteam.application.tegao.databinding.FragmentSettingLookupBinding
+import com.tegaoteam.application.tegao.databinding.FragmentSettingBinding
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.setting.SettingEntryListAdapter
 
 class SettingLookupFragment : Fragment() {
     private lateinit var _viewModel: SettingLookupViewModel
     private lateinit var _settingRepo: SettingRepo
-    private lateinit var _binding: FragmentSettingLookupBinding
+    private lateinit var _binding: FragmentSettingBinding
 
     private lateinit var _adapter: SettingEntryListAdapter
 
@@ -27,7 +27,7 @@ class SettingLookupFragment : Fragment() {
         _settingRepo = SettingHub()
         _viewModel = ViewModelProvider(this, SettingLookupViewModel.Companion.ViewModelFactory(_settingRepo))[SettingLookupViewModel::class]
 
-        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting_lookup, container, false)
+        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting, container, false)
         _adapter = SettingEntryListAdapter(viewLifecycleOwner).apply {
             submitList(_viewModel.lookupSettings)
         }

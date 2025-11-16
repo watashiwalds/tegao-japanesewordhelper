@@ -10,13 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.data.hub.SettingHub
-import com.tegaoteam.application.tegao.databinding.FragmentSettingAddonBinding
+import com.tegaoteam.application.tegao.databinding.FragmentSettingBinding
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.setting.SettingEntryListAdapter
 
 class SettingAddonFragment : Fragment() {
-    private lateinit var _binding: FragmentSettingAddonBinding
+    private lateinit var _binding: FragmentSettingBinding
     private lateinit var _viewModel: SettingAddonViewModel
     private lateinit var _adapter: SettingEntryListAdapter
     private lateinit var _settingRepo: SettingRepo
@@ -28,7 +28,7 @@ class SettingAddonFragment : Fragment() {
     ): View {
         _settingRepo = SettingHub()
         _addonRepo = AddonHub()
-        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting_addon, container, false)
+        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting, container, false)
         _viewModel = ViewModelProvider(this, SettingAddonViewModel.Companion.ViewModelFactory(_settingRepo, _addonRepo))[SettingAddonViewModel::class.java]
 
         _adapter = SettingEntryListAdapter(viewLifecycleOwner).apply {

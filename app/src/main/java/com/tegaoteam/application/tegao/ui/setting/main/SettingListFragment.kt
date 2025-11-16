@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
-import com.tegaoteam.application.tegao.databinding.FragmentSettingListBinding
+import com.tegaoteam.application.tegao.databinding.FragmentSettingBinding
 
 class SettingListFragment : Fragment() {
     private lateinit var _viewModel: SettingListViewModel
-    private lateinit var _binding: FragmentSettingListBinding
+    private lateinit var _binding: FragmentSettingBinding
     private lateinit var _listAdapter: SettingListAdapter
 
     override fun onCreateView(
@@ -22,7 +22,7 @@ class SettingListFragment : Fragment() {
     ): View? {
         _viewModel = ViewModelProvider(this)[SettingListViewModel::class]
 
-        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting_list, container, false)
+        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_setting, container, false)
 
         val navController = findNavController()
         _listAdapter = SettingListAdapter().apply {

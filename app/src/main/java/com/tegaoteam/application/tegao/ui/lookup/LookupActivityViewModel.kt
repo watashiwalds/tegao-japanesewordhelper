@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.R
@@ -70,8 +71,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
 
     //handwriting addon variables
-    private val _isHandwritingEnabled = MutableLiveData<Boolean>().apply { value = true }
-    val isHandwritingEnabled: LiveData<Boolean> = _isHandwritingEnabled
+    val isHandwritingEnabled: LiveData<Boolean> = settingRepo.isHandwritingAddonEnable().asFlow().asLiveData()
 
     //preference values
     private var _useHepburnConverter = true
@@ -79,7 +79,6 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     init {
         viewModelScope.launch {
             _useHepburnConverter = settingRepo.isHepburnConverterEnable().asFlow().first()
-            _isHandwritingEnabled.value = settingRepo.isHandwritingAddonEnable().asFlow().first()
         }
     }
 

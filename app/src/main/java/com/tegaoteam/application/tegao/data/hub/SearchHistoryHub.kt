@@ -27,4 +27,9 @@ class SearchHistoryHub: SearchHistoryRepo {
         if (entry.keyword.isBlank() || entry.searchDate.isBlank()) return
         historyDb.upsert(SearchHistoryEntity.fromDomainSearchHistory(entry))
     }
+
+    override suspend fun deleteAll(): Int {
+        Timber.i("Delete all search history in Room...")
+        return historyDb.deleteAll()
+    }
 }

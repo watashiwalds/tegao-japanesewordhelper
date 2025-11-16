@@ -8,6 +8,12 @@
     <string name="setting_lookup_label_hepburnConverter_toggle">Chuyển đổi Hepburn</string>
     <string name="setting_lookup_description_hepburnConverter_toggle">Tự động chuyển đổi từ khoá từ định dạng Romaji sang Hiragana trên thanh tìm kiếm</string>
 
+    <string name="setting_history_label">Lịch sử</string>
+    <string name="setting_history_detail">Từ khoá tìm kiếm</string>
+    <string name="setting_history_label_deleteAll">Xoá toàn bộ lịch sử tra cứu</string>
+    <string name="setting_history_detail_deleteAll">Xoá tất cả bản ghi liên quan đến lịch sử tra cứu từ điển, bao gồm lịch sử tra cứu từ vựng và tra cứu Hán tự</string>
+    <string name="setting_history_result_deleteAll">Đã xoá tất cả %d bản ghi lịch sử</string>
+
     <string name="setting_addon_label">Phần mở rộng</string>
     <string name="setting_addon_detail">Chữ viết tay • More coming soon…</string>
     <string name="setting_addon_label_section_toggle">Kích hoạt</string>

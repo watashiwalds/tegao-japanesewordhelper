@@ -33,6 +33,8 @@ data class Kanji(
     )
 
     companion object {
+        const val TYPE_VALUE = 1
+
         fun default() = Kanji(
             id = 0,
             character = "",

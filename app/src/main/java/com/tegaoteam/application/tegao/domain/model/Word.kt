@@ -46,6 +46,8 @@ data class Word(
     )
 
     companion object {
+        const val TYPE_VALUE = 0
+
         fun default() = Word(
             id = 0,
             reading = "",

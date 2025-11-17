@@ -2,7 +2,6 @@ package com.tegaoteam.application.tegao.data.database.searchhistory
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity.Companion
 import com.tegaoteam.application.tegao.domain.model.SearchHistory
 

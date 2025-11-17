@@ -103,11 +103,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/lo_tag_kunyomi_icl"
             app:layout_constraintStart_toEndOf="@id/lo_tag_kunyomi_icl"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="@dimen/padding_tiny"
             style="@style/Theme.Tegao.ContentText.Normal"
             android:textIsSelectable="true"
 
-            tools:text="たつ、いせ"
+            tools:text="たつ、いせたつ、いせたつ、いせたつ、いせたつ、いせたつ、いせたつ、いせたつ、いせたつ、いせ"
             />
 
         <androidx.constraintlayout.widget.Group
@@ -121,9 +122,9 @@
             android:id="@+id/lo_tag_onyomi_icl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lo_tag_kunyomi_icl"
+            app:layout_constraintTop_toBottomOf="@id/kunyomi"
             app:layout_constraintStart_toStartOf="@id/lo_kanji_stroke_frm"
-            android:layout_marginTop="@dimen/padding_tiny"
+            android:layout_marginTop="@dimen/padding_small"
             />
 
         <TextView
@@ -132,13 +133,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/lo_tag_onyomi_icl"
             app:layout_constraintStart_toEndOf="@id/lo_tag_onyomi_icl"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="@dimen/padding_tiny"
             style="@style/Theme.Tegao.ContentText.Normal"
             android:textIsSelectable="true"
 
-            tools:text="リュウ、リョウ、ロウ"
+            tools:text="リュウ、リョウ、ロウリュウ、リョウ、ロウリュウ、リョウ、ロウリュウ、リョウ、ロウ"
             />
-
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/lo_composite_grp"
@@ -151,9 +152,9 @@
             android:id="@+id/lo_tag_composite_icl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lo_tag_onyomi_icl"
+            app:layout_constraintTop_toBottomOf="@id/onyomi"
             app:layout_constraintStart_toStartOf="@id/lo_kanji_stroke_frm"
-            android:layout_marginTop="@dimen/padding_tiny"
+            android:layout_marginTop="@dimen/padding_small"
             />
 
         <TextView
@@ -162,20 +163,21 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/lo_tag_composite_icl"
             app:layout_constraintStart_toEndOf="@id/lo_tag_composite_icl"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="@dimen/padding_tiny"
             style="@style/Theme.Tegao.ContentText.Normal"
             android:textIsSelectable="true"
 
-            tools:text="[立] LẬP, [电] ĐIỆN"
+            tools:text="[立] LẬP, [电] ĐIỆN[立] LẬP, [电] ĐIỆN[立] LẬP, [电] ĐIỆN[立] LẬP, [电] ĐIỆN"
             />
 
         <TextView
             android:id="@+id/lo_additional_info_available_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lo_tag_composite_icl"
+            app:layout_constraintTop_toBottomOf="@id/composite"
             app:layout_constraintStart_toStartOf="@id/lo_kanji_stroke_frm"
-            android:layout_marginTop="@dimen/padding_small"
+            android:layout_marginTop="@dimen/padding_normal"
             app:drawableStartCompat="@drawable/ftc_bold_trig_down_16"
             android:drawablePadding="@dimen/padding_small"
             android:paddingStart="@dimen/padding_tiny"

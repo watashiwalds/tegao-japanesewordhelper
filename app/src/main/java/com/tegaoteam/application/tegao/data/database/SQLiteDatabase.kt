@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryDAO
 
-@Database(entities = [SearchHistoryEntity::class], version = SQLiteDatabase.Companion.DATABASE_VERSION, exportSchema = false)
+@Database(entities = [SearchHistoryEntity::class], version = SQLiteDatabase.Companion.DATABASE_VERSION, exportSchema = true)
 abstract class SQLiteDatabase: RoomDatabase() {
 
     abstract val searchHistoryDAO: SearchHistoryDAO

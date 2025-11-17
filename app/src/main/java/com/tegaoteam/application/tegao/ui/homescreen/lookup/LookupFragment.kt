@@ -139,12 +139,14 @@ class LookupFragment : Fragment() {
         val toAdapter = when (_viewModel.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchHistoryAdapter
             GlobalState.LookupMode.KANJI -> _kanjiSearchHistoryAdapter
+            null -> null
         }
         _binding.historyListRcy.apply {
             toggleVisibility(false)
             layoutManager = when (_viewModel.lookupMode.value) {
                 GlobalState.LookupMode.WORD -> _searchHistoryLinearLayoutManager
                 GlobalState.LookupMode.KANJI -> _searchHistoryGridLayoutManager
+                null -> null
             }
             if (adapter != toAdapter) {
                 adapter = null

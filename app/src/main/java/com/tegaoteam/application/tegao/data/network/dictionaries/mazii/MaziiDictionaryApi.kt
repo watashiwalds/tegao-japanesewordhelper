@@ -3,12 +3,14 @@ package com.tegaoteam.application.tegao.data.network.dictionaries.mazii
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
+import com.tegaoteam.application.tegao.data.config.SystemStates
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
+import timber.log.Timber
 
 class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
 
@@ -39,6 +41,8 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     }
 
     override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {
+        if (SystemStates.isInternetAvailable() != true) return onNoInternetAvailable()
+
         _wordPayloadRequest.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
         return when (res) {
@@ -48,6 +52,8 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     }
 
     override suspend fun searchKanji(keyword: String): RepoResult<JsonObject> {
+        if (SystemStates.isInternetAvailable() != true) return onNoInternetAvailable()
+
         _kanjiPayloadRequest.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest) }
         return when (res) {
@@ -63,5 +69,10 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
             is RepoResult.Error<*> -> res
             is RepoResult.Success<*> -> RepoResult.Success("${res.data}")
         }
+    }
+
+    override fun onNoInternetAvailable(): RepoResult<Nothing> {
+        Timber.w("No internet available, return RepoResult.Error with code -1")
+        return RepoResult.Error<Nothing>(-1, "No internet available")
     }
 }

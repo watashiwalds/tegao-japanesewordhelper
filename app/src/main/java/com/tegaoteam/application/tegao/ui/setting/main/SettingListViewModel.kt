@@ -30,11 +30,13 @@ class SettingListViewModel: ViewModel() {
             detailResId = R.string.setting_addon_detail,
             iconResId = R.drawable.ftc_round_addon_128
         ),
-//        ListNavigationItemInfo(
-//            labelResId = R.string.dev_setting_label,
-//            directionId = SettingListFragmentDirections.actionSettingListFragmentToDevPlaygroundFragment().actionId,
-//            detailResId = R.string.dev_setting_detail,
-//            iconResId = R.drawable.ftc_bold_lab_128
-//        ),
+
+        //enable dev playground
+        ListNavigationItemInfo(
+            labelResId = R.string.dev_setting_label,
+            directionId = SettingListFragmentDirections.actionSettingListFragmentToDevPlaygroundFragment().actionId,
+            detailResId = R.string.dev_setting_detail,
+            iconResId = R.drawable.ftc_bold_lab_128
+        ),
     )
 }

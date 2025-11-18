@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryDAO
 
@@ -19,7 +20,7 @@ abstract class SQLiteDatabase: RoomDatabase() {
         @Volatile
         private var _instance: SQLiteDatabase? = null
 
-        fun getInstance(context: Context): SQLiteDatabase {
+        fun getInstance(context: Context = TegaoApplication.instance): SQLiteDatabase {
             synchronized(this) {
                 var instance = _instance
                 if (instance == null) {

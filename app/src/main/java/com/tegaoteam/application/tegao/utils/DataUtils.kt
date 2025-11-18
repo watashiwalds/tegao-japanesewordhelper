@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.utils
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import java.security.MessageDigest
 import java.time.Instant
 import java.time.Duration
 
@@ -37,4 +38,10 @@ object Time {
     }
 
     const val DIFF_DAY = 0
+}
+
+fun getMD5HashedValue(input: Any): String {
+    val messageDigester = MessageDigest.getInstance("MD5")
+    val hashedBytes = messageDigester.digest(input.toString().toByteArray())
+    return hashedBytes.joinToString("") { "%02x".format(it) }
 }

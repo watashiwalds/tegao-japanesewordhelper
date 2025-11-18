@@ -18,6 +18,12 @@ class DevPlaygroundFragment : Fragment() {
     ): View? {
         _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_dev_playground, container, false)
 
+        _binding.apply {
+            toggleFlick.setOnClickListener {
+                flickview.flickable = !flickview.flickable
+            }
+        }
+
         // Inflate the layout for this fragment
         return _binding.root
     }

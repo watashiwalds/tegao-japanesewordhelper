@@ -7,44 +7,45 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         style="@style/Theme.Tegao.Screen"
-
         tools:context=".ui.setting.devmode.DevPlaygroundFragment">
 
-        <FrameLayout
-            android:id="@+id/testview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+        <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableView
+            android:id="@+id/flickview"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_margin="@dimen/padding_large"
+
+            android:background="@drawable/neutral_stroke_background"
+            app:flickable="@{false}"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            >
-
-            <include layout="@layout/view_writing_board_full"
-                android:id="@+id/lo_writing_view_icl"/>
-
-        </FrameLayout>
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/test_edittext_Edt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:hint="Show keyboard"
-            android:inputType="text"
-            android:maxLines="1"
-            tools:ignore="HardcodedText" />
-
-        <include
-            android:id="@+id/test_pushswitch"
-            layout="@layout/view_button_pushswitch_icononly"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/test_edittext_Edt" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Drag this!"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableView>
+
+        <Button
+            android:id="@+id/toggleFlick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Toggle Flickable"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -7,7 +7,7 @@ import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
-import com.tegaoteam.application.tegao.domain.interf.DictionaryNetworkApi
+import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word

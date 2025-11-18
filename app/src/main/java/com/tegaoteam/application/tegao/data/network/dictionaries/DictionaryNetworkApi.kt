@@ -1,8 +1,8 @@
-package com.tegaoteam.application.tegao.domain.interf
+package com.tegaoteam.application.tegao.data.network.dictionaries
 
+import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
-import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.model.Word
 
 interface DictionaryNetworkApi {

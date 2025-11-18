@@ -1,21 +1,34 @@
 package com.tegaoteam.application.tegao.data.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheDAO
+import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheEntity
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryDAO
 
-@Database(entities = [SearchHistoryEntity::class], version = SQLiteDatabase.Companion.DATABASE_VERSION, exportSchema = true)
+@Database(
+    entities = [
+        SearchHistoryEntity::class,
+        DictionaryCacheEntity::class
+               ],
+    version = SQLiteDatabase.Companion.DATABASE_VERSION,
+    autoMigrations = [
+        AutoMigration(from = 2, to = 3)
+                     ],
+    exportSchema = true)
 abstract class SQLiteDatabase: RoomDatabase() {
 
     abstract val searchHistoryDAO: SearchHistoryDAO
+    abstract val dictionaryCacheDAO: DictionaryCacheDAO
 
     companion object {
         const val DATABASE_NAME = "tegao_sqlite_db"
-        const val DATABASE_VERSION = 2
+        const val DATABASE_VERSION = 3
 
         @Volatile
         private var _instance: SQLiteDatabase? = null
@@ -25,6 +38,7 @@ abstract class SQLiteDatabase: RoomDatabase() {
                 var instance = _instance
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.applicationContext, SQLiteDatabase::class.java, DATABASE_NAME)
+                        .addMigrations()
                         .fallbackToDestructiveMigration(true) //TODO: Change this to a migratable function to keep user data after upgrade
                         .build()
                     _instance = instance

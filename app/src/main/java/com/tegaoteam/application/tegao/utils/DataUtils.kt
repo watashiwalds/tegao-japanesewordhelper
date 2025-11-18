@@ -19,7 +19,7 @@ fun String.toSafeQueryString(): String {
 
 object Time {
     fun getCurrentTimestamp(): Instant? = Instant.now()
-    fun timeDifferenceBetween(start: Any, end: Any, differenceIn: Int): Long {
+    fun timeDifferenceBetween(start: Any?, end: Any?, differenceIn: Int): Long {
         val cStart = when (start) {
             is String -> Instant.parse(start)
             is Instant -> start

@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.data.network.dictionaries.mazii
 
 import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
@@ -10,9 +11,10 @@ import kotlin.collections.toList
 class MaziiResponseConverter: DictionaryResponseConverter {
     override fun <T> toDomainWordList(rawData: T): List<Word> {
         val words = mutableListOf<Word>()
-        if (rawData !is JsonObject) return words
+        val rawJsonObj = JsonParser.parseString(rawData.toString()).asJsonObject
+        if (rawJsonObj !is JsonObject) return words
         try {
-            val rawList = rawData.getAsJsonObject("data").getAsJsonArray("words")
+            val rawList = rawJsonObj.getAsJsonObject("data").getAsJsonArray("words")
             for (w in rawList) {
                 val wObj = w.asJsonObject
                 var word: Word? = null
@@ -105,14 +107,16 @@ class MaziiResponseConverter: DictionaryResponseConverter {
             furigana = listOf("Không tìm thấy kết quả nào"),
             definitions = listOf()
         ))
+//        Timber.i("Converted result: $words")
         return words
     }
 
     override fun <T> toDomainKanjiList(rawData: T): List<Kanji> {
         val kanjis = mutableListOf<Kanji>()
-        if (rawData !is JsonObject) return kanjis
+        val rawJsonObj = JsonParser.parseString(rawData.toString()).asJsonObject
+        if (rawJsonObj !is JsonObject) return kanjis
         try {
-            val kanji = rawData.getAsJsonArray("results")
+            val kanji = rawJsonObj.getAsJsonArray("results")
             for (k in kanji) {
                 val kObj = k.asJsonObject
                 var kanji: Kanji? = null
@@ -166,6 +170,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
             character = "",
             meaning = "Không có kết quả nào khớp"
         ))
+//        Timber.i("Converted result: $kanjis")
         return kanjis
     }
 }

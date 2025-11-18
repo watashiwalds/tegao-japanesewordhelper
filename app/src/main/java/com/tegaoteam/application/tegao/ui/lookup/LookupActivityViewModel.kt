@@ -22,7 +22,7 @@ import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import com.tegaoteam.application.tegao.utils.HepburnStringConvert
-import com.tegaoteam.application.tegao.utils.getCurrentTimestamp
+import com.tegaoteam.application.tegao.utils.Time.getCurrentTimestamp
 import com.tegaoteam.application.tegao.utils.toSafeQueryString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

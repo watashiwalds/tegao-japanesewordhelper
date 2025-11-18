@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import java.time.Instant
+import java.time.Duration
 
 fun JsonObject.toMap(): Map<String, Any> {
     val typeToken = object: TypeToken<Map<String, Any>>() {}.type
@@ -15,4 +16,25 @@ fun String.toSafeQueryString(): String {
     return this.replace(Regex(regex), "").trim()
 }
 
-fun getCurrentTimestamp(): Instant? = Instant.now()
+object Time {
+    fun getCurrentTimestamp(): Instant? = Instant.now()
+    fun timeDifferenceBetween(start: Any, end: Any, differenceIn: Int): Long {
+        val cStart = when (start) {
+            is String -> Instant.parse(start)
+            is Instant -> start
+            else -> getCurrentTimestamp()
+        }
+        val cEnd = when (end) {
+            is String -> Instant.parse(end)
+            is Instant -> end
+            else -> getCurrentTimestamp()
+        }
+        val durationDiff = Duration.between(cStart, cEnd)
+        return when (differenceIn) {
+            DIFF_DAY -> durationDiff.toDays()
+            else -> durationDiff.toMinutes()
+        }
+    }
+
+    const val DIFF_DAY = 0
+}

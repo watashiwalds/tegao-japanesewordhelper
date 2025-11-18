@@ -15,4 +15,9 @@ interface DictionaryCacheDAO {
 
     @Upsert
     suspend fun upsertCache(entity: Entity): Long
+
+    @Query("""
+        delete from ${Entity.TABLE_NAME}
+    """)
+    suspend fun deleteCaches(): Int
 }

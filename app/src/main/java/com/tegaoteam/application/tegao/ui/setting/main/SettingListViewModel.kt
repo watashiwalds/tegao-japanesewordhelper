@@ -19,6 +19,12 @@ class SettingListViewModel: ViewModel() {
             iconResId = R.drawable.ftc_round_history_128
         ),
         ListNavigationItemInfo(
+            labelResId = R.string.setting_storage_label,
+            directionId = SettingListFragmentDirections.actionSettingListFragmentToSettingStorageFragment().actionId,
+            detailResId = R.string.setting_storage_detail,
+            iconResId = R.drawable.ftc_line_storage_128
+        ),
+        ListNavigationItemInfo(
             labelResId = R.string.setting_addon_label,
             directionId = SettingListFragmentDirections.actionSettingListFragmentToSettingAddonFragment().actionId,
             detailResId = R.string.setting_addon_detail,

@@ -33,6 +33,7 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
+import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 
 class LookupActivity : AppCompatActivity() {
@@ -132,6 +133,9 @@ class LookupActivity : AppCompatActivity() {
         }
         _viewModel.isHandwritingEnabled.observe(this) {
             if (it && _addonRepo.isHandwritingAvailable()) initHandwritingFunction()
+        }
+        _viewModel.nonResult.observe(this) {
+            AppToast.show(it, AppToast.LENGTH_SHORT)
         }
     }
 

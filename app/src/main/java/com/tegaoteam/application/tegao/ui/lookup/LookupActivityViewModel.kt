@@ -61,8 +61,8 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     val availableDictionariesList = dictionaryRepo.getAvailableDictionariesList()
     var selectedDictionaryId: String = ""
 
-    private var _indevRetrofitResult = MutableLiveData<String>()
-    val indevRetrofitResult: LiveData<String> = _indevRetrofitResult
+    private var _nonResult = MutableLiveData<String>()
+    val nonResult: LiveData<String> = _nonResult
 
     //Start search on selected source
     val evStartSearch = EventBeacon()
@@ -101,7 +101,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
 
         //TODO: Proper displaying onSearch status in Activity, not by toasting text
         AppToast.show("Now searching...", AppToast.LENGTH_SHORT)
-        _indevRetrofitResult.value = "Now searching..."
+        _nonResult.value = "Now searching..."
 
         searchJob = viewModelScope.launch(Dispatchers.IO) {
             val result = when (lookupMode.value) {
@@ -110,7 +110,7 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
             }
             withContext(Dispatchers.Main) {
                 when (result) {
-                    is RepoResult.Error<*> -> _indevRetrofitResult.value = "ErrorCode: ${result.code}, Reason: ${result.message}"
+                    is RepoResult.Error<*> -> _nonResult.value = "Error [${result.code}] : ${result.message}"
                     is RepoResult.Success<*> -> {
                         //return search result to activity
                         val data = result.data
@@ -122,7 +122,6 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
                                 else -> {}
                             }
                         }
-                        _indevRetrofitResult.value = "${result.data}"
                     }
                 }
             }

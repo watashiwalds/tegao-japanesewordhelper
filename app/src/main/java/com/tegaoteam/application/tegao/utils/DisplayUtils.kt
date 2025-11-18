@@ -5,7 +5,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
-import com.tegaoteam.application.tegao.ui.component.flickcard.FlickableView
 
 @BindingAdapter("toggleVisibility")
 fun View.toggleVisibility(allowShow: Boolean) {

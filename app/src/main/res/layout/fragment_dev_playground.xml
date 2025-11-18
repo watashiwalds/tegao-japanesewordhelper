@@ -10,7 +10,7 @@
         style="@style/Theme.Tegao.Screen"
         tools:context=".ui.setting.devmode.DevPlaygroundFragment">
 
-        <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableView
+        <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
             android:id="@+id/flickview"
             android:layout_width="300dp"
             android:layout_height="300dp"
@@ -35,7 +35,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableView>
+        </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout>
 
         <Button
             android:id="@+id/toggleFlick"

@@ -9,12 +9,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.tegaoteam.application.tegao.utils.dpToPixel
 import timber.log.Timber
 
-class FlickableView(context: Context, attrs: AttributeSet?): ConstraintLayout(context, attrs) {
+class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): ConstraintLayout(context, attrs) {
     //x and y is coordination inside the parent view
 
     var flickable = false
     var collideDpPadding = 0f
-
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
@@ -44,7 +43,10 @@ class FlickableView(context: Context, attrs: AttributeSet?): ConstraintLayout(co
 //                Timber.i("dragCoordinate [$x; $y]")
             }
             MotionEvent.ACTION_UP -> {
-                if (collidingState != COLLIDING_NONE) return //todo: animating out with correct direction and GONE
+                if (collidingState != COLLIDING_NONE) {
+                    onFinalCollide[collidingState]?.invoke()
+                    Timber.i("Final colliding on $collidingState")
+                } //todo: animating out with correct direction and GONE
                 animate()
                     .translationX(0f)
                     .translationY(0f)
@@ -54,6 +56,20 @@ class FlickableView(context: Context, attrs: AttributeSet?): ConstraintLayout(co
             }
         }
     }
+    //endregion
+
+    //region [Storing onCollide lambda and setters]
+        //none, west, north, east, south
+    private var onFinalCollide = mutableMapOf<Int, (() -> Unit)?>(COLLIDING_NONE to null, COLLIDING_WEST to null, COLLIDING_NORTH to null, COLLIDING_EAST to null, COLLIDING_SOUTH to null)
+    private var onCollide = mutableMapOf<Int, (() -> Unit)?>(COLLIDING_NONE to null, COLLIDING_WEST to null, COLLIDING_NORTH to null, COLLIDING_EAST to null, COLLIDING_SOUTH to null)
+    fun setOnCollideListener(vararg sides: Int, lambda: () -> Unit) {
+        sides.forEach { onCollide[it] = lambda }
+    }
+    fun setOnFinalCollideListener(vararg sides: Int, lambda: () -> Unit) {
+        sides.forEach { onFinalCollide[it] = lambda }
+    }
+    fun getOnCollideListener(side: Int) = onCollide.getOrDefault(side, null)
+    fun getOnFinalCollideListener(side: Int) = onFinalCollide.getOrDefault(side, null)
     //endregion
 
     //region [Detect border's collide]
@@ -71,29 +87,23 @@ class FlickableView(context: Context, attrs: AttributeSet?): ConstraintLayout(co
         borderSouth = height - borderSouth
     }
 
-    var whenCollideWest = { Timber.i("Left collide!") }
-    var whenCollideNorth = { Timber.i("Top collide!") }
-    var whenCollideEast = { Timber.i("Right collide!") }
-    var whenCollideSouth = { Timber.i("Bottom collide!") }
     var collidingState = COLLIDING_NONE
         private set
     private fun updateCollidingState() {
         //pos - collide, neg - no collide
-        //[west, north, east, south]
-        val deltas = listOf(0 - x, 0 - y, x + borderEast, y + borderSouth)
+        val deltas = listOf(
+            COLLIDING_WEST to (0 - x),
+            COLLIDING_NORTH to (0 - y),
+            COLLIDING_EAST to (x + borderEast),
+            COLLIDING_SOUTH to (y + borderSouth))
         val nowColliding = run{
-            val maxIndex = deltas.withIndex().maxBy { it.value }.index
-            if (deltas[maxIndex] - dpToPixel(collideDpPadding) <= 0) -1 else maxIndex
+            val maxCollide = deltas.maxBy { it.second }
+            if (maxCollide.second - dpToPixel(collideDpPadding) <= 0) COLLIDING_NONE else maxCollide.first
         }
         if (nowColliding != collidingState) {
             collidingState = nowColliding
-            when (collidingState) {
-                COLLIDING_WEST -> whenCollideWest.invoke()
-                COLLIDING_NORTH -> whenCollideNorth.invoke()
-                COLLIDING_EAST -> whenCollideEast.invoke()
-                COLLIDING_SOUTH -> whenCollideSouth.invoke()
-                COLLIDING_NONE -> Timber.i("No collide")
-            }
+            Timber.i("Colliding on $collidingState")
+            onCollide[collidingState]?.invoke()
         }
     }
     //endregion

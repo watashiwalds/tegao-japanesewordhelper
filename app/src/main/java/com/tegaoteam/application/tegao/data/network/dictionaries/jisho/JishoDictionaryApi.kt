@@ -6,21 +6,18 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
-import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
-import com.tegaoteam.application.tegao.domain.model.Kanji
-import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.utils.toMap
 import okhttp3.ResponseBody
 
-class JishoDictionaryApi private constructor (private val converter: DictionaryResponseConverter):
+class JishoDictionaryApi private constructor():
     DictionaryNetworkApi {
 
     companion object {
         val api by lazy {
-            JishoDictionaryApi(JishoResponseConverter())
+            JishoDictionaryApi()
         }
     }
 
@@ -44,21 +41,21 @@ class JishoDictionaryApi private constructor (private val converter: DictionaryR
         RetrofitMaker.createWithUrl(_url).create(RetrofitApi::class.java)
     }
 
-    override suspend fun searchWord(keyword: String): RepoResult<List<Word>> {
+    override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {
         _wordParams.addProperty("keyword", keyword)
         val res = RetrofitResult.wrapper { instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() }) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(converter.toDomainWordList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(res.data)
         }
     }
 
-    override suspend fun searchKanji(keyword: String): RepoResult<List<Kanji>> {
+    override suspend fun searchKanji(keyword: String): RepoResult<ResponseBody> {
         _kanjiPathAppend = String.format(_kanjiPathAppend, keyword)
         val res = RetrofitResult.wrapper { instance.getFunctionFetchRaw(endpoint = _kanjiPath + _kanjiPathAppend, params = mapOf()) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<ResponseBody> -> RepoResult.Success(converter.toDomainKanjiList(res.data))
+            is RepoResult.Success<ResponseBody> -> RepoResult.Success(res.data)
         }
     }
 

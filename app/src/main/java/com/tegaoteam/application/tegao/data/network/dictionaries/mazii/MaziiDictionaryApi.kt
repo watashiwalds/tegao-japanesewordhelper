@@ -6,18 +6,15 @@ import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
-import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
-import com.tegaoteam.application.tegao.domain.model.Kanji
-import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 
-class MaziiDictionaryApi private constructor(private val converter: DictionaryResponseConverter): DictionaryNetworkApi {
+class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
 
     companion object {
         val api by lazy {
-            MaziiDictionaryApi(MaziiResponseConverter())
+            MaziiDictionaryApi()
         }
     }
 
@@ -41,21 +38,21 @@ class MaziiDictionaryApi private constructor(private val converter: DictionaryRe
         RetrofitMaker.createWithUrl(_url).create(RetrofitApi::class.java)
     }
 
-    override suspend fun searchWord(keyword: String): RepoResult<List<Word>> {
+    override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {
         _wordPayloadRequest.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(converter.toDomainWordList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(res.data)
         }
     }
 
-    override suspend fun searchKanji(keyword: String): RepoResult<List<Kanji>> {
+    override suspend fun searchKanji(keyword: String): RepoResult<JsonObject> {
         _kanjiPayloadRequest.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(converter.toDomainKanjiList(res.data))
+            is RepoResult.Success<JsonObject> -> RepoResult.Success(res.data)
         }
     }
 

@@ -48,8 +48,8 @@ class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): List
                     info.clickListener = {
                         QuickPreset.requestConfirmation(
                             binding.root.context,
-                            R.string.setting_history_label_deleteAll,
-                            R.string.setting_history_detail_deleteAll,
+                            info.labelResId,
+                            info.descriptionResId,
                             original
                         )
                     }

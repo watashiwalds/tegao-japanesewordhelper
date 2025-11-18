@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.utils
 
+import android.content.res.Resources
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
@@ -44,4 +45,8 @@ fun getMD5HashedValue(input: Any): String {
     val messageDigester = MessageDigest.getInstance("MD5")
     val hashedBytes = messageDigester.digest(input.toString().toByteArray())
     return hashedBytes.joinToString("") { "%02x".format(it) }
+}
+
+fun dpToPixel(value: Float): Float {
+    return value * Resources.getSystem().displayMetrics.density
 }

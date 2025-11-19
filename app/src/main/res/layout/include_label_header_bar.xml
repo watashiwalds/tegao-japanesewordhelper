@@ -37,11 +37,25 @@
             android:scaleType="fitCenter"
             app:tint="@color/text_normal"
             android:background="?android:selectableItemBackground"
-            android:paddingVertical="26dp"
-            android:paddingEnd="26dp"
-            android:paddingStart="@dimen/padding_normal"
+            android:padding="24dp"
             app:toggleVisibility="@{headerBarInfo.backOnClickListener != null}"
             android:onClick="@{() -> headerBarInfo.backOnClickListener.invoke()}"
+            />
+
+        <ImageButton
+            android:id="@+id/close_btn"
+            android:layout_width="@dimen/img_headerBackButton"
+            android:layout_height="@dimen/img_headerBackButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ftc_round_x_128"
+            android:scaleType="fitCenter"
+            app:tint="@color/text_normal"
+            android:background="?android:selectableItemBackground"
+            android:padding="25dp"
+            app:toggleVisibility="@{headerBarInfo.closeOnClickListener != null}"
+            android:onClick="@{() -> headerBarInfo.closeOnClickListener.invoke()}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.ui.component.searchdisplay
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
@@ -15,6 +16,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.utils.setTextWithVisibility
 import com.tegaoteam.application.tegao.utils.toggleVisibility
@@ -47,7 +49,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
         notifyDataSetChanged()
     }
 
-    class WidgetManager private constructor(private val lifecycleOwner: LifecycleOwner, private val binding: ViewTabDefinitionKanjisBinding, private val chipAdapter: ThemedChipListAdapter<ItemChipCharacterPickBinding>): RecyclerView.ViewHolder(binding.root) {
+    class WidgetManager private constructor(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val binding: ViewTabDefinitionKanjisBinding, private val chipAdapter: ThemedChipListAdapter<ItemChipCharacterPickBinding>): RecyclerView.ViewHolder(binding.root) {
         fun initBind(list: List<Kanji>, onTabChangedListener: (String) -> Unit) {
             chipAdapter.submitListWithClickListener(list.map{ ThemedChipItem.fromKanji(it) }) { kanjiId ->
                 //TODO: Notify Adapter of character change when click
@@ -111,13 +113,16 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
                 false
             })
 
+            //functions for qab button
+            binding.qabMakeNewCardBtn.setOnClickListener { context.startActivity(CardCreateActivityGate.departIntent(context, kanji)) }
+
             binding.lifecycleOwner = lifecycleOwner
             binding.executePendingBindings()
         }
         companion object {
             fun from(lifecycleOwner: LifecycleOwner, parent: ViewGroup, adapter: ThemedChipListAdapter<ItemChipCharacterPickBinding>): WidgetManager {
                 val binding = ViewTabDefinitionKanjisBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return WidgetManager(lifecycleOwner, binding, adapter)
+                return WidgetManager(parent.context, lifecycleOwner, binding, adapter)
             }
         }
     }

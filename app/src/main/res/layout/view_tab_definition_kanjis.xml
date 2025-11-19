@@ -235,7 +235,7 @@
             />
 
         <ImageButton
-            android:id="@+id/makeNewCard_btn"
+            android:id="@+id/qab_makeNewCard_btn"
             style="@style/Theme.Tegao.IconButton"
             android:background="@drawable/neutral_stroke_background"
             android:layout_width="32dp"

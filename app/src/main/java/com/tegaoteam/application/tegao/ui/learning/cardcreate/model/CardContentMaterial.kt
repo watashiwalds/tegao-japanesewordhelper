@@ -1,0 +1,41 @@
+package com.tegaoteam.application.tegao.ui.learning.cardcreate.model
+
+import com.tegaoteam.application.tegao.domain.model.Kanji
+import com.tegaoteam.application.tegao.domain.model.Word
+
+data class CardContentMaterial(
+    val contents: Map<String, List<String>>
+) {
+    companion object {
+        fun fromWord(word: Word): CardContentMaterial {
+            val parsed = mutableMapOf<String, List<String>>()
+            if (word.reading.isNotBlank()) parsed["reading"] = listOf(word.reading)
+            word.furigana?.let { parsed["furigana"] = it }
+            parsed["meaning"] = word.definitions.map {
+                it.tags?.joinToString { tag -> "[${tag.label}] " } +
+                it.meaning
+            }.toList()
+            word.additionalInfo?.let { parsed["additional"] = it.map { additionalInfo -> additionalInfo.content } }
+            return CardContentMaterial(parsed)
+        }
+        fun fromKanji(kanji: Kanji): CardContentMaterial {
+            val parsed = mutableMapOf<String, List<String>>()
+            if (kanji.character.isNotBlank()) parsed["reading"] = listOf(kanji.character)
+            kanji.kunyomi?.let { parsed["kunyomi"] = it }
+            kanji.onyomi?.let { parsed["onyomi"] = it }
+            if (kanji.meaning.isNotBlank()) parsed["meaning"] = listOf(kanji.meaning)
+            kanji.additionalInfo?.let { parsed["additional"] = it.map { additionalInfo -> additionalInfo.content } }
+            return CardContentMaterial(parsed)
+        }
+
+        //todo: change to string res for globalization
+        val keyDisplayMap = mapOf(
+            "reading" to "Từ vựng",
+            "meaning" to "Dịch nghĩa",
+            "furigana" to "Phiên âm Hiragana",
+            "kunyomi" to "Nhật âm",
+            "onyomi" to "Hán âm",
+            "additional" to "Khác",
+        )
+    }
+}

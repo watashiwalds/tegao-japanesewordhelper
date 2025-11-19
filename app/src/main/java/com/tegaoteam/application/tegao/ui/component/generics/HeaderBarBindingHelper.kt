@@ -14,8 +14,9 @@ object HeaderBarBindingHelper {
     fun bind(
         headerBinding: ViewDataBinding,
         label: String,
-        backOnClickListener: (() -> Unit)? = null) {
-        val info = HeaderBarInfo(label, backOnClickListener)
+        backOnClickListener: (() -> Unit)? = null,
+        closeOnClickListener: (() -> Unit)? = null) {
+        val info = HeaderBarInfo(label, backOnClickListener, closeOnClickListener)
         headerBinding.setVariable(BR.headerBarInfo, info)
         headerBinding.executePendingBindings()
     }

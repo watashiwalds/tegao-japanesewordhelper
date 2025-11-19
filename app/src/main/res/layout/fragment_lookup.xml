@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    tools:context=".ui.homescreen.lookup.LookupFragment">
+    tools:context=".ui.homescreen.lookup.SearchHistoryFragment">
 
     <data>
         <import type="com.tegaoteam.application.tegao.ui.shared.GlobalState.LookupMode"/>
         <variable
             name="viewModel"
-            type="com.tegaoteam.application.tegao.ui.homescreen.lookup.LookupFragmentViewModel" />
+            type="com.tegaoteam.application.tegao.ui.homescreen.lookup.SearchHistoryFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

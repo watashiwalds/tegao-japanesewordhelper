@@ -1,7 +1,5 @@
 package com.tegaoteam.application.tegao.ui.homescreen.lookup
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.tegaoteam.application.tegao.R
@@ -21,7 +18,6 @@ import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryKanjiBinding
 import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryWordBinding
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.ui.homescreen.lookup.searchhistory.SearchHistoryListAdapter
-import com.tegaoteam.application.tegao.ui.lookup.LookupActivity
 import com.tegaoteam.application.tegao.ui.lookup.LookupActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
@@ -31,9 +27,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class LookupFragment : Fragment() {
+class SearchHistoryFragment : Fragment() {
     private lateinit var _binding: FragmentLookupBinding
-    private lateinit var _viewModel: LookupFragmentViewModel
+    private lateinit var _viewModel: SearchHistoryFragmentViewModel
 
     private lateinit var _searchHistoryRepo: SearchHistoryRepo
     private lateinit var _wordSearchHistoryAdapter: SearchHistoryListAdapter<ItemSearchhistoryWordBinding>
@@ -58,7 +54,7 @@ class LookupFragment : Fragment() {
     private fun initVariables() {
         _searchHistoryRepo = SearchHistoryHub()
 
-        _viewModel = ViewModelProvider(this, LookupFragmentViewModel.Companion.ViewModelFactory(_searchHistoryRepo)).get(LookupFragmentViewModel::class.java)
+        _viewModel = ViewModelProvider(this, SearchHistoryFragmentViewModel.Companion.ViewModelFactory(_searchHistoryRepo)).get(SearchHistoryFragmentViewModel::class.java)
         _binding.lifecycleOwner = viewLifecycleOwner
         _binding.viewModel = _viewModel
 

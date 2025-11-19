@@ -10,7 +10,7 @@ import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.flow.map
 
-class LookupFragmentViewModel(seachHistoryRepo: SearchHistoryRepo): ViewModel() {
+class SearchHistoryFragmentViewModel(seachHistoryRepo: SearchHistoryRepo): ViewModel() {
     val evNavigateToLookupActivity = EventBeacon()
 
     val lookupMode = GlobalState.lookupMode.asLiveData()
@@ -32,8 +32,8 @@ class LookupFragmentViewModel(seachHistoryRepo: SearchHistoryRepo): ViewModel() 
         ) : ViewModelProvider.Factory {
             @Suppress("unchecked_cast")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (modelClass.isAssignableFrom(LookupFragmentViewModel::class.java)) {
-                    return LookupFragmentViewModel(searchHistoryRepo) as T
+                if (modelClass.isAssignableFrom(SearchHistoryFragmentViewModel::class.java)) {
+                    return SearchHistoryFragmentViewModel(searchHistoryRepo) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

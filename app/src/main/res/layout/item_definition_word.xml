@@ -19,7 +19,7 @@
             android:longClickable="true"
             android:textIsSelectable="true"
             app:layout_constraintEnd_toEndOf="@+id/furigana"
-            app:layout_constraintEnd_toStartOf="@+id/makeNewCard_btn"
+            app:layout_constraintEnd_toStartOf="@+id/qab_makeNewCard_btn"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/furigana"
@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:singleLine="false"
-            app:layout_constraintEnd_toStartOf="@+id/makeNewCard_btn"
+            app:layout_constraintEnd_toStartOf="@+id/qab_makeNewCard_btn"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
@@ -88,7 +88,7 @@
             />
 
         <ImageButton
-            android:id="@+id/makeNewCard_btn"
+            android:id="@+id/qab_makeNewCard_btn"
             style="@style/Theme.Tegao.IconButton"
             android:layout_width="32dp"
             android:layout_height="32dp"

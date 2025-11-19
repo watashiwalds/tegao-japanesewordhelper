@@ -10,15 +10,15 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object RetrofitMaker {
     //logging interceptor for url call logging
-    val logging = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY  // Logs URL, headers, and body
-    }
+//    val logging = HttpLoggingInterceptor().apply {
+//        level = HttpLoggingInterceptor.Level.BODY  // Logs URL, headers, and body
+//    }
 
     //shared OkHttpClient for all Retrofit instance of each source
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
-            .addInterceptor(logging)
+//            .addInterceptor(logging)
             .build()
     }
 

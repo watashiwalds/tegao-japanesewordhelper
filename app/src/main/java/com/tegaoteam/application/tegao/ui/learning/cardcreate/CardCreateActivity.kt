@@ -20,8 +20,10 @@ class CardCreateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
-        setContentView(R.layout.activity_card_create)
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_card_create)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -30,7 +32,6 @@ class CardCreateActivity : AppCompatActivity() {
 
         _learningRepo = LearningHub()
         _viewModel = ViewModelProvider(this, CardCreateActivityViewModel.Companion.ViewModelFactory(_learningRepo))[CardCreateActivityViewModel::class.java]
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_card_create)
 
         setupHeaderBar()
 

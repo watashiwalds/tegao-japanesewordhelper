@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.ui.learning.cardcreate.model
 
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
+import kotlin.math.exp
 
 data class CardContentMaterial(
     val contents: Map<String, List<String>>
@@ -12,9 +13,10 @@ data class CardContentMaterial(
             if (word.reading.isNotBlank()) parsed["reading"] = listOf(word.reading)
             word.furigana?.let { parsed["furigana"] = it }
             parsed["meaning"] = word.definitions.map {
-                it.tags?.joinToString { tag -> "[${tag.label}] " } +
+                (it.tags?.joinToString { tag -> "[${tag.label}] " }?: "") +
                 it.meaning
             }.toList()
+            //todo: Add definition's expandInfo as additional
             word.additionalInfo?.let { parsed["additional"] = it.map { additionalInfo -> additionalInfo.content } }
             return CardContentMaterial(parsed)
         }

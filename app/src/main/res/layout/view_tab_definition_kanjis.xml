@@ -64,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
 
             tools:listitem="@layout/item_tag"
-            tools:itemCount="6"
+            tools:itemCount="3"
             tools:orientation="horizontal"
             />
 
@@ -233,6 +233,18 @@
             tools:itemCount="2"
             tools:listitem="@layout/subitem_definition_additional_info"
             />
+
+        <ImageButton
+            android:id="@+id/makeNewCard_btn"
+            style="@style/Theme.Tegao.IconButton"
+            android:background="@drawable/neutral_stroke_background"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:padding="@dimen/padding_small"
+            android:src="@drawable/ftc_round_plus_128"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lo_kanji_stroke_frm"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     

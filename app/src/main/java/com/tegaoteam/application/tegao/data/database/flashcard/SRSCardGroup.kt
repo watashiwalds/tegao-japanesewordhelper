@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.data.database.flashcard
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.tegaoteam.application.tegao.domain.model.CardGroup
 
 @Entity(
     tableName = SRSCardGroup.TABLE_NAME
@@ -15,5 +16,15 @@ data class SRSCardGroup(
         const val TABLE_NAME = "srs_card_group"
         const val COL_ID = "groupId"
         const val COL_LABEL = "label"
+
+        fun toDomainCardGroup(entity: SRSCardGroup) = CardGroup(
+            entity.groupId,
+            entity.label
+        )
+
+        fun fromDomainCardGroup(entry: CardGroup) = SRSCardGroup(
+            entry.groupId,
+            entry.label
+        )
     }
 }

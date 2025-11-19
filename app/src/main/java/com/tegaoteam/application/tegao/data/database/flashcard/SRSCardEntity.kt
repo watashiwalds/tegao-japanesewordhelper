@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.tegaoteam.application.tegao.domain.model.CardEntry
 
 @Entity(
     tableName = SRSCardEntity.TABLE_NAME,
@@ -27,5 +28,23 @@ data class SRSCardEntity(
         const val COL_FRONT = "front"
         const val COL_ANSWER = "answer"
         const val COL_BACK = "back"
+
+        fun toDomainCardEntry(entity: SRSCardEntity) = CardEntry(
+            entity.cardId,
+            entity.groupId,
+            entity.type,
+            entity.front,
+            entity.answer,
+            entity.back
+        )
+
+        fun fromDomainCardEntry(entry: CardEntry) = SRSCardEntity(
+            entry.cardId,
+            entry.groupId,
+            entry.type,
+            entry.front,
+            entry.answer,
+            entry.back
+        )
     }
 }

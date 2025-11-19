@@ -27,7 +27,7 @@ object CardCreateActivityGate {
                 extra = Json.encodeToString(contentSource)
             }
         }
-        return Intent(context, LookupActivity::class.java).apply {
+        return Intent(context, CardCreateActivity::class.java).apply {
             if (extra != null) {
                 putExtra(KEY_CONTENTSOURCE, extra)
                 putExtra(KEY_CONTENTTYPE, type!!)

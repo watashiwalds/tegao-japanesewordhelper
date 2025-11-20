@@ -13,7 +13,7 @@ data class CardContentMaterial(
             if (word.reading.isNotBlank()) parsed["reading"] = listOf(word.reading)
             word.furigana?.let { parsed["furigana"] = it }
             parsed["meaning"] = word.definitions.map {
-                (it.tags?.joinToString { tag -> "[${tag.label}] " }?: "") +
+                (it.tags?.joinToString(separator = "") { tag -> "[${tag.label}] " }?: "") +
                 it.meaning
             }.toList()
             //todo: Add definition's expandInfo as additional

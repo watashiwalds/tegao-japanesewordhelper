@@ -45,9 +45,9 @@ class SingleSelectThemedChipListAdapter<T: ViewDataBinding>(private val lifecycl
     /**
      * Pass in a <ThemedChipItem> list with clickListener for wanted picking behavior
      */
-    fun submitListWithClickListener(list: List<ThemedChipItem>?, listener: (id: String) -> Unit) {
+    fun submitListWithClickListener(list: List<ThemedChipItem>?, listener: (chip: ThemedChipItem) -> Unit) {
         themedChipManager = ThemedChipManager(list?: listOf(), ThemedChipManager.MODE_SINGLE)
-        list?.forEach { it.onSelectedListener = { listener(it.id) } }
+        list?.forEach { it.onSelectedListener = { listener(it) } }
         super.submitList(list)
     }
 

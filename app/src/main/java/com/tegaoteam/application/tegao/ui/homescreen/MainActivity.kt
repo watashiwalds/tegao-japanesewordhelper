@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         _binding.navItemsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.gridEven(this)
         val navAdapter = SingleSelectThemedChipListAdapter(this, ItemChipNavbarIconNLabelBinding::inflate).apply {
-            submitListWithClickListener(navItems) { fragmentString ->
-                navController.navigate(fragmentString.toInt(), null, navOptions)
+            submitListWithClickListener(navItems) { tabChip ->
+                navController.navigate(tabChip.id.toInt(), null, navOptions)
             }
             themedChipManager?.selectFirst()
         }

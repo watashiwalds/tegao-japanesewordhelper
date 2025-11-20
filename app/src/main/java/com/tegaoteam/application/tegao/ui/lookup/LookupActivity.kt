@@ -187,8 +187,8 @@ class LookupActivity : AppCompatActivity() {
     fun displayDictionaryOptions() {
         val availableDictionaries = _viewModel.availableDictionariesList
         val dictChipAdapter = SingleSelectThemedChipListAdapter(this, ItemChipDictionaryPickBinding::inflate)
-        dictChipAdapter.submitListWithClickListener(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) }) { dictId ->
-            _viewModel.selectedDictionaryId = dictId
+        dictChipAdapter.submitListWithClickListener(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) }) { dictChip ->
+            _viewModel.selectedDictionaryId = dictChip.id
             _viewModel.evStartSearch.ignite()
         }
         dictChipAdapter.themedChipManager?.selectFirst()

@@ -51,11 +51,11 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
 
     class WidgetManager private constructor(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val binding: ViewTabDefinitionKanjisBinding, private val chipAdapter: SingleSelectThemedChipListAdapter<ItemChipCharacterPickBinding>): RecyclerView.ViewHolder(binding.root) {
         fun initBind(list: List<Kanji>, onTabChangedListener: (String) -> Unit) {
-            chipAdapter.submitListWithClickListener(list.map{ ThemedChipItem.fromKanji(it) }) { kanjiId ->
+            chipAdapter.submitListWithClickListener(list.map{ ThemedChipItem.fromKanji(it) }) { kanjiChip ->
                 //TODO: Notify Adapter of character change when click
-                updateBind(list.find { it.character == kanjiId }?: Kanji.default())
-                onTabChangedListener.invoke(kanjiId)
-                Timber.i("Kanji selected -> [$kanjiId]")
+                updateBind(list.find { it.character == kanjiChip.id }?: Kanji.default())
+                onTabChangedListener.invoke(kanjiChip.id)
+                Timber.i("Kanji selected -> [${kanjiChip.id}]")
             }
             chipAdapter.themedChipManager?.selectFirst()
             binding.ctrlKanjisTabPickRcy.adapter = chipAdapter

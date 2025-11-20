@@ -16,7 +16,7 @@ object QuickPreset {
             setView(binding.root)
         }.create()
 
-        binding.confirmBtn.setOnClickListener { lambdaRun?.invoke() }
+        binding.confirmBtn.setOnClickListener { lambdaRun?.invoke(); dialog.dismiss() }
         binding.cancelBtn.setOnClickListener { dialog.dismiss() }
 
         dialog.show()
@@ -30,7 +30,7 @@ object QuickPreset {
 
         val editText = EditText(context)
         binding.frame.addView(editText)
-        binding.confirmBtn.setOnClickListener { lambdaRun?.invoke(editText.text.toString()) }
+        binding.confirmBtn.setOnClickListener { lambdaRun?.invoke(editText.text.toString()); dialog.dismiss() }
         binding.cancelBtn.setOnClickListener { dialog.dismiss() }
         binding.executePendingBindings()
 

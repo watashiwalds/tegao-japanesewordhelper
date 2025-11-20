@@ -2,4 +2,6 @@
 <resources>
     <string name="card_create_what_group">Bạn muốn thêm thẻ vào bộ thẻ nào?</string>
     <string name="card_create_qab_add_group">Nhấn nút + để thêm bộ thẻ mới</string>
+    <string name="card_create_add_group_label">Thêm bộ thẻ mới</string>
+    <string name="card_create_add_group_message">Nhập tên bộ thẻ mới để tạo</string>
 </resources>

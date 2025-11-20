@@ -14,6 +14,7 @@ import com.tegaoteam.application.tegao.databinding.ItemChipCheckboxTextBinding
 import com.tegaoteam.application.tegao.ui.component.themedchip.SingleSelectThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
+import com.tegaoteam.application.tegao.utils.QuickPreset
 
 class CardCreateSetGroupFragment : Fragment() {
     private lateinit var _binding: FragmentCardCreateValueSelectBinding
@@ -50,5 +51,14 @@ class CardCreateSetGroupFragment : Fragment() {
 
     private fun initView() {
         _binding.loFragmentTitleText.setText(R.string.card_create_what_group)
+        _binding.qabNewGroupBtn.setOnClickListener {
+            QuickPreset.requestValueDialog(
+                requireActivity(),
+                R.string.card_create_add_group_label,
+                R.string.card_create_add_group_message
+            ) { groupName ->
+                _parentViewModel.addNewCardGroup(groupName)
+            }
+        }
     }
 }

@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
-import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardContentMaterial
-import com.tegaoteam.application.tegao.ui.lookup.LookupActivity
+import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardMaterial
 import kotlinx.serialization.json.Json
 
 object CardCreateActivityGate {
@@ -35,13 +34,13 @@ object CardCreateActivityGate {
         }
     }
 
-    fun arriveIntent(intent: Intent): CardContentMaterial? {
+    fun arriveIntent(intent: Intent): CardMaterial? {
         val extra = intent.getStringExtra(KEY_CONTENTSOURCE)
         if (extra == null) return null
         val type = intent.getIntExtra(KEY_CONTENTTYPE, -1)
         return when (type) {
-            TYPE_WORD -> CardContentMaterial.fromWord(Json.decodeFromString(extra))
-            TYPE_KANJI -> CardContentMaterial.fromKanji(Json.decodeFromString(extra))
+            TYPE_WORD -> CardMaterial.fromWord(Json.decodeFromString(extra))
+            TYPE_KANJI -> CardMaterial.fromKanji(Json.decodeFromString(extra))
             else -> null
         }
     }

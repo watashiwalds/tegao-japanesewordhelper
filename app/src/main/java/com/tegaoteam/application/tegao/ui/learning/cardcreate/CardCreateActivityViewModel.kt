@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
-import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardContentMaterial
+import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardMaterial
 
 class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewModel() {
-    private val _cardContentMaterial = MutableLiveData<CardContentMaterial>().apply { value = null }
-    val cardContentMaterial: LiveData<CardContentMaterial> = _cardContentMaterial
-    fun postCardContentMaterial(contentMaterial: CardContentMaterial?) {
-        if (_cardContentMaterial.value == null) _cardContentMaterial.value = contentMaterial
+    private val _cardMaterial = MutableLiveData<CardMaterial>().apply { value = null }
+    val cardMaterial: LiveData<CardMaterial> = _cardMaterial
+    fun postCardContentMaterial(contentMaterial: CardMaterial?) {
+        if (_cardMaterial.value == null) _cardMaterial.value = contentMaterial
     }
 
     companion object {

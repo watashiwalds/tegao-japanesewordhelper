@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateSetGroupBinding
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
@@ -26,7 +25,7 @@ class CardCreateSetGroupFragment : Fragment() {
     }
 
     private fun initObservers() {
-        _parentViewModel.cardContentMaterial.observe(viewLifecycleOwner) {
+        _parentViewModel.cardMaterial.observe(viewLifecycleOwner) {
             _binding.rawDataDisplay.text = it.toString()
         }
     }

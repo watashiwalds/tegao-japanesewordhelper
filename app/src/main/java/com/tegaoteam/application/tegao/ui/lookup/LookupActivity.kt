@@ -191,6 +191,7 @@ class LookupActivity : AppCompatActivity() {
             _viewModel.selectedDictionaryId = dictId
             _viewModel.evStartSearch.ignite()
         }
+        dictChipAdapter.themedChipManager?.selectFirst()
         _binding.loDictionaryChipRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(
             0,
             TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_tiny)))

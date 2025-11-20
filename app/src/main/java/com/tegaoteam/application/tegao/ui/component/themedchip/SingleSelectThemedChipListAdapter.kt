@@ -34,7 +34,8 @@ class SingleSelectThemedChipListAdapter<T: ViewDataBinding>(private val lifecycl
 
     //Manage ThemedChipItem list
     //Chip control design for 1 selectable chip in concurrent
-    private lateinit var themedChipManager: ThemedChipManager
+    var themedChipManager: ThemedChipManager? = null
+        private set
 
     /**
      * Unused, use submitListWithClickListener instead
@@ -46,10 +47,8 @@ class SingleSelectThemedChipListAdapter<T: ViewDataBinding>(private val lifecycl
      */
     fun submitListWithClickListener(list: List<ThemedChipItem>?, listener: (id: String) -> Unit) {
         themedChipManager = ThemedChipManager(list?: listOf(), ThemedChipManager.MODE_SINGLE)
-        list?.forEach { it.onSelectedListener = { listener(it.id); themedChipManager.onSelected(it) } }
+        list?.forEach { it.onSelectedListener = { listener(it.id); themedChipManager?.onSelected(it) } }
         super.submitList(list)
-        Timber.i("Invoke first item of chips to be selected")
-        themedChipManager.selectFirst()
     }
 
     inner class ViewHolder (private val binding: T, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {

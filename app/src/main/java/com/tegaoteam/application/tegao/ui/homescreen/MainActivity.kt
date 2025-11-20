@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             submitListWithClickListener(navItems) { fragmentString ->
                 navController.navigate(fragmentString.toInt(), null, navOptions)
             }
+            themedChipManager?.selectFirst()
         }
         _binding.navItemsRcy.adapter = navAdapter
         _binding.executePendingBindings()

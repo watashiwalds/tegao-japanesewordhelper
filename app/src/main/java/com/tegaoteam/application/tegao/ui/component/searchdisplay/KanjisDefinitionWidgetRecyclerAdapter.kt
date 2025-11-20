@@ -57,6 +57,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
                 onTabChangedListener.invoke(kanjiId)
                 Timber.i("Kanji selected -> [$kanjiId]")
             }
+            chipAdapter.themedChipManager?.selectFirst()
             binding.ctrlKanjisTabPickRcy.adapter = chipAdapter
             updateBind(list.firstOrNull()?: Kanji.default())
             binding.executePendingBindings()

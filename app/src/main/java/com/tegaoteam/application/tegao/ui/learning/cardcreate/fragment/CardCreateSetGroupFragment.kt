@@ -13,12 +13,13 @@ import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueSelect
 import com.tegaoteam.application.tegao.databinding.ItemChipCheckboxTextBinding
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
+import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.utils.QuickPreset
 
 class CardCreateSetGroupFragment : Fragment() {
     private lateinit var _binding: FragmentCardCreateValueSelectBinding
-    private val _adapter = ThemedChipListAdapter(this, ItemChipCheckboxTextBinding::inflate)
+    private lateinit var _adapter: ThemedChipListAdapter<ItemChipCheckboxTextBinding>
     private val _parentViewModel: CardCreateActivityViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -35,17 +36,17 @@ class CardCreateSetGroupFragment : Fragment() {
     }
 
     private fun initVariables() {
-        _binding.lifecycleOwner = viewLifecycleOwner
+        _binding.lifecycleOwner = this
+        _adapter = ThemedChipListAdapter(this, ItemChipCheckboxTextBinding::inflate).apply {
+            themedChipManager = ThemedChipManager(ThemedChipManager.MODE_MULTI)
+        }
         _binding.loSelectableGroupListRcy.adapter = _adapter
         _binding.executePendingBindings()
     }
 
     private fun initObservers() {
         _parentViewModel.cardGroups.observe(viewLifecycleOwner) {
-            _adapter.submitList(
-                it.map { (groupId, label) -> ThemedChipItem(groupId.toString(), label, MutableLiveData<Boolean>()) },
-                {}
-            )
+            _adapter.submitList(it.map { (groupId, label) -> ThemedChipItem(groupId.toString(), label, MutableLiveData<Boolean>()) })
         }
     }
 
@@ -59,6 +60,13 @@ class CardCreateSetGroupFragment : Fragment() {
             ) { groupName ->
                 _parentViewModel.addNewCardGroup(groupName)
             }
+        }
+        _binding.nextBtn.setOnClickListener {
+            QuickPreset.requestConfirmation(
+                requireActivity(),
+                title = "_dev_ Catched values of ThemedChipManager",
+                message = _adapter.themedChipManager?.selectedChips?.joinToString { it.label }
+            )
         }
     }
 }

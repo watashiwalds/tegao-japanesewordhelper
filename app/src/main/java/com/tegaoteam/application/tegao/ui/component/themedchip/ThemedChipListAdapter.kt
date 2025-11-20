@@ -16,7 +16,7 @@ import timber.log.Timber
  *  @param lifecycleOwner Lifecycle owner for controlling chips state
  *  @param bindingInflater ::inflater of the ViewDataBinding class linked to the desired-to-use chip XML (need to have itemChip variable in order to work)
  */
-class SingleSelectThemedChipListAdapter<T: ViewDataBinding>(private val lifecycleOwner: LifecycleOwner, private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T): ListAdapter<ThemedChipItem, SingleSelectThemedChipListAdapter<T>.ViewHolder>( DiffCallback() ) {
+class ThemedChipListAdapter<T: ViewDataBinding>(private val lifecycleOwner: LifecycleOwner, private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T): ListAdapter<ThemedChipItem, ThemedChipListAdapter<T>.ViewHolder>( DiffCallback() ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

@@ -11,14 +11,14 @@ import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueSelectBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipCheckboxTextBinding
-import com.tegaoteam.application.tegao.ui.component.themedchip.SingleSelectThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.utils.QuickPreset
 
 class CardCreateSetGroupFragment : Fragment() {
     private lateinit var _binding: FragmentCardCreateValueSelectBinding
-    private val _adapter = SingleSelectThemedChipListAdapter(this, ItemChipCheckboxTextBinding::inflate)
+    private val _adapter = ThemedChipListAdapter(this, ItemChipCheckboxTextBinding::inflate)
     private val _parentViewModel: CardCreateActivityViewModel by activityViewModels()
 
     override fun onCreateView(

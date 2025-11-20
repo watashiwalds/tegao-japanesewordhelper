@@ -30,7 +30,7 @@ import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewContr
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefinitionWidgetRecyclerAdapter
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
-import com.tegaoteam.application.tegao.ui.component.themedchip.SingleSelectThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
@@ -187,7 +187,7 @@ class LookupActivity : AppCompatActivity() {
 
     fun displayDictionaryOptions() {
         val availableDictionaries = _viewModel.availableDictionariesList
-        val dictChipAdapter = SingleSelectThemedChipListAdapter(this, ItemChipDictionaryPickBinding::inflate)
+        val dictChipAdapter = ThemedChipListAdapter(this, ItemChipDictionaryPickBinding::inflate)
         dictChipAdapter.themedChipManager = ThemedChipManager(ThemedChipManager.MODE_SINGLE)
         dictChipAdapter.submitList(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) })
         dictChipAdapter.themedChipManager?.apply {

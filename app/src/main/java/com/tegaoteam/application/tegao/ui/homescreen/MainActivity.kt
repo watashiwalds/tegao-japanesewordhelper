@@ -14,6 +14,7 @@ import com.tegaoteam.application.tegao.data.hub.SettingHub
 import com.tegaoteam.application.tegao.databinding.ActivityMainBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipNavbarIconNLabelBinding
 import com.tegaoteam.application.tegao.ui.component.themedchip.SingleSelectThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.setting.SettingActivity
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.IdTranslator
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         _binding.navItemsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.gridEven(this)
         val navAdapter = SingleSelectThemedChipListAdapter(this, ItemChipNavbarIconNLabelBinding::inflate).apply {
+            themedChipManager = ThemedChipManager(ThemedChipManager.MODE_SINGLE)
             submitList(navItems)
             themedChipManager?.apply {
                 setChipsOnSelectedListener { tabChip ->

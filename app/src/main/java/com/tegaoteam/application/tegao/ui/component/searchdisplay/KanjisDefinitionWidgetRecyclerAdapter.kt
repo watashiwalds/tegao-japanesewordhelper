@@ -16,6 +16,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.SingleSelectThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.utils.setTextWithVisibility
@@ -51,6 +52,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
 
     class WidgetManager private constructor(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val binding: ViewTabDefinitionKanjisBinding, private val chipAdapter: SingleSelectThemedChipListAdapter<ItemChipCharacterPickBinding>): RecyclerView.ViewHolder(binding.root) {
         fun initBind(list: List<Kanji>, onTabChangedListener: (String) -> Unit) {
+            chipAdapter.themedChipManager = ThemedChipManager(ThemedChipManager.MODE_SINGLE)
             chipAdapter.submitList(list.map{ ThemedChipItem.fromKanji(it) })
             chipAdapter.themedChipManager?.apply {
                 setChipsOnSelectedListener { kanjiChip ->

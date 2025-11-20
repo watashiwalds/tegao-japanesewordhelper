@@ -31,6 +31,7 @@ import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefiniti
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.SingleSelectThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
@@ -187,6 +188,7 @@ class LookupActivity : AppCompatActivity() {
     fun displayDictionaryOptions() {
         val availableDictionaries = _viewModel.availableDictionariesList
         val dictChipAdapter = SingleSelectThemedChipListAdapter(this, ItemChipDictionaryPickBinding::inflate)
+        dictChipAdapter.themedChipManager = ThemedChipManager(ThemedChipManager.MODE_SINGLE)
         dictChipAdapter.submitList(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) })
         dictChipAdapter.themedChipManager?.apply {
             setChipsOnSelectedListener { dictChip ->

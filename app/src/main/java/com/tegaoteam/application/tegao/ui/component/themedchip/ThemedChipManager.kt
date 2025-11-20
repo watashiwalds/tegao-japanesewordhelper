@@ -3,8 +3,8 @@ package com.tegaoteam.application.tegao.ui.component.themedchip
 import timber.log.Timber
 
 class ThemedChipManager(
-    val chips: List<ThemedChipItem>,
-    val mode: Int
+    val mode: Int,
+    private var chips: MutableList<ThemedChipItem> = mutableListOf()
 ) {
     companion object {
         const val MODE_SINGLE = 0
@@ -12,6 +12,10 @@ class ThemedChipManager(
     }
 
     init {
+        assigningSelfToItems()
+    }
+
+    private fun assigningSelfToItems() {
         chips.forEach { it.assignController(this) }
     }
 
@@ -66,11 +70,24 @@ class ThemedChipManager(
         }
     }
 
-    fun setChipsOnSelectedListener(listener: (ThemedChipItem) -> Unit) {
+    private var chipSelectedListener: ((ThemedChipItem) -> Unit)? = null
+    private var chipUnselectedListener: ((ThemedChipItem) -> Unit)? = null
+    fun setChipsOnSelectedListener(listener: ((ThemedChipItem) -> Unit)?) {
         chips.forEach { it.onSelectedListener = listener }
+        chipSelectedListener = listener
+    }
+    fun setChipsOnUnselectedListener(listener: ((ThemedChipItem) -> Unit)?) {
+        chips.forEach { it.onUnselectedListener = listener }
+        chipUnselectedListener = listener
     }
 
-    fun setChipsOnUnselectedListener(listener: (ThemedChipItem) -> Unit) {
-        chips.forEach { it.onUnselectedListener = listener }
+    fun submitChipList(submitChips: List<ThemedChipItem>?) {
+        chips.apply {
+            clear()
+            addAll(submitChips?: emptyList())
+        }
+        assigningSelfToItems()
+        chipSelectedListener?.let { setChipsOnSelectedListener { chipSelectedListener } }
+        chipUnselectedListener?.let { setChipsOnUnselectedListener { chipUnselectedListener } }
     }
 }

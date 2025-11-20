@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.BR
+import timber.log.Timber
 
 /**
  *  Generic ListAdapter for every kind of ThemedChipItem chip style
@@ -34,10 +35,10 @@ class SingleSelectThemedChipListAdapter<T: ViewDataBinding>(private val lifecycl
     //Manage ThemedChipItem list
     //Chip control design for 1 selectable chip in concurrent
     var themedChipManager: ThemedChipManager? = null
-        private set
 
     override fun submitList(list: List<ThemedChipItem>?) {
-        themedChipManager = ThemedChipManager(list?: listOf(), ThemedChipManager.MODE_SINGLE)
+        if (themedChipManager == null) Timber.w("No ThemedChipManager presented. Chip will not function as intended!")
+        themedChipManager?.submitChipList(list)
         super.submitList(list)
     }
 

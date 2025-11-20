@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.data.database.flashcard
+package com.tegaoteam.application.tegao.data.database.srscard
 
 import androidx.room.Dao
 import androidx.room.Query

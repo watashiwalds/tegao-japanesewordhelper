@@ -1,9 +1,9 @@
 package com.tegaoteam.application.tegao.data.hub
 
 import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
-import com.tegaoteam.application.tegao.data.database.flashcard.SRSCardEntity
-import com.tegaoteam.application.tegao.data.database.flashcard.SRSCardGroup
-import com.tegaoteam.application.tegao.data.database.flashcard.SRSCardRepeat
+import com.tegaoteam.application.tegao.data.database.srscard.SRSCardEntity
+import com.tegaoteam.application.tegao.data.database.srscard.SRSCardGroup
+import com.tegaoteam.application.tegao.data.database.srscard.SRSCardRepeat
 import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.model.CardGroup

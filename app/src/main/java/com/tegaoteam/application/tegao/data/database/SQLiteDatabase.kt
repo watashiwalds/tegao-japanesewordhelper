@@ -8,10 +8,10 @@ import androidx.room.RoomDatabase
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheDAO
 import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheEntity
-import com.tegaoteam.application.tegao.data.database.flashcard.SRSCardDAO
-import com.tegaoteam.application.tegao.data.database.flashcard.SRSCardEntity
-import com.tegaoteam.application.tegao.data.database.flashcard.SRSCardGroup
-import com.tegaoteam.application.tegao.data.database.flashcard.SRSCardRepeat
+import com.tegaoteam.application.tegao.data.database.srscard.SRSCardDAO
+import com.tegaoteam.application.tegao.data.database.srscard.SRSCardEntity
+import com.tegaoteam.application.tegao.data.database.srscard.SRSCardGroup
+import com.tegaoteam.application.tegao.data.database.srscard.SRSCardRepeat
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryDAO
 

@@ -15,7 +15,7 @@ import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
-import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.component.themedchip.SingleSelectThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.utils.setTextWithVisibility
@@ -23,7 +23,7 @@ import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
 
 class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: LifecycleOwner, private var kanjiList: List<Kanji> = listOf(), private val onTabChangedListener: (String) -> Unit = {}): RecyclerView.Adapter<KanjisDefinitionWidgetRecyclerAdapter.WidgetManager>() {
-    private val charPickAdapter = ThemedChipListAdapter(lifecycleOwner, ItemChipCharacterPickBinding::inflate)
+    private val charPickAdapter = SingleSelectThemedChipListAdapter(lifecycleOwner, ItemChipCharacterPickBinding::inflate)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -49,7 +49,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
         notifyDataSetChanged()
     }
 
-    class WidgetManager private constructor(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val binding: ViewTabDefinitionKanjisBinding, private val chipAdapter: ThemedChipListAdapter<ItemChipCharacterPickBinding>): RecyclerView.ViewHolder(binding.root) {
+    class WidgetManager private constructor(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val binding: ViewTabDefinitionKanjisBinding, private val chipAdapter: SingleSelectThemedChipListAdapter<ItemChipCharacterPickBinding>): RecyclerView.ViewHolder(binding.root) {
         fun initBind(list: List<Kanji>, onTabChangedListener: (String) -> Unit) {
             chipAdapter.submitListWithClickListener(list.map{ ThemedChipItem.fromKanji(it) }) { kanjiId ->
                 //TODO: Notify Adapter of character change when click
@@ -120,7 +120,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             binding.executePendingBindings()
         }
         companion object {
-            fun from(lifecycleOwner: LifecycleOwner, parent: ViewGroup, adapter: ThemedChipListAdapter<ItemChipCharacterPickBinding>): WidgetManager {
+            fun from(lifecycleOwner: LifecycleOwner, parent: ViewGroup, adapter: SingleSelectThemedChipListAdapter<ItemChipCharacterPickBinding>): WidgetManager {
                 val binding = ViewTabDefinitionKanjisBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return WidgetManager(parent.context, lifecycleOwner, binding, adapter)
             }

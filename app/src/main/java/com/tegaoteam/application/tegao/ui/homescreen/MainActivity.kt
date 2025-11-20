@@ -13,7 +13,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.SettingHub
 import com.tegaoteam.application.tegao.databinding.ActivityMainBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipNavbarIconNLabelBinding
-import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
+import com.tegaoteam.application.tegao.ui.component.themedchip.SingleSelectThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.setting.SettingActivity
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.IdTranslator
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         _binding.navItemsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.gridEven(this)
-        val navAdapter = ThemedChipListAdapter(this, ItemChipNavbarIconNLabelBinding::inflate).apply {
+        val navAdapter = SingleSelectThemedChipListAdapter(this, ItemChipNavbarIconNLabelBinding::inflate).apply {
             submitListWithClickListener(navItems) { fragmentString ->
                 navController.navigate(fragmentString.toInt(), null, navOptions)
             }

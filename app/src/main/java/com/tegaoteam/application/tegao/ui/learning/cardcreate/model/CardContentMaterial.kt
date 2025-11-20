@@ -17,6 +17,8 @@ data class CardContentMaterial(
                 it.meaning
             }.toList()
             //todo: Add definition's expandInfo as additional
+            val defExpands = word.definitions.mapNotNull { it.expandInfos }.flatten().map { it.content }.toSet()
+            if (defExpands.isNotEmpty()) parsed["expand"] = defExpands.toList()
             word.additionalInfo?.let { parsed["additional"] = it.map { additionalInfo -> additionalInfo.content } }
             return CardContentMaterial(parsed)
         }
@@ -34,6 +36,7 @@ data class CardContentMaterial(
         val keyDisplayMap = mapOf(
             "reading" to "Từ vựng",
             "meaning" to "Dịch nghĩa",
+            "expand" to "Mở rộng",
             "furigana" to "Phiên âm Hiragana",
             "kunyomi" to "Nhật âm",
             "onyomi" to "Hán âm",

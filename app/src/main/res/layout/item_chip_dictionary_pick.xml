@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{itemChip.label}"
-            android:onClick="@{() -> itemChip.onClick()}"
+            android:onClick="@{() -> itemChip.nowSelected()}"
             app:toggleVisibility="@{!itemChip.isSelected()}"
             style="@style/Theme.Tegao.LabelButton.Chip"
 

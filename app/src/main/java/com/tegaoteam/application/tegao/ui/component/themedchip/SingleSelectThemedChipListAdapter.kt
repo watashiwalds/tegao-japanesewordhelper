@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.BR
+import timber.log.Timber
 
 /**
  *  Generic ListAdapter for every kind of ThemedChipItem chip style
@@ -33,7 +34,7 @@ class SingleSelectThemedChipListAdapter<T: ViewDataBinding>(private val lifecycl
 
     //Manage ThemedChipItem list
     //Chip control design for 1 selectable chip in concurrent
-    private lateinit var themedChipController: ThemedChipController
+    private lateinit var themedChipManager: ThemedChipManager
 
     /**
      * Unused, use submitListWithClickListener instead
@@ -44,10 +45,11 @@ class SingleSelectThemedChipListAdapter<T: ViewDataBinding>(private val lifecycl
      * Pass in a <ThemedChipItem> list with clickListener for wanted picking behavior
      */
     fun submitListWithClickListener(list: List<ThemedChipItem>?, listener: (id: String) -> Unit) {
-        themedChipController = ThemedChipController(list?: listOf(), ThemedChipController.MODE_SINGLE)
-        list?.forEach { it.setOnClickListener { listener(it.id); themedChipController.setSelected(it) } }
+        themedChipManager = ThemedChipManager(list?: listOf(), ThemedChipManager.MODE_SINGLE)
+        list?.forEach { it.onSelectedListener = { listener(it.id); themedChipManager.onSelected(it) } }
         super.submitList(list)
-        themedChipController.selectFirst()
+        Timber.i("Invoke first item of chips to be selected")
+        themedChipManager.selectFirst()
     }
 
     inner class ViewHolder (private val binding: T, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {

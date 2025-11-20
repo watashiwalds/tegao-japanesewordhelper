@@ -22,13 +22,43 @@ class ThemedChipItem(
         _isSelected.value = false
     }
 
-    private var listener: () -> Unit = {}
-    fun setOnClickListener(listener: () -> Unit) { this.listener = listener }
-    fun onClick() { listener.invoke() }
+    var manager: ThemedChipManager? = null
+        private set
+    fun assignController(controller: ThemedChipManager) { if (this.manager == null) this.manager = controller}
+
+    var onSelectedListener: (() -> Unit)? = null
+    var onUnselectedListener: (() -> Unit)? = null
 
     val isSelected: LiveData<Boolean> = _isSelected
     fun setSelectedState(b: Boolean) {
         _isSelected.value = b
+        onSelectedStateChanged()
+    }
+    fun toggleSelectedState() {
+        _isSelected.value = !_isSelected.value!!
+        onSelectedStateChanged()
+    }
+    fun nowSelected() {
+        _isSelected.value = true
+        onSelectedStateChanged()
+    }
+    fun nowUnselected() {
+        _isSelected.value = false
+        onSelectedStateChanged()
+    }
+
+    private fun onSelectedStateChanged() {
+        when (_isSelected.value) {
+            true -> {
+                manager?.onSelected(this)
+                onSelectedListener?.invoke()
+            }
+            false -> {
+                manager?.onUnselected(this)
+                onUnselectedListener?.invoke()
+            }
+            null -> {}
+        }
     }
 
     companion object {

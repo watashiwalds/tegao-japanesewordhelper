@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         style="@style/Theme.Tegao.Screen"
-        tools:context=".ui.setting.SettingActivity">
+        tools:context=".ui.learning.cardcreate.CardCreateActivity">
 
         <include layout="@layout/include_label_header_bar"
             android:id="@+id/lo_headerBar_icl"
@@ -19,7 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mainActFragmentContainerView"
+            android:id="@+id/cardCreateFragmentContainerView"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
             app:navGraph="@navigation/card_create_navigation"

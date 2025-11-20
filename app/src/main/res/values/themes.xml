@@ -81,6 +81,11 @@
         <item name="android:textColor">@color/text_reverse</item>
         <item name="iconTint">@color/text_reverse</item>
     </style>
+    <style name="Theme.Tegao.LabelButton.Secondary">
+        <item name="android:background">@drawable/secondary_solid_background</item>
+        <item name="android:textColor">@color/const_black</item>
+        <item name="iconTint">@color/const_black</item>
+    </style>
     <style name="Theme.Tegao.LabelButton.Neutral">
         <item name="android:background">@drawable/neutral_stroke_background</item>
         <item name="iconTint">@color/text_normal</item>

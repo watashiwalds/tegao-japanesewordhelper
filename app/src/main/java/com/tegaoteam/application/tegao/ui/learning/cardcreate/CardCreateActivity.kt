@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.ActivityCardCreateBinding
@@ -39,10 +40,11 @@ class CardCreateActivity : AppCompatActivity() {
     }
 
     private fun setupHeaderBar() {
+        val navController = (supportFragmentManager.findFragmentById(R.id.cardCreateFragmentContainerView) as NavHostFragment).navController
         HeaderBarBindingHelper.bind(
             _binding.loHeaderBarIcl,
             "Thêm thẻ học tập mới",
-            null,
+            { if (!navController.popBackStack()) finish() },
             { finish() }
             )
     }

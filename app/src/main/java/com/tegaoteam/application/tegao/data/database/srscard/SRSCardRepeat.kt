@@ -10,21 +10,25 @@ import com.tegaoteam.application.tegao.domain.model.CardRepeat
 )
 data class SRSCardRepeat(
     @PrimaryKey @ColumnInfo(name = COL_ID) val cardId: Long,
-    @ColumnInfo(name = COL_REPEATAT) var repeatAt: String
+    @ColumnInfo(name = COL_LASTREPEAT) var lastRepeat: String,
+    @ColumnInfo(name = COL_NEXTREPEAT) var nextRepeat: String
 ) {
     companion object {
         const val TABLE_NAME = "srs_card_repeat"
         const val COL_ID = SRSCardEntity.COL_ID
-        const val COL_REPEATAT = "repeatAt"
+        const val COL_LASTREPEAT = "lastRepeat"
+        const val COL_NEXTREPEAT = "nextRepeat"
 
         fun toDomainCardRepeat(entity: SRSCardRepeat) = CardRepeat(
             entity.cardId,
-            entity.repeatAt
+            entity.lastRepeat,
+            entity.nextRepeat
         )
 
         fun fromDomainCardRepeat(entry: CardRepeat) = SRSCardRepeat(
             entry.cardId,
-            entry.repeatAt
+            entry.lastRepeat,
+            entry.nextRepeat
         )
     }
 }

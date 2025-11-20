@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
-import com.tegaoteam.application.tegao.databinding.FragmentLookupBinding
+import com.tegaoteam.application.tegao.databinding.FragmentMainSearchHistoryBinding
 import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryKanjiBinding
 import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryWordBinding
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class SearchHistoryFragment : Fragment() {
-    private lateinit var _binding: FragmentLookupBinding
+    private lateinit var _binding: FragmentMainSearchHistoryBinding
     private lateinit var _viewModel: SearchHistoryFragmentViewModel
 
     private lateinit var _searchHistoryRepo: SearchHistoryRepo
@@ -41,7 +41,7 @@ class SearchHistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_lookup, container, false)
+        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_main_search_history, container, false)
 
         initVariables()
         initObservers()

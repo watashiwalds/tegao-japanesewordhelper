@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/launch_navigation"
-    app:startDestination="@id/lookupFragment">
+    app:startDestination="@id/searchHistoryFragment">
 
     <fragment
-        android:id="@+id/lookupFragment"
+        android:id="@+id/searchHistoryFragment"
         android:name="com.tegaoteam.application.tegao.ui.homescreen.lookup.SearchHistoryFragment"
         android:label="fragment_lookup"
-        tools:layout="@layout/fragment_lookup" >
+        tools:layout="@layout/fragment_main_search_history" >
     </fragment>
 
 </navigation>

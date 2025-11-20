@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardMaterial
 
@@ -13,6 +15,8 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     fun postCardContentMaterial(contentMaterial: CardMaterial?) {
         if (_cardMaterial.value == null) _cardMaterial.value = contentMaterial
     }
+
+    val cardGroups = learningRepo.getCardGroups().asFlow().asLiveData()
 
     companion object {
         class ViewModelFactory(

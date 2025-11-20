@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="itemChip"
+            type="com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:selectableItemBackground"
+        android:onClick="@{() -> itemChip.toggleSelectedState()}"
+        >
+
+        <CheckBox
+            android:id="@+id/lo_checkbox_cue_ckx"
+            android:checked="@{itemChip.isSelected()}"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            style="@style/Theme.Tegao.ContentText.Normal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/lo_checkbox_cue_ckx"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{itemChip.label}"
+
+            tools:text="Content here"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

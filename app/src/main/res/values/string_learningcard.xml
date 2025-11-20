@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="card_create_what_group">Bạn muốn thêm thẻ vào bộ thẻ nào?</string>
+    <string name="card_create_qab_add_group">Nhấn nút + để thêm bộ thẻ mới</string>
+</resources>

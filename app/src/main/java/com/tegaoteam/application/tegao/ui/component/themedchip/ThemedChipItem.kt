@@ -26,8 +26,8 @@ class ThemedChipItem(
         private set
     fun assignController(controller: ThemedChipManager) { if (this.manager == null) this.manager = controller}
 
-    var onSelectedListener: (() -> Unit)? = null
-    var onUnselectedListener: (() -> Unit)? = null
+    var onSelectedListener: ((ThemedChipItem) -> Unit)? = null
+    var onUnselectedListener: ((ThemedChipItem) -> Unit)? = null
 
     val isSelected: LiveData<Boolean> = _isSelected
     fun setSelectedState(b: Boolean) {
@@ -51,11 +51,11 @@ class ThemedChipItem(
         when (_isSelected.value) {
             true -> {
                 manager?.onSelected(this)
-                onSelectedListener?.invoke()
+                onSelectedListener?.invoke(this)
             }
             false -> {
                 manager?.onUnselected(this)
-                onUnselectedListener?.invoke()
+                onUnselectedListener?.invoke(this)
             }
             null -> {}
         }

@@ -65,4 +65,12 @@ class ThemedChipManager(
             chips[0].nowSelected()
         }
     }
+
+    fun setChipsOnSelectedListener(listener: (ThemedChipItem) -> Unit) {
+        chips.forEach { it.onSelectedListener = listener }
+    }
+
+    fun setChipsOnUnselectedListener(listener: (ThemedChipItem) -> Unit) {
+        chips.forEach { it.onUnselectedListener = listener }
+    }
 }

@@ -42,7 +42,7 @@ class CardCreateSetGroupFragment : Fragment() {
 
     private fun initObservers() {
         _parentViewModel.cardGroups.observe(viewLifecycleOwner) {
-            _adapter.submitListWithClickListener(
+            _adapter.submitList(
                 it.map { (groupId, label) -> ThemedChipItem(groupId.toString(), label, MutableLiveData<Boolean>()) },
                 {}
             )

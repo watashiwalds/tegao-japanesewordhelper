@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.BR
-import timber.log.Timber
 
 /**
  *  Generic ListAdapter for every kind of ThemedChipItem chip style
@@ -37,17 +36,8 @@ class SingleSelectThemedChipListAdapter<T: ViewDataBinding>(private val lifecycl
     var themedChipManager: ThemedChipManager? = null
         private set
 
-    /**
-     * Unused, use submitListWithClickListener instead
-     */
-    override fun submitList(list: List<ThemedChipItem>?) {}
-
-    /**
-     * Pass in a <ThemedChipItem> list with clickListener for wanted picking behavior
-     */
-    fun submitListWithClickListener(list: List<ThemedChipItem>?, listener: (chip: ThemedChipItem) -> Unit) {
+    override fun submitList(list: List<ThemedChipItem>?) {
         themedChipManager = ThemedChipManager(list?: listOf(), ThemedChipManager.MODE_SINGLE)
-        list?.forEach { it.onSelectedListener = { listener(it) } }
         super.submitList(list)
     }
 

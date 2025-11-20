@@ -187,11 +187,14 @@ class LookupActivity : AppCompatActivity() {
     fun displayDictionaryOptions() {
         val availableDictionaries = _viewModel.availableDictionariesList
         val dictChipAdapter = SingleSelectThemedChipListAdapter(this, ItemChipDictionaryPickBinding::inflate)
-        dictChipAdapter.submitListWithClickListener(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) }) { dictChip ->
-            _viewModel.selectedDictionaryId = dictChip.id
-            _viewModel.evStartSearch.ignite()
+        dictChipAdapter.submitList(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) })
+        dictChipAdapter.themedChipManager?.apply {
+            setChipsOnSelectedListener { dictChip ->
+                _viewModel.selectedDictionaryId = dictChip.id
+                _viewModel.evStartSearch.ignite()
+            }
+            selectFirst()
         }
-        dictChipAdapter.themedChipManager?.selectFirst()
         _binding.loDictionaryChipRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(
             0,
             TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_tiny)))

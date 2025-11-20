@@ -33,6 +33,10 @@ class ThemedChipManager(
                     }
                 } else {
                     _selectedChips[0].nowUnselected()
+                    if (selectedState) {
+                        if (_selectedChips.isEmpty()) _selectedChips.add(callerChip)
+                        else _selectedChips[0] = callerChip
+                    }
                 }
             }
             MODE_MULTI -> {

@@ -54,7 +54,7 @@ class CardCreateSetFrontFragment: Fragment() {
             val selected = _adapter.currentList.map { it.getSelectedChips() }.flatten()
             if (selected.isEmpty()) {
                 DialogPreset.requestConfirmation(
-                    context = requireActivity(),
+                    context = requireContext(),
                     title = 0,
                     message = R.string.card_create_error_no_content
                 )
@@ -79,7 +79,7 @@ class CardCreateSetFrontFragment: Fragment() {
                 label = CardMaterial.keyDisplayMap[contentPack.key]?: "-",
                 manager = ThemedChipManager(ThemedChipManager.MODE_MULTI),
                 listAdapter = ThemedChipListAdapter(viewLifecycleOwner, ItemChipToggableTextBinding::inflate),
-                layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(requireActivity()),
+                layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(requireContext()),
 //                expandControl = ,
                 allowQuickSelect = true
             ) }

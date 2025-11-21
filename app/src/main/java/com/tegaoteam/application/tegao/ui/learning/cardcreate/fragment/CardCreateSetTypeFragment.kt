@@ -60,7 +60,7 @@ class CardCreateSetTypeFragment: Fragment() {
             val selected = _adapter.themedChipManager?.selectedChips?.firstOrNull()?.id
             if (selected == null) {
                 DialogPreset.requestConfirmation(
-                    context = requireActivity(),
+                    context = requireContext(),
                     title = 0,
                     message = R.string.card_create_error_no_type
                 )

@@ -59,7 +59,7 @@ class CardCreateSetGroupFragment : Fragment() {
             setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ftc_round_plus_128))
             setOnClickListener {
                 DialogPreset.requestValueDialog(
-                    requireActivity(),
+                    requireContext(),
                     R.string.card_create_add_group_label,
                     R.string.card_create_add_group_message
                 ) { groupName ->
@@ -72,7 +72,7 @@ class CardCreateSetGroupFragment : Fragment() {
             val selected = _adapter.themedChipManager?.selectedChips?.map { it.id.toLong() }?.toList()?: listOf()
             if (selected.isEmpty())
                 DialogPreset.requestConfirmation(
-                    requireActivity(),
+                    requireContext(),
                     message = R.string.card_create_error_no_group
                 )
             else {

@@ -35,6 +35,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/lo_checkbox_cue_ckx"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="@dimen/padding_small"
             android:text="@{itemChip.label}"
 
             tools:text="Content here"

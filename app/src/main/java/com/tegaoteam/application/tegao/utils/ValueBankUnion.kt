@@ -53,3 +53,7 @@ object TermBank {
     )
     fun getTermDescription(key: String) = termDescriptions[key]?: ""
 }
+
+fun getStringFromAppRes(resId: Int): String {
+    return ContextCompat.getString(TegaoApplication.instance, resId)
+}

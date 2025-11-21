@@ -74,7 +74,7 @@ class CardCreateSetGroupFragment : Fragment() {
                     message = R.string.card_create_error_no_group
                 )
             else {
-                _parentViewModel.submitSelectedCardGroups(_adapter.themedChipManager?.selectedChips?.map { it.id.toLong() }?.toList() ?: listOf())
+                _parentViewModel.submitSelectedGroupIds(_adapter.themedChipManager?.selectedChips?.map { it.id.toLong() }?.toList() ?: listOf())
                 findNavController().navigate(CardCreateSetGroupFragmentDirections.actionCardCreateSetGroupFragmentToCardCreateSetTypeFragment())
             }
         }

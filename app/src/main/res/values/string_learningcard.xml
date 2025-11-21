@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="card_type_flashcard_name">Thẻ xem nhanh</string>
+    <string name="card_type_flashcard_detail">Dạng thẻ in nội dung. Lật mặt thẻ để xem đáp án và tự đánh giá mức độ ghi nhớ của bản thân</string>
+    <string name="card_type_answercard_name">Thẻ trả lời</string>
+    <string name="card_type_answercard_detail">Dạng thẻ điền đáp án. Nhập đáp án và lật thẻ để xem đáp án đúng. Tự đánh giá mức độ ghi nhớ của bản thân</string>
+
     <string name="card_create_what_group">Bạn muốn thêm thẻ vào bộ thẻ nào?</string>
     <string name="card_create_qab_add_group">Nhấn nút + để thêm bộ thẻ mới</string>
     <string name="card_create_add_group_label">Thêm bộ thẻ mới</string>
     <string name="card_create_add_group_message">Nhập tên bộ thẻ mới để tạo</string>
     <string name="card_create_error_no_group">Hãy chọn một bộ thẻ để tiếp tục</string>
+
+    <string name="card_create_what_type">Bạn muốn tạo loại thẻ nào?</string>
+    <string name="card_create_error_no_type">Hãy chọn một loại thẻ để tiếp tục</string>
 </resources>

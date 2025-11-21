@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.model.CardGroup
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
+import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardMaterial
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,11 +33,20 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     }
     private val _selectedGroupIds = mutableListOf<Long>()
     val selectedGroupIds: List<Long> = _selectedGroupIds
-    fun submitSelectedCardGroups(groupIds: List<Long>) {
+    fun submitSelectedGroupIds(groupIds: List<Long>) {
         _selectedGroupIds.apply {
             clear()
             addAll(groupIds)
         }
+    }
+    //endregion
+
+    //region [SetType related]
+    val cardTypeChipItems = LearningCardConst.Type.entries.map { it.id to it.display }
+    var selectedType: Int? = null
+        private set
+    fun submitSelectedType(type: Int) {
+        selectedType = if (type in cardTypeChipItems.map { it.first }) type else null
     }
     //endregion
 

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.DialogYesOrNoBinding
+import com.tegaoteam.application.tegao.utils.setTextWithResId
 
 object DialogPreset {
     fun requestConfirmation(context: Context, title: Any? = null, message: Any? = null, lambdaRun: (() -> Unit)? = null) {
@@ -39,13 +40,15 @@ object DialogPreset {
 
     private fun inflateBareboneYesNoDialog(context: Context, title: Any? = null, message: Any? = null): DialogYesOrNoBinding {
         val binding = DataBindingUtil.inflate<DialogYesOrNoBinding>(LayoutInflater.from(context), R.layout.dialog_yes_or_no, null, false)
-        title?.let {
-            if (it is String) binding.label.text = it
-            if (it is Int) binding.label.setText(it)
+        when (title) {
+            is String -> binding.label.text = title
+            is Int -> binding.label.setTextWithResId(title)
+            else -> binding.label.setTextWithResId(0)
         }
-        message?.let {
-            if (it is String) binding.message.text = it
-            if (it is Int) binding.message.setText(it)
+        when (message) {
+            is String -> binding.message.text = message
+            is Int -> binding.message.setTextWithResId(message)
+            else -> binding.message.setTextWithResId(0)
         }
         return binding
     }

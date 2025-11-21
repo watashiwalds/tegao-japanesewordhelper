@@ -26,7 +26,7 @@
             android:layout_marginTop="@dimen/padding_normal"
 
             app:layout_constraintTop_toBottomOf="@id/lo_fragment_title_text"
-            app:layout_constraintBottom_toTopOf="@id/qab_newGroup_btn"
+            app:layout_constraintBottom_toTopOf="@id/next_btn"
 
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
@@ -55,6 +55,7 @@
             android:padding="@dimen/padding_normal"
             android:layout_margin="@dimen/padding_normal"
             android:src="@drawable/ftc_round_plus_128"
+            android:visibility="gone"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

@@ -53,14 +53,17 @@ class CardCreateSetGroupFragment : Fragment() {
 
     private fun initView() {
         _binding.loFragmentTitleText.setText(R.string.card_create_what_group)
-        _binding.qabNewGroupBtn.setOnClickListener {
-            DialogPreset.requestValueDialog(
-                requireActivity(),
-                R.string.card_create_add_group_label,
-                R.string.card_create_add_group_message
-            ) { groupName ->
-                _parentViewModel.addNewCardGroup(groupName)
+        _binding.qabNewGroupBtn.apply {
+            setOnClickListener {
+                DialogPreset.requestValueDialog(
+                    requireActivity(),
+                    R.string.card_create_add_group_label,
+                    R.string.card_create_add_group_message
+                ) { groupName ->
+                    _parentViewModel.addNewCardGroup(groupName)
+                }
             }
+            visibility = View.VISIBLE
         }
         _binding.nextBtn.setOnClickListener {
             val selected = _adapter.themedChipManager?.selectedChips?.map { it.id.toLong() }?.toList()?: listOf()

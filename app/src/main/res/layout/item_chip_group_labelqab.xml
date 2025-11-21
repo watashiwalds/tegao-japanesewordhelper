@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="groupInfo"
+            type="com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipGroupInfo" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lo_groupHeader_cst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> groupInfo.expandControl.toggleExpand()}"
+            >
+            
+            <TextView
+                style="@style/Theme.Tegao.Label.LargeMedium"
+                android:background="@drawable/neutral_stroke_end"
+                android:id="@+id/lo_groupLabel_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_normal"
+                android:layout_marginVertical="@dimen/padding_normal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/lo_selectAllCue_ckx"
+
+                tools:text="Chip group's label here"
+                />
+
+            <CheckBox
+                android:id="@+id/lo_selectAllCue_ckx"
+                app:toggleVisibility="@{groupInfo.allowQAB}"
+                android:clickable="false"
+                android:checked="@{groupInfo.themedChipManager.allSelected}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/lo_groupLabel_txt"
+                app:layout_constraintBottom_toBottomOf="@id/lo_groupLabel_txt"
+                />
+            
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lo_groupHeader_cst"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingStart="@dimen/padding_normal"
+
+            tools:listitem="@layout/item_chip_checkbox_text"
+            tools:itemCount="3"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

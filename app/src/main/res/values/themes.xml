@@ -165,6 +165,10 @@
         <item name="fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">@dimen/textSize_average</item>
     </style>
+    <style name="Theme.Tegao.Label.LargeMedium">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/textSize_average</item>
+    </style>
 
     <style name="Theme.Tegao.SuggestText">
         <item name="fontFamily">@font/roboto_light</item>

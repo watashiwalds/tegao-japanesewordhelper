@@ -10,7 +10,7 @@
         tools:context=".ui.learning.cardcreate.fragment.CardCreateSetGroupFragment">
 
         <TextView
-            style="@style/Theme.Tegao.ContentText"
+            style="@style/Theme.Tegao.Label.Large"
             android:id="@+id/lo_fragment_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

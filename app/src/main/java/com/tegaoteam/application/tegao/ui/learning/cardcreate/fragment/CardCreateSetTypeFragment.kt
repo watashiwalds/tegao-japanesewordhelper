@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueSelectBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipCheckboxTextBinding
@@ -65,6 +66,7 @@ class CardCreateSetTypeFragment: Fragment() {
                 )
             } else {
                 _parentViewModel.submitSelectedType(selected.toInt())
+                findNavController().navigate(CardCreateSetTypeFragmentDirections.actionCardCreateSetTypeFragmentToCardCreateSetFrontFragment())
             }
         }
         _binding.executePendingBindings()

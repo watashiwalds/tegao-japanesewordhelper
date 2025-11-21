@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.BR
 import com.tegaoteam.application.tegao.R
+import timber.log.Timber
 
 class ThemedChipGroupListAdapter<T: ViewDataBinding>(private val lifecycleOwner: LifecycleOwner, private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T): ListAdapter<ThemedChipGroup, ThemedChipGroupListAdapter<T>.ViewHolder>( DiffCallback() ) {
     override fun onCreateViewHolder(
@@ -28,9 +29,6 @@ class ThemedChipGroupListAdapter<T: ViewDataBinding>(private val lifecycleOwner:
 
     inner class ViewHolder(private val binding: T, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
         fun bind(group: ThemedChipGroup) {
-            // bind manager to listAdapter first-hand to support my short-term memory
-            group.listAdapter.themedChipManager = group.manager
-
             binding.setVariable(BR.groupInfo, group)
             binding.root.findViewById<RecyclerView>(R.id.themedChipDisplay_rcy).let {
                 it.layoutManager = group.layoutManager

@@ -15,5 +15,13 @@
     <fragment
         android:id="@+id/cardCreateSetTypeFragment"
         android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateSetTypeFragment"
-        android:label="CardCreateSetTypeFragment" />
+        android:label="CardCreateSetTypeFragment" >
+        <action
+            android:id="@+id/action_cardCreateSetTypeFragment_to_cardCreateSetFrontFragment"
+            app:destination="@id/cardCreateSetFrontFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardCreateSetFrontFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateSetFrontFragment"
+        android:label="CardCreateSetFrontFragment" />
 </navigation>

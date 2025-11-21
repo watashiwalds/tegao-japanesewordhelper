@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
@@ -54,7 +55,8 @@ class CardCreateSetGroupFragment : Fragment() {
 
     private fun initView() {
         _binding.loFragmentTitleText.setText(R.string.card_create_what_group)
-        _binding.qabNewGroupBtn.apply {
+        _binding.placeholderQabBtn.apply {
+            setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ftc_round_plus_128))
             setOnClickListener {
                 DialogPreset.requestValueDialog(
                     requireActivity(),

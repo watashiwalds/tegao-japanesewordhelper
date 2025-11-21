@@ -6,7 +6,7 @@
     <data>
         <variable
             name="groupInfo"
-            type="com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipGroupInfo" />
+            type="com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipGroup" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

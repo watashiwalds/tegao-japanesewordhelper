@@ -41,7 +41,7 @@
                 android:id="@+id/lo_selectAllCue_ckx"
                 app:toggleVisibility="@{groupInfo.allowQAB}"
                 android:clickable="false"
-                android:checked="@{groupInfo.themedChipManager.allSelected}"
+                android:checked="@{groupInfo.manager.allSelected}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"

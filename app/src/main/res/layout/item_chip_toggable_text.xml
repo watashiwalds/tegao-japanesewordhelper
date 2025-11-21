@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="itemChip"
+            type="com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem" />
+    </data>
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding_small"
+        android:layout_marginBottom="@dimen/padding_tiny"
+        >
+
+        <Button
+            android:id="@+id/chip_unselected"
+            android:background="@drawable/neutral_stroke_underline"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:iconTint="@color/text_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{itemChip.label}"
+            android:onClick="@{() -> itemChip.nowSelected()}"
+            app:toggleVisibility="@{!itemChip.isSelected()}"
+            style="@style/Theme.Tegao.LabelButton.Chip"
+
+            tools:text="Label"
+            />
+
+        <Button
+            android:id="@+id/chip_selected"
+            android:background="@drawable/primary_solid_background"
+            android:textColor="@color/text_reverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{itemChip.label}"
+            android:onClick="@{() -> itemChip.nowUnselected()}"
+            app:toggleVisibility="@{itemChip.isSelected()}"
+            style="@style/Theme.Tegao.LabelButton.Chip"
+            android:clickable="false"
+
+            tools:text="Label"
+            />
+
+    </FrameLayout>
+
+</layout>

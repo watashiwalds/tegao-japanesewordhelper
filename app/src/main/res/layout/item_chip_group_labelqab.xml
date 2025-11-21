@@ -52,6 +52,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/themedChipDisplay_rcy"
+            app:toggleVisibility="@{groupInfo.expandControl.expandable}"
+            app:toggleVisibility2ndGateLiveData="@{groupInfo.expandControl.isExpanding()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/lo_groupHeader_cst"

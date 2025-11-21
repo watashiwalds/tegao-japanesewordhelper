@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/lo_index_txt"
-            android:textAlignment="center"
+            android:gravity="center"
             android:layout_width="@dimen/padding_large"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_nano"

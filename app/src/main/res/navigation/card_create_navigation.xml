@@ -23,5 +23,24 @@
     <fragment
         android:id="@+id/cardCreateSetFrontFragment"
         android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateSetFrontFragment"
-        android:label="CardCreateSetFrontFragment" />
+        android:label="CardCreateSetFrontFragment" >
+        <action
+            android:id="@+id/action_cardCreateSetFrontFragment_to_cardCreateSetAnswerFragment"
+            app:destination="@id/cardCreateSetAnswerFragment" />
+        <action
+            android:id="@+id/action_cardCreateSetFrontFragment_to_cardCreateSetBackFragment"
+            app:destination="@id/cardCreateSetBackFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardCreateSetAnswerFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateSetAnswerFragment"
+        android:label="CardCreateSetAnswerFragment" >
+        <action
+            android:id="@+id/action_cardCreateSetAnswerFragment_to_cardCreateSetBackFragment"
+            app:destination="@id/cardCreateSetBackFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardCreateSetBackFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateSetBackFragment"
+        android:label="CardCreateSetBackFragment" />
 </navigation>

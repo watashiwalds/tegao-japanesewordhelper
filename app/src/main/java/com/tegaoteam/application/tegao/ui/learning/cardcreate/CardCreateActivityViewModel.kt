@@ -23,7 +23,7 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     }
     //endregion
 
-    //region [SetGroup related]
+    //region [SetGroup]
     val cardGroups = learningRepo.getCardGroups().asFlow().asLiveData()
     fun addNewCardGroup(groupName: String) {
         if (groupName.isBlank()) return
@@ -41,13 +41,25 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     }
     //endregion
 
-    //region [SetType related]
+    //region [SetType]
     val cardTypeChipItems = LearningCardConst.Type.entries.map { it.id to it.display }
     var selectedType: Int? = null
         private set
     fun submitSelectedType(type: Int) {
         selectedType = if (type in cardTypeChipItems.map { it.first }) type else null
     }
+    //endregion
+
+    //region [SetFront]
+    var selectedFronts: List<Pair<String, String>>? = null
+        private set
+    fun submitSelectedFront(frontContent: List<Pair<String, String>>) {
+        selectedFronts = frontContent.ifEmpty { null }
+    }
+    //endregion
+
+    //region [SetAnswer]
+
     //endregion
 
     companion object {

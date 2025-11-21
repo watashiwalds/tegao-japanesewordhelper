@@ -7,10 +7,11 @@
     <string name="title_search_history_empty">Chưa có lịch sử tìm kiếm</string>
     <string name="title_more_info">Thông tin thêm</string>
     <string name="title_search_history_count">Đã tìm kiếm %d từ khoá</string>
-    <string name="hint_enter_search_keyword_here">Nhập từ khoá 漢字, かな, romaji, ...</string>
+    <string name="hint_enter_search_keyword_here">Nhập từ khoá 漢字, かな, romaji, …</string>
     <string name="title_label_lookup">Tra cứu</string>
     <string name="title_label_option">Lựa chọn</string>
     <string name="title_label_setting">Cài đặt</string>
+    <string name="hint_is_an_input_field">Nhập tại đây…</string>
 
     <string name="phrase_confirm">Xác nhận</string>
     <string name="phrase_cancel">Huỷ</string>

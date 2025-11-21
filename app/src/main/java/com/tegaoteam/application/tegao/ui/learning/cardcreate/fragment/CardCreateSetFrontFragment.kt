@@ -66,7 +66,7 @@ class CardCreateSetFrontFragment: Fragment() {
                 listAdapter = ThemedChipListAdapter(viewLifecycleOwner, ItemChipToggableTextBinding::inflate),
                 layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(requireActivity()),
 //                expandControl = ,
-                allowQAB = true
+                allowQuickSelect = true
             ) }
             chipGroups.forEach {
                 it.listAdapter.themedChipManager = it.manager

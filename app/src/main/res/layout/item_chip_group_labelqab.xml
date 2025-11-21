@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{() -> groupInfo.expandControl.toggleExpand()}"
             >
             
             <TextView
@@ -41,7 +40,7 @@
 
             <CheckBox
                 android:id="@+id/lo_selectAllCue_ckx"
-                app:toggleVisibility="@{groupInfo.allowQAB}"
+                app:toggleVisibility="@{groupInfo.allowQuickSelect}"
                 android:clickable="false"
                 android:checked="@{groupInfo.manager.allSelected}"
                 android:layout_width="wrap_content"

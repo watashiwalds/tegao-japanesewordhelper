@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.ui.component.themedchip
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.recyclerview.widget.ListAdapter
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.BR
 import com.tegaoteam.application.tegao.R
-import timber.log.Timber
 
 class ThemedChipGroupListAdapter<T: ViewDataBinding>(private val lifecycleOwner: LifecycleOwner, private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T): ListAdapter<ThemedChipGroup, ThemedChipGroupListAdapter<T>.ViewHolder>( DiffCallback() ) {
     override fun onCreateViewHolder(
@@ -30,9 +30,12 @@ class ThemedChipGroupListAdapter<T: ViewDataBinding>(private val lifecycleOwner:
     inner class ViewHolder(private val binding: T, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
         fun bind(group: ThemedChipGroup) {
             binding.setVariable(BR.groupInfo, group)
-            binding.root.findViewById<RecyclerView>(R.id.themedChipDisplay_rcy).let {
+            binding.root.findViewById<RecyclerView>(R.id.themedChipDisplay_rcy)?.let {
                 it.layoutManager = group.layoutManager
                 it.adapter = group.listAdapter
+            }
+            if (group.allowQuickSelect) binding.root.findViewById<CheckBox>(R.id.lo_selectAllCue_ckx)?.let {
+                it.setOnClickListener { group.qabToggleSelectAll() }
             }
             binding.lifecycleOwner = lifecycleOwner
             binding.executePendingBindings()

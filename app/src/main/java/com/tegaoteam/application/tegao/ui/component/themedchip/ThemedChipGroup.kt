@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.ui.component.themedchip
 
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.tegaoteam.application.tegao.ui.component.generics.ViewExpandControl
+import timber.log.Timber
 
 /**
  * Class to manage ThemedChips to inflate to a designated XML design with custom action
@@ -17,10 +18,14 @@ data class ThemedChipGroup(
     val listAdapter: ThemedChipListAdapter<*>,
     val layoutManager: LayoutManager? = null,
     val expandControl: ViewExpandControl = ViewExpandControl(true),
-    val allowQAB: Boolean = false
+    val allowQuickSelect: Boolean = false
 ) {
     init {
         listAdapter.themedChipManager = manager
     }
     fun getSelectedChips() = manager.selectedChips
+    fun qabToggleSelectAll() {
+        Timber.i("Would this cause unselectAll? ${manager.isAllSelected()}")
+        if (manager.isAllSelected()) manager.unselectAll() else manager.selectAll()
+    }
 }

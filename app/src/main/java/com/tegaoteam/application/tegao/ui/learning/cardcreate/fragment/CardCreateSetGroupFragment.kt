@@ -15,8 +15,7 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAda
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
-import com.tegaoteam.application.tegao.utils.QuickPreset
-import timber.log.Timber
+import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 
 class CardCreateSetGroupFragment : Fragment() {
     private lateinit var _binding: FragmentCardCreateValueSelectBinding
@@ -55,7 +54,7 @@ class CardCreateSetGroupFragment : Fragment() {
     private fun initView() {
         _binding.loFragmentTitleText.setText(R.string.card_create_what_group)
         _binding.qabNewGroupBtn.setOnClickListener {
-            QuickPreset.requestValueDialog(
+            DialogPreset.requestValueDialog(
                 requireActivity(),
                 R.string.card_create_add_group_label,
                 R.string.card_create_add_group_message
@@ -66,7 +65,7 @@ class CardCreateSetGroupFragment : Fragment() {
         _binding.nextBtn.setOnClickListener {
             val selected = _adapter.themedChipManager?.selectedChips?.map { it.id.toLong() }?.toList()?: listOf()
             if (selected.isEmpty())
-                QuickPreset.requestConfirmation(
+                DialogPreset.requestConfirmation(
                     requireActivity(),
                     message = R.string.card_create_error_no_group
                 )

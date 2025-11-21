@@ -12,7 +12,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ItemSettingConfigDisplayBinding
 import com.tegaoteam.application.tegao.databinding.SubitemSettingConfigBtnBooleanBinding
 import com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem
-import com.tegaoteam.application.tegao.utils.QuickPreset
+import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 
 @Suppress("unchecked_cast")
 class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): ListAdapter<ConfigEntryItem, SettingEntryListAdapter.ViewHolder>(DiffCallback()) {
@@ -46,7 +46,7 @@ class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): List
                 ConfigEntryItem.Companion.Type.CONFIRMATION -> {
                     val original = info.clickListener
                     info.clickListener = {
-                        QuickPreset.requestConfirmation(
+                        DialogPreset.requestConfirmation(
                             binding.root.context,
                             info.labelResId,
                             info.descriptionResId,

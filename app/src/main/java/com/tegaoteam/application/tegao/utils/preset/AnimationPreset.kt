@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.utils
+package com.tegaoteam.application.tegao.utils.preset
 
 import android.view.View
 import android.view.animation.DecelerateInterpolator

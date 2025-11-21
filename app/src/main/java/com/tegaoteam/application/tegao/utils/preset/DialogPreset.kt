@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.utils
+package com.tegaoteam.application.tegao.utils.preset
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.DialogYesOrNoBinding
 
-object QuickPreset {
+object DialogPreset {
     fun requestConfirmation(context: Context, title: Any? = null, message: Any? = null, lambdaRun: (() -> Unit)? = null) {
         val binding = inflateBareboneYesNoDialog(context, title, message)
 

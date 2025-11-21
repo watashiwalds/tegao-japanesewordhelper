@@ -21,7 +21,7 @@ import com.tegaoteam.application.tegao.ui.homescreen.lookup.searchhistory.Search
 import com.tegaoteam.application.tegao.ui.lookup.LookupActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
-import com.tegaoteam.application.tegao.utils.QuickPreset
+import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -65,7 +65,7 @@ class SearchHistoryFragment : Fragment() {
                 startActivity(LookupActivityGate.departIntent(requireContext(), keyword))
             },
             { item ->
-                QuickPreset.requestConfirmation(
+                DialogPreset.requestConfirmation(
                     requireContext(),
                     getString(R.string.quicksetting_history_label_deleteEntry, item.keyword),
                     lambdaRun = {
@@ -83,7 +83,7 @@ class SearchHistoryFragment : Fragment() {
                 startActivity(LookupActivityGate.departIntent(requireContext(), keyword))
             },
             { item ->
-                QuickPreset.requestConfirmation(
+                DialogPreset.requestConfirmation(
                     requireContext(),
                     getString(R.string.quicksetting_history_label_deleteEntry, item.keyword),
                     lambdaRun = {

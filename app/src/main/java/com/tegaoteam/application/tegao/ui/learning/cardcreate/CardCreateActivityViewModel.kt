@@ -30,6 +30,14 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
             learningRepo.addCardGroup(CardGroup(0, groupName))
         }
     }
+    private val _selectedGroupIds = mutableListOf<Long>()
+    val selectedGroupIds: List<Long> = _selectedGroupIds
+    fun submitSelectedCardGroups(groupIds: List<Long>) {
+        _selectedGroupIds.apply {
+            clear()
+            addAll(groupIds)
+        }
+    }
     //endregion
 
     companion object {

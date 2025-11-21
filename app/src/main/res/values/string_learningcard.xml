@@ -4,4 +4,5 @@
     <string name="card_create_qab_add_group">Nhấn nút + để thêm bộ thẻ mới</string>
     <string name="card_create_add_group_label">Thêm bộ thẻ mới</string>
     <string name="card_create_add_group_message">Nhập tên bộ thẻ mới để tạo</string>
+    <string name="card_create_error_no_group">Hãy chọn một bộ thẻ để tiếp tục</string>
 </resources>

@@ -1,10 +1,8 @@
 package com.tegaoteam.application.tegao.ui.component.themedchip
 
-import timber.log.Timber
-
 class ThemedChipManager(
     val mode: Int,
-    private var chips: MutableList<ThemedChipItem> = mutableListOf()
+    private var _chips: MutableList<ThemedChipItem> = mutableListOf()
 ) {
     companion object {
         const val MODE_SINGLE = 0
@@ -15,8 +13,10 @@ class ThemedChipManager(
         assigningSelfToItems()
     }
 
+    val chips: List<ThemedChipItem> = _chips
+
     private fun assigningSelfToItems() {
-        chips.forEach { it.assignController(this) }
+        _chips.forEach { it.assignController(this) }
     }
 
     private val _selectedChips = mutableListOf<ThemedChipItem>()
@@ -58,21 +58,21 @@ class ThemedChipManager(
     }
 
     fun onSelected(chip: ThemedChipItem) {
-        if (chip in chips) onChipSelectStateChanged(chip, true)
+        if (chip in _chips) onChipSelectStateChanged(chip, true)
     }
     fun onUnselected(chip: ThemedChipItem) {
-        if (chip in chips) onChipSelectStateChanged(chip, false)
+        if (chip in _chips) onChipSelectStateChanged(chip, false)
     }
 
     fun selectFirst() {
-        if (chips.isNotEmpty()) {
-            chips[0].nowSelected()
+        if (_chips.isNotEmpty()) {
+            _chips[0].nowSelected()
         }
     }
 
     fun selectAll() {
         if (mode == MODE_MULTI) {
-            chips.forEach { it.nowSelected() }
+            _chips.forEach { it.nowSelected() }
         }
     }
 
@@ -80,21 +80,21 @@ class ThemedChipManager(
         while (!_selectedChips.isEmpty()) _selectedChips.firstOrNull()?.nowUnselected()
     }
 
-    fun isAllSelected() = (_selectedChips.size == chips.size) && chips.isNotEmpty()
+    fun isAllSelected() = (_selectedChips.size == _chips.size) && _chips.isNotEmpty()
 
     private var chipSelectedListener: ((ThemedChipItem) -> Unit)? = null
     private var chipUnselectedListener: ((ThemedChipItem) -> Unit)? = null
     fun setChipsOnSelectedListener(listener: ((ThemedChipItem) -> Unit)?) {
-        chips.forEach { it.onSelectedListener = listener }
+        _chips.forEach { it.onSelectedListener = listener }
         chipSelectedListener = listener
     }
     fun setChipsOnUnselectedListener(listener: ((ThemedChipItem) -> Unit)?) {
-        chips.forEach { it.onUnselectedListener = listener }
+        _chips.forEach { it.onUnselectedListener = listener }
         chipUnselectedListener = listener
     }
 
     fun submitChipList(submitChips: List<ThemedChipItem>?) {
-        chips.apply {
+        _chips.apply {
             clear()
             addAll(submitChips?: emptyList())
         }

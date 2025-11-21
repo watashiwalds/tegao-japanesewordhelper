@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ViewInputBarBinding
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
+import timber.log.Timber
 
 class InputBarView(
     private val _context: Context,
@@ -20,11 +21,12 @@ class InputBarView(
     val view = _binding.root
 
     //region Normal, basic input method
-    val enableClearSearchString = MutableLiveData<Boolean>().apply { value = false }
+    val enableClearInput = MutableLiveData<Boolean>().apply { value = false }
 
     init {
         _binding.inputFieldEdt.doOnTextChanged { text, start, end, count ->
-            enableClearSearchString.value = text?.isNotEmpty()?: false
+            enableClearInput.value = text?.isNotEmpty()?: false
+            Timber.i("Text is changing, clear string is ${enableClearInput.value}")
         }
         _binding.inputClearBtn.setOnClickListener {
             _binding.inputFieldEdt.apply {
@@ -32,8 +34,6 @@ class InputBarView(
                 text?.clear()
             }
         }
-        _binding.lifecycleOwner = _lifecycleOwner
-        _binding.executePendingBindings()
     }
 
     fun getInputValue() = _binding.inputFieldEdt.text.toString()
@@ -49,5 +49,12 @@ class InputBarView(
                 switchState = MutableLiveData<Boolean>().apply { value = false }
             )
         }
+    }
+
+    // Final init for binding this object and lifecycleOwner to run execute()
+    init {
+        _binding.inputBar = this
+        _binding.lifecycleOwner = _lifecycleOwner
+        _binding.executePendingBindings()
     }
 }

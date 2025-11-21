@@ -43,8 +43,7 @@
             app:layout_constraintStart_toEndOf="@id/inputField_edt"
             app:layout_constraintEnd_toStartOf="@id/switch_handwritingMode_icl"
             app:layout_constraintWidth_percent="0.1"
-
-            app:toggleVisibility="@{inputBar.enableClearSearchString}"
+            app:toggleVisibility="@{inputBar.enableClearInput}"
             android:foreground="?android:attr/selectableItemBackground"
 
             tools:visibility="visible"

@@ -72,6 +72,7 @@ class ThemedChipManager(
 
     fun selectAll() {
         if (mode == MODE_MULTI) {
+            _selectedChips.clear()
             _chips.forEach { it.nowSelected() }
         }
     }

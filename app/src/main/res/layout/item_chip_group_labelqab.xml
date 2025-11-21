@@ -22,13 +22,14 @@
             >
             
             <TextView
-                style="@style/Theme.Tegao.Label.LargeMedium"
+                style="@style/Theme.Tegao.Label.Normal"
+                android:fontFamily="@font/roboto_bold"
                 android:background="@drawable/neutral_stroke_end"
                 android:id="@+id/lo_groupLabel_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding_normal"
-                android:layout_marginVertical="@dimen/padding_normal"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_marginVertical="@dimen/padding_small"
                 android:text="@{groupInfo.label}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -54,18 +55,19 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/themedChipDisplay_rcy"
-            app:toggleVisibility="@{groupInfo.expandControl.expandable}"
-            app:toggleVisibility2ndGateLiveData="@{groupInfo.expandControl.isExpanding()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lo_groupHeader_cst"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingStart="@dimen/padding_small"
+            android:layout_marginBottom="@dimen/padding_small"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:paddingStart="@dimen/padding_normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lo_groupHeader_cst"
+            app:toggleVisibility="@{groupInfo.expandControl.expandable}"
 
-            tools:listitem="@layout/item_chip_checkbox_text"
+            app:toggleVisibility2ndGateLiveData="@{groupInfo.expandControl.isExpanding()}"
             tools:itemCount="3"
-            />
+            tools:listitem="@layout/item_chip_checkbox_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

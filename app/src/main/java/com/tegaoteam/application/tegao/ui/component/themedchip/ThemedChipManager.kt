@@ -70,6 +70,16 @@ class ThemedChipManager(
         }
     }
 
+    fun selectAll() {
+        if (mode == MODE_MULTI) {
+            chips.forEach { it.nowSelected() }
+        }
+    }
+
+    fun unselectAll() {
+        while (!_selectedChips.isEmpty()) _selectedChips.firstOrNull()?.nowUnselected()
+    }
+
     private var chipSelectedListener: ((ThemedChipItem) -> Unit)? = null
     private var chipUnselectedListener: ((ThemedChipItem) -> Unit)? = null
     fun setChipsOnSelectedListener(listener: ((ThemedChipItem) -> Unit)?) {

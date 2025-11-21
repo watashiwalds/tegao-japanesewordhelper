@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueSelectBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipCheckboxTextBinding
@@ -72,8 +73,10 @@ class CardCreateSetGroupFragment : Fragment() {
                     requireActivity(),
                     message = R.string.card_create_error_no_group
                 )
-            else
-                _parentViewModel.submitSelectedCardGroups(_adapter.themedChipManager?.selectedChips?.map { it.id.toLong() }?.toList()?: listOf())
+            else {
+                _parentViewModel.submitSelectedCardGroups(_adapter.themedChipManager?.selectedChips?.map { it.id.toLong() }?.toList() ?: listOf())
+                findNavController().navigate(CardCreateSetGroupFragmentDirections.actionCardCreateSetGroupFragmentToCardCreateSetTypeFragment())
+            }
         }
     }
 

@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/cardCreateSetGroupFragment"
         android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateSetGroupFragment"
-        android:label="CardCreateSetGroupFragment" />
+        android:label="CardCreateSetGroupFragment" >
+        <action
+            android:id="@+id/action_cardCreateSetGroupFragment_to_cardCreateSetTypeFragment"
+            app:destination="@id/cardCreateSetTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardCreateSetTypeFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateSetTypeFragment"
+        android:label="CardCreateSetTypeFragment" />
 </navigation>

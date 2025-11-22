@@ -37,6 +37,8 @@ class InputBarView(
     }
 
     fun getInputValue() = _binding.inputFieldEdt.text.toString()
+    fun getEditTextView() = _binding.inputFieldEdt
+    fun getSwitchButton() = _binding.switchHandwritingModeIcl
     //endregion
 
     // Handwriting handling if enabled

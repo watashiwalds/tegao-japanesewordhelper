@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -11,6 +12,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueInputBinding
 import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
+import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import kotlin.getValue
@@ -33,6 +35,7 @@ class CardCreateSetAnswerFragment: Fragment() {
 
         initVariables()
         initView()
+        initAddons()
 
         return _binding.root
     }
@@ -56,5 +59,16 @@ class CardCreateSetAnswerFragment: Fragment() {
                 message = _inputBarView.getInputValue()
             )
         }
+    }
+
+    private fun initAddons() {
+        // it has handwriting support, so it need to bind the addon
+        WritingViewBindingHelper.fullSuggestionBoard(
+            AddonHub(),
+            activity = requireActivity() as AppCompatActivity,
+            linkedEditText = _inputBarView.getEditTextView(),
+            boardHolder = requireActivity().findViewById(R.id.unv_customInputHolder_frm),
+            switchButtonBinding = _inputBarView.getSwitchButton()
+        )
     }
 }

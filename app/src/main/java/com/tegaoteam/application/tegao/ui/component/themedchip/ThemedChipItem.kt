@@ -16,7 +16,9 @@ class ThemedChipItem(
     val id: String,
     val label: String,
     private val _isSelected: MutableLiveData<Boolean>,
-    val iconResId: Int? = null
+    val iconResId: Int? = null,
+    val backgroundResId: Int? = null,
+    val textColor: Int? = null
 ) {
     init {
         _isSelected.value = false

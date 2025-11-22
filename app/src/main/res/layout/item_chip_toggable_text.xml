@@ -34,7 +34,9 @@
         <Button
             android:id="@+id/chip_selected"
             android:background="@drawable/primary_solid_background"
+            app:backgroundResId="@{itemChip.backgroundResId}"
             android:textColor="@color/text_reverse"
+            app:textColorResId="@{itemChip.textColor}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{itemChip.label}"

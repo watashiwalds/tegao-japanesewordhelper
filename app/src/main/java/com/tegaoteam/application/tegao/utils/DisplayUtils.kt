@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.utils
 
+import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -61,4 +62,9 @@ fun View.setBackgroundWithResId(drawableResId: Int?) {
 @BindingAdapter("textColorResId")
 fun TextView.setTextColorWithResId(textColorResId: Int?) {
     textColorResId?.let { if (it != 0) setTextColor(getColorFromAppRes(textColorResId)) }
+}
+
+@BindingAdapter("htmlText")
+fun TextView.setHtmlFormattedText(txt: String) {
+    text = Html.fromHtml(txt.replace("\n", "<br>").replace("\t", "&emsp;"), Html.FROM_HTML_MODE_COMPACT)
 }

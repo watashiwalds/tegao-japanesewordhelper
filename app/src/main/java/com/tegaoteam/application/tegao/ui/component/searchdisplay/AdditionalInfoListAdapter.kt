@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.SubitemDefinitionAdditionalInfoBinding
 import com.tegaoteam.application.tegao.ui.component.tag.TagItem
+import com.tegaoteam.application.tegao.utils.setHtmlFormattedText
 
 class AdditionalInfoListAdapter: ListAdapter<Pair<String, String>, AdditionalInfoListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -26,7 +27,7 @@ class AdditionalInfoListAdapter: ListAdapter<Pair<String, String>, AdditionalInf
     class ViewHolder private constructor(private val binding: SubitemDefinitionAdditionalInfoBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Pair<String, String>) {
             binding.expandTag.infoTag = TagItem.toTagItem(data.first)
-            binding.expandContent.text = data.second
+            binding.expandContent.setHtmlFormattedText(data.second)
         }
         companion object {
             fun from(parent: ViewGroup): ViewHolder {

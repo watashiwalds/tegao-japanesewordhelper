@@ -19,13 +19,13 @@ import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
 import com.tegaoteam.application.tegao.data.hub.SettingHub
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipDictionaryPickBinding
-import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
+import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewBindingHelper
 import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewController
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefinitionWidgetRecyclerAdapter
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
@@ -133,49 +133,23 @@ class LookupActivity : AppCompatActivity() {
             updateSearchResultValue(it)
         }
         _viewModel.isHandwritingEnabled.observe(this) {
-            if (it && _addonRepo.isHandwritingAvailable()) initHandwritingFunction()
+            if (it && _addonRepo.isHandwritingAvailable()) initAddons()
         }
         _viewModel.nonResult.observe(this) {
             AppToast.show(it, AppToast.LENGTH_SHORT)
         }
     }
 
-    private fun initHandwritingFunction() {
+    private fun initAddons() {
         // handwriting addon components init
+        WritingViewBindingHelper.fullSuggestionBoard(
+            _addonRepo,
+            this,
+            _binding.keywordInputEdt,
+            _binding.loSpecialistInputBoardHolderFrm,
+            _binding.switchHandwritingModeIcl
+        )
         // todo: changes switch and view inflation enact factor to using values from viewmodel
-        if (_addonRepo.isHandwritingAvailable()) {
-            val handwritingBoardBinding = ViewWritingBoardFullBinding.inflate(layoutInflater).apply {
-                root.id = R.id.addons_writingView_fullBoard_ifl
-            }
-            _binding.loSpecialistInputBoardHolderFrm.addView(handwritingBoardBinding.root)
-
-            _writingViewController = WritingViewController(
-                writingView = handwritingBoardBinding.writingPadWrv,
-                writingBinding = handwritingBoardBinding,
-                onRequestRecognition = { bitmap -> _addonRepo.handwritingAddonApi?.requestInputSuggestions(bitmap) },
-                editText = _binding.keywordInputEdt,
-                onStrokeFinished = { _writingViewController.requestSuggestions() },
-                onEnterKeyPressed = null
-            )
-            _addonRepo.handwritingAddonApi?.registerCallback { suggestions -> _writingViewController.updateSuggestionsList(suggestions) }
-
-            _binding.switchHandwritingModeIcl.apply {
-                switchInfo = _viewModel.handwritingSwitchInfo.apply {
-                    onStateChangedListener = { switchState ->
-                        _writingViewController.toggleWritingMode(switchState)
-                        this@LookupActivity.apply {
-                            if (_writingViewController.isEditTextEqual(currentFocus))
-                                (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).apply {
-                                    if (switchState) hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-                                    else showSoftInput(currentFocus, 0)
-                                }
-                        }
-                    }
-                }
-                lifecycleOwner = this@LookupActivity
-                executePendingBindings()
-            }
-        }
     }
 
     fun updateSearchString() = _viewModel.setSearchString(_binding.keywordInputEdt.text.toString())

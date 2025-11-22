@@ -24,6 +24,7 @@ data class ThemedChipGroup(
         listAdapter.themedChipManager = manager
     }
     fun getSelectedChips() = manager.selectedChips
+    fun getChips() = manager.chips
     fun qabToggleSelectAll() {
         if (manager.isAllSelected()) manager.unselectAll() else manager.selectAll()
     }

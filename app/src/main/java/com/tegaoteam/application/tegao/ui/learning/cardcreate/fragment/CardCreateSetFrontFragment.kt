@@ -59,7 +59,10 @@ class CardCreateSetFrontFragment: Fragment() {
                     message = R.string.card_create_error_no_content
                 )
             } else {
-                _parentViewModel.submitSelectedFront(selected.map { it.id to it.label })
+                _parentViewModel.submitSelectedFront(selected.map {
+                    val split = it.id.split("#")
+                    split.first() to split.last()
+                })
                 when (_parentViewModel.selectedType) {
                     LearningCardConst.Type.TYPE_FLASHCARD.id -> {
                         findNavController().navigate(CardCreateSetFrontFragmentDirections.actionCardCreateSetFrontFragmentToCardCreateSetBackFragment())
@@ -80,7 +83,6 @@ class CardCreateSetFrontFragment: Fragment() {
                 manager = ThemedChipManager(ThemedChipManager.MODE_MULTI),
                 listAdapter = ThemedChipListAdapter(viewLifecycleOwner, ItemChipToggableTextBinding::inflate),
                 layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(requireContext()),
-//                expandControl = ,
                 allowQuickSelect = true
             ) }
             chipGroups.forEach {
@@ -92,6 +94,16 @@ class CardCreateSetFrontFragment: Fragment() {
                 ) } )
             }
             _adapter.submitList(chipGroups)
+            displayLastResult()
+        }
+    }
+
+    private fun displayLastResult() {
+        _parentViewModel.selectedFronts?.let { selecteds ->
+            val allChips = _adapter.currentList.map { group -> group.id to group.getChips() }
+            selecteds.forEach { slt ->
+                allChips.first { slt.first == it.first }.second[slt.second.toInt()].nowSelected()
+            }
         }
     }
 }

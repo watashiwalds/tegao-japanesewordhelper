@@ -54,3 +54,8 @@ fun ImageView.setSrcWithResId(drawableResId: Int) {
 fun TextView.setTextWithResId(stringResId: Int) {
     if (stringResId != 0) setText(stringResId) else visibility = View.GONE
 }
+
+@BindingAdapter("backgroundResId")
+fun View.setBackgroundWithResId(drawableResId: Int?) {
+    drawableResId?.let { if (it != 0) setBackgroundResource(drawableResId) }
+}

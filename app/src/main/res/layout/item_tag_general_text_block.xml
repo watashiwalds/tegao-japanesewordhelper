@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="infoTag"
@@ -10,9 +11,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:foreground="?android:selectableItemBackground"
+        android:layout_marginEnd="@dimen/padding_small"
+        android:layout_marginBottom="@dimen/padding_tiny"
         android:text="@{infoTag.label}"
         android:onClick="@{() -> infoTag.onClick()}"
-        android:background="@{infoTag.backgroundResId}"
+        app:backgroundResId="@{infoTag.backgroundResId}"
         style="@style/Theme.Tegao.LabelButton.Chip.ContentChip"
 
         tools:text="gradient"

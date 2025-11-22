@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,6 +20,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
+import com.tegaoteam.application.tegao.utils.dpToPixel
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import timber.log.Timber
 import kotlin.getValue
@@ -62,6 +64,7 @@ class CardCreateSetAnswerFragment: Fragment() {
             addView(RecyclerView(requireContext()).apply {
                 layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(requireContext())
                 adapter = _quickInputAdapter
+                setPadding(0, dpToPixel(16f).toInt(), 0, 0)
             })
         }
         _binding.executePendingBindings()
@@ -70,7 +73,7 @@ class CardCreateSetAnswerFragment: Fragment() {
             DialogPreset.requestConfirmation(
                 context = requireContext(),
                 title = 0,
-                message = _inputBarView.getInputValue()
+                message = _inputBarView.getInputValue().lowercase()
             )
         }
     }

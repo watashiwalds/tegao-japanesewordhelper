@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.utils
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
@@ -56,4 +57,10 @@ object TermBank {
 
 fun getStringFromAppRes(resId: Int): String {
     return ContextCompat.getString(TegaoApplication.instance, resId)
+}
+fun getDrawableFromAppRes(resId: Int): Drawable? {
+    return ContextCompat.getDrawable(TegaoApplication.instance, resId)
+}
+fun getColorFromAppRes(resId: Int): Int {
+    return ContextCompat.getColor(TegaoApplication.instance, resId)
 }

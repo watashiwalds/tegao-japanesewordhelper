@@ -9,7 +9,7 @@
         android:padding="@dimen/padding_large"
         android:layout_margin="@dimen/padding_large"
         android:minWidth="300dp"
-        android:background="@drawable/neutral_solid_stroke_background">
+        android:background="@drawable/neutral_filled_stroke_background">
 
         <TextView
             style="@style/Theme.Tegao.Label.Large"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="infoTag"
+            type="com.tegaoteam.application.tegao.ui.component.tag.TagItem" />
+    </data>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{infoTag.label}"
+        android:onClick="@{() -> infoTag.onClick()}"
+        android:background="@{infoTag.backgroundResId}"
+        style="@style/Theme.Tegao.LabelButton.Chip.ContentChip"
+
+        tools:text="gradient"
+        tools:background="@drawable/neutral_solid_background"
+        />
+</layout>

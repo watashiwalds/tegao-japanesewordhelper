@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ItemChipCharacterPickBinding
+import com.tegaoteam.application.tegao.databinding.ItemTagClassificationBinding
 import com.tegaoteam.application.tegao.databinding.ViewTabDefinitionKanjisBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
@@ -91,7 +92,7 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             binding.loTagsRcy.apply {
                 layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(context)
                 if (itemDecorationCount == 0) addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
-                adapter = TagGroupListAdapter().apply { submitRawTagList(kanji.tags?.map { it.termKey to it.label }) }
+                adapter = TagGroupListAdapter(ItemTagClassificationBinding::inflate).apply { submitRawTagList(kanji.tags?.map { it.termKey to it.label }) }
             }
 
             binding.meaning.setTextWithVisibility(kanji.meaning)

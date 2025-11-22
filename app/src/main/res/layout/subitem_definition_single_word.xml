@@ -42,7 +42,7 @@
 
             tools:itemCount="3"
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_tag"
+            tools:listitem="@layout/item_tag_classification"
             tools:orientation="horizontal" />
 
         <TextView

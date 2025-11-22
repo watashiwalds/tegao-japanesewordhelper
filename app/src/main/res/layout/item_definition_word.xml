@@ -60,7 +60,7 @@
 
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:orientation="horizontal"
-            tools:listitem="@layout/item_tag"
+            tools:listitem="@layout/item_tag_classification"
             tools:itemCount="3"
             />
 

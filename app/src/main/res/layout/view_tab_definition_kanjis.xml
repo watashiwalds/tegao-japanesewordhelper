@@ -63,7 +63,7 @@
             app:layout_constraintStart_toEndOf="@id/lo_kanji_stroke_frm"
             app:layout_constraintEnd_toEndOf="parent"
 
-            tools:listitem="@layout/item_tag"
+            tools:listitem="@layout/item_tag_classification"
             tools:itemCount="3"
             tools:orientation="horizontal"
             />
@@ -88,7 +88,7 @@
             app:constraint_referenced_ids="lo_tag_kunyomi_icl, kunyomi"
             />
 
-        <include layout="@layout/item_tag"
+        <include layout="@layout/item_tag_classification"
             android:id="@+id/lo_tag_kunyomi_icl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
             app:constraint_referenced_ids="lo_tag_onyomi_icl, onyomi"
             />
 
-        <include layout="@layout/item_tag"
+        <include layout="@layout/item_tag_classification"
             android:id="@+id/lo_tag_onyomi_icl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
             app:constraint_referenced_ids="lo_tag_composite_icl, composite"
             />
 
-        <include layout="@layout/item_tag"
+        <include layout="@layout/item_tag_classification"
             android:id="@+id/lo_tag_composite_icl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.databinding.ItemTagClassificationBinding
 import com.tegaoteam.application.tegao.databinding.SubitemDefinitionSingleWordBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
@@ -35,7 +36,7 @@ class DefinitionListAdapter(private val lifecycleOwner: LifecycleOwner): ListAda
 
             binding.loDefinitionTagsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(binding.loDefinitionTagsRcy.context)
             if (binding.loDefinitionTagsRcy.itemDecorationCount == 0) binding.loDefinitionTagsRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
-            binding.loDefinitionTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(definition.tags?.map{ it.termKey to (it.label to it.description) }) }
+            binding.loDefinitionTagsRcy.adapter = TagGroupListAdapter(ItemTagClassificationBinding::inflate).apply { submitRawTagList(definition.tags?.map{ it.termKey to (it.label to it.description) }) }
 
             binding.definition.text = definition.meaning
 

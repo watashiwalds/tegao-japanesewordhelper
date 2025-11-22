@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.databinding.ItemDefinitionWordBinding
+import com.tegaoteam.application.tegao.databinding.ItemTagClassificationBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityGate
@@ -42,7 +43,7 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
             //display func for tags
             binding.loWordTagsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(binding.loWordTagsRcy.context)
             if (binding.loWordTagsRcy.itemDecorationCount == 0) binding.loWordTagsRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
-            binding.loWordTagsRcy.adapter = TagGroupListAdapter().apply { submitRawTagList(word.tags?.map { it.termKey to it.label }) }
+            binding.loWordTagsRcy.adapter = TagGroupListAdapter(ItemTagClassificationBinding::inflate).apply { submitRawTagList(word.tags?.map { it.termKey to it.label }) }
 
             //TODO: Write DefinitionListAdapter to make definition list for RecyclerView
             binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter(lifecycleOwner).apply { submitList(word.definitions) }

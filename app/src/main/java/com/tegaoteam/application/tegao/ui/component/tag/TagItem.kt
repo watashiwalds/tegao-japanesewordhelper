@@ -5,10 +5,11 @@ import com.tegaoteam.application.tegao.utils.TermBank
 
 data class TagItem(
     val label: String? = null,
-    val backgroundColor: Int,
-    val textColor: Int,
     val detail: String? = null,
-    val clickListener: (TagItem) -> Unit = {}
+    val backgroundResId: Int? = null,
+    val backgroundColor: Int? = null,
+    val textColor: Int? = null,
+    val clickListener: (TagItem) -> Unit = {},
 ) {
     fun onClick() {
         clickListener.invoke(this)

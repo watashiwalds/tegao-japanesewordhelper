@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         >
 
-        <include layout="@layout/item_tag" android:id="@+id/expand_tag"/>
+        <include layout="@layout/item_tag_classification" android:id="@+id/expand_tag"/>
 
         <TextView
             android:id="@+id/expand_content"

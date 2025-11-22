@@ -61,7 +61,7 @@ class CardCreateSetFrontFragment: Fragment() {
             } else {
                 _parentViewModel.submitSelectedFront(selected.map {
                     val split = it.id.split("#")
-                    split.first() to split.last()
+                    split.first() to split.last().toInt()
                 })
                 when (_parentViewModel.selectedType) {
                     LearningCardConst.Type.TYPE_FLASHCARD.id -> {

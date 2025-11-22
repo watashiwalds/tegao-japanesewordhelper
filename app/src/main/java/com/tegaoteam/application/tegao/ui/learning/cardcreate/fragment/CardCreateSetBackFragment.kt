@@ -60,7 +60,7 @@ class CardCreateSetBackFragment: Fragment() {
             } else {
                 _parentViewModel.submitSelectedBack(selected.map {
                     val split = it.id.split("#")
-                    split.first() to split.last()
+                    split.first() to split.last().toInt()
                 })
                 findNavController().navigate(CardCreateSetBackFragmentDirections.actionCardCreateSetBackFragmentToCardCreateConfirmationFragment())
             }
@@ -86,7 +86,7 @@ class CardCreateSetBackFragment: Fragment() {
         chipGroups.forEach {
             it.listAdapter.themedChipManager = it.manager
             it.listAdapter.submitList(contentMap.contents[it.id]?.mapIndexed { index, content ->
-                val isOnFront = alreadyFront?.contains(Pair(it.id, index.toString()))?: false
+                val isOnFront = alreadyFront?.contains(Pair(it.id, index))?: false
                 ThemedChipItem(
                     id = "${it.id}#$index",
                     label = content,

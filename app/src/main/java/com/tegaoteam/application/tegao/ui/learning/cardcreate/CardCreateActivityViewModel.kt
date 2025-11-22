@@ -51,9 +51,9 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     //endregion
 
     //region [SetFront]
-    var selectedFronts: List<Pair<String, String>>? = null
+    var selectedFronts: List<Pair<String, Int>>? = null
         private set
-    fun submitSelectedFront(frontContent: List<Pair<String, String>>) {
+    fun submitSelectedFront(frontContent: List<Pair<String, Int>>) {
         selectedFronts = frontContent.ifEmpty { null }
     }
     //endregion
@@ -67,9 +67,9 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     //endregion
 
     //region [SetBack]
-    var selectedBacks: List<Pair<String, String>>? = null
+    var selectedBacks: List<Pair<String, Int>>? = null
         private set
-    fun submitSelectedBack(backContent: List<Pair<String, String>>) {
+    fun submitSelectedBack(backContent: List<Pair<String, Int>>) {
         selectedBacks = backContent.ifEmpty { null }
     }
     //endregion

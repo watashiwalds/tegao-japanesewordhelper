@@ -9,6 +9,7 @@ import androidx.core.view.marginTop
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.AddonHub
@@ -70,11 +71,11 @@ class CardCreateSetAnswerFragment: Fragment() {
         _binding.executePendingBindings()
 
         _binding.nextBtn.setOnClickListener {
-            DialogPreset.requestConfirmation(
-                context = requireContext(),
-                title = 0,
-                message = _inputBarView.getInputValue().lowercase()
-            )
+            val selectedAnswer = _inputBarView.getInputValue().lowercase()
+            if (isAnswerMeetConstraints(selectedAnswer)) {
+                _parentViewModel.submitSelectedAnswer(selectedAnswer)
+                findNavController().navigate(CardCreateSetAnswerFragmentDirections.actionCardCreateSetAnswerFragmentToCardCreateSetBackFragment())
+            }
         }
     }
 
@@ -105,5 +106,27 @@ class CardCreateSetAnswerFragment: Fragment() {
             boardHolder = requireActivity().findViewById(R.id.unv_customInputHolder_frm),
             switchButtonBinding = _inputBarView.getSwitchButton()
         )
+    }
+
+    private fun isAnswerMeetConstraints(ans: String?): Boolean {
+        var res = false
+        if (ans == null || ans.isBlank()) {
+            DialogPreset.requestConfirmation(
+                context = requireContext(),
+                title = R.string.card_create_warning_empty_answer_label,
+                message = R.string.card_create_warning_empty_answer_message,
+                lambdaRun = { res = true }
+            )
+        } else if (ans.length > 30) {
+            DialogPreset.requestConfirmation(
+                context = requireContext(),
+                title = R.string.card_create_warning_lengthy_answer_label,
+                message = R.string.card_create_warning_lengthy_answer_message,
+                lambdaRun = { res = true }
+            )
+        } else {
+            res = true
+        }
+        return res
     }
 }

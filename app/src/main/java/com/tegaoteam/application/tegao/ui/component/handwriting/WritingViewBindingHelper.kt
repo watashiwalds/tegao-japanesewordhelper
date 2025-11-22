@@ -29,9 +29,7 @@ class WritingViewBindingHelper {
             switchButtonBinding: ViewButtonPushswitchIcononlyBinding
         ): View? {
             if (addonRepo.isHandwritingAvailable()) {
-                val handwritingBoardBinding = ViewWritingBoardFullBinding.inflate(LayoutInflater.from(activity)).apply {
-                    root.id = R.id.addons_writingView_fullBoard_ifl
-                }
+                val handwritingBoardBinding = ViewWritingBoardFullBinding.inflate(LayoutInflater.from(activity))
                 boardHolder.apply {
                     removeAllViews()
                     addView(handwritingBoardBinding.root)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="addons_writingView_fullBoard_ifl" type="id"/>
+    <item name="view_writingView_fullBoard" type="id"/>
+    <item name="view_inputBarView" type="id"/>
 
     <item name="unv_themedChipDisplay_rcy" type="id"/>
     <item name="unv_inputField_edt" type="id"/>

@@ -24,20 +24,20 @@ class InputBarView(
     val enableClearInput = MutableLiveData<Boolean>().apply { value = false }
 
     init {
-        _binding.inputFieldEdt.doOnTextChanged { text, start, end, count ->
+        _binding.unvInputFieldEdt.doOnTextChanged { text, start, end, count ->
             enableClearInput.value = text?.isNotEmpty()?: false
             Timber.i("Text is changing, clear string is ${enableClearInput.value}")
         }
         _binding.inputClearBtn.setOnClickListener {
-            _binding.inputFieldEdt.apply {
+            _binding.unvInputFieldEdt.apply {
                 clearFocus()
                 text?.clear()
             }
         }
     }
 
-    fun getInputValue() = _binding.inputFieldEdt.text.toString()
-    fun getEditTextView() = _binding.inputFieldEdt
+    fun getInputValue() = _binding.unvInputFieldEdt.text.toString()
+    fun getEditTextView() = _binding.unvInputFieldEdt
     fun getSwitchButton() = _binding.switchHandwritingModeIcl
     //endregion
 

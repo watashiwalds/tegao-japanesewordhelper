@@ -1,6 +1,9 @@
 package com.tegaoteam.application.tegao.ui.learning.cardcreate
 
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,6 +16,7 @@ import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.ActivityCardCreateBinding
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
+import com.tegaoteam.application.tegao.ui.shared.BehaviorPreset
 
 class CardCreateActivity : AppCompatActivity() {
     private lateinit var _viewModel: CardCreateActivityViewModel
@@ -47,5 +51,15 @@ class CardCreateActivity : AppCompatActivity() {
             { if (!navController.popBackStack()) finish() },
             { finish() }
             )
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (currentFocus is EditText) BehaviorPreset.cancelInputWhenTouchOutside(
+            ev,
+            findViewById(R.id.unv_inputField_edt),
+            currentFocus,
+            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager,
+            _binding.unvCustomInputHolderFrm, findViewById(R.id.view_inputBarView))
+        return super.dispatchTouchEvent(ev)
     }
 }

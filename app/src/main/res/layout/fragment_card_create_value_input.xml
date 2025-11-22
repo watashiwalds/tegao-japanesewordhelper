@@ -19,12 +19,18 @@
             tools:text="Fragment header line goes here" />
 
         <ScrollView
-            android:id="@+id/lo_input_field_list_lst"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/next_btn"
-            app:layout_constraintTop_toBottomOf="@+id/lo_fragment_title_text" />
+            app:layout_constraintTop_toBottomOf="@+id/lo_fragment_title_text">
+            <LinearLayout
+                android:id="@+id/lo_input_field_list_lst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
+        </ScrollView>
 
         <Button
             android:id="@+id/next_btn"

@@ -19,6 +19,7 @@ object DialogPreset {
 
         binding.confirmBtn.setOnClickListener { lambdaRun?.invoke(); dialog.dismiss() }
         binding.cancelBtn.setOnClickListener { dialog.dismiss() }
+        binding.executePendingBindings()
 
         dialog.show()
     }

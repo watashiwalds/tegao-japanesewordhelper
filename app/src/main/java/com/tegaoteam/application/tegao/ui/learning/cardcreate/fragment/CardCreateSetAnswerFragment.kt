@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginTop
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -72,11 +71,13 @@ class CardCreateSetAnswerFragment: Fragment() {
 
         _binding.nextBtn.setOnClickListener {
             val selectedAnswer = _inputBarView.getInputValue().lowercase()
-            if (isAnswerMeetConstraints(selectedAnswer)) {
-                _parentViewModel.submitSelectedAnswer(selectedAnswer)
-                findNavController().navigate(CardCreateSetAnswerFragmentDirections.actionCardCreateSetAnswerFragmentToCardCreateSetBackFragment())
-            }
+            isAnswerMeetConstraints(selectedAnswer)
         }
+    }
+
+    private fun submitAnswer(answer: String) {
+        _parentViewModel.submitSelectedAnswer(answer)
+        findNavController().navigate(CardCreateSetAnswerFragmentDirections.actionCardCreateSetAnswerFragmentToCardCreateSetBackFragment())
     }
 
     private fun initObservers() {
@@ -108,25 +109,23 @@ class CardCreateSetAnswerFragment: Fragment() {
         )
     }
 
-    private fun isAnswerMeetConstraints(ans: String?): Boolean {
-        var res = false
+    private fun isAnswerMeetConstraints(ans: String?) {
         if (ans == null || ans.isBlank()) {
             DialogPreset.requestConfirmation(
                 context = requireContext(),
                 title = R.string.card_create_warning_empty_answer_label,
                 message = R.string.card_create_warning_empty_answer_message,
-                lambdaRun = { res = true }
+                lambdaRun = { submitAnswer("") }
             )
         } else if (ans.length > 30) {
             DialogPreset.requestConfirmation(
                 context = requireContext(),
                 title = R.string.card_create_warning_lengthy_answer_label,
                 message = R.string.card_create_warning_lengthy_answer_message,
-                lambdaRun = { res = true }
+                lambdaRun = { submitAnswer(ans) }
             )
         } else {
-            res = true
+            submitAnswer(ans)
         }
-        return res
     }
 }

@@ -42,5 +42,13 @@
     <fragment
         android:id="@+id/cardCreateSetBackFragment"
         android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateSetBackFragment"
-        android:label="CardCreateSetBackFragment" />
+        android:label="CardCreateSetBackFragment" >
+        <action
+            android:id="@+id/action_cardCreateSetBackFragment_to_cardCreateConfirmationFragment"
+            app:destination="@id/cardCreateConfirmationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardCreateConfirmationFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment.CardCreateConfirmationFragment"
+        android:label="CardCreateConfirmationFragment" />
 </navigation>

@@ -66,6 +66,14 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     }
     //endregion
 
+    //region [SetBack]
+    var selectedBacks: List<Pair<String, String>>? = null
+        private set
+    fun submitSelectedBack(backContent: List<Pair<String, String>>) {
+        selectedBacks = backContent.ifEmpty { null }
+    }
+    //endregion
+
     companion object {
         class ViewModelFactory(
             private val learningRepo: LearningRepo

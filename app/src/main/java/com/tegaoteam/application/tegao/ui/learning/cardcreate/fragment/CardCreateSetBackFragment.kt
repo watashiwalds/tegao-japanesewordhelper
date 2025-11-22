@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueSelectBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipGroupLabelqabBinding
@@ -49,34 +50,70 @@ class CardCreateSetBackFragment: Fragment() {
         _binding.loSelectableGroupListRcy.adapter = _adapter
 
         _binding.nextBtn.setOnClickListener {
-            DialogPreset.requestConfirmation(
-                context = requireContext(),
-                title = 0,
-                message = _adapter.currentList.map { it.getSelectedChips() }.flatten().joinToString { it.id }
-            )
+            val selected = _adapter.currentList.map { it.getSelectedChips() }.flatten()
+            if (selected.isEmpty()) {
+                DialogPreset.requestConfirmation(
+                    context = requireContext(),
+                    title = 0,
+                    message = R.string.card_create_error_no_content
+                )
+            } else {
+                _parentViewModel.submitSelectedBack(selected.map {
+                    val split = it.id.split("#")
+                    split.first() to split.last()
+                })
+                findNavController().navigate(CardCreateSetBackFragmentDirections.actionCardCreateSetBackFragmentToCardCreateConfirmationFragment())
+            }
         }
     }
 
     private fun initObserver() {
         _parentViewModel.cardMaterial.observe(viewLifecycleOwner) { contentMap ->
-            val chipGroups = contentMap.contents.map { contentPack -> ThemedChipGroup(
-                id = contentPack.key,
-                label = CardMaterial.keyDisplayMap[contentPack.key]?: "-",
-                manager = ThemedChipManager(ThemedChipManager.MODE_MULTI),
-                listAdapter = ThemedChipListAdapter(viewLifecycleOwner, ItemChipToggableTextBinding::inflate),
-                layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(requireContext()),
-//                expandControl = ,
-                allowQuickSelect = true
-            ) }
-            chipGroups.forEach {
-                it.listAdapter.themedChipManager = it.manager
-                it.listAdapter.submitList(contentMap.contents[it.id]?.mapIndexed { index, content -> ThemedChipItem(
+            displayContentList(contentMap)
+        }
+    }
+
+    private fun displayContentList(contentMap: CardMaterial) {
+        val chipGroups = contentMap.contents.map { contentPack -> ThemedChipGroup(
+            id = contentPack.key,
+            label = CardMaterial.keyDisplayMap[contentPack.key]?: "-",
+            manager = ThemedChipManager(ThemedChipManager.MODE_MULTI),
+            listAdapter = ThemedChipListAdapter(viewLifecycleOwner, ItemChipToggableTextBinding::inflate),
+            layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(requireContext()),
+            allowQuickSelect = true
+        ) }
+        val alreadyFront = _parentViewModel.selectedFronts
+        val hasnotSetBack = _parentViewModel.selectedBacks == null
+        chipGroups.forEach {
+            it.listAdapter.themedChipManager = it.manager
+            it.listAdapter.submitList(contentMap.contents[it.id]?.mapIndexed { index, content ->
+                val isOnFront = alreadyFront?.contains(Pair(it.id, index.toString()))?: false && hasnotSetBack
+                ThemedChipItem(
                     id = "${it.id}#$index",
                     label = content,
-                    _isSelected = MutableLiveData<Boolean>()
-                ) } )
+                    _isSelected = MutableLiveData<Boolean>(),
+                    backgroundResId = if (isOnFront) R.drawable.secondary_solid_background else null,
+                    textColor = if (isOnFront) R.color.const_black else null
+                )
+            } )
+        }
+        _adapter.submitList(chipGroups)
+        displayLastResult()
+    }
+
+    private fun displayLastResult() {
+        _parentViewModel.selectedBacks?.let { selecteds ->
+            val allChips = _adapter.currentList.map { group -> group.id to group.getChips() }
+            selecteds.forEach { slt ->
+                allChips.first { slt.first == it.first }.second[slt.second.toInt()].nowSelected()
             }
-            _adapter.submitList(chipGroups)
+            return
+        }
+        _parentViewModel.selectedFronts?.let { selecteds ->
+            val allChips = _adapter.currentList.map { group -> group.id to group.getChips() }
+            selecteds.forEach { slt ->
+                allChips.first { slt.first == it.first }.second[slt.second.toInt()].nowSelected()
+            }
         }
     }
 }

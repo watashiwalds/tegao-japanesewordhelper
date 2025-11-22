@@ -83,11 +83,10 @@ class CardCreateSetBackFragment: Fragment() {
             allowQuickSelect = true
         ) }
         val alreadyFront = _parentViewModel.selectedFronts
-        val hasnotSetBack = _parentViewModel.selectedBacks == null
         chipGroups.forEach {
             it.listAdapter.themedChipManager = it.manager
             it.listAdapter.submitList(contentMap.contents[it.id]?.mapIndexed { index, content ->
-                val isOnFront = alreadyFront?.contains(Pair(it.id, index.toString()))?: false && hasnotSetBack
+                val isOnFront = alreadyFront?.contains(Pair(it.id, index.toString()))?: false
                 ThemedChipItem(
                     id = "${it.id}#$index",
                     label = content,

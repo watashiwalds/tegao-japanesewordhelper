@@ -87,7 +87,7 @@ class CardCreateSetAnswerFragment: Fragment() {
                 pack.value.mapIndexed { index, mat ->
                     TagItem(
                         label = mat,
-                        backgroundResId = if (usedMats?.contains(Pair(pack.key, index.toString())) == true) R.drawable.neutral_solid_background else R.drawable.neutral_stroke_underline,
+                        backgroundResId = if (usedMats?.contains(Pair(pack.key, index)) == true) R.drawable.neutral_solid_background else R.drawable.neutral_stroke_underline,
                         clickListener = { tag ->
                             _inputBarView.getEditTextView().editableText.append(mat)
                         }

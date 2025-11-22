@@ -23,4 +23,13 @@
     <string name="card_create_what_contentAtFront">Mặt trước của thẻ sẽ có nội dung gì?</string>
     <string name="card_create_what_contentAtBack">Mặt sau của thẻ sẽ có nội dung gì?</string>
     <string name="card_create_error_no_content">Bạn chưa chọn nội dung nào, hãy chọn ít nhất 1 để tiếp tục</string>
+
+    <string name="card_create_confirmation">Xem lại nội dung thẻ trước khi tạo</string>
+    <string name="card_create_last_confirm_message">Xác nhận nội dung và tạo thẻ học?</string>
+
+    <string name="card_create_info_general">Loại thẻ: %s\nBộ thẻ: %s</string>
+    <string name="card_create_info_answer">Câu trả lời: %s</string>
+    <string name="card_create_info_front">Mặt trước</string>
+    <string name="card_create_info_back">Mặt sau</string>
+
 </resources>

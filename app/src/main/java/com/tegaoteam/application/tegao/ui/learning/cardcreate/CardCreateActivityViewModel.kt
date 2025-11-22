@@ -11,6 +11,7 @@ import com.tegaoteam.application.tegao.domain.model.CardGroup
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardMaterial
+import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardPlaceholder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -73,6 +74,18 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
         selectedBacks = backContent.ifEmpty { null }
     }
     //endregion
+
+    var parsedCardPlaceholder: CardPlaceholder? = null
+    fun parsingCardPlaceholder() {
+        parsedCardPlaceholder = CardPlaceholder.parseFromSelectedMaterials(
+            materials = cardMaterial.value?: CardMaterial(mapOf()),
+            groupIds = selectedGroupIds,
+            type = selectedType?: LearningCardConst.Type.TYPE_FLASHCARD.id,
+            frontKeys = selectedFronts?: listOf(),
+            answer = selectedAnswer,
+            backKeys = selectedBacks?: listOf()
+        )
+    }
 
     companion object {
         class ViewModelFactory(

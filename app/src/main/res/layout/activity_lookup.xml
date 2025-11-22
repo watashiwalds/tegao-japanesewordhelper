@@ -259,13 +259,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        <include layout="@layout/view_writing_board_full"-->
-<!--            android:id="@+id/cIME_handwritingBoard_icl"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            />-->
-
         <FrameLayout
             android:id="@+id/lo_specialistInputBoard_holder_frm"
             android:layout_width="match_parent"

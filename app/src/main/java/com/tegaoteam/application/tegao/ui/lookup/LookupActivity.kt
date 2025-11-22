@@ -1,6 +1,5 @@
 package com.tegaoteam.application.tegao.ui.lookup
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -26,7 +25,6 @@ import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewBindingHelper
-import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewController
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefinitionWidgetRecyclerAdapter
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
@@ -151,7 +149,6 @@ class LookupActivity : AppCompatActivity() {
             _binding.loSpecialistInputBoardHolderFrm,
             _binding.switchHandwritingModeIcl
         )
-        // todo: changes switch and view inflation enact factor to using values from viewmodel
     }
 
     fun updateSearchString() = _viewModel.setSearchString(_binding.keywordInputEdt.text.toString())

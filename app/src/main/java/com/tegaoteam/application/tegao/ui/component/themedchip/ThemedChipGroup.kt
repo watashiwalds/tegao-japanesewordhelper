@@ -25,7 +25,6 @@ data class ThemedChipGroup(
     }
     fun getSelectedChips() = manager.selectedChips
     fun qabToggleSelectAll() {
-        Timber.i("Would this cause unselectAll? ${manager.isAllSelected()}")
         if (manager.isAllSelected()) manager.unselectAll() else manager.selectAll()
     }
 }

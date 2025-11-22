@@ -2,7 +2,7 @@ package com.tegaoteam.application.tegao.ui.component.themedchip
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CheckBox
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.ListAdapter
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
@@ -34,7 +34,7 @@ class ThemedChipGroupListAdapter<T: ViewDataBinding>(private val lifecycleOwner:
                 it.layoutManager = group.layoutManager
                 it.adapter = group.listAdapter
             }
-            if (group.allowQuickSelect) binding.root.findViewById<CheckBox>(R.id.lo_selectAllCue_ckx)?.let {
+            if (group.allowQuickSelect) binding.root.findViewById<FrameLayout>(R.id.lo_toggleSelectAllQab_frm)?.let {
                 it.setOnClickListener { group.qabToggleSelectAll() }
             }
             binding.lifecycleOwner = lifecycleOwner

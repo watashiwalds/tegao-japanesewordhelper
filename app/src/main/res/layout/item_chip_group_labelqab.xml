@@ -33,22 +33,28 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/lo_selectAllCue_ckx"
+                app:layout_constraintEnd_toStartOf="@id/lo_toggleSelectAllQab_frm"
 
                 tools:text="Chip group's label here"
                 />
 
-            <CheckBox
-                android:id="@+id/lo_selectAllCue_ckx"
+            <FrameLayout
+                android:id="@+id/lo_toggleSelectAllQab_frm"
                 app:toggleVisibility="@{groupInfo.allowQuickSelect}"
-                android:clickable="false"
-                android:checked="@{groupInfo.manager.allSelected}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small"
+                android:foreground="?android:selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/lo_groupLabel_txt"
                 app:layout_constraintBottom_toBottomOf="@id/lo_groupLabel_txt"
-                />
+                >
+                <ImageView
+                    style="@style/Theme.Tegao.IconImage"
+                    android:src="@drawable/ftc_round_select_all_128"
+                    android:layout_gravity="center"
+                    />
+            </FrameLayout>
             
         </androidx.constraintlayout.widget.ConstraintLayout>
 

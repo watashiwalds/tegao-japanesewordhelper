@@ -6,9 +6,9 @@ import com.tegaoteam.application.tegao.utils.TermBank
 data class TagItem(
     val label: String? = null,
     val detail: String? = null,
-    val backgroundResId: Int? = null,
-    val backgroundColor: Int? = null,
-    val textColor: Int? = null,
+    val backgroundResId: Int = 0,
+    val backgroundColor: Int = 0,
+    val textColor: Int = 0,
     val clickListener: (TagItem) -> Unit = {},
 ) {
     fun onClick() {

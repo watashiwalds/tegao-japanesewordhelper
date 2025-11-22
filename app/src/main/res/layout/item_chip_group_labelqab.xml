@@ -53,7 +53,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/themedChipDisplay_rcy"
+            android:id="@+id/unv_themedChipDisplay_rcy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_small"

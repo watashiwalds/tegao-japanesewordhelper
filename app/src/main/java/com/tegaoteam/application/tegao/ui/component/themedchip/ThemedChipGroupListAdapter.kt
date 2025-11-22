@@ -30,7 +30,7 @@ class ThemedChipGroupListAdapter<T: ViewDataBinding>(private val lifecycleOwner:
     inner class ViewHolder(private val binding: T, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
         fun bind(group: ThemedChipGroup) {
             binding.setVariable(BR.groupInfo, group)
-            binding.root.findViewById<RecyclerView>(R.id.themedChipDisplay_rcy)?.let {
+            binding.root.findViewById<RecyclerView>(R.id.unv_themedChipDisplay_rcy)?.let {
                 it.layoutManager = group.layoutManager
                 it.adapter = group.listAdapter
             }

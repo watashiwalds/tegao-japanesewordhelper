@@ -95,7 +95,7 @@ class LookupActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        _binding.keywordInputEdt.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+        _binding.unvInputFieldEdt.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 updateSearchString()
             }
@@ -104,7 +104,7 @@ class LookupActivity : AppCompatActivity() {
 
     private fun initObservers() {
         _viewModel.userSearchString.observe(this) { value ->
-            _binding.keywordInputEdt.setText(value)
+            _binding.unvInputFieldEdt.setText(value)
         }
         _viewModel.evClearSearchString.beacon.observe(this) {
             if (_viewModel.evClearSearchString.receive()) {
@@ -145,16 +145,16 @@ class LookupActivity : AppCompatActivity() {
         if (_addonRepo.isHandwritingAvailable()) _handwritingBoardView = WritingViewBindingHelper.fullSuggestionBoard(
             _addonRepo,
             this,
-            _binding.keywordInputEdt,
-            _binding.loSpecialistInputBoardHolderFrm,
+            _binding.unvInputFieldEdt,
+            _binding.unvCustomInputHolderFrm,
             _binding.switchHandwritingModeIcl
         )
     }
 
-    fun updateSearchString() = _viewModel.setSearchString(_binding.keywordInputEdt.text.toString())
+    fun updateSearchString() = _viewModel.setSearchString(_binding.unvInputFieldEdt.text.toString())
 
     fun clearSearchString() {
-        _binding.keywordInputEdt.text?.clear()
+        _binding.unvInputFieldEdt.text?.clear()
         updateSearchString()
     }
 
@@ -219,10 +219,10 @@ class LookupActivity : AppCompatActivity() {
     }
 
     private fun makeCleanStartState() {
-        _binding.keywordInputEdt.requestFocus()
+        _binding.unvInputFieldEdt.requestFocus()
     }
     private fun makeRequestedSearchState(keyword: String) {
-        _binding.keywordInputEdt.setText(keyword)
+        _binding.unvInputFieldEdt.setText(keyword)
         updateSearchString()
         _viewModel.evStartSearch.ignite()
     }
@@ -230,7 +230,7 @@ class LookupActivity : AppCompatActivity() {
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         BehaviorPreset.cancelInputWhenTouchOutside(
             ev,
-            _binding.keywordInputEdt,
+            _binding.unvInputFieldEdt,
             currentFocus,
             getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager,
             _binding.inputClearBtn, _handwritingBoardView, _binding.switchHandwritingModeIcl.root

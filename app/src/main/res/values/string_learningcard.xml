@@ -15,7 +15,7 @@
     <string name="card_create_error_no_type">Hãy chọn một loại thẻ để tiếp tục</string>
 
     <string name="card_create_what_answer">Câu trả lời của thẻ này là?</string>
-    <string name="card_create_warning_empty_answer_label">Câu trả lời rỗng</string>
+    <string name="card_create_warning_empty_answer_label">Trường nhập rỗng</string>
     <string name="card_create_warning_empty_answer_message">Bạn chưa nhập câu trả lời cho thẻ. Thẻ sẽ nhận câu trả lời đúng là rỗng. Chắc chắn chứ?</string>
     <string name="card_create_warning_lengthy_answer_label">Câu trả lời dài</string>
     <string name="card_create_warning_lengthy_answer_message">Câu trả lời dài khó để nhập hiệu quả và chính xác. Bạn chắc chắn chứ?</string>

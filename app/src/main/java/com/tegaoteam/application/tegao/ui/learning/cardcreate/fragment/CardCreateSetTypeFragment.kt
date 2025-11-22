@@ -33,9 +33,12 @@ class CardCreateSetTypeFragment: Fragment() {
         initVariables()
         initView()
 
-        displayLastResult()
-
         return _binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        displayLastResult()
     }
 
     private fun initVariables() {

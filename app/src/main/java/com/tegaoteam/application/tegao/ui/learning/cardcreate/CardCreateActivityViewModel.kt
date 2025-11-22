@@ -61,7 +61,7 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     //region [SetAnswer]
     var selectedAnswer: String? = null
         private set
-    fun submitSelectedAnswer(answer: String) {
+    fun submitSelectedAnswer(answer: String?) {
         if (selectedType == LearningCardConst.Type.TYPE_ANSWERCARD.id) selectedAnswer = answer
     }
     //endregion

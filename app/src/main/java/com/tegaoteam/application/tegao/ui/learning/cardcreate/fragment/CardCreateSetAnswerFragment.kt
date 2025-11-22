@@ -75,7 +75,7 @@ class CardCreateSetAnswerFragment: Fragment() {
         }
     }
 
-    private fun submitAnswer(answer: String) {
+    private fun submitAnswer(answer: String?) {
         _parentViewModel.submitSelectedAnswer(answer)
         findNavController().navigate(CardCreateSetAnswerFragmentDirections.actionCardCreateSetAnswerFragmentToCardCreateSetBackFragment())
     }
@@ -115,7 +115,7 @@ class CardCreateSetAnswerFragment: Fragment() {
                 context = requireContext(),
                 title = R.string.card_create_warning_empty_answer_label,
                 message = R.string.card_create_warning_empty_answer_message,
-                lambdaRun = { submitAnswer("") }
+                lambdaRun = { submitAnswer(null) }
             )
         } else if (ans.length > 30) {
             DialogPreset.requestConfirmation(

@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.ui.component.handwriting
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -15,13 +16,18 @@ import com.tegaoteam.application.tegao.ui.component.generics.SwitchButtonInfo
 
 class WritingViewBindingHelper {
     companion object {
+        /**
+         * Binding a full functions WritingBoard according to provided variables.
+         *
+         * @return Inflated binding.root if successful, null otherwise.
+         */
         fun fullSuggestionBoard(
             addonRepo: AddonRepo,
             activity: AppCompatActivity,
             linkedEditText: EditText,
             boardHolder: ViewGroup,
             switchButtonBinding: ViewButtonPushswitchIcononlyBinding
-            ) {
+        ): View? {
             if (addonRepo.isHandwritingAvailable()) {
                 val handwritingBoardBinding = ViewWritingBoardFullBinding.inflate(LayoutInflater.from(activity)).apply {
                     root.id = R.id.addons_writingView_fullBoard_ifl
@@ -37,7 +43,7 @@ class WritingViewBindingHelper {
                     writingBinding = handwritingBoardBinding,
                     onRequestRecognition = { bitmap -> addonRepo.handwritingAddonApi?.requestInputSuggestions(bitmap) },
                     editText = linkedEditText,
-                    //todo: keep an eye, if crash or malfunction of writing view, probably 'cause of !!
+                    //keep an eye, if crash or malfunction of writing view, probably 'cause of !!
                     onStrokeFinished = { writingViewController!!.requestSuggestions() },
                     onEnterKeyPressed = null
                 )
@@ -62,7 +68,9 @@ class WritingViewBindingHelper {
                     lifecycleOwner = activity
                     executePendingBindings()
                 }
+                return handwritingBoardBinding.root
             }
+            return null
         }
     }
 }

@@ -4,6 +4,7 @@ data class CardEntry(
     val cardId: Long,
     val groupId: Long,
     val type: Int,
+    val dateCreated: String,
     val front: String,
     val answer: String?,
     val back: String

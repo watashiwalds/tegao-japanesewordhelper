@@ -16,6 +16,7 @@ data class SRSCardEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = COL_ID) val cardId: Long,
     @ColumnInfo(name = COL_GROUPID) val groupId: Long,
     @ColumnInfo(name = COL_TYPE) val type: Int,
+    @ColumnInfo(name = COL_DATECREATED, defaultValue = "2025-10-01T00:00:00Z") val dateCreated: String,
     @ColumnInfo(name = COL_FRONT) val front: String,
     @ColumnInfo(name = COL_ANSWER) val answer: String?,
     @ColumnInfo(name = COL_BACK) val back: String
@@ -25,6 +26,7 @@ data class SRSCardEntity(
         const val COL_ID = "cardId"
         const val COL_GROUPID = SRSCardGroup.COL_ID
         const val COL_TYPE = "type"
+        const val COL_DATECREATED = "dateCreated"
         const val COL_FRONT = "front"
         const val COL_ANSWER = "answer"
         const val COL_BACK = "back"
@@ -34,6 +36,7 @@ data class SRSCardEntity(
             entity.groupId,
             entity.type,
             entity.front,
+            entity.dateCreated,
             entity.answer,
             entity.back
         )
@@ -43,6 +46,7 @@ data class SRSCardEntity(
             entry.groupId,
             entry.type,
             entry.front,
+            entry.dateCreated,
             entry.answer,
             entry.back
         )

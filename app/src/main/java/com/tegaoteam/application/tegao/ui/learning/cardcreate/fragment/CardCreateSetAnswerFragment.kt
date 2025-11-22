@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueInputBinding
 import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
@@ -37,7 +38,7 @@ class CardCreateSetAnswerFragment: Fragment() {
     }
 
     private fun initVariables() {
-        _inputBarView = InputBarView(requireContext(), this)
+        _inputBarView = InputBarView(requireContext(), this, AddonHub())
     }
 
     private fun initView() {

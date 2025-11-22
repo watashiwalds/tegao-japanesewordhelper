@@ -28,6 +28,7 @@ import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistory
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
         AutoMigration(from = 4, to = 5),
+        AutoMigration(from = 5, to = 6)
                      ],
     exportSchema = true)
 abstract class SQLiteDatabase: RoomDatabase() {
@@ -38,7 +39,7 @@ abstract class SQLiteDatabase: RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "tegao_sqlite_db"
-        const val DATABASE_VERSION = 5
+        const val DATABASE_VERSION = 6
 
         @Volatile
         private var _instance: SQLiteDatabase? = null

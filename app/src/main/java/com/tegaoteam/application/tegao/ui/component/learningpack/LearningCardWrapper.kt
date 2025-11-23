@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.ui.component.learningpack
 
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
@@ -38,7 +39,7 @@ class LearningCardWrapper(private val context: Context, private val lifecycleOwn
         // Back
         cardEntry.answer?.let {
             initInputBar()
-            binding.loFrontHeaderBarFrm.apply {
+            binding.loFrontFooterBarFrm.apply {
                 removeAllViews()
                 addView(_inputBarView.view)
                 toggleVisibility(true)
@@ -57,17 +58,20 @@ class LearningCardWrapper(private val context: Context, private val lifecycleOwn
         when (cardType) {
             CARDTYPE_ANSWERCARD -> {
                 initInputBar()
-                binding.loFrontHeaderBarFrm.apply {
+                binding.loFrontFooterBarFrm.apply {
                     removeAllViews()
                     addView(_inputBarView.view)
                     toggleVisibility(true)
                 }
                 binding.loBackFooterBarFrm.apply {
                     removeAllViews()
-                    cardEntry.answer?.let { addView(AppCompatTextView(themedContext).apply {
-                        textAlignment = AppCompatTextView.TEXT_ALIGNMENT_CENTER
-                        text = it
-                    })}
+                    cardEntry.answer?.let {
+                        addView(AppCompatTextView(themedContext).apply {
+                            gravity = Gravity.CENTER
+                            text = it
+                        })
+                        toggleVisibility(true)
+                    }
                 }
             }
         }

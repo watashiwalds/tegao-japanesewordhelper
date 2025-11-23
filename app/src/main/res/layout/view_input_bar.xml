@@ -18,7 +18,7 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/unv_inputField_edt"
-            android:paddingVertical="@dimen/padding_large"
+            android:paddingVertical="@dimen/padding_normal"
             android:paddingStart="@dimen/padding_normal"
             android:inputType="text"
             android:layout_width="0dp"

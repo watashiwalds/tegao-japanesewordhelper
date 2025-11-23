@@ -101,9 +101,9 @@ class CardCreateConfirmationFragment: Fragment() {
         }
 
         _binding.placeholderQabBtn.apply {
-            updateContents()
             setSrcWithResId(R.drawable.ftc_bold_view_128)
             setOnClickListener {
+                updateContents()
                 _parentViewModel.parsingCardPlaceholder()
                 val preview = LearningCardWrapper(
                     context = requireContext(),

@@ -24,8 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@id/lo_backFooterBar_frm"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/lo_backFooterBar_frm">
                 <LinearLayout
                     android:id="@+id/lo_cardBackContents_lst"
                     android:layout_width="match_parent"
@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/padding_small"
                 android:visibility="gone"
                 />
         </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout>
@@ -55,20 +56,13 @@
             android:padding="@dimen/padding_large"
             android:layout_margin="@dimen/padding_large"
             >
-            <FrameLayout
-                android:id="@+id/lo_frontHeaderBar_frm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"
-                />
             <ScrollView
                 style="@style/Theme.Tegao.ScrollableViewFadeEdge"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/lo_frontHeaderBar_frm"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/lo_frontFooterBar_frm">
                 <LinearLayout
                     android:id="@+id/lo_cardFrontContents_lst"
                     android:layout_width="match_parent"
@@ -76,6 +70,14 @@
                     android:orientation="vertical"
                     />
             </ScrollView>
+            <FrameLayout
+                android:id="@+id/lo_frontFooterBar_frm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                />
         </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

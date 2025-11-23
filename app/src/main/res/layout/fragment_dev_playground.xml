@@ -10,42 +10,15 @@
         style="@style/Theme.Tegao.Screen"
         tools:context=".ui.setting.devmode.DevPlaygroundFragment">
 
-        <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
-            android:id="@+id/flickview"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_margin="@dimen/padding_large"
-
-            android:background="@drawable/neutral_stroke_background"
-            app:flickable="@{false}"
-
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="Drag this!"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout>
-
-        <Button
-            android:id="@+id/toggleFlick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="Toggle Flickable"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

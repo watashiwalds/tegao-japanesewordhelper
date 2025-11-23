@@ -16,7 +16,8 @@ import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 
 class LearningCardWrapper(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val cardEntry: CardEntry, val mode: Int) {
-    private val themedContext = ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
+    private val themedContext = ContextThemeWrapper(context, R.style.Theme_Tegao_LearningCardText_Default)
+    private val defaultContext = ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
     private lateinit var _inputBarView: InputBarView
 
     fun inflate(): View {
@@ -66,7 +67,7 @@ class LearningCardWrapper(private val context: Context, private val lifecycleOwn
                 binding.loBackFooterBarFrm.apply {
                     removeAllViews()
                     cardEntry.answer?.let {
-                        addView(AppCompatTextView(themedContext).apply {
+                        addView(AppCompatTextView(defaultContext).apply {
                             gravity = Gravity.CENTER
                             text = it
                         })

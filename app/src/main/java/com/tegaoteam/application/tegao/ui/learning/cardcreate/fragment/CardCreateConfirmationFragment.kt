@@ -1,12 +1,15 @@
 package com.tegaoteam.application.tegao.ui.learning.cardcreate.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.InputType
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -20,6 +23,9 @@ import kotlin.getValue
 class CardCreateConfirmationFragment: Fragment() {
     private lateinit var _binding: FragmentCardCreateValueInputBinding
     private val _parentViewModel: CardCreateActivityViewModel by activityViewModels()
+
+    private lateinit var _frontRawEditText: EditText
+    private lateinit var _backRawEditText: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +49,30 @@ class CardCreateConfirmationFragment: Fragment() {
         _binding.loFragmentTitleText.setText(R.string.card_create_confirmation)
 
         val plc = _parentViewModel.parsedCardPlaceholder
-        val pad16 = dpToPixel(16f).toInt()
         plc?.let {
+            val pad16 = dpToPixel(16f).toInt()
+            val themedContext = ContextThemeWrapper(requireContext(), R.style.Theme_Tegao_ContentText_Normal)
+            val edtLayoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(pad16, 0, 0, pad16)
+            }
+            _frontRawEditText = AppCompatEditText(themedContext).apply {
+                layoutParams = edtLayoutParams
+                isSingleLine = false
+                gravity = Gravity.START or Gravity.TOP
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            }
+            _backRawEditText = AppCompatEditText(themedContext).apply {
+                layoutParams = edtLayoutParams
+                isSingleLine = false
+                gravity = Gravity.START or Gravity.TOP
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            }
+
             _binding.loInputFieldListLst.apply {
                 removeAllViews()
-                val themedContext = ContextThemeWrapper(requireContext(), R.style.Theme_Tegao_ContentText_Normal)
                 addView(AppCompatTextView(themedContext).apply {
                     text = getString(R.string.card_create_info_general).format(
                         _parentViewModel.cardTypeChipItems.find { it.first == plc.type }!!.second.split("\n")[0],
@@ -55,19 +80,17 @@ class CardCreateConfirmationFragment: Fragment() {
                     )
                     setPadding(0, pad16, 0, pad16)
                 })
-                plc.answer?.let { addView(TextView(themedContext).apply {
+                plc.answer?.let { addView(AppCompatTextView(themedContext).apply {
                     text = getString(R.string.card_create_info_answer).format(it)
                     setPadding(0, 0, 0, pad16)
                 }) }
                 addView(AppCompatTextView(themedContext).apply{ text = getString(R.string.card_create_info_front) })
-                addView(AppCompatTextView(themedContext).apply{
-                    text = plc.front
-                    setPadding(pad16, 0, 0, pad16)
+                addView(_frontRawEditText.apply {
+                    editableText.append(plc.front)
                 })
                 addView(AppCompatTextView(themedContext).apply{ text = getString(R.string.card_create_info_back) })
-                addView(AppCompatTextView(themedContext).apply{
-                    text = plc.back
-                    setPadding(pad16, 0, 0, pad16)
+                addView(_backRawEditText.apply {
+                    editableText.append(plc.back)
                 })
             }
         }

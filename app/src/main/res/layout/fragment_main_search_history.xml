@@ -22,7 +22,7 @@
             android:id="@+id/lo_searchBar_cst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/primary_thick_stroke_background"
+            android:background="@drawable/primary_stroke_background"
             android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintTop_toTopOf="parent"
             android:onClick="@{() -> viewModel.evNavigateToLookupActivity.ignite()}">

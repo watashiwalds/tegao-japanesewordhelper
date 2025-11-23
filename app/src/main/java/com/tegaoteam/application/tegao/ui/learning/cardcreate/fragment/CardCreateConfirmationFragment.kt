@@ -111,7 +111,7 @@ class CardCreateConfirmationFragment: Fragment() {
                     cardEntry = CardPlaceholder.toDomainCardEntry(_parentViewModel.parsedCardPlaceholder!!),
                     mode = LearningCardWrapper.MODE_PREVIEW
                 ).inflate()
-                DialogPreset.quickView(requireContext(), preview)
+                DialogPreset.quickView(requireContext(), preview, R.string.card_create_preview_gesture_hint)
             }
             toggleVisibility(true)
         }

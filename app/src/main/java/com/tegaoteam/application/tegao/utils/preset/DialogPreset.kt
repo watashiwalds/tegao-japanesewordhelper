@@ -56,8 +56,13 @@ object DialogPreset {
         return binding
     }
 
-    fun quickView(context: Context, view: View) {
+    fun quickView(context: Context, view: View, message: Any? = null) {
         val binding = DataBindingUtil.inflate<DialogQuickViewBinding>(LayoutInflater.from(context), R.layout.dialog_quick_view, null, false)
+        when (message) {
+            is String -> binding.message.text = message
+            is Int -> binding.message.setTextWithResId(message)
+            else -> binding.message.setTextWithResId(0)
+        }
         val dialog = AlertDialog.Builder(context).apply {
             setView(binding.root)
         }.create()

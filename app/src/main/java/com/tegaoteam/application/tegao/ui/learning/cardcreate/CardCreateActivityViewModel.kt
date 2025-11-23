@@ -75,6 +75,7 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     }
     //endregion
 
+    //region [Parsing to Placeholder]
     var parsedCardPlaceholder: CardPlaceholder? = null
     fun parsingCardPlaceholder() {
         parsedCardPlaceholder = CardPlaceholder.parseFromSelectedMaterials(
@@ -86,6 +87,16 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
             backKeys = selectedBacks?: listOf()
         )
     }
+    //endregion
+
+    //region [Update if content changed during confirmation]
+    fun updatePlaceholderContents(front: String?, back: String?) {
+        parsedCardPlaceholder?.apply {
+            front?.let { this.front = it }
+            back?.let { this.back = it }
+        }
+    }
+    //endregion
 
     companion object {
         class ViewModelFactory(

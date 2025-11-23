@@ -16,8 +16,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueInputBinding
+import com.tegaoteam.application.tegao.ui.component.learningpack.LearningCardWrapper
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
+import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardPlaceholder
 import com.tegaoteam.application.tegao.utils.dpToPixel
+import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.utils.setSrcWithResId
+import com.tegaoteam.application.tegao.utils.toggleVisibility
 import kotlin.getValue
 
 class CardCreateConfirmationFragment: Fragment() {
@@ -94,5 +99,32 @@ class CardCreateConfirmationFragment: Fragment() {
                 })
             }
         }
+
+        _binding.placeholderQabBtn.apply {
+            updateContents()
+            setSrcWithResId(R.drawable.ftc_bold_view_128)
+            setOnClickListener {
+                _parentViewModel.parsingCardPlaceholder()
+                val preview = LearningCardWrapper(
+                    context = requireContext(),
+                    lifecycleOwner = viewLifecycleOwner,
+                    cardEntry = CardPlaceholder.toDomainCardEntry(_parentViewModel.parsedCardPlaceholder!!),
+                    mode = LearningCardWrapper.MODE_PREVIEW
+                ).inflate()
+                DialogPreset.quickView(requireContext(), preview)
+            }
+            toggleVisibility(true)
+        }
+        _binding.nextBtn.setOnClickListener {
+            DialogPreset.requestConfirmation(
+                requireContext(),
+                0,
+                _frontRawEditText.text.toString()
+            )
+        }
+    }
+
+    private fun updateContents() {
+        _parentViewModel.updatePlaceholderContents(_frontRawEditText.text.toString(), _backRawEditText.text.toString())
     }
 }

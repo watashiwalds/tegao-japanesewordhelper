@@ -2,10 +2,12 @@ package com.tegaoteam.application.tegao.utils.preset
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.databinding.DialogQuickViewBinding
 import com.tegaoteam.application.tegao.databinding.DialogYesOrNoBinding
 import com.tegaoteam.application.tegao.utils.setTextWithResId
 
@@ -52,5 +54,21 @@ object DialogPreset {
             else -> binding.message.setTextWithResId(0)
         }
         return binding
+    }
+
+    fun quickView(context: Context, view: View) {
+        val binding = DataBindingUtil.inflate<DialogQuickViewBinding>(LayoutInflater.from(context), R.layout.dialog_quick_view, null, false)
+        val dialog = AlertDialog.Builder(context).apply {
+            setView(binding.root)
+        }.create()
+        binding.apply {
+            frame.apply {
+                removeAllViews()
+                addView(view)
+            }
+            dismissBtn.setOnClickListener { dialog.dismiss() }
+            executePendingBindings()
+        }
+        dialog.show()
     }
 }

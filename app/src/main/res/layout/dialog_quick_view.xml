@@ -4,7 +4,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/padding_normal"
         android:layout_margin="@dimen/padding_large"
         android:background="@drawable/neutral_filled_stroke_background">
@@ -32,7 +32,7 @@
         <FrameLayout
             android:id="@+id/frame"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/lo_headerBar_frm"
             app:layout_constraintBottom_toBottomOf="parent"
             />

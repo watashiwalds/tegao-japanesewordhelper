@@ -10,7 +10,7 @@
         </shape>
     </item>
     <item
-        android:height="24dp"
+        android:height="40dp"
         android:gravity="bottom">
         <shape>
             <corners

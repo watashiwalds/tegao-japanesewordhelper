@@ -32,6 +32,6 @@
     <string name="card_create_info_front">Mặt trước</string>
     <string name="card_create_info_back">Mặt sau</string>
 
-    <string name="card_create_preview_gesture_hint">Giữ và kéo viền thẻ để di chuyển</string>
+    <string name="card_create_preview_gesture_hint">Giữ và kéo viền thẻ để di chuyển\nThẻ xem thử giới hạn so với thực tế</string>
 
 </resources>

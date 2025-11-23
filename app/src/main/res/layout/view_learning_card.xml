@@ -16,7 +16,9 @@
             app:layout_constraintDimensionRatio="9:15"
 
             android:background="@drawable/view_flickcard_back"
-            android:padding="@dimen/padding_large"
+            android:paddingHorizontal="@dimen/padding_large"
+            android:paddingTop="@dimen/padding_large"
+            android:paddingBottom="40dp"
             android:layout_margin="@dimen/padding_large"
             >
             <ScrollView
@@ -53,7 +55,9 @@
             app:layout_constraintDimensionRatio="9:15"
 
             android:background="@drawable/view_flickcard_front"
-            android:padding="@dimen/padding_large"
+            android:paddingHorizontal="@dimen/padding_large"
+            android:paddingTop="@dimen/padding_large"
+            android:paddingBottom="40dp"
             android:layout_margin="@dimen/padding_large"
             >
             <ScrollView

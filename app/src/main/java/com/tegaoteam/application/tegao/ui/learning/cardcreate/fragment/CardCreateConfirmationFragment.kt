@@ -23,6 +23,7 @@ import com.tegaoteam.application.tegao.utils.dpToPixel
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
 import com.tegaoteam.application.tegao.utils.toggleVisibility
+import timber.log.Timber
 import kotlin.getValue
 
 class CardCreateConfirmationFragment: Fragment() {
@@ -104,7 +105,6 @@ class CardCreateConfirmationFragment: Fragment() {
             setSrcWithResId(R.drawable.ftc_bold_view_128)
             setOnClickListener {
                 updateContents()
-                _parentViewModel.parsingCardPlaceholder()
                 val preview = LearningCardWrapper(
                     context = requireContext(),
                     lifecycleOwner = viewLifecycleOwner,

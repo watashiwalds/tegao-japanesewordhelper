@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +17,7 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.utils.setSrcWithResId
 
 class CardCreateSetGroupFragment : Fragment() {
     private lateinit var _binding: FragmentCardCreateValueSelectBinding
@@ -56,7 +56,7 @@ class CardCreateSetGroupFragment : Fragment() {
     private fun initView() {
         _binding.loFragmentTitleText.setText(R.string.card_create_what_group)
         _binding.placeholderQabBtn.apply {
-            setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ftc_round_plus_128))
+            setSrcWithResId(R.drawable.ftc_round_plus_128)
             setOnClickListener {
                 DialogPreset.requestValueDialog(
                     requireContext(),

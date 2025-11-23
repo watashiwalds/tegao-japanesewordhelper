@@ -56,10 +56,10 @@ class CardCreateActivity : AppCompatActivity() {
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (currentFocus is EditText) BehaviorPreset.cancelInputWhenTouchOutside(
             ev,
-            findViewById(R.id.unv_inputField_edt),
+            currentFocus!!,
             currentFocus,
             getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager,
-            _binding.unvCustomInputHolderFrm, findViewById(R.id.view_inputBarView))
+            _binding.unvCustomInputHolderFrm, findViewById(R.id.view_inputBarView), currentFocus)
         return super.dispatchTouchEvent(ev)
     }
 }

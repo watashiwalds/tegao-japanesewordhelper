@@ -9,15 +9,13 @@ import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ViewInputBarBinding
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
-import timber.log.Timber
 
 class InputBarView(
-    private val _context: Context,
-    private val _lifecycleOwner: LifecycleOwner,
-    private val _addonRepo: AddonRepo? = null,
-    private val _writingBoardLocatedViewGroup: ViewGroup? = null
+    context: Context,
+    lifecycleOwner: LifecycleOwner,
+    addonRepo: AddonRepo? = null
 ) {
-    private val _binding = ViewInputBarBinding.inflate(LayoutInflater.from(_context))
+    private val _binding = ViewInputBarBinding.inflate(LayoutInflater.from(context))
     val view = _binding.root
 
     //region Normal, basic input method
@@ -26,11 +24,9 @@ class InputBarView(
     init {
         _binding.unvInputFieldEdt.doOnTextChanged { text, start, end, count ->
             enableClearInput.value = text?.isNotEmpty()?: false
-            Timber.i("Text is changing, clear string is ${enableClearInput.value}")
         }
         _binding.inputClearBtn.setOnClickListener {
             _binding.unvInputFieldEdt.apply {
-                clearFocus()
                 text?.clear()
             }
         }
@@ -43,7 +39,7 @@ class InputBarView(
 
     // Handwriting handling if enabled
     //todo: bind handwriting also when using this bar view
-    val isHandwritingEnabled = _addonRepo?.isHandwritingAvailable()?: false
+    val isHandwritingEnabled = addonRepo?.isHandwritingAvailable()?: false
     init {
         if (isHandwritingEnabled) {
             _binding.switchHandwritingModeIcl.switchInfo = SwitchButtonInfo(
@@ -56,7 +52,7 @@ class InputBarView(
     // Final init for binding this object and lifecycleOwner to run execute()
     init {
         _binding.inputBar = this
-        _binding.lifecycleOwner = _lifecycleOwner
+        _binding.lifecycleOwner = lifecycleOwner
         _binding.executePendingBindings()
     }
 }

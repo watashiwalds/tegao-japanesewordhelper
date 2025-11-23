@@ -2,23 +2,22 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/padding_large"
-        >
+        android:layout_height="match_parent">
 
         <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
             android:id="@+id/lo_cardBack_flk"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:maxWidth="480dp"
-            android:maxHeight="640dp"
-            android:minWidth="270dp"
-            android:minHeight="360dp"
-            android:layout_gravity="center"
+            android:layout_height="0dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="9:15"
+
             android:background="@drawable/view_flickcard_back"
             android:padding="@dimen/padding_large"
+            android:layout_margin="@dimen/padding_large"
             >
             <ScrollView
                 style="@style/Theme.Tegao.ScrollableViewFadeEdge"
@@ -46,14 +45,15 @@
         <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
             android:id="@+id/lo_cardFront_flk"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:maxWidth="480dp"
-            android:maxHeight="640dp"
-            android:minWidth="270dp"
-            android:minHeight="360dp"
-            android:layout_gravity="center"
+            android:layout_height="0dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="9:15"
+
             android:background="@drawable/view_flickcard_front"
             android:padding="@dimen/padding_large"
+            android:layout_margin="@dimen/padding_large"
             >
             <FrameLayout
                 android:id="@+id/lo_frontHeaderBar_frm"
@@ -78,6 +78,6 @@
             </ScrollView>
         </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout>
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

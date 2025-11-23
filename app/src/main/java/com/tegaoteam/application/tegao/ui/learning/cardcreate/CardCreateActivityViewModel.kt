@@ -12,8 +12,11 @@ import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardMaterial
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardPlaceholder
+import com.tegaoteam.application.tegao.utils.Time
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewModel() {
     //region [Pre-start, fetch materials for card creation from Word/Kanji passed into]
@@ -94,6 +97,35 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
         parsedCardPlaceholder?.apply {
             front?.let { this.front = it }
             back?.let { this.back = it }
+        }
+    }
+    //endregion
+
+    //region [Finalize creation by save card to SQLite]
+    private val _inSavingProcess = MutableLiveData<Boolean>()
+    val inSavingProcess: LiveData<Boolean> = _inSavingProcess
+    private val _saveResultCode = MutableLiveData<Int>()
+    val saveResultCode: LiveData<Int> = _saveResultCode
+
+    fun saveCardToDatabase() {
+//        Timber.i("Receive saving card request")
+        if (_inSavingProcess.value == true) return
+        if (parsedCardPlaceholder == null) return
+//        Timber.i("Accept saving card request")
+        _inSavingProcess.value = true
+
+        parsedCardPlaceholder!!.dateCreated = Time.getCurrentTimestamp().toString()
+        val domainCard = CardPlaceholder.toDomainCardEntry(parsedCardPlaceholder!!)
+
+//        Timber.i("Change scope to perform saving card")
+        viewModelScope.launch(Dispatchers.IO) {
+//            Timber.i("Start saving card: $domainCard")
+            val res = learningRepo.addCard(domainCard)
+//            Timber.i("Finished saving card")
+            withContext(Dispatchers.Main) {
+                _inSavingProcess.value = false
+                _saveResultCode.value = res.toInt()
+            }
         }
     }
     //endregion

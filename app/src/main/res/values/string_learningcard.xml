@@ -34,4 +34,8 @@
 
     <string name="card_create_preview_gesture_hint">Giữ và kéo viền thẻ để di chuyển\nThẻ xem thử có giới hạn so với thực tế</string>
 
+    <string name="card_create_save_processing">Đang lưu thẻ, hãy chờ một chút…</string>
+    <string name="card_create_save_success">Lưu thẻ thành công</string>
+    <string name="card_create_save_failed">Lưu thẻ thất bại</string>
+
 </resources>

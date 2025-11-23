@@ -17,5 +17,10 @@ class AppToast {
             toastInstance = Toast.makeText(context, text, duration)
             toastInstance.show()
         }
+        fun show(resId: Int, duration: Int, context: Context = TegaoApplication.instance.applicationContext) {
+            toastInstance.cancel()
+            toastInstance = Toast.makeText(context, resId, duration)
+            toastInstance.show()
+        }
     }
 }

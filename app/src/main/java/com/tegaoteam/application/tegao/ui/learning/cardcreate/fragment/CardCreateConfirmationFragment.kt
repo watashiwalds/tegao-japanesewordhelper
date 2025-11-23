@@ -19,6 +19,7 @@ import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueInputB
 import com.tegaoteam.application.tegao.ui.component.learningpack.LearningCardWrapper
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardPlaceholder
+import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.dpToPixel
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
@@ -47,6 +48,7 @@ class CardCreateConfirmationFragment: Fragment() {
         )
 
         initView()
+        initObservers()
 
         return _binding.root
     }
@@ -119,8 +121,26 @@ class CardCreateConfirmationFragment: Fragment() {
             DialogPreset.requestConfirmation(
                 requireContext(),
                 0,
-                _frontRawEditText.text.toString()
+                R.string.card_create_last_confirm_message,
+                {
+                    Timber.i("Confirm saving card")
+                    _parentViewModel.saveCardToDatabase()
+                }
             )
+        }
+    }
+
+    private fun initObservers() {
+        _parentViewModel.inSavingProcess.observe(viewLifecycleOwner) {
+            if (it) DialogPreset.showSnackbar(_binding.root, R.string.card_create_save_processing)
+            else DialogPreset.dismissCurrentSnackbar()
+        }
+        _parentViewModel.saveResultCode.observe(viewLifecycleOwner) {
+            if (it == -1) AppToast.show(R.string.card_create_save_failed, AppToast.LENGTH_SHORT)
+            else {
+                AppToast.show(R.string.card_create_save_success, AppToast.LENGTH_SHORT)
+                requireActivity().finish()
+            }
         }
     }
 

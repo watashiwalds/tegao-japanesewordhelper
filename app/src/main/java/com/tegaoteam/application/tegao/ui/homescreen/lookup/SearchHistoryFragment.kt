@@ -54,7 +54,7 @@ class SearchHistoryFragment : Fragment() {
     private fun initVariables() {
         _searchHistoryRepo = SearchHistoryHub()
 
-        _viewModel = ViewModelProvider(this, SearchHistoryFragmentViewModel.Companion.ViewModelFactory(_searchHistoryRepo)).get(SearchHistoryFragmentViewModel::class.java)
+        _viewModel = ViewModelProvider(requireActivity(), SearchHistoryFragmentViewModel.Companion.ViewModelFactory(_searchHistoryRepo)).get(SearchHistoryFragmentViewModel::class.java)
         _binding.lifecycleOwner = viewLifecycleOwner
         _binding.viewModel = _viewModel
 

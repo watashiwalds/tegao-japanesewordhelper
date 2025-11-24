@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_dashboard_duecard_title">Thẻ đến hạn</string>
+    <string name="learning_dashboard_streak_title">Chuỗi ngày học</string>
+    <string name="learning_startAll_title">Bắt đầu học</string>
+</resources>

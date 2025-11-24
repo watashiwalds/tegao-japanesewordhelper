@@ -14,6 +14,7 @@
     <string name="title_label_setting">Cài đặt</string>
     <string name="hint_is_an_input_field">Nhập tại đây…</string>
 
+    <string name="phrase_processing">Đang xử lý…</string>
     <string name="phrase_confirm">Xác nhận</string>
     <string name="phrase_cancel">Huỷ</string>
     <string name="phrase_next">Tiếp</string>

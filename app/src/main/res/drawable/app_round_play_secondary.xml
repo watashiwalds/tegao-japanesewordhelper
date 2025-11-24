@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="@dimen/img_icon_large"
+        android:height="@dimen/img_icon_large">
+        <shape>
+            <corners
+                android:topLeftRadius="5dp"
+                android:bottomLeftRadius="5dp"
+                />
+            <solid android:color="@color/secondary" />
+        </shape>
+    </item>
+
+    <item
+        android:width="@dimen/img_icon"
+        android:height="@dimen/img_icon"
+        android:gravity="center"
+        android:drawable="@drawable/ftc_round_play_128"/>
+</layer-list>

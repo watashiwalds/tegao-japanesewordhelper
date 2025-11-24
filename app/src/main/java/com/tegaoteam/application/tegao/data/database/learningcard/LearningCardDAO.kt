@@ -54,4 +54,16 @@ interface LearningCardDAO {
         return rawDeleteCardsByIds(listOf(cardId))
     }
     //endregion
+
+    //region [Complementary functions to serve various niche query of UI]
+    @Query("""
+        with CardIds as (
+            select ${CardEntity.COL_ID} as related from ${CardEntity.TABLE_NAME}
+            where ${CardGroupEntity.COL_ID} = :groupId
+        )
+        select * from ${CardRepeatEntity.TABLE_NAME}
+        inner join CardIds on ${CardEntity.COL_ID} = related
+    """)
+    fun getCardRepeatsByGroupId(groupId: Long): Flow<List<CardRepeatEntity>>
+    //endregion
 }

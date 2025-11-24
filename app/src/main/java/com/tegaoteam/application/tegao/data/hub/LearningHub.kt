@@ -5,6 +5,7 @@ import com.tegaoteam.application.tegao.data.database.learningcard.CardEntity
 import com.tegaoteam.application.tegao.data.database.learningcard.CardGroupEntity
 import com.tegaoteam.application.tegao.data.database.learningcard.CardRepeatEntity
 import com.tegaoteam.application.tegao.data.model.FlowStream
+import com.tegaoteam.application.tegao.domain.independency.Stream
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.model.CardGroup
 import com.tegaoteam.application.tegao.domain.model.CardRepeat
@@ -22,6 +23,9 @@ class LearningHub: LearningRepo {
 
     override fun getCardRepeatsByCardIds(cardIds: List<Long>): FlowStream<List<CardRepeat>>
         = FlowStream(_srsDb.getCardRepeatsByCardIds(cardIds).map { it.map { item -> CardRepeatEntity.toDomainCardRepeat(item) } })
+
+    override fun getCardRepeatsByGroupId(groupId: Long): FlowStream<List<CardRepeat>>
+        = FlowStream(_srsDb.getCardRepeatsByGroupId(groupId).map { it.map { item -> CardRepeatEntity.toDomainCardRepeat(item) } })
 
     override suspend fun addCardGroup(newGroup: CardGroup): Long
         = _srsDb.upsertCardGroup(CardGroupEntity.fromDomainCardGroup(newGroup))

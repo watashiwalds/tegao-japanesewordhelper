@@ -4,9 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
+import com.tegaoteam.application.tegao.utils.getStringFromAppRes
 
 object IdTranslator {
     const val MAINNAV_TOLOOKUP = "lookup"
+    const val MAINNAV_TOLEARNING = "learning"
 
     /**
      * Get ThemedChipItem for navigating in MainActivity's fragments
@@ -16,10 +18,16 @@ object IdTranslator {
     fun mainNavbarId(navId: String): ThemedChipItem? {
         when (navId) {
             MAINNAV_TOLOOKUP -> return ThemedChipItem(
-                id = (R.id.searchHistoryFragment).toString(),
+                id = (R.id.main_searchHistoryFragment).toString(),
                 label = TegaoApplication.instance.getString(R.string.title_label_lookup),
                 _isSelected = MutableLiveData<Boolean>(),
                 iconResId = R.drawable.ftc_round_search_128
+            )
+            MAINNAV_TOLEARNING -> return ThemedChipItem(
+                id = (R.id.main_learningDashboardFragment).toString(),
+                label = getStringFromAppRes(R.string.title_label_learning),
+                _isSelected = MutableLiveData(),
+                iconResId = R.drawable.ftc_round_flashcard_128
             )
             else -> return null
         }

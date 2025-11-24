@@ -3,13 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/launch_navigation"
-    app:startDestination="@id/searchHistoryFragment">
+    app:startDestination="@id/main_searchHistoryFragment">
 
     <fragment
-        android:id="@+id/searchHistoryFragment"
+        android:id="@+id/main_searchHistoryFragment"
         android:name="com.tegaoteam.application.tegao.ui.homescreen.lookup.SearchHistoryFragment"
         android:label="fragment_lookup"
         tools:layout="@layout/fragment_main_search_history" >
     </fragment>
+    <fragment
+        android:id="@+id/main_learningDashboardFragment"
+        android:name="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningDashboardFragment"
+        android:label="fragment_main_learning_dashboard"
+        tools:layout="@layout/fragment_main_learning_dashboard" />
 
 </navigation>

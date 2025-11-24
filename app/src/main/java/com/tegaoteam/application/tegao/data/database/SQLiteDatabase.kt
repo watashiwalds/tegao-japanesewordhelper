@@ -3,15 +3,17 @@ package com.tegaoteam.application.tegao.data.database
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.RenameTable
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.AutoMigrationSpec
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheDAO
 import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheEntity
-import com.tegaoteam.application.tegao.data.database.srscard.SRSCardDAO
-import com.tegaoteam.application.tegao.data.database.srscard.SRSCardEntity
-import com.tegaoteam.application.tegao.data.database.srscard.SRSCardGroup
-import com.tegaoteam.application.tegao.data.database.srscard.SRSCardRepeat
+import com.tegaoteam.application.tegao.data.database.learningcard.LearningCardDAO
+import com.tegaoteam.application.tegao.data.database.learningcard.CardEntity
+import com.tegaoteam.application.tegao.data.database.learningcard.CardGroupEntity
+import com.tegaoteam.application.tegao.data.database.learningcard.CardRepeatEntity
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryEntity
 import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistoryDAO
 
@@ -19,27 +21,28 @@ import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistory
     entities = [
         SearchHistoryEntity::class,
         DictionaryCacheEntity::class,
-        SRSCardGroup::class,
-        SRSCardEntity::class,
-        SRSCardRepeat::class,
+        CardGroupEntity::class,
+        CardEntity::class,
+        CardRepeatEntity::class,
     ],
     version = SQLiteDatabase.Companion.DATABASE_VERSION,
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
         AutoMigration(from = 4, to = 5),
-        AutoMigration(from = 5, to = 6)
+        AutoMigration(from = 5, to = 6),
+        AutoMigration(from = 6, to = 7, spec = SQLiteDatabase.MigrationSpec6To7::class)
                      ],
     exportSchema = true)
 abstract class SQLiteDatabase: RoomDatabase() {
 
     abstract val searchHistoryDAO: SearchHistoryDAO
     abstract val dictionaryCacheDAO: DictionaryCacheDAO
-    abstract val srsCardDAO: SRSCardDAO
+    abstract val learningCardDAO: LearningCardDAO
 
     companion object {
         const val DATABASE_NAME = "tegao_sqlite_db"
-        const val DATABASE_VERSION = 6
+        const val DATABASE_VERSION = 7
 
         @Volatile
         private var _instance: SQLiteDatabase? = null
@@ -58,4 +61,9 @@ abstract class SQLiteDatabase: RoomDatabase() {
             }
         }
     }
+
+    @RenameTable(fromTableName = "srs_card_detail", toTableName = "learning_card_detail")
+    @RenameTable(fromTableName = "srs_card_group", toTableName = "learning_card_group")
+    @RenameTable(fromTableName = "srs_card_repeat", toTableName = "learning_card_repeat")
+    class MigrationSpec6To7: AutoMigrationSpec
 }

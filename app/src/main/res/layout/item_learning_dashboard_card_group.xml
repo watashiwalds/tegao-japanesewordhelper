@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="dataBind"
+            type="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningBindingDataClasses.DashboardCardGroupBinding" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/padding_small"
                 android:maxLines="1"
+                android:text="@{dataBind.groupEntry.label}"
                 tools:text="Group's label" />
 
             <LinearLayout
@@ -41,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/padding_tiny"
                     app:drawableStartCompat="@drawable/ftc_round_learn_16"
+                    android:text="@{dataBind.newCardsCount}"
                     tools:text="0" />
 
                 <ImageView style="@style/Theme.Tegao.Divider.Vertical" />
@@ -52,6 +60,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/padding_tiny"
                     app:drawableStartCompat="@drawable/ftc_round_clock_16"
+                    android:text="@{dataBind.dueCardsCount}"
                     tools:text="0" />
             </LinearLayout>
 
@@ -62,7 +71,8 @@
                 app:indicatorColor="@color/primary"
                 app:trackColor="@color/primary_light"
                 android:layout_marginTop="@dimen/padding_normal"
-                tools:progress="80"/>
+                android:progress="@{dataBind.clearProgress}"
+                tools:progress="33"/>
 
         </LinearLayout>
 
@@ -72,6 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/app_round_play_secondary"
+            app:toggleVisibility="@{dataBind.onStartLearnClickListener != null}"
+            android:onClick="@{() -> dataBind.onStartLearnClickListener.invoke(dataBind.groupEntry.groupId)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

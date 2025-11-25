@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="dataBind"
+            type="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningBindingDataClasses.QuickCrudItemBinding" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -10,6 +16,8 @@
         android:paddingHorizontal="@dimen/padding_normal"
         android:paddingVertical="@dimen/padding_small"
         android:layout_marginBottom="@dimen/padding_small"
+        android:onClick="@{() -> dataBind.onItemClickListener.invoke(dataBind.id)}"
+        android:clickable="@{dataBind.onItemClickListener != null}"
         >
 
         <TextView
@@ -22,6 +30,7 @@
             app:layout_constraintEnd_toStartOf="@+id/lo_crudQab_lnr"
             android:maxLines="1"
             android:ellipsize="end"
+            android:text="@{dataBind.label}"
 
             tools:text="Label here"
             />
@@ -35,6 +44,7 @@
             app:layout_constraintEnd_toStartOf="@+id/lo_crudQab_lnr"
             android:maxLines="3"
             android:ellipsize="end"
+            android:text="@{dataBind.quickInfo}"
 
             tools:text="The condensed infomations\nthat you want to show the user with\nto aid them with coordinating the list\nwhich should not be too long"
             />
@@ -55,7 +65,8 @@
                 android:layout_height="@dimen/img_icon_big"
                 android:padding="@dimen/padding_tiny"
                 android:src="@drawable/ftc_round_pen_128"
-                android:layout_gravity="end"
+                app:toggleVisibility="@{dataBind.onEditQabClickListener != null}"
+                android:onClick="@{() -> dataBind.onEditQabClickListener.invoke(dataBind.id)}"
                 android:layout_marginBottom="@dimen/padding_small"
                 />
             <ImageButton
@@ -65,7 +76,8 @@
                 android:layout_height="@dimen/img_icon_big"
                 android:padding="@dimen/padding_tiny"
                 android:src="@drawable/ftc_round_trash_128"
-                android:layout_gravity="end"
+                app:toggleVisibility="@{dataBind.onDeleteQabClickListener != null}"
+                android:onClick="@{() -> dataBind.onDeleteQabClickListener.invoke(dataBind.id)}"
                 />
 
         </LinearLayout>

@@ -47,7 +47,7 @@
                 android:fontFamily="@font/calsans_regular"
                 android:maxLines="1"
                 android:textSize="48sp"
-                android:text="@{dataBind != null ? dataBind.dueCardCount : '_'}"
+                android:text='@{dataBind != null ? String.valueOf(dataBind.dueCardCount) : "_"}'
                 />
         </LinearLayout>
 
@@ -82,7 +82,7 @@
                 android:fontFamily="@font/calsans_regular"
                 android:maxLines="1"
                 android:textSize="48sp"
-                android:text="@{dataBind != null ? dataBind.streakCount : '_'}"
+                android:text='@{dataBind != null ? String.valueOf(dataBind.streakCount) : "_"}'
                 />
         </LinearLayout>
 
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/img_icon_big"
                 android:layout_gravity="center_vertical"
-                android:text="@{dataBind != null? String.format(@string/learning_dashboard_groupCount, dataBind.cardGroupCount) : @string/phrase_processing}"
+                android:text="@{dataBind != null? @string/learning_dashboard_groupCount(dataBind.cardGroupCount) : @string/phrase_processing}"
                 />
 
             <ImageButton

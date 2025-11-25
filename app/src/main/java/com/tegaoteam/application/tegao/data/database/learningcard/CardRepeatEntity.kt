@@ -12,7 +12,7 @@ import com.tegaoteam.application.tegao.utils.Time
 data class CardRepeatEntity(
     @PrimaryKey @ColumnInfo(name = COL_ID) val cardId: Long,
     @ColumnInfo(name = COL_LASTREPEAT) var lastRepeat: String = Time.getTodayMidnightTimestamp().toString(),
-    @ColumnInfo(name = COL_NEXTREPEAT) var nextRepeat: String = Time.getTodayMidnightTimestamp().toString()
+    @ColumnInfo(name = COL_NEXTREPEAT) var nextRepeat: String? = null
 ) {
     companion object {
         const val TABLE_NAME = "learning_card_repeat"

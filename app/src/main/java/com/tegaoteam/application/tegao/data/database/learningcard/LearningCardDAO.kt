@@ -77,7 +77,7 @@ interface LearningCardDAO {
 
     @Query("""
         select ${CardEntity.COL_ID} from ${CardRepeatEntity.TABLE_NAME}
-        where ${CardRepeatEntity.COL_NEXTREPEAT} < :nowDate 
+        where ${CardRepeatEntity.COL_NEXTREPEAT} not null and ${CardRepeatEntity.COL_NEXTREPEAT} < :nowDate 
     """)
     fun getTodayDueCardIds(nowDate: String): Flow<List<Long>>
     //endregion

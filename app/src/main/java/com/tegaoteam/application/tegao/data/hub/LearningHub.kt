@@ -17,28 +17,26 @@ class LearningHub: LearningRepo {
 
     override fun getCardGroups(): FlowStream<List<CardGroup>>
         = FlowStream(_srsDb.getCardGroups().map { it.map { item -> CardGroupEntity.toDomainCardGroup(item) } })
-
     override fun getCardsByGroupId(groupId: Long): FlowStream<List<CardEntry>>
         = FlowStream(_srsDb.getCardsByGroupId(groupId).map { it.map { item -> CardEntity.toDomainCardEntry(item) } })
-
+    override fun getCardByCardId(cardId: Long): FlowStream<CardEntry>
+        = FlowStream(_srsDb.getCardByCardId(cardId).map { CardEntity.toDomainCardEntry(it) })
     override fun getCardRepeatsByCardIds(cardIds: List<Long>): FlowStream<List<CardRepeat>>
         = FlowStream(_srsDb.getCardRepeatsByCardIds(cardIds).map { it.map { item -> CardRepeatEntity.toDomainCardRepeat(item) } })
-
     override fun getCardRepeatsByGroupId(groupId: Long): FlowStream<List<CardRepeat>>
         = FlowStream(_srsDb.getCardRepeatsByGroupId(groupId).map { it.map { item -> CardRepeatEntity.toDomainCardRepeat(item) } })
 
     override suspend fun addCardGroup(newGroup: CardGroup): Long
         = _srsDb.upsertCardGroup(CardGroupEntity.fromDomainCardGroup(newGroup))
-
     override suspend fun addCard(newCard: CardEntry): Long
         = _srsDb.upsertCard(CardEntity.fromDomainCardEntry(newCard))
+    override suspend fun deleteCardGroupById(groupId: Long): Int
+        = _srsDb.deleteCardGroupById(groupId)
+    override suspend fun deleteCardById(cardId: Long): Int
+        = _srsDb.deleteCardById(cardId)
 
     override suspend fun updateRepeatTime(cardRepeat: CardRepeat): Long
         = _srsDb.upsertCardRepeat(CardRepeatEntity.fromDomainCardRepeat(cardRepeat))
-
-    override suspend fun deleteCardGroupById(groupId: Long): Int
-        = _srsDb.deleteCardGroupById(groupId)
-
-    override suspend fun deleteCardById(cardId: Long): Int
-        = _srsDb.deleteCardById(cardId)
+    override fun getTodayDueCardIds(nowDate: String): FlowStream<List<Long>>
+        = FlowStream(_srsDb.getTodayDueCardIds(nowDate))
 }

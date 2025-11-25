@@ -7,6 +7,8 @@ import com.google.gson.reflect.TypeToken
 import java.security.MessageDigest
 import java.time.Instant
 import java.time.Duration
+import java.time.LocalDate
+import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
 
 fun JsonObject.toMap(): Map<String, Any> {
@@ -31,7 +33,8 @@ object Time {
             getCurrentTimestamp()
         }
     }
-    fun getCurrentTimestamp(): Instant? = Instant.now()
+    fun getCurrentTimestamp(): Instant = Instant.now()
+    fun getTodayMidnightTimestamp() = LocalDate.now(ZoneOffset.UTC).atStartOfDay().toInstant(ZoneOffset.UTC)
     fun timeDifferenceBetween(start: Any?, end: Any?, differenceIn: Int): Long {
         val cStart = transformToInstant(start)
         val cEnd = transformToInstant(end)

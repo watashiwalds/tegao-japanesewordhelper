@@ -8,23 +8,32 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LearningCardDAO {
-    //region [Normal GET functions]
+    //region [GET functions]
     @Query("""select * from ${CardGroupEntity.TABLE_NAME}""")
     fun getCardGroups(): Flow<List<CardGroupEntity>>
 
     @Query("""select * from ${CardEntity.TABLE_NAME} where ${CardGroupEntity.COL_ID} = :groupId""")
     fun getCardsByGroupId(groupId: Long): Flow<List<CardEntity>>
 
+    @Query("""select * from ${CardEntity.TABLE_NAME} where ${CardEntity.COL_ID} = :cardId""")
+    fun getCardByCardId(cardId: Long): Flow<CardEntity>
+
     @Query("""select * from ${CardRepeatEntity.TABLE_NAME} where ${CardEntity.COL_ID} in (:cardIds)""")
     fun getCardRepeatsByCardIds(cardIds: List<Long>): Flow<List<CardRepeatEntity>>
     //endregion
 
-    //region [Normal INSERT/UPSERT functions]
+    //region [INSERT/UPSERT functions]
     @Upsert
     suspend fun upsertCardGroup(newGroup: CardGroupEntity): Long
 
     @Upsert
-    suspend fun upsertCard(newCard: CardEntity): Long
+    suspend fun rawUpsertCard(newCard: CardEntity): Long
+    @Transaction
+    suspend fun upsertCard(newCard: CardEntity): Long {
+        val cardUpsertRes = rawUpsertCard(newCard)
+        if (cardUpsertRes != -1L) upsertCardRepeat(CardRepeatEntity(newCard.cardId))
+        return cardUpsertRes
+    }
 
     @Upsert
     suspend fun upsertCardRepeat(cardRepeat: CardRepeatEntity): Long
@@ -65,5 +74,11 @@ interface LearningCardDAO {
         inner join CardIds on ${CardEntity.COL_ID} = related
     """)
     fun getCardRepeatsByGroupId(groupId: Long): Flow<List<CardRepeatEntity>>
+
+    @Query("""
+        select ${CardEntity.COL_ID} from ${CardRepeatEntity.TABLE_NAME}
+        where ${CardRepeatEntity.COL_NEXTREPEAT} < :nowDate 
+    """)
+    fun getTodayDueCardIds(nowDate: String): Flow<List<Long>>
     //endregion
 }

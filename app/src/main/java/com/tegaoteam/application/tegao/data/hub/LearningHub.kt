@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.data.hub
 
+import com.tegaoteam.application.tegao.data.config.LearningConfig
 import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
 import com.tegaoteam.application.tegao.data.database.learningcard.CardEntity
 import com.tegaoteam.application.tegao.data.database.learningcard.CardGroupEntity
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.map
 
 class LearningHub: LearningRepo {
     private val _srsDb = SQLiteDatabase.getInstance().learningCardDAO
-
+    //region card crud(s)
     override fun getCardGroups(): FlowStream<List<CardGroup>>
         = FlowStream(_srsDb.getCardGroups().map { it.map { item -> CardGroupEntity.toDomainCardGroup(item) } })
     override fun getCardsByGroupId(groupId: Long): FlowStream<List<CardEntry>>
@@ -39,4 +40,12 @@ class LearningHub: LearningRepo {
         = _srsDb.upsertCardRepeat(CardRepeatEntity.fromDomainCardRepeat(cardRepeat))
     override fun getTodayDueCardIds(nowDate: String): FlowStream<List<Long>>
         = FlowStream(_srsDb.getTodayDueCardIds(nowDate))
+    //endregion
+
+    private val _learningConfig = LearningConfig
+    //region streak manager
+    override fun currentStreak(): FlowStream<Long> = FlowStream(_learningConfig.currentStreak)
+    override fun highestStreak(): FlowStream<Long> = FlowStream(_learningConfig.highestStreak)
+    override suspend fun streakCheckin() { _learningConfig.streakCheckin() }
+    //endregion
 }

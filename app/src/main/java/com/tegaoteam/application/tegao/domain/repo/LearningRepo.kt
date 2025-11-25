@@ -6,6 +6,7 @@ import com.tegaoteam.application.tegao.domain.model.CardGroup
 import com.tegaoteam.application.tegao.domain.model.CardRepeat
 
 interface LearningRepo {
+    //region card crud(s)
     fun getCardGroups(): Stream<List<CardGroup>>
     fun getCardsByGroupId(groupId: Long): Stream<List<CardEntry>>
     fun getCardByCardId(cardId: Long): Stream<CardEntry>
@@ -19,4 +20,11 @@ interface LearningRepo {
 
     suspend fun updateRepeatTime(cardRepeat: CardRepeat): Long
     fun getTodayDueCardIds(nowDate: String): Stream<List<Long>>
+    //endregion
+
+    //region streak manager
+    fun currentStreak(): Stream<Long>
+    fun highestStreak(): Stream<Long>
+    suspend fun streakCheckin()
+    //endregion
 }

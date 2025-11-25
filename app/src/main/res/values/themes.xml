@@ -204,6 +204,7 @@
         <item name="android:overScrollMode">ifContentScrolls</item>
     </style>
 
+    <style name="Theme.Tegao.Divider"/>
     <style name="Theme.Tegao.Divider.Horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>

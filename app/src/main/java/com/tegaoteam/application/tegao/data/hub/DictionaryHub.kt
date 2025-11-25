@@ -25,7 +25,7 @@ class DictionaryHub: DictionaryRepo {
         val cache = getDictionaryCache(keyword, Word.TYPE_VALUE, dictionaryId)
         cache?.let{
             // cache older than 7 days -> force refresh, newer -> return as result
-            if (Time.timeDifferenceBetween(it.cacheDate, Time.getCurrentTimestamp(), Time.DIFF_DAY) < 7) {
+            if (Time.preciseTimeDifferenceBetween(it.cacheDate, Time.getCurrentTimestamp(), Time.DIFF_DAY) < 7) {
                 return RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json))
             }
         }
@@ -53,7 +53,7 @@ class DictionaryHub: DictionaryRepo {
         val cache = getDictionaryCache(keyword, Kanji.TYPE_VALUE, dictionaryId)
         cache?.let{
             // cache older than 7 days -> force refresh, newer -> return as result
-            if (Time.timeDifferenceBetween(it.cacheDate, Time.getCurrentTimestamp(), Time.DIFF_DAY) < 7) {
+            if (Time.preciseTimeDifferenceBetween(it.cacheDate, Time.getCurrentTimestamp(), Time.DIFF_DAY) < 7) {
                 return RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json))
             }
         }

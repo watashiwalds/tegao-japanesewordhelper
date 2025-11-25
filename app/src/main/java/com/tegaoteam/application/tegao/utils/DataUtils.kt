@@ -8,7 +8,7 @@ import java.security.MessageDigest
 import java.time.Instant
 import java.time.Duration
 import java.time.LocalDate
-import java.time.ZoneOffset
+import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
 fun JsonObject.toMap(): Map<String, Any> {
@@ -34,8 +34,8 @@ object Time {
         }
     }
     fun getCurrentTimestamp(): Instant = Instant.now()
-    fun getTodayMidnightTimestamp() = LocalDate.now(ZoneOffset.UTC).atStartOfDay().toInstant(ZoneOffset.UTC)
-    fun timeDifferenceBetween(start: Any?, end: Any?, differenceIn: Int): Long {
+    fun getTodayMidnightTimestamp(): Instant = LocalDate.now(ZoneId.systemDefault()).atStartOfDay(ZoneId.systemDefault()).toInstant()
+    fun preciseTimeDifferenceBetween(start: Any?, end: Any?, differenceIn: Int): Long {
         val cStart = transformToInstant(start)
         val cEnd = transformToInstant(end)
         val durationDiff = Duration.between(cStart, cEnd)
@@ -44,7 +44,7 @@ object Time {
             else -> 0
         }
     }
-    fun logicalTimeDifferenceBetween(start: Any?, end: Any?, differenceIn: Int): Long {
+    fun absoluteTimeDifferenceBetween(start: Any?, end: Any?, differenceIn: Int): Long {
         val cStart = transformToInstant(start)
         val cEnd = transformToInstant(end)
         return when (differenceIn) {

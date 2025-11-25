@@ -16,22 +16,25 @@ class LearningDashboardFragment : Fragment() {
     private lateinit var _binding: FragmentMainLearningDashboardBinding
     private lateinit var _viewModel: LearningDashboardFragmentViewModel
     private lateinit var _learningRepo: LearningRepo
+    private lateinit var _adapter: DashboardGroupListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_main_learning_dashboard, container, false)
+
         initVariables()
         initObservers()
         initView()
 
-        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_main_learning_dashboard, container, false)
         return _binding.root
     }
 
     private fun initVariables() {
         _learningRepo = LearningHub()
         _viewModel = ViewModelProvider(requireActivity(), LearningDashboardFragmentViewModel.Companion.ViewModelFactory(_learningRepo))[LearningDashboardFragmentViewModel::class.java]
+        _adapter = DashboardGroupListAdapter()
     }
 
     private fun initObservers() {
@@ -40,10 +43,23 @@ class LearningDashboardFragment : Fragment() {
                 _binding.dataInfo = it
                 _binding.executePendingBindings()
             }
+            dashboardGroups.observe(viewLifecycleOwner) {
+                //todo: binding listener to the list
+                _adapter.submitList(it)
+            }
+
+            eventRepeatsByGroupUpdated.beacon.observe(viewLifecycleOwner) {
+                if (eventRepeatsByGroupUpdated.receive()) composeDashboardGroup()
+            }
         }
     }
 
     private fun initView() {
-        _viewModel.fetchDashboardInfo()
+        _binding.cardGroupListRcy.adapter = _adapter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        _viewModel.refreshData()
     }
 }

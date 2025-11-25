@@ -5,7 +5,8 @@ import com.tegaoteam.application.tegao.domain.model.CardGroup
 class LearningBindingDataClasses {
     data class DashboardBinding(
         val dueCardCount: Int,
-        val streakCount: Int,
+        val currentStreak: Int,
+        val highestStreak: Int,
         val cardGroupCount: Int
     )
     data class DashboardCardGroupBinding(

@@ -9,6 +9,7 @@
         android:background="@drawable/neutral_stroke_background"
         android:paddingHorizontal="@dimen/padding_normal"
         android:paddingVertical="@dimen/padding_small"
+        android:layout_marginBottom="@dimen/padding_small"
         >
 
         <TextView

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        style="@style/Theme.Tegao.Screen.PaddingBorder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            style="@style/Theme.Tegao.ScrollableViewFadeEdge"
+            android:id="@+id/quickCrudList_rcy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+
+            tools:listitem="@layout/item_card_edit_info_crudqab"
+            />
+
+    </FrameLayout>
+
+</layout>

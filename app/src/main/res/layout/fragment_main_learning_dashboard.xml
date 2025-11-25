@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="dataBind"
-            type="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningBindingDataClasses.DashboardBinding" />
+            name="dataInfo"
+            type="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningInfoDataClasses.DashboardInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +39,7 @@
                 android:fontFamily="@font/calsans_regular"
                 android:maxLines="1"
                 android:textSize="48sp"
-                android:text='@{dataBind != null ? String.valueOf(dataBind.dueCardCount) : "_"}'
+                android:text='@{dataInfo != null ? String.valueOf(dataInfo.dueCardCount) : "_"}'
                 />
             <TextView
                 style="@style/Theme.Tegao.Label.Normal"
@@ -74,7 +74,7 @@
                 android:fontFamily="@font/calsans_regular"
                 android:maxLines="1"
                 android:textSize="48sp"
-                android:text='@{dataBind != null ? String.valueOf(dataBind.currentStreak) : "_"}'
+                android:text='@{dataInfo != null ? String.valueOf(dataInfo.currentStreak) : "_"}'
                 />
             <TextView
                 style="@style/Theme.Tegao.Label.Normal"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/const_white"
                 android:maxLines="1"
-                android:text='@{dataBind != null ? @string/learning_dashboard_streak_title(dataBind.highestStreak) : @string/learning_dashboard_streak_title("_")}'
+                android:text='@{dataInfo != null ? @string/learning_dashboard_streak_title(dataInfo.highestStreak) : @string/learning_dashboard_streak_title("_")}'
                 />
         </LinearLayout>
 
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/img_icon_big"
                 android:layout_gravity="center_vertical"
-                android:text="@{dataBind != null? @string/learning_dashboard_groupCount(dataBind.cardGroupCount) : @string/phrase_processing}"
+                android:text="@{dataInfo != null? @string/learning_dashboard_groupCount(dataInfo.cardGroupCount) : @string/phrase_processing}"
                 />
 
             <ImageButton

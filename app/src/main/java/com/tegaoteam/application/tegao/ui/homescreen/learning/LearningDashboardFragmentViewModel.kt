@@ -20,8 +20,8 @@ class LearningDashboardFragmentViewModel(private val _learningRepo: LearningRepo
     val dueCardIds: LiveData<List<Long>> = _learningRepo.getTodayDueCardIds(Time.getCurrentTimestamp().toString()).asFlow().asLiveData()
 
     //region Display information for dashboard
-    private val _dashboardBinding = MutableLiveData<LearningBindingDataClasses.DashboardBinding>()
-    val dashboardBinding: LiveData<LearningBindingDataClasses.DashboardBinding> = _dashboardBinding
+    private val _dashboardInfo = MutableLiveData<LearningInfoDataClasses.DashboardInfo>()
+    val dashboardInfo: LiveData<LearningInfoDataClasses.DashboardInfo> = _dashboardInfo
     fun fetchDashboardInfo() {
         viewModelScope.launch {
             val groupsCount = cardGroups.value?.size?: _learningRepo.getCardGroups().asFlow().first().size
@@ -29,7 +29,7 @@ class LearningDashboardFragmentViewModel(private val _learningRepo: LearningRepo
             val currentStreak = _learningRepo.currentStreak().asFlow().first()
             val highestStreak = _learningRepo.highestStreak().asFlow().first()
             withContext(Dispatchers.Main) {
-                _dashboardBinding.value = LearningBindingDataClasses.DashboardBinding(
+                _dashboardInfo.value = LearningInfoDataClasses.DashboardInfo(
                     dueCardCount = dueCardsCount,
                     currentStreak = currentStreak.toInt(),
                     highestStreak = highestStreak.toInt(),

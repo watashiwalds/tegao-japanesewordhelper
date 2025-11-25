@@ -36,8 +36,8 @@ class LearningDashboardFragment : Fragment() {
 
     private fun initObservers() {
         _viewModel.apply {
-            dashboardBinding.observe(viewLifecycleOwner) {
-                _binding.dataBind = it
+            dashboardInfo.observe(viewLifecycleOwner) {
+                _binding.dataInfo = it
                 _binding.executePendingBindings()
             }
         }

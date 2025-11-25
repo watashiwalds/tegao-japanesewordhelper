@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="dataBind"
-            type="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningBindingDataClasses.DashboardCardGroupBinding" />
+            name="dataInfo"
+            type="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningInfoDataClasses.DashboardCardGroupInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/padding_small"
                 android:maxLines="1"
-                android:text="@{dataBind.groupEntry.label}"
+                android:text="@{dataInfo.groupEntry.label}"
                 tools:text="Group's label" />
 
             <LinearLayout
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/padding_tiny"
                     app:drawableStartCompat="@drawable/ftc_round_learn_16"
-                    android:text="@{dataBind.newCardsCount}"
+                    android:text="@{dataInfo.newCardsCount}"
                     tools:text="0" />
 
                 <ImageView style="@style/Theme.Tegao.Divider.Vertical" />
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/padding_tiny"
                     app:drawableStartCompat="@drawable/ftc_round_clock_16"
-                    android:text="@{dataBind.dueCardsCount}"
+                    android:text="@{dataInfo.dueCardsCount}"
                     tools:text="0" />
             </LinearLayout>
 
@@ -71,7 +71,7 @@
                 app:indicatorColor="@color/primary"
                 app:trackColor="@color/primary_light"
                 android:layout_marginTop="@dimen/padding_normal"
-                android:progress="@{dataBind.clearProgress}"
+                android:progress="@{dataInfo.clearProgress}"
                 tools:progress="33"/>
 
         </LinearLayout>
@@ -82,8 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/app_round_play_secondary"
-            app:toggleVisibility="@{dataBind.onStartLearnClickListener != null}"
-            android:onClick="@{() -> dataBind.onStartLearnClickListener.invoke(dataBind.groupEntry.groupId)}"
+            app:toggleVisibility="@{dataInfo.onStartLearnClickListener != null}"
+            android:onClick="@{() -> dataInfo.onStartLearnClickListener.invoke(dataInfo.groupEntry.groupId)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -2,14 +2,14 @@ package com.tegaoteam.application.tegao.ui.homescreen.learning
 
 import com.tegaoteam.application.tegao.domain.model.CardGroup
 
-class LearningBindingDataClasses {
-    data class DashboardBinding(
+class LearningInfoDataClasses {
+    data class DashboardInfo(
         val dueCardCount: Int,
         val currentStreak: Int,
         val highestStreak: Int,
         val cardGroupCount: Int
     )
-    data class DashboardCardGroupBinding(
+    data class DashboardCardGroupInfo(
         val groupEntry: CardGroup,
         val newCardsCount: Int,
         val dueCardsCount: Int,
@@ -17,7 +17,7 @@ class LearningBindingDataClasses {
         val onStartLearnClickListener: ((Long) -> Unit)? = null,
         val onGroupClickListener: ((Long) -> Unit)? = null
     )
-    data class QuickCrudItemBinding(
+    data class QuickCrudItemInfo(
         val id: Long,
         val label: String,
         val quickInfo: String,

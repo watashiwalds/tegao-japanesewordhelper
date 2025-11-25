@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.model.CardEntry
+import com.tegaoteam.application.tegao.domain.model.CardRepeat
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.Dispatchers
@@ -18,13 +19,13 @@ import timber.log.Timber
 class DevPlaygroundViewModel: ViewModel() {
     val learningRepo: LearningRepo = LearningHub()
     val groups = learningRepo.getCardGroups().asFlow().asLiveData()
-    val queriedCard = MutableLiveData<List<CardEntry>>()
+    val queriedCardRepeat = MutableLiveData<List<CardRepeat>>()
 
     fun queryCardsByGroupId(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            val cards = learningRepo.getCardsByGroupId(id).asFlow().first()
+            val cards = learningRepo.getCardRepeatsByGroupId(id).asFlow().first()
             withContext(Dispatchers.Main) {
-                queriedCard.value = cards
+                queriedCardRepeat.value = cards
             }
         }
     }

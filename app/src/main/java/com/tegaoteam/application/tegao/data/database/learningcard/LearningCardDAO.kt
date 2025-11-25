@@ -31,7 +31,7 @@ interface LearningCardDAO {
     @Transaction
     suspend fun upsertCard(newCard: CardEntity): Long {
         val cardUpsertRes = rawUpsertCard(newCard)
-        if (cardUpsertRes != -1L) upsertCardRepeat(CardRepeatEntity(newCard.cardId))
+        if (cardUpsertRes != -1L) upsertCardRepeat(CardRepeatEntity(cardUpsertRes))
         return cardUpsertRes
     }
 
@@ -70,9 +70,10 @@ interface LearningCardDAO {
             select ${CardEntity.COL_ID} as related from ${CardEntity.TABLE_NAME}
             where ${CardGroupEntity.COL_ID} = :groupId
         )
-        select * from ${CardRepeatEntity.TABLE_NAME}
-        inner join CardIds on ${CardEntity.COL_ID} = related
+        select * from ${CardRepeatEntity.TABLE_NAME} ori
+        join CardIds flr on ori.${CardEntity.COL_ID} = flr.related
     """)
+//    join CardIds r on f.${CardEntity.COL_ID} = r.related
     fun getCardRepeatsByGroupId(groupId: Long): Flow<List<CardRepeatEntity>>
 
     @Query("""

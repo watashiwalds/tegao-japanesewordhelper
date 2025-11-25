@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentDevPlaygroundBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
+import com.tegaoteam.application.tegao.domain.model.CardRepeat
 import timber.log.Timber
 
 class DevPlaygroundFragment : Fragment() {
@@ -29,17 +30,16 @@ class DevPlaygroundFragment : Fragment() {
     }
 
     private lateinit var viewModel: DevPlaygroundViewModel
-    private val cardsOfGroups = mutableMapOf<Long, List<CardEntry>>()
+    private val cardsOfGroups = mutableListOf<CardRepeat>()
     private fun initObservers() {
         viewModel.evMakePrint.beacon.observe(viewLifecycleOwner) {
             if (viewModel.evMakePrint.receive()) {
-                _binding.textView.text = cardsOfGroups.toString()
+                _binding.textView.text = cardsOfGroups.joinToString("\n") { "${it.cardId}: \n\t${it.lastRepeat} \n\t${it.nextRepeat}" }
             }
         }
-        viewModel.queriedCard.observe(viewLifecycleOwner) {
-            val groupId = it.firstOrNull()?.groupId?: -1
-            cardsOfGroups[groupId] = it
-            Timber.i("1 batch fin")
+        viewModel.queriedCardRepeat.observe(viewLifecycleOwner) {
+            cardsOfGroups.addAll(it)
+            Timber.i("1 batch fin, count: ${it.size}")
             viewModel.evMakePrint.ignite()
         }
         viewModel.groups.observe(viewLifecycleOwner) {

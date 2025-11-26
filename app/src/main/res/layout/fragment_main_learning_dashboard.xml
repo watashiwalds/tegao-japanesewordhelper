@@ -23,7 +23,7 @@
             android:background="@drawable/primary_solid_background"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/padding_normal"
-            android:paddingBottom="@dimen/padding_normal"
+            android:paddingBottom="@dimen/padding_small"
             android:paddingTop="@dimen/padding_small"
             android:layout_marginEnd="@dimen/padding_tiny"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,15 +36,17 @@
                 android:layout_height="wrap_content"
                 style="@style/Theme.Tegao.RemoveDefaultTextPad"
                 android:textColor="@color/const_white"
-                android:fontFamily="@font/calsans_regular"
+                android:fontFamily="@font/baumans_regular"
                 android:maxLines="1"
                 android:textSize="48sp"
                 android:text='@{dataInfo != null ? String.valueOf(dataInfo.dueCardCount) : "_"}'
+                tools:text="1053"
                 />
             <TextView
-                style="@style/Theme.Tegao.Label.Normal"
+                style="@style/Theme.Tegao.Label.SmallThick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:translationY="-6dp"
                 android:textColor="@color/const_white"
                 android:maxLines="1"
                 android:text="@string/learning_dashboard_duecard_title"
@@ -58,7 +60,7 @@
             android:background="@drawable/primary_solid_background"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/padding_normal"
-            android:paddingBottom="@dimen/padding_normal"
+            android:paddingBottom="@dimen/padding_small"
             android:paddingTop="@dimen/padding_small"
             android:layout_marginStart="@dimen/padding_tiny"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,18 +73,21 @@
                 android:layout_height="wrap_content"
                 style="@style/Theme.Tegao.RemoveDefaultTextPad"
                 android:textColor="@color/const_white"
-                android:fontFamily="@font/calsans_regular"
+                android:fontFamily="@font/baumans_regular"
                 android:maxLines="1"
                 android:textSize="48sp"
                 android:text='@{dataInfo != null ? String.valueOf(dataInfo.currentStreak) : "_"}'
+                tools:text="153"
                 />
             <TextView
-                style="@style/Theme.Tegao.Label.Normal"
+                style="@style/Theme.Tegao.Label.SmallThick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/const_white"
+                android:translationY="-6dp"
                 android:maxLines="1"
                 android:text='@{dataInfo != null ? @string/learning_dashboard_streak_title(dataInfo.highestStreak) : @string/learning_dashboard_streak_title("_")}'
+                tools:text="Chuỗi cao nhất: 512"
                 />
         </LinearLayout>
 
@@ -117,6 +122,7 @@
                 android:layout_marginEnd="@dimen/img_icon_big"
                 android:layout_gravity="center_vertical"
                 android:text="@{dataInfo != null? @string/learning_dashboard_groupCount(dataInfo.cardGroupCount) : @string/phrase_processing}"
+                tools:text="1 vài bộ thẻ"
                 />
 
             <ImageButton

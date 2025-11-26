@@ -36,7 +36,7 @@
             />
 
         <TextView
-            style="@style/Theme.Tegao.ContentText.Normal"
+            style="@style/Theme.Tegao.ContentText.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

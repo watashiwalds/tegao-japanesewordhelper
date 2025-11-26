@@ -25,6 +25,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             android:layout_marginTop="@dimen/textSize_large"
+            android:paddingTop="@dimen/padding_small"
             android:paddingBottom="@dimen/img_icon_large"
             android:layout_marginBottom="@dimen/padding_normal"
 

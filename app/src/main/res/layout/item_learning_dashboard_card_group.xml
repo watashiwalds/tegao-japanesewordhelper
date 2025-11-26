@@ -45,25 +45,25 @@
 
                 <TextView
                     android:id="@+id/newCardToday_txt"
-                    style="@style/Theme.Tegao.ContentText.Normal"
+                    style="@style/Theme.Tegao.ContentText.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/padding_tiny"
                     app:drawableStartCompat="@drawable/ftc_round_learn_16"
-                    android:text="@{String.valueOf(dataInfo.newCardsCount)}"
-                    tools:text="0" />
+                    android:text="@{String.format(@string/learning_dashboard_newCount, dataInfo.newCardsCount)}"
+                    tools:text="New 0" />
 
                 <ImageView style="@style/Theme.Tegao.Divider.Vertical" />
 
                 <TextView
                     android:id="@+id/dueCardToday_txt"
-                    style="@style/Theme.Tegao.ContentText.Normal"
+                    style="@style/Theme.Tegao.ContentText.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/padding_tiny"
                     app:drawableStartCompat="@drawable/ftc_round_clock_16"
-                    android:text="@{String.valueOf(dataInfo.dueCardsCount)}"
-                    tools:text="0" />
+                    android:text="@{String.format(@string/learning_dashboard_dueCount, dataInfo.dueCardsCount)}"
+                    tools:text="Due 0" />
             </LinearLayout>
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -81,9 +81,9 @@
         <ImageButton
             android:id="@+id/learnGroup_btn"
             style="@style/Theme.Tegao.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/app_round_play_secondary"
+            android:layout_width="@dimen/img_icon_big"
+            android:layout_height="@dimen/img_icon_big"
+            android:src="@drawable/material3_round_chevron_forward_24px"
             app:toggleVisibility="@{dataInfo.onStartLearnClickListener != null}"
             android:onClick="@{() -> dataInfo.onStartLearnClickListener.invoke(dataInfo.groupEntry.groupId)}"
             app:layout_constraintBottom_toBottomOf="parent"

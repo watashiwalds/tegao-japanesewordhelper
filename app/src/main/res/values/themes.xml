@@ -162,8 +162,16 @@
         <item name="fontFamily">@font/roboto_light</item>
         <item name="android:textSize">@dimen/textSize_small</item>
     </style>
+    <style name="Theme.Tegao.Label.SmallThick">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/textSize_small</item>
+    </style>
     <style name="Theme.Tegao.Label.Normal">
         <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/textSize_normal</item>
+    </style>
+    <style name="Theme.Tegao.Label.NormalSlim">
+        <item name="fontFamily">@font/roboto_light</item>
         <item name="android:textSize">@dimen/textSize_normal</item>
     </style>
     <style name="Theme.Tegao.Label.Large">

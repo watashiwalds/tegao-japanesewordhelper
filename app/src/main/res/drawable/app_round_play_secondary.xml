@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:width="@dimen/img_icon_large"
-        android:height="@dimen/img_icon_large">
+        android:width="@dimen/img_icon_big"
+        android:height="@dimen/img_icon_big">
         <shape>
             <corners
                 android:topRightRadius="5dp"
@@ -13,8 +13,8 @@
     </item>
 
     <item
-        android:width="@dimen/img_icon"
-        android:height="@dimen/img_icon"
+        android:width="@dimen/img_icon_small"
+        android:height="@dimen/img_icon_small"
         android:gravity="center"
         android:drawable="@drawable/ftc_round_play_128"/>
 </layer-list>

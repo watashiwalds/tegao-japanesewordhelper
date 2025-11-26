@@ -3,5 +3,7 @@
     <string name="learning_dashboard_duecard_title">Thẻ đến hạn</string>
     <string name="learning_dashboard_streak_title">Kỷ lục chuỗi: %s</string>
     <string name="learning_dashboard_groupCount">%d bộ thẻ</string>
+    <string name="learning_dashboard_newCount">Mới %d</string>
+    <string name="learning_dashboard_dueCount">Đến hạn %d</string>
     <string name="learning_startAll_title">Bắt đầu học</string>
 </resources>

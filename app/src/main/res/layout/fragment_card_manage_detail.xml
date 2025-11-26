@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/textSize_large"
+            android:paddingTop="@dimen/padding_small"
             android:layout_marginBottom="@dimen/img_icon_large"
             android:paddingBottom="@dimen/padding_normal"
             >

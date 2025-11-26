@@ -45,6 +45,7 @@ class LearningDashboardFragment : Fragment() {
             }
             dashboardGroups.observe(viewLifecycleOwner) {
                 //todo: binding listener to the list
+                it.forEach { grp -> grp.onStartLearnClickListener = {} }
                 _adapter.submitList(it)
             }
 

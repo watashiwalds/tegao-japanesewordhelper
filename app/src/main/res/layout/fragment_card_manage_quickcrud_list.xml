@@ -17,7 +17,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
 
-            tools:listitem="@layout/item_card_edit_info_crudqab"
+            tools:listitem="@layout/item_card_manage_info_crudqab"
             />
 
     </FrameLayout>

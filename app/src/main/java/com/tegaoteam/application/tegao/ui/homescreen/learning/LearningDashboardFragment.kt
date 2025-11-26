@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.ui.homescreen.learning
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.FragmentMainLearningDashboardBinding
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
+import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityGate
 
 class LearningDashboardFragment : Fragment() {
     private lateinit var _binding: FragmentMainLearningDashboardBinding
@@ -57,6 +59,10 @@ class LearningDashboardFragment : Fragment() {
 
     private fun initView() {
         _binding.cardGroupListRcy.adapter = _adapter
+
+        _binding.cardGroupEditBtn.setOnClickListener {
+            startActivity(CardManageActivityGate.departIntent(requireContext()))
+        }
     }
 
     override fun onStart() {

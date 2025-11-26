@@ -58,7 +58,8 @@ interface LearningCardDAO {
         val relatedCardIds = rawGetCardIdsByGroupId(groupId)
         if (relatedCardIds.isEmpty()) return rawDeleteCardGroupById(groupId)
         rawDeleteCardRepeatsByCardIds(relatedCardIds)
-        return rawDeleteCardsByIds(relatedCardIds) + 1
+        rawDeleteCardsByIds(relatedCardIds)
+        return rawDeleteCardGroupById(groupId)
     }
 
     @Transaction

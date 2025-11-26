@@ -27,9 +27,9 @@ class LearningHub: LearningRepo {
     override fun getCardRepeatsByGroupId(groupId: Long): FlowStream<List<CardRepeat>>
         = FlowStream(_srsDb.getCardRepeatsByGroupId(groupId).map { it.map { item -> CardRepeatEntity.toDomainCardRepeat(item) } })
 
-    override suspend fun addCardGroup(newGroup: CardGroup): Long
+    override suspend fun upsertCardGroup(newGroup: CardGroup): Long
         = _srsDb.upsertCardGroup(CardGroupEntity.fromDomainCardGroup(newGroup))
-    override suspend fun addCard(newCard: CardEntry): Long
+    override suspend fun upsertCard(newCard: CardEntry): Long
         = _srsDb.upsertCard(CardEntity.fromDomainCardEntry(newCard))
     override suspend fun deleteCardGroupById(groupId: Long): Int
         = _srsDb.deleteCardGroupById(groupId)

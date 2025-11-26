@@ -16,7 +16,6 @@ import com.tegaoteam.application.tegao.utils.Time
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewModel() {
     //region [Pre-start, fetch materials for card creation from Word/Kanji passed into]
@@ -32,7 +31,7 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     fun addNewCardGroup(groupName: String) {
         if (groupName.isBlank()) return
         viewModelScope.launch(Dispatchers.IO) {
-            learningRepo.addCardGroup(CardGroup(0, groupName))
+            learningRepo.upsertCardGroup(CardGroup(0, groupName))
         }
     }
     private val _selectedGroupIds = mutableListOf<Long>()
@@ -120,7 +119,7 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
 //        Timber.i("Change scope to perform saving card")
         viewModelScope.launch(Dispatchers.IO) {
 //            Timber.i("Start saving card: $domainCard")
-            val res = learningRepo.addCard(domainCard)
+            val res = learningRepo.upsertCard(domainCard)
 //            Timber.i("Finished saving card")
             withContext(Dispatchers.Main) {
                 _inSavingProcess.value = false

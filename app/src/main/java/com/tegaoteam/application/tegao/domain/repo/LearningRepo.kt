@@ -13,8 +13,8 @@ interface LearningRepo {
     fun getCardRepeatsByCardIds(cardIds: List<Long>): Stream<List<CardRepeat>>
     fun getCardRepeatsByGroupId(groupId: Long): Stream<List<CardRepeat>>
 
-    suspend fun addCardGroup(newGroup: CardGroup): Long
-    suspend fun addCard(newCard: CardEntry): Long
+    suspend fun upsertCardGroup(newGroup: CardGroup): Long
+    suspend fun upsertCard(newCard: CardEntry): Long
     suspend fun deleteCardGroupById(groupId: Long): Int
     suspend fun deleteCardById(cardId: Long): Int
 

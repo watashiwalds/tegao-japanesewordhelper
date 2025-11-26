@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.map
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.FragmentMainLearningDashboardBinding
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityGate
+import kotlinx.coroutines.flow.first
 
 class LearningDashboardFragment : Fragment() {
     private lateinit var _binding: FragmentMainLearningDashboardBinding
@@ -51,12 +53,16 @@ class LearningDashboardFragment : Fragment() {
                     val cardsType = _viewModel.fetchCardsTypeOfGroup(group.groupId)
                     val new = cardsType.map { it.count { type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_NEW } }
                     val due = cardsType.map { it.count { type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_DUE } }
-                    val total = cardsType.map { it.size }
+                    val progress = cardsType.map {
+                        val total = it.size
+                        val new = it.count{ type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_NEW }
+                        ((total.toDouble() - new)*100 / (if (total == 0) 1 else total)).toInt()
+                    }
                     LearningInfoDataClasses.DashboardCardGroupInfo(
                         groupEntry = group,
                         newCardsCount = new,
                         dueCardsCount = due,
-                        clearProgress = new.map { ((((total.value?: 0) - it.toDouble()) * 100) / (total.value?: 1)).toInt() },
+                        clearProgress = progress,
                         onStartLearnClickListener = {},
                         onGroupClickListener = {},
                         lifecycleOwner = viewLifecycleOwner

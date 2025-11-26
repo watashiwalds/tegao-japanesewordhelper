@@ -29,6 +29,22 @@ class SettingStorageViewModel(private val storageRepo: StorageRepo): ViewModel()
                     }
                 }
             }
+        ),
+        ConfigEntryItem(
+            labelResId = R.string.setting_storage_label_deleteLearningDatabase,
+            descriptionResId = R.string.setting_storage_detail_deleteLearningDatabase,
+            type = ConfigEntryItem.Companion.Type.CONFIRMATION,
+            clickListener = {
+                viewModelScope.launch(Dispatchers.Default) {
+                    val count = storageRepo.deleteLearningCardDatabase()
+                    withContext(Dispatchers.Main) {
+                        AppToast.show(
+                            String.format(TegaoApplication.instance.getString(R.string.setting_storage_result_deleteLearningDatabase), count),
+                            AppToast.LENGTH_SHORT
+                        )
+                    }
+                }
+            }
         )
     )
 

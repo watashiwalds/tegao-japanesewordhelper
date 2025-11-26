@@ -9,4 +9,11 @@ class StorageHub: StorageRepo {
     override suspend fun deleteSearchCaches(): Int {
         return _dictionaryCacheDb.deleteCaches()
     }
+
+    private val _learningDb = SQLiteDatabase.getInstance().learningCardDAO
+
+    override suspend fun deleteLearningCardDatabase(): Int {
+        return _learningDb.purgeAllData()
+    }
+
 }

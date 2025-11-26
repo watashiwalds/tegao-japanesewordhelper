@@ -28,6 +28,7 @@ interface LearningCardDAO {
 
     @Upsert
     suspend fun rawUpsertCard(newCard: CardEntity): Long
+
     @Transaction
     suspend fun upsertCard(newCard: CardEntity): Long {
         val cardUpsertRes = rawUpsertCard(newCard)
@@ -42,10 +43,13 @@ interface LearningCardDAO {
     //region [Raw functions to form TRANSACTION for respective DELETE functions]
     @Query("""delete from ${CardGroupEntity.TABLE_NAME} where ${CardGroupEntity.COL_ID} = :groupId""")
     suspend fun rawDeleteCardGroupById(groupId: Long): Int
+
     @Query("""select ${CardEntity.COL_ID} from ${CardEntity.TABLE_NAME} where ${CardGroupEntity.COL_ID} = :groupId""")
     fun rawGetCardIdsByGroupId(groupId: Long): List<Long>
+
     @Query("""delete from ${CardRepeatEntity.TABLE_NAME} where ${CardEntity.COL_ID} in (:cardIds)""")
     suspend fun rawDeleteCardRepeatsByCardIds(cardIds: List<Long>): Int
+
     @Query("""delete from ${CardEntity.TABLE_NAME} where ${CardEntity.COL_ID} in (:cardIds)""")
     suspend fun rawDeleteCardsByIds(cardIds: List<Long>): Int
 
@@ -65,21 +69,39 @@ interface LearningCardDAO {
     //endregion
 
     //region [Complementary functions to serve various niche query of UI]
-    @Query("""
+    @Query(
+        """
         with CardIds as (
             select ${CardEntity.COL_ID} as related from ${CardEntity.TABLE_NAME}
             where ${CardGroupEntity.COL_ID} = :groupId
         )
         select * from ${CardRepeatEntity.TABLE_NAME} ori
-        join CardIds flr on ori.${CardEntity.COL_ID} = flr.related
-    """)
-//    join CardIds r on f.${CardEntity.COL_ID} = r.related
+        where ori.${CardEntity.COL_ID} in (select related from CardIds)
+    """
+    )
     fun getCardRepeatsByGroupId(groupId: Long): Flow<List<CardRepeatEntity>>
 
-    @Query("""
+    @Query(
+        """
         select ${CardEntity.COL_ID} from ${CardRepeatEntity.TABLE_NAME}
         where ${CardRepeatEntity.COL_NEXTREPEAT} not null and ${CardRepeatEntity.COL_NEXTREPEAT} < :nowDate 
-    """)
+    """
+    )
     fun getTodayDueCardIds(nowDate: String): Flow<List<Long>>
     //endregion
+
+    //region total data annihilation
+    @Query("delete from ${CardRepeatEntity.TABLE_NAME}")
+    fun purgeCardGroups(): Int
+    @Query("delete from ${CardEntity.TABLE_NAME}")
+    fun purgeCardEntities(): Int
+    @Query("delete from ${CardGroupEntity.TABLE_NAME}")
+    fun purgeCardRepeats(): Int
+    @Transaction
+    suspend fun purgeAllData(): Int {
+        val res = purgeCardRepeats() + purgeCardEntities() + purgeCardGroups()
+        return res
+    }
+    //endregion
+
 }

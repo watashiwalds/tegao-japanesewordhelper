@@ -16,10 +16,13 @@
     <string name="quicksetting_history_label_deleteEntry">Xoá bản ghi "%s"</string>
 
     <string name="setting_storage_label">Lưu trữ</string>
-    <string name="setting_storage_detail">Dữ liệu tra cứu</string>
+    <string name="setting_storage_detail">Cache tra cứu • Dữ liệu thẻ học</string>
     <string name="setting_storage_label_deleteDictionaryCaches">Xoá toàn bộ dữ liệu tra cứu</string>
     <string name="setting_storage_detail_deleteDictionaryCaches">Xoá tất cả bản ghi dữ liệu tra cứu hỗ trợ cho việc tra cứu ngoại tuyến từ nguồn trực tuyến, khiến tất cả tra cứu mới lấy dữ liệu từ Internet</string>
     <string name="setting_storage_result_deleteDictionaryCaches">Đã xoá tất cả %d bản ghi tra cứu</string>
+    <string name="setting_storage_label_deleteLearningDatabase">Xoá toàn bộ dữ liệu thẻ học</string>
+    <string name="setting_storage_detail_deleteLearningDatabase">Xoá tất cả bản ghi liên quan đến thẻ học (gồm bộ thẻ, thẻ, tiến độ học thẻ). Hữu dụng khi có vấn để không thể giải quyết liên quan đến hệ thống thẻ học</string>
+    <string name="setting_storage_result_deleteLearningDatabase">Đã xoá tất cả %d bản ghi liên quan</string>
 
     <string name="setting_addon_label">Phần mở rộng</string>
     <string name="setting_addon_detail">Chữ viết tay • More coming soon…</string>

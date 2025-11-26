@@ -47,7 +47,7 @@ class CardCreateActivity : AppCompatActivity() {
         val navController = (supportFragmentManager.findFragmentById(R.id.cardCreateFragmentContainerView) as NavHostFragment).navController
         HeaderBarBindingHelper.bind(
             _binding.loHeaderBarIcl,
-            "Thêm thẻ học tập mới",
+            getString(R.string.card_create_activity_title),
             { if (!navController.popBackStack()) finish() },
             { finish() }
             )

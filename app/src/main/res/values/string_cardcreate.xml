@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="card_create_activity_title">Thêm thẻ học tập mới</string>
+
     <string name="card_type_flashcard_name">Thẻ xem nhanh</string>
     <string name="card_type_flashcard_detail">Dạng thẻ in nội dung. Lật mặt thẻ để xem đáp án và tự đánh giá mức độ ghi nhớ của bản thân</string>
     <string name="card_type_answercard_name">Thẻ trả lời</string>

@@ -8,6 +8,14 @@
 
     <string name="card_manage_groupDetail_field_name">Tên hiển thị</string>
 
+    <string name="card_manage_cardDetail_field_dateCreated">Ngày tạo: %s</string>
+    <string name="card_manage_cardDetail_field_group_current">Bộ thẻ hiện tại: %s</string>
+    <string name="card_manage_cardDetail_field_group_hint">Đổi sang bộ thẻ…</string>
+    <string name="card_manage_cardDetail_field_type">Loại thẻ</string>
+    <string name="card_manage_cardDetail_field_front">Mặt trước</string>
+    <string name="card_manage_cardDetail_field_answer">Câu trả lời</string>
+    <string name="card_manage_cardDetail_field_end">Mặt sau</string>
+
     <string name="card_manage_card_count">%d thẻ</string>
     <string name="card_manage_group_count">%d bộ</string>
 

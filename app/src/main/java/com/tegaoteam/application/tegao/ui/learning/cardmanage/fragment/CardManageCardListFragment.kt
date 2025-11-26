@@ -56,7 +56,7 @@ class CardManageCardListFragment: Fragment() {
                 if (res == null) requireActivity().onBackPressedDispatcher.onBackPressed()
                 else {
                     cardGroup = res
-                    _binding.loFragmentTitleTxt.text = getString(R.string.card_manage_cardList_label, res.label)
+                    _binding.loFragmentTitleTxt.text = res.label
                     observeCardListLiveData(_parentViewModel.fetchCardsOfGroupLiveData(res.groupId))
                 }
             }

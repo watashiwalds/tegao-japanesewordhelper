@@ -12,6 +12,8 @@ import com.tegaoteam.application.tegao.domain.model.CardGroup
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -62,6 +64,16 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo): View
             val res = _learningRepo.deleteCardById(cardId)
             withContext(Dispatchers.Main) {
                 stateDelete.value = res
+            }
+        }
+    }
+    fun getCardById(cardId: Long): LiveData<CardEntry> {
+        return _learningRepo.getCardByCardId(cardId).asFlow().asLiveData()
+    }
+    fun updateCard(cardEntry: CardEntry) {
+        viewModelScope.launch(Dispatchers.Default) {
+            if (_learningRepo.getCardByCardId(cardEntry.cardId).asFlow().firstOrNull() != null) {
+                _learningRepo.upsertCard(cardEntry)
             }
         }
     }

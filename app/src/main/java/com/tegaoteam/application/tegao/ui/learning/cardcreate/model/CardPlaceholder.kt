@@ -22,6 +22,15 @@ data class CardPlaceholder(
             plc.answer,
             plc.back
         )
+        fun fromDomainCardEntry(entry: CardEntry) = CardPlaceholder(
+            entry.cardId,
+            entry.groupId,
+            entry.type,
+            entry.dateCreated,
+            entry.front,
+            entry.answer,
+            entry.back
+        )
         fun parseFromSelectedMaterials(
             materials: CardMaterial,
             groupIds: List<Long>,

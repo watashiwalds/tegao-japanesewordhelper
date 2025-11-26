@@ -1,5 +1,7 @@
 package com.tegaoteam.application.tegao.ui.homescreen.learning
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import com.tegaoteam.application.tegao.domain.model.CardGroup
 
 class LearningInfoDataClasses {
@@ -20,9 +22,10 @@ class LearningInfoDataClasses {
     data class QuickCrudItemInfo(
         val id: Long,
         val label: String,
-        val quickInfo: String,
+        val quickInfo: LiveData<String>,
         var onEditQabClickListener: ((Long) -> Unit)? = null,
         var onDeleteQabClickListener: ((Long) -> Unit)? = null,
-        var onItemClickListener: ((Long) -> Unit)? = null
+        var onItemClickListener: ((Long) -> Unit)? = null,
+        val lifecycleOwner: LifecycleOwner? = null
     )
 }

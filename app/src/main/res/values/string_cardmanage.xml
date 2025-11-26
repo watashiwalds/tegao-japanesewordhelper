@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="card_manage_activity_label">Quản lý thẻ</string>
+
+    <string name="card_manage_group_size_count">Kích thước: %s thẻ</string>
+
+    <string name="card_manage_delete_success">Xoá thành công</string>
+    <string name="card_manage_delete_failed">Xoá thất bại</string>
+
+    <string name="card_manage_delete_group_title">Xoá bộ thẻ %s?</string>
+    <string name="card_manage_delete_group_message">Toàn bộ thẻ trong bộ thẻ này cũng sẽ được xoá. Thao tác không thể hoàn tác. Bạn chắc chắn chứ?</string>
 </resources>

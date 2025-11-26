@@ -1,0 +1,58 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        style="@style/Theme.Tegao.Screen.PaddingBorder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/lo_fragmentTitle_txt"
+            style="@style/Theme.Tegao.Label.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Fragment title here"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/textSize_large"
+            android:layout_marginBottom="@dimen/img_icon_large"
+            android:paddingBottom="@dimen/padding_normal"
+            >
+            <LinearLayout
+                android:id="@+id/lo_detailList_lst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/update_btn"
+            style="@style/Theme.Tegao.LabelButton.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/img_icon_large"
+            android:layout_margin="@dimen/padding_normal"
+            android:text="@string/phrase_confirm"
+            android:foreground="?android:selectableItemBackground"
+            android:layout_gravity="bottom|right"
+            />
+
+        <ImageButton
+            android:id="@+id/delete_btn"
+            style="@style/Theme.Tegao.IconButton"
+            android:src="@drawable/ftc_round_trash_128"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="@dimen/img_icon_large"
+            android:background="@drawable/neutral_filled_stroke_background"
+            android:padding="12dp"
+            android:layout_margin="@dimen/padding_normal"
+
+            android:layout_gravity="bottom|start"/>
+
+    </FrameLayout>
+
+</layout>

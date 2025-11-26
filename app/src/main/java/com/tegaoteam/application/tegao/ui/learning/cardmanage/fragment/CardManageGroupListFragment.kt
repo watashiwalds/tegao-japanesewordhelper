@@ -45,24 +45,17 @@ class CardManageGroupListFragment: Fragment() {
 
     private fun initObservers() {
         _parentViewModel.apply {
-            stateDeleteGroup.observe(viewLifecycleOwner) {
-                DialogPreset.apply {
-                    dismissCurrentSnackbar()
-                    when (it) {
-                        CardManageActivityViewModel.STATUS_PROCESSING -> showSnackbar(_binding.root, R.string.phrase_processing)
-                        CardManageActivityViewModel.STATUS_SUCCESS -> AppToast.show(R.string.card_manage_delete_success, AppToast.LENGTH_SHORT)
-                        CardManageActivityViewModel.STATUS_FAILURE -> AppToast.show(R.string.card_manage_delete_failed, AppToast.LENGTH_SHORT)
-                    }
-                }
-            }
             cardGroups.observe(viewLifecycleOwner) { groups ->
                 _adapter.submitList(groups.map { group ->
-                    val editGroupLambda = { groupId: Long -> _navController.navigate(CardManageGroupListFragmentDirections.actionCardManageGroupListFragmentToCardManageEditGroupFragment(groupId)) }
                     LearningInfoDataClasses.QuickCrudItemInfo(
                         id = group.groupId,
                         label = group.label,
                         quickInfo = _parentViewModel.fetchCardsOfGroupLiveData(group.groupId).map { getString(R.string.card_manage_group_size_count, it.size.toString()) },
-                        onEditQabClickListener = { groupId -> editGroupLambda(groupId) },
+                        onEditQabClickListener = { groupId ->
+                            _navController.navigate(
+                                CardManageGroupListFragmentDirections
+                                    .actionCardManageGroupListFragmentToCardManageEditGroupFragment(groupId))
+                        },
                         onDeleteQabClickListener = { groupId ->
                             DialogPreset.requestConfirmation(
                                 context = requireContext(),
@@ -71,7 +64,11 @@ class CardManageGroupListFragment: Fragment() {
                                 lambdaRun = { _parentViewModel.deleteGroup(groupId) }
                             )
                         },
-                        onItemClickListener = { groupId -> editGroupLambda(groupId) },
+                        onItemClickListener = { groupId ->
+                            _navController.navigate(
+                                CardManageGroupListFragmentDirections
+                                    .actionCardManageGroupListFragmentToCardManageCardListFragment(groupId))
+                        },
                         lifecycleOwner = viewLifecycleOwner
                     )
                 } )

@@ -31,7 +31,7 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo): View
     //endregion
 
     //region suspend C_UD function of LearningRepo
-    val stateDeleteGroup = MutableLiveData<Int>(null)
+    private val stateDeleteGroup = MutableLiveData<Int>(null)
     fun deleteGroup(groupId: Long) {
         if (stateDeleteGroup.value == STATUS_PROCESSING) return
         stateDeleteGroup.value = STATUS_PROCESSING
@@ -45,7 +45,13 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo): View
     fun addNewCardGroup(groupName: String) {
         if (groupName.isBlank()) return
         viewModelScope.launch(Dispatchers.IO) {
-            _learningRepo.addCardGroup(CardGroup(0, groupName))
+            _learningRepo.upsertCardGroup(CardGroup(0, groupName))
+        }
+    }
+    fun updateCardGroup(cardGroup: CardGroup) {
+        if (cardGroups.value?.firstOrNull{ it.groupId == cardGroup.groupId } == null) return
+        viewModelScope.launch(Dispatchers.Default) {
+            _learningRepo.upsertCardGroup(cardGroup)
         }
     }
     //endregion

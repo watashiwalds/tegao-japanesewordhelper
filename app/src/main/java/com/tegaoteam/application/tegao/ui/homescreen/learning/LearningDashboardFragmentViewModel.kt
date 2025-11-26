@@ -46,66 +46,30 @@ class LearningDashboardFragmentViewModel(private val _learningRepo: LearningRepo
     //endregion
 
     //region Fetching repeatsByGroup and storing for later use in ViewModel
-    private val _repeatsByGroup: MutableMap<Long, List<Pair<Long, Int>>> = mutableMapOf()
-    val repeatsByGroup: Map<Long, List<Pair<Long, Int>>> = _repeatsByGroup
-    val eventRepeatsByGroupUpdated = EventBeacon()
-    private fun fetchRepeatsByGroup() {
-        viewModelScope.launch {
-            val groups = (cardGroups.value?: _learningRepo.getCardGroups().asFlow().first()).map { it.groupId }
-            val fetchMap = mutableMapOf<Long, List<Pair<Long, Int>>>()
-            groups.forEach { groupId ->
-                fetchMap[groupId] = _learningRepo.getCardRepeatsByGroupId(groupId).asFlow().map { it.map { rpt -> Pair(
-                    rpt.cardId,
-                    if (rpt.nextRepeat == null)
-                        CARDSTATUS_NEW
-                    else if (Time.absoluteTimeDifferenceBetween(rpt.nextRepeat, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) <= 0)
-                        CARDSTATUS_DUE
-                    else
-                        CARDSTATUS_LEARNED
-                ) } }.first()
-            }
-            withContext(Dispatchers.Main) {
-                fetchMap.keys.forEach { _repeatsByGroup[it] = fetchMap[it]!! }
-                eventRepeatsByGroupUpdated.ignite()
-            }
-        }
+    private val _groupCardsStatus = mutableMapOf<Long, LiveData<List<Pair<Long, Int>>>>()
+    val groupCardsStatus: Map<Long, LiveData<List<Pair<Long, Int>>>> = _groupCardsStatus
+    fun fetchCardsTypeOfGroup(groupId: Long): LiveData<List<Pair<Long, Int>>> {
+        if (_groupCardsStatus[groupId] != null) return _groupCardsStatus[groupId]!!
+        val liveData = _learningRepo.getCardRepeatsByGroupId(groupId).asFlow().map { repeats ->
+            repeats.map { repeat -> Pair(
+                repeat.cardId,
+                if (repeat.nextRepeat == null)
+                    CARDSTATUS_NEW
+                else if (Time.absoluteTimeDifferenceBetween(repeat.nextRepeat, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) <= 0)
+                    CARDSTATUS_DUE
+                else
+                    CARDSTATUS_LEARNED
+            ) }
+        }.asLiveData()
+        _groupCardsStatus[groupId] = liveData
+        return liveData
     }
-    //endregion
-
-    //region Display groups with cards count and group-only reepatIds fetching
-    private val _dashboardGroups = MutableLiveData<List<LearningInfoDataClasses.DashboardCardGroupInfo>>()
-    val dashboardGroups: LiveData<List<LearningInfoDataClasses.DashboardCardGroupInfo>> = _dashboardGroups
-    fun composeDashboardGroup() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val groups = cardGroups.value?: _learningRepo.getCardGroups().asFlow().first()
-            val composed = groups.map {
-                val groupRepeats = repeatsByGroup[it.groupId]
-                val new = groupRepeats?.count { rpt -> rpt.second == CARDSTATUS_NEW }?: 0
-                val due = groupRepeats?.count { rpt -> rpt.second == CARDSTATUS_DUE }?: 0
-                val progress = floor((((groupRepeats?.size?: 1) - new.toDouble()) / (groupRepeats?.size?: 1)) * 100).toInt()
-                LearningInfoDataClasses.DashboardCardGroupInfo(
-                    groupEntry = it,
-                    newCardsCount = new,
-                    dueCardsCount = due,
-                    clearProgress = progress
-                )
-            }
-            withContext(Dispatchers.Main) {
-                _dashboardGroups.value = composed
-            }
-        }
-    }
-    //endregion
-
-    fun refreshData() {
-        fetchDashboardInfo()
-        fetchRepeatsByGroup()
-    }
+    //end region
 
     companion object {
-        private const val CARDSTATUS_NEW = 0
-        private const val CARDSTATUS_LEARNED = 1
-        private const val CARDSTATUS_DUE = 2
+        const val CARDSTATUS_NEW = 0
+        const val CARDSTATUS_LEARNED = 1
+        const val CARDSTATUS_DUE = 2
 
         class ViewModelFactory(
             private val learningRepo: LearningRepo

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.map
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.FragmentMainLearningDashboardBinding
@@ -45,14 +46,22 @@ class LearningDashboardFragment : Fragment() {
                 _binding.dataInfo = it
                 _binding.executePendingBindings()
             }
-            dashboardGroups.observe(viewLifecycleOwner) {
-                //todo: binding listener to the list
-                it.forEach { grp -> grp.onStartLearnClickListener = {} }
-                _adapter.submitList(it)
-            }
-
-            eventRepeatsByGroupUpdated.beacon.observe(viewLifecycleOwner) {
-                if (eventRepeatsByGroupUpdated.receive()) composeDashboardGroup()
+            cardGroups.observe(viewLifecycleOwner) { groups ->
+                _adapter.submitList(groups.map { group ->
+                    val cardsType = _viewModel.fetchCardsTypeOfGroup(group.groupId)
+                    val new = cardsType.map { it.count { type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_NEW } }
+                    val due = cardsType.map { it.count { type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_DUE } }
+                    val total = cardsType.map { it.size }
+                    LearningInfoDataClasses.DashboardCardGroupInfo(
+                        groupEntry = group,
+                        newCardsCount = new,
+                        dueCardsCount = due,
+                        clearProgress = new.map { ((((total.value?: 0) - it.toDouble()) * 100) / (total.value?: 1)).toInt() },
+                        onStartLearnClickListener = {},
+                        onGroupClickListener = {},
+                        lifecycleOwner = viewLifecycleOwner
+                    )
+                })
             }
         }
     }
@@ -67,6 +76,6 @@ class LearningDashboardFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        _viewModel.refreshData()
+        _viewModel.fetchDashboardInfo()
     }
 }

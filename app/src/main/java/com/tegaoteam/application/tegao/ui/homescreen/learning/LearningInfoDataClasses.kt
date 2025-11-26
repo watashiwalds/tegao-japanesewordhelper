@@ -13,11 +13,12 @@ class LearningInfoDataClasses {
     )
     data class DashboardCardGroupInfo(
         val groupEntry: CardGroup,
-        val newCardsCount: Int,
-        val dueCardsCount: Int,
-        val clearProgress: Int,
+        val newCardsCount: LiveData<Int>,
+        val dueCardsCount: LiveData<Int>,
+        val clearProgress: LiveData<Int>,
         var onStartLearnClickListener: ((Long) -> Unit)? = null,
-        var onGroupClickListener: ((Long) -> Unit)? = null
+        var onGroupClickListener: ((Long) -> Unit)? = null,
+        val lifecycleOwner: LifecycleOwner? = null
     )
     data class QuickCrudItemInfo(
         val id: Long,

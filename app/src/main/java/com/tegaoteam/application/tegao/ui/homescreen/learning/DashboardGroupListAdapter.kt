@@ -25,6 +25,7 @@ class DashboardGroupListAdapter: ListAdapter<LearningInfoDataClasses.DashboardCa
     class ViewHolder private constructor(private val binding: ItemLearningDashboardCardGroupBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(dataInfo: LearningInfoDataClasses.DashboardCardGroupInfo) {
             binding.dataInfo = dataInfo
+            binding.lifecycleOwner = dataInfo.lifecycleOwner
             binding.executePendingBindings()
         }
         companion object {

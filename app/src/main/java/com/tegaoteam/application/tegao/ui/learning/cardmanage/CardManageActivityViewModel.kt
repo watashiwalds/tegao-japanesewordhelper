@@ -8,6 +8,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.model.CardEntry
+import com.tegaoteam.application.tegao.domain.model.CardGroup
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +40,12 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo): View
             withContext(Dispatchers.Main) {
                 stateDeleteGroup.value = res
             }
+        }
+    }
+    fun addNewCardGroup(groupName: String) {
+        if (groupName.isBlank()) return
+        viewModelScope.launch(Dispatchers.IO) {
+            _learningRepo.addCardGroup(CardGroup(0, groupName))
         }
     }
     //endregion

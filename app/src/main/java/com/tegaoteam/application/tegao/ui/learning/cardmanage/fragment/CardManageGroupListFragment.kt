@@ -16,6 +16,7 @@ import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivity
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.adapter.QuickCrudItemListAdapter
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.utils.setSrcWithResId
 
 class CardManageGroupListFragment: Fragment() {
     private lateinit var _binding: FragmentCardManageQuickcrudListBinding
@@ -80,6 +81,20 @@ class CardManageGroupListFragment: Fragment() {
 
     private fun initView() {
         _binding.quickCrudListRcy.adapter = _adapter
+        _binding.placeholderQabBtn.apply {
+            setSrcWithResId(R.drawable.ftc_round_plus_128)
+            setOnClickListener {
+                DialogPreset.requestValueDialog(
+                    requireContext(),
+                    R.string.card_create_add_group_label,
+                    R.string.card_create_add_group_message
+                ) { groupName ->
+                    _parentViewModel.addNewCardGroup(groupName)
+                }
+            }
+            visibility = View.VISIBLE
+        }
+
         _binding.lifecycleOwner = viewLifecycleOwner
         _binding.executePendingBindings()
     }

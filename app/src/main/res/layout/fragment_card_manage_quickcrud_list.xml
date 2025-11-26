@@ -16,9 +16,23 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/img_icon_large"
+            android:layout_marginBottom="@dimen/padding_normal"
 
             tools:listitem="@layout/item_card_manage_info_crudqab"
             />
+
+        <ImageButton
+            android:id="@+id/placeholder_qab_btn"
+            style="@style/Theme.Tegao.IconButton"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="@dimen/img_icon_large"
+            android:background="@drawable/neutral_filled_stroke_background"
+            android:padding="@dimen/padding_normal"
+            android:layout_margin="@dimen/padding_normal"
+            android:visibility="gone"
+
+            android:layout_gravity="bottom|start"/>
 
     </FrameLayout>
 

@@ -16,7 +16,7 @@ interface LearningCardDAO {
     fun getCardsByGroupId(groupId: Long): Flow<List<CardEntity>>
 
     @Query("""select * from ${CardEntity.TABLE_NAME} where ${CardEntity.COL_ID} = :cardId""")
-    fun getCardByCardId(cardId: Long): Flow<CardEntity>
+    fun getCardByCardId(cardId: Long): Flow<CardEntity?>
 
     @Query("""select * from ${CardRepeatEntity.TABLE_NAME} where ${CardEntity.COL_ID} in (:cardIds)""")
     fun getCardRepeatsByCardIds(cardIds: List<Long>): Flow<List<CardRepeatEntity>>

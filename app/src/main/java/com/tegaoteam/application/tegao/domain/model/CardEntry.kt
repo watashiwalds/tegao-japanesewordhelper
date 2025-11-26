@@ -12,5 +12,15 @@ data class CardEntry(
     companion object {
         const val TYPE_FLASHCARD = 0
         const val TYPE_ANSWERCARD = 1
+
+        fun default() = CardEntry(
+            cardId = 0,
+            groupId = 0,
+            type = 0,
+            dateCreated = "",
+            front = "",
+            answer = null,
+            back = ""
+        )
     }
 }

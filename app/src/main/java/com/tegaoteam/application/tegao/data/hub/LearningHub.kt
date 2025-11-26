@@ -21,7 +21,7 @@ class LearningHub: LearningRepo {
     override fun getCardsByGroupId(groupId: Long): FlowStream<List<CardEntry>>
         = FlowStream(_srsDb.getCardsByGroupId(groupId).map { it.map { item -> CardEntity.toDomainCardEntry(item) } })
     override fun getCardByCardId(cardId: Long): FlowStream<CardEntry>
-        = FlowStream(_srsDb.getCardByCardId(cardId).map { CardEntity.toDomainCardEntry(it) })
+        = FlowStream(_srsDb.getCardByCardId(cardId).map { CardEntity.toDomainCardEntry(it?: null) })
     override fun getCardRepeatsByCardIds(cardIds: List<Long>): FlowStream<List<CardRepeat>>
         = FlowStream(_srsDb.getCardRepeatsByCardIds(cardIds).map { it.map { item -> CardRepeatEntity.toDomainCardRepeat(item) } })
     override fun getCardRepeatsByGroupId(groupId: Long): FlowStream<List<CardRepeat>>

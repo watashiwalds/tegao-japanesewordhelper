@@ -31,15 +31,17 @@ data class CardEntity(
         const val COL_ANSWER = "answer"
         const val COL_BACK = "back"
 
-        fun toDomainCardEntry(entity: CardEntity) = CardEntry(
-            entity.cardId,
-            entity.groupId,
-            entity.type,
-            entity.front,
-            entity.dateCreated,
-            entity.answer,
-            entity.back
-        )
+        fun toDomainCardEntry(entity: CardEntity?): CardEntry {
+            if (entity != null) return CardEntry(
+                entity.cardId,
+                entity.groupId,
+                entity.type,
+                entity.front,
+                entity.dateCreated,
+                entity.answer,
+                entity.back
+            ) else return CardEntry.default()
+        }
 
         fun fromDomainCardEntry(entry: CardEntry) = CardEntity(
             entry.cardId,

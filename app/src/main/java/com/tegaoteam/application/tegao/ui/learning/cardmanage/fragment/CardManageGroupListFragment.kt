@@ -14,7 +14,6 @@ import com.tegaoteam.application.tegao.databinding.FragmentCardManageQuickcrudLi
 import com.tegaoteam.application.tegao.ui.homescreen.learning.LearningInfoDataClasses
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.adapter.QuickCrudItemListAdapter
-import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
 
@@ -50,7 +49,7 @@ class CardManageGroupListFragment: Fragment() {
                     LearningInfoDataClasses.QuickCrudItemInfo(
                         id = group.groupId,
                         label = group.label,
-                        quickInfo = _parentViewModel.fetchCardsOfGroupLiveData(group.groupId).map { getString(R.string.card_manage_group_size_count, it.size.toString()) },
+                        quickInfo = _parentViewModel.fetchCardsOfGroupLiveData(group.groupId).map { getString(R.string.card_manage_card_count, it.size) },
                         onEditQabClickListener = { groupId ->
                             _navController.navigate(
                                 CardManageGroupListFragmentDirections
@@ -72,6 +71,7 @@ class CardManageGroupListFragment: Fragment() {
                         lifecycleOwner = viewLifecycleOwner
                     )
                 } )
+                _binding.itemCountTxt.text = getString(R.string.card_manage_group_count, groups.size)
             }
         }
     }

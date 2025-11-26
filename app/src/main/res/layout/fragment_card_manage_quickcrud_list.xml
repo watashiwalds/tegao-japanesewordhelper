@@ -40,9 +40,19 @@
             android:background="@drawable/neutral_filled_stroke_background"
             android:padding="@dimen/padding_normal"
             android:layout_margin="@dimen/padding_normal"
-            android:visibility="gone"
 
             android:layout_gravity="bottom|start"/>
+
+        <TextView
+            android:id="@+id/itemCount_txt"
+            style="@style/Theme.Tegao.Label.NormalSlim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_normal"
+            android:maxLines="1"
+            android:layout_gravity="center_horizontal|bottom"
+            tools:text="Some small note here"
+            />
 
     </FrameLayout>
 

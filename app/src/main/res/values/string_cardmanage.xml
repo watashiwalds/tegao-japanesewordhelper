@@ -8,7 +8,10 @@
 
     <string name="card_manage_groupDetail_field_name">Tên hiển thị</string>
 
-    <string name="card_manage_group_size_count">%s thẻ</string>
+    <string name="card_manage_card_count">%d thẻ</string>
+    <string name="card_manage_group_count">%d bộ</string>
+
+    <string name="card_manage_cardItem_label">Thẻ %s</string>
 
     <string name="card_manage_update_title">Xác nhận cập nhật?</string>
     <string name="card_manage_update_confirm">Đã thực hiện cập nhật</string>
@@ -17,4 +20,6 @@
     <string name="card_manage_delete_failed">Xoá thất bại</string>
     <string name="card_manage_delete_group_title">Xoá bộ thẻ %s?</string>
     <string name="card_manage_delete_group_message">Toàn bộ thẻ trong bộ thẻ này cũng sẽ được xoá. Thao tác không thể hoàn tác. Bạn chắc chắn chứ?</string>
+    <string name="card_manage_delete_card_title">Xoá thẻ %s?</string>
+    <string name="card_manage_delete_card_message">Thẻ và bản ghi học tập của thẻ sẽ được xoá. Thao tác không thể hoàn tác. Bạn chắc chắn chứ?</string>
 </resources>

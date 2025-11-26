@@ -20,25 +20,26 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo): View
 
     //region Cards by groupId data fetching
     private val _cardsOfGroup = mutableMapOf<Long, LiveData<List<CardEntry>>>()
-    val cardsOfGroup: Map<Long, LiveData<List<CardEntry>>> = _cardsOfGroup
+//    val cardsOfGroup: Map<Long, LiveData<List<CardEntry>>> = _cardsOfGroup
     val eventCardsOfGroupUpdated = EventBeacon()
     fun fetchCardsOfGroupLiveData(groupId: Long): LiveData<List<CardEntry>> {
         if (_cardsOfGroup[groupId] != null) return _cardsOfGroup[groupId]!!
         val liveData = _learningRepo.getCardsByGroupId(groupId).asFlow().asLiveData()
         _cardsOfGroup[groupId] = liveData
+        eventCardsOfGroupUpdated.ignite()
         return liveData
     }
     //endregion
 
     //region suspend C_UD function of LearningRepo
-    private val stateDeleteGroup = MutableLiveData<Int>(null)
+    private val stateDelete = MutableLiveData<Int>(null)
     fun deleteGroup(groupId: Long) {
-        if (stateDeleteGroup.value == STATUS_PROCESSING) return
-        stateDeleteGroup.value = STATUS_PROCESSING
+        if (stateDelete.value == STATUS_PROCESSING) return
+        stateDelete.value = STATUS_PROCESSING
         viewModelScope.launch {
             val res = _learningRepo.deleteCardGroupById(groupId)
             withContext(Dispatchers.Main) {
-                stateDeleteGroup.value = res
+                stateDelete.value = res
             }
         }
     }
@@ -52,6 +53,16 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo): View
         if (cardGroups.value?.firstOrNull{ it.groupId == cardGroup.groupId } == null) return
         viewModelScope.launch(Dispatchers.Default) {
             _learningRepo.upsertCardGroup(cardGroup)
+        }
+    }
+    fun deleteCard(cardId: Long) {
+        if (stateDelete.value == STATUS_PROCESSING) return
+        stateDelete.value = STATUS_PROCESSING
+        viewModelScope.launch {
+            val res = _learningRepo.deleteCardById(cardId)
+            withContext(Dispatchers.Main) {
+                stateDelete.value = res
+            }
         }
     }
     //endregion

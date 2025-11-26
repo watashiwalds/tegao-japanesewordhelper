@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="card_manage_activity_label">Quản lý thẻ</string>
+    <string name="card_manage_groupList_label">Danh sách bộ thẻ</string>
 
-    <string name="card_manage_group_size_count">Kích thước: %s thẻ</string>
+    <string name="card_manage_group_size_count">%s thẻ</string>
 
     <string name="card_manage_delete_success">Xoá thành công</string>
     <string name="card_manage_delete_failed">Xoá thất bại</string>

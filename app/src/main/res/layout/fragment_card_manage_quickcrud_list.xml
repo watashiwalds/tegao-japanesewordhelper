@@ -9,6 +9,14 @@
         android:layout_height="match_parent"
         >
 
+        <TextView
+            android:id="@+id/lo_fragmentTitle_txt"
+            style="@style/Theme.Tegao.Label.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Fragment title here"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             style="@style/Theme.Tegao.ScrollableViewFadeEdge"
             android:id="@+id/quickCrudList_rcy"
@@ -16,6 +24,7 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/textSize_large"
             android:paddingBottom="@dimen/img_icon_large"
             android:layout_marginBottom="@dimen/padding_normal"
 

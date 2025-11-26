@@ -80,6 +80,7 @@ class CardManageGroupListFragment: Fragment() {
     }
 
     private fun initView() {
+        _binding.loFragmentTitleTxt.setText(R.string.card_manage_groupList_label)
         _binding.quickCrudListRcy.adapter = _adapter
         _binding.placeholderQabBtn.apply {
             setSrcWithResId(R.drawable.ftc_round_plus_128)

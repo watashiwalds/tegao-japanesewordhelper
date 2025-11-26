@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_manage_navigation"
+    app:startDestination="@id/cardManageGroupListFragment">
+
+    <fragment
+        android:id="@+id/cardManageGroupListFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardmanage.fragment.CardManageGroupListFragment"
+        android:label="CardManageGroupListFragment" >
+        <action
+            android:id="@+id/action_cardManageGroupListFragment_to_cardManageCardListFragment"
+            app:destination="@id/cardManageCardListFragment" />
+        <action
+            android:id="@+id/action_cardManageGroupListFragment_to_cardManageEditGroupFragment"
+            app:destination="@id/cardManageEditGroupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardManageCardListFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardmanage.fragment.CardManageCardListFragment"
+        android:label="CardManageCardListFragment" >
+        <action
+            android:id="@+id/action_cardManageCardListFragment_to_cardManageEditCardFragment"
+            app:destination="@id/cardManageEditCardFragment" />
+        <argument
+            android:name="groupId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardManageEditGroupFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardmanage.fragment.CardManageEditGroupFragment"
+        android:label="CardManageEditGroupFragment" >
+        <argument
+            android:name="groupId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardManageEditCardFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardmanage.fragment.CardManageEditCardFragment"
+        android:label="CardManageEditCardFragment" >
+        <argument
+            android:name="cardId"
+            app:argType="long" />
+    </fragment>
+</navigation>

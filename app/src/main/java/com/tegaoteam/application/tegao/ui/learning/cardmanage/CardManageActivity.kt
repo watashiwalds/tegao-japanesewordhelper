@@ -2,6 +2,9 @@ package com.tegaoteam.application.tegao.ui.learning.cardmanage
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,6 +19,7 @@ import com.tegaoteam.application.tegao.databinding.ActivityCardManageBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.fragment.CardManageCardListFragmentDirections
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.fragment.CardManageGroupListFragmentDirections
+import com.tegaoteam.application.tegao.ui.shared.BehaviorPreset
 
 class CardManageActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityCardManageBinding
@@ -61,5 +65,15 @@ class CardManageActivity : AppCompatActivity() {
             CardManageActivityGate.ACTION_EDITCARD -> _navController.navigate(CardManageCardListFragmentDirections.actionCardManageCardListFragmentToCardManageEditCardFragment(dataId))
             else -> _navController.navigate(R.id.cardManageGroupListFragment)
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (currentFocus is EditText) BehaviorPreset.cancelInputWhenTouchOutside(
+            ev,
+            currentFocus!!,
+            currentFocus,
+            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager,
+            currentFocus)
+        return super.dispatchTouchEvent(ev)
     }
 }

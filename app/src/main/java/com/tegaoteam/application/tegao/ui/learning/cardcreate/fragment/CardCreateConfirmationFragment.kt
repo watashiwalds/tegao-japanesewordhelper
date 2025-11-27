@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueInputBinding
-import com.tegaoteam.application.tegao.ui.component.learningpack.LearningCardWrapper
+import com.tegaoteam.application.tegao.ui.component.learningpack.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardPlaceholder
 import com.tegaoteam.application.tegao.utils.AppToast
@@ -107,12 +107,11 @@ class CardCreateConfirmationFragment: Fragment() {
             setSrcWithResId(R.drawable.ftc_bold_view_128)
             setOnClickListener {
                 updateContents()
-                val preview = LearningCardWrapper(
+                val preview = LearningCardBindingHelper(
                     context = requireContext(),
                     lifecycleOwner = viewLifecycleOwner,
-                    cardEntry = CardPlaceholder.toDomainCardEntry(_parentViewModel.parsedCardPlaceholder!!),
-                    mode = LearningCardWrapper.MODE_PREVIEW
-                ).inflate()
+                    cardEntry = CardPlaceholder.toDomainCardEntry(_parentViewModel.parsedCardPlaceholder!!)
+                ).inflate(LearningCardBindingHelper.MODE_PREVIEW)
                 DialogPreset.quickView(requireContext(), preview, R.string.card_create_preview_gesture_hint)
             }
             toggleVisibility(true)

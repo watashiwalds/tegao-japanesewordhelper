@@ -64,14 +64,13 @@ class CardManageCardListFragment: Fragment() {
     }
 
     private fun observeCardListLiveData(liveData: LiveData<List<CardEntry>>) {
-        val toEditLambda = { cardId: Long -> _navController.navigate(CardManageCardListFragmentDirections.actionCardManageCardListFragmentToCardManageEditCardFragment(cardId)) }
         liveData.observe(viewLifecycleOwner) { cards ->
             _adapter.submitList( cards.map { card ->
                 LearningInfoDataClasses.QuickCrudItemInfo(
                     id = card.cardId,
                     label = getString(R.string.card_manage_cardItem_label, "${card.cardId}"),
                     quickInfo = MutableLiveData<String>().apply { value = card.front.split("\n").apply { subList(0, if (this.size < 2) this.size else 2) }.joinToString("\n") },
-                    onEditQabClickListener = toEditLambda,
+                    onEditQabClickListener = { cardId -> _navController.navigate(CardManageCardListFragmentDirections.actionCardManageCardListFragmentToCardManageEditCardFragment(cardId)) },
                     onDeleteQabClickListener = { cardId ->
                         DialogPreset.requestConfirmation(
                             context = requireContext(),
@@ -80,7 +79,7 @@ class CardManageCardListFragment: Fragment() {
                             lambdaRun = { _parentViewModel.deleteCard(cardId) }
                         )
                     },
-                    onItemClickListener = toEditLambda
+                    onItemClickListener = { cardId -> _navController.navigate(CardManageCardListFragmentDirections.actionCardManageCardListFragmentToCardManageCardPreviewFragment(cardId)) },
                 )
             } )
             _binding.itemCountTxt.text = getString(R.string.card_manage_card_count, cards.size)

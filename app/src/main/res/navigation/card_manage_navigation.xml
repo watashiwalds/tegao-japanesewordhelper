@@ -25,6 +25,9 @@
         <argument
             android:name="groupId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_cardManageCardListFragment_to_cardManageCardPreviewFragment"
+            app:destination="@id/cardManageCardPreviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/cardManageEditGroupFragment"
@@ -38,6 +41,14 @@
         android:id="@+id/cardManageEditCardFragment"
         android:name="com.tegaoteam.application.tegao.ui.learning.cardmanage.fragment.CardManageEditCardFragment"
         android:label="CardManageEditCardFragment" >
+        <argument
+            android:name="cardId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardManageCardPreviewFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardmanage.fragment.CardManageCardPreviewFragment"
+        android:label="CardManageCardPreviewFragment" >
         <argument
             android:name="cardId"
             app:argType="long" />

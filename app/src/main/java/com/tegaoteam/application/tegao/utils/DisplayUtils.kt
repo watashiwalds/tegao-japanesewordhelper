@@ -1,11 +1,13 @@
 package com.tegaoteam.application.tegao.utils
 
+import android.content.res.ColorStateList
 import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
+import com.tegaoteam.application.tegao.R
 
 @BindingAdapter("toggleVisibility")
 fun View.toggleVisibility(allowShow: Boolean) {
@@ -67,4 +69,10 @@ fun TextView.setTextColorWithResId(textColorResId: Int?) {
 @BindingAdapter("htmlText")
 fun TextView.setHtmlFormattedText(txt: String) {
     text = Html.fromHtml(txt.replace("\n", "<br>").replace("\t", "&emsp;"), Html.FROM_HTML_MODE_COMPACT)
+}
+
+@BindingAdapter("cueEnabled")
+fun View.setEnableWithBackgroundCue(enable: Boolean) {
+    isEnabled = enable
+    backgroundTintList = if (!enable) ColorStateList.valueOf(getColorFromAppRes(R.color.disable)) else null
 }

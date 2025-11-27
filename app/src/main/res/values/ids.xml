@@ -2,6 +2,7 @@
 <resources>
     <item name="view_writingView_fullBoard" type="id"/>
     <item name="view_inputBarView" type="id"/>
+    <item name="view_learningCard" type="id"/>
 
     <item name="unv_themedChipDisplay_rcy" type="id"/>
     <item name="unv_inputField_edt" type="id"/>

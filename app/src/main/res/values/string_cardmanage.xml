@@ -30,4 +30,6 @@
     <string name="card_manage_delete_group_message">Toàn bộ thẻ trong bộ thẻ này cũng sẽ được xoá. Thao tác không thể hoàn tác. Bạn chắc chắn chứ?</string>
     <string name="card_manage_delete_card_title">Xoá thẻ %s?</string>
     <string name="card_manage_delete_card_message">Thẻ và bản ghi học tập của thẻ sẽ được xoá. Thao tác không thể hoàn tác. Bạn chắc chắn chứ?</string>
+
+    <string name="card_manage_preview_resetCardState">Khôi phục thẻ</string>
 </resources>

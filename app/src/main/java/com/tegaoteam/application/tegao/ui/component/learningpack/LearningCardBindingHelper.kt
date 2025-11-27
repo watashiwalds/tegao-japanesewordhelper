@@ -15,18 +15,22 @@ import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 
-class LearningCardWrapper(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val cardEntry: CardEntry, val mode: Int) {
+class LearningCardBindingHelper(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val cardEntry: CardEntry) {
     private val themedContext = ContextThemeWrapper(context, R.style.Theme_Tegao_LearningCardText_Default)
     private val defaultContext = ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
     private lateinit var _inputBarView: InputBarView
 
-    fun inflate(): View {
+    fun inflate(mode: Int): View {
         val binding = ViewLearningCardBinding.inflate(LayoutInflater.from(context), null, false)
         bindContents(binding)
         bindTypeDisplay(binding, cardEntry.type)
         bindModeFunctions(binding, mode)
-
         return binding.root
+    }
+
+    fun bindCardBasis(binding: ViewLearningCardBinding) {
+        bindContents(binding)
+        bindTypeDisplay(binding, cardEntry.type)
     }
 
     private fun bindContents(binding: ViewLearningCardBinding) {

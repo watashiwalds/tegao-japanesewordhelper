@@ -82,8 +82,10 @@ class CardManageEditCardFragment: Fragment() {
     private fun observeCardLiveData(liveData: LiveData<CardEntry>) {
         liveData.observe(viewLifecycleOwner) {
             if (it.cardId != _cardId) requireActivity().onBackPressedDispatcher.onBackPressed()
-            cardEntry = it
-            initView()
+            else {
+                cardEntry = it
+                initView()
+            }
         }
     }
 

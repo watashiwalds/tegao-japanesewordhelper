@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:gravity="start|center_vertical"
+        android:width="@dimen/padding_tiny"
+        android:height="@dimen/img_icon_big">
+        <shape>
+            <corners android:radius="@dimen/padding_nano" />
+            <solid android:color="@color/neutral" />
+        </shape>
+    </item>
+    <item
+        android:gravity="end|center_vertical"
+        android:width="@dimen/padding_tiny"
+        android:height="@dimen/img_icon_big">
+        <shape>
+            <corners android:radius="@dimen/padding_nano" />
+            <solid android:color="@color/neutral" />
+        </shape>
+    </item>
+    <item
+        android:gravity="top|center_horizontal"
+        android:height="@dimen/padding_tiny"
+        android:width="@dimen/img_icon_big">
+        <shape>
+            <corners android:radius="@dimen/padding_nano" />
+            <solid android:color="@color/neutral" />
+        </shape>
+    </item>
+    <item
+        android:gravity="bottom|center_horizontal"
+        android:height="@dimen/padding_tiny"
+        android:width="@dimen/img_icon_big">
+        <shape>
+            <corners android:radius="@dimen/padding_nano" />
+            <solid android:color="@color/neutral" />
+        </shape>
+    </item>
+</layer-list>

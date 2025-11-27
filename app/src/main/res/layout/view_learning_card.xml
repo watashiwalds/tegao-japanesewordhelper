@@ -4,7 +4,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_bordermark_bars"
+        >
 
         <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
             android:id="@+id/lo_cardBack_flk"

@@ -83,13 +83,34 @@ class LearningCardBindingHelper(private val context: Context, private val lifecy
         binding.executePendingBindings()
     }
 
-    private fun bindModeFunctions(binding: ViewLearningCardBinding, mode: Int) {
+    fun bindModeFunctions(binding: ViewLearningCardBinding, mode: Int) {
+        binding.apply {
+            loCardFrontFlk.collideDpPadding = 24f
+            loCardBackFlk.collideDpPadding = 24f
+        }
         when (mode) {
             MODE_PREVIEW -> {
                 binding.loCardFrontFlk.flickable = true
             }
+            MODE_NO_RATING -> {
+                binding.loCardFrontFlk.apply {
+                    flickable = true
+                    enableFlickAway = true
+                }
+                binding.loCardBackFlk.apply {
+                    flickable = true
+                    enableFlickAway = true
+                }
+            }
         }
         binding.executePendingBindings()
+    }
+
+    fun resetVisual(binding: ViewLearningCardBinding) {
+        binding.apply {
+            loCardFrontFlk.toggleVisibility(true)
+            loCardBackFlk.toggleVisibility(true)
+        }
     }
 
     private fun initInputBar() {

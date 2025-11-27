@@ -7,12 +7,14 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.tegaoteam.application.tegao.utils.dpToPixel
+import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
 
 class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): ConstraintLayout(context, attrs) {
     //x and y is coordination inside the parent view
 
     var flickable = false
+    var enableFlickAway = false
     var collideDpPadding = 0f
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -46,13 +48,8 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 if (collidingState != COLLIDING_NONE) {
                     onFinalCollide[collidingState]?.invoke()
                     Timber.i("Final colliding on $collidingState")
-                } //todo: animating out with correct direction and GONE
-                animate()
-                    .translationX(0f)
-                    .translationY(0f)
-                    .setInterpolator(DecelerateInterpolator())
-                    .setDuration(200)
-                    .start()
+                }
+                flickAway()
             }
         }
     }
@@ -92,10 +89,10 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
     private fun updateCollidingState() {
         //pos - collide, neg - no collide
         val deltas = listOf(
-            COLLIDING_WEST to (0 - x),
-            COLLIDING_NORTH to (0 - y),
-            COLLIDING_EAST to (x + borderEast),
-            COLLIDING_SOUTH to (y + borderSouth))
+            COLLIDING_WEST to (0 - x - dpToPixel(collideDpPadding)),
+            COLLIDING_NORTH to (0 - y - 2*dpToPixel(collideDpPadding)),
+            COLLIDING_EAST to (x + borderEast - dpToPixel(collideDpPadding)),
+            COLLIDING_SOUTH to (y + borderSouth - 2*dpToPixel(collideDpPadding)))
         val nowColliding = run{
             val maxCollide = deltas.maxBy { it.second }
             if (maxCollide.second - dpToPixel(collideDpPadding) <= 0) COLLIDING_NONE else maxCollide.first
@@ -104,6 +101,60 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
             collidingState = nowColliding
             Timber.i("Colliding on $collidingState")
             onCollide[collidingState]?.invoke()
+        }
+    }
+    //endregion
+
+    //region small function for niche
+    private fun flickAway() {
+        if (!enableFlickAway || collidingState == COLLIDING_NONE) {
+            animate()
+                .translationX(0f)
+                .translationY(0f)
+                .setInterpolator(DecelerateInterpolator())
+                .setDuration(200)
+                .start()
+        } else when (collidingState) {
+            COLLIDING_WEST -> animate()
+                .translationX(-width.toFloat())
+                .translationY(0f)
+                .setInterpolator(DecelerateInterpolator())
+                .setDuration(200)
+                .withEndAction {
+                    toggleVisibility(false)
+                    animate().translationX(0f).translationY(0f).start()
+                }
+                .start()
+            COLLIDING_NORTH -> animate()
+                .translationX(0f)
+                .translationY(-height.toFloat())
+                .setInterpolator(DecelerateInterpolator())
+                .setDuration(200)
+                .withEndAction {
+                    toggleVisibility(false)
+                    animate().translationX(0f).translationY(0f).start()
+                }
+                .start()
+            COLLIDING_EAST -> animate()
+                .translationX(width + borderEast)
+                .translationY(0f)
+                .setInterpolator(DecelerateInterpolator())
+                .setDuration(200)
+                .withEndAction {
+                    toggleVisibility(false)
+                    animate().translationX(0f).translationY(0f).start()
+                }
+                .start()
+            COLLIDING_SOUTH -> animate()
+                .translationX(0f)
+                .translationY(height + borderSouth)
+                .setInterpolator(DecelerateInterpolator())
+                .setDuration(200)
+                .withEndAction {
+                    toggleVisibility(false)
+                    animate().translationX(0f).translationY(0f).start()
+                }
+                .start()
         }
     }
     //endregion

@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tegaoteam.application.tegao.databinding.FragmentCardManagePreviewBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
+import com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
 import com.tegaoteam.application.tegao.ui.component.learningpack.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityViewModel
+import com.tegaoteam.application.tegao.utils.AppToast
+import com.tegaoteam.application.tegao.utils.setEnableWithBackgroundCue
 
 class CardManageCardPreviewFragment: Fragment() {
     private lateinit var _binding: FragmentCardManagePreviewBinding
@@ -47,11 +50,33 @@ class CardManageCardPreviewFragment: Fragment() {
     private lateinit var _learningCardBindingHelper: LearningCardBindingHelper
     private fun initView() {
         if (!::_learningCardBindingHelper.isInitialized) _learningCardBindingHelper = LearningCardBindingHelper(requireContext(), viewLifecycleOwner, _cardEntry)
-        _learningCardBindingHelper.bindCardBasis(_binding.viewLearningCard)
-
+        _learningCardBindingHelper.apply {
+            bindCardBasis(_binding.viewLearningCard)
+            bindModeFunctions(_binding.viewLearningCard, LearningCardBindingHelper.MODE_NO_RATING)
+        }
         _binding.viewLearningCard.apply {
-            loCardFrontFlk.flickable = true
-            loCardBackFlk.flickable = true
+            FlickableConstraintLayout.apply {
+                loCardFrontFlk.setOnCollideListener(
+                    COLLIDING_NORTH,
+                    COLLIDING_WEST,
+                    COLLIDING_EAST,
+                    COLLIDING_SOUTH
+                ) {
+                    AppToast.show("COLLIDE", AppToast.LENGTH_SHORT)
+                }
+                loCardFrontFlk.setOnFinalCollideListener(
+                    COLLIDING_NORTH,
+                    COLLIDING_WEST,
+                    COLLIDING_EAST,
+                    COLLIDING_SOUTH
+                ) {
+                    _binding.resetCardStateBtn.setEnableWithBackgroundCue(true)
+                }
+            }
+        }
+        _binding.resetCardStateBtn.setOnClickListener { view ->
+            _learningCardBindingHelper.resetVisual(_binding.viewLearningCard)
+            view.setEnableWithBackgroundCue(false)
         }
     }
 }

@@ -19,4 +19,10 @@
             <solid android:color="@color/neutral" />
         </shape>
     </item>
+    <item
+        android:width="@dimen/padding_large"
+        android:height="@dimen/padding_large"
+        android:bottom="@dimen/padding_small"
+        android:gravity="bottom|center_horizontal"
+        android:drawable="@drawable/ftc_round_movable_128"/>
 </layer-list>

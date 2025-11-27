@@ -41,6 +41,7 @@ class CardManageEditCardFragment: Fragment() {
 
         _binding = FragmentCardManageDetailBinding.inflate(layoutInflater, container, false)
 
+        initVariables()
         initObservers()
 
         return _binding.root
@@ -50,11 +51,19 @@ class CardManageEditCardFragment: Fragment() {
         _cardId = CardManageEditCardFragmentArgs.fromBundle(requireArguments()).cardId
     }
 
+    private fun initVariables() {
+        _groupFieldAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, mutableListOf<String>())
+    }
+
     private fun initObservers() {
         observeCardLiveData(_parentViewModel.getCardById(_cardId?: 0))
         _parentViewModel.cardGroups.observe(viewLifecycleOwner) {
             cardGroups = it
-            initView()
+            _groupFieldAdapter.apply {
+                clear();
+                addAll(it.map { it -> it.label });
+                notifyDataSetChanged()
+            }
         }
     }
 
@@ -66,6 +75,7 @@ class CardManageEditCardFragment: Fragment() {
         }
     }
 
+    private lateinit var _groupFieldAdapter: ArrayAdapter<String>
     private fun initView() {
         _binding.loFragmentTitleTxt.setText(R.string.card_manage_cardDetail_label)
         if (!::cardEntry.isInitialized || !::cardGroups.isInitialized) return
@@ -97,7 +107,7 @@ class CardManageEditCardFragment: Fragment() {
                 text = getString(R.string.card_manage_cardDetail_field_dateCreated, cardEntry.dateCreated)
             })
             addView(AppCompatTextView(themedContext).apply { text = getString(R.string.card_manage_cardDetail_field_group_current, cardGroups.find { it.groupId == cardEntry.groupId }?.label) })
-            addView(groupField.apply { setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, cardGroups.map { it.label })) })
+            addView(groupField.apply { setAdapter(_groupFieldAdapter) })
         }
 
         _binding.deleteBtn.setOnClickListener {

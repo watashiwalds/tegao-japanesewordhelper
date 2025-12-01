@@ -15,24 +15,30 @@ import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 
-class LearningCardBindingHelper(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val cardEntry: CardEntry) {
+class LearningCardBindingHelper(
+    private val context: Context,
+    private val lifecycleOwner: LifecycleOwner,
+    val cardEntry: CardEntry,
+    val binding: ViewLearningCardBinding? = null
+) {
     private val themedContext =
         ContextThemeWrapper(context, R.style.Theme_Tegao_LearningCardText_Default)
     private val defaultContext =
         ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
     private lateinit var _inputBarView: InputBarView
+    var currentMode = MODE_PREVIEW
+        private set
 
-    fun inflate(mode: Int): View {
-        val binding = ViewLearningCardBinding.inflate(LayoutInflater.from(context), null, false)
-        bindContents(binding)
-        bindTypeDisplay(binding, cardEntry.type)
-        bindModeFunctions(binding, mode)
-        return binding.root
-    }
+    fun bindOnMode(mode: Int): View? {
+        if (mode !in listOf(MODE_PREVIEW, MODE_NO_RATING, MODE_SRS_RATING)) return null
+        currentMode = mode
 
-    fun bindCardBasis(binding: ViewLearningCardBinding) {
-        bindContents(binding)
-        bindTypeDisplay(binding, cardEntry.type)
+        val bindComp = binding?: ViewLearningCardBinding.inflate(LayoutInflater.from(context), null, false)
+        bindContents(bindComp)
+        bindCardType(bindComp, cardEntry.type)
+        bindBehavior(bindComp, currentMode)
+
+        return bindComp.root
     }
 
     private fun bindContents(binding: ViewLearningCardBinding) {
@@ -61,7 +67,7 @@ class LearningCardBindingHelper(private val context: Context, private val lifecy
         binding.executePendingBindings()
     }
 
-    private fun bindTypeDisplay(binding: ViewLearningCardBinding, cardType: Int) {
+    private fun bindCardType(binding: ViewLearningCardBinding, cardType: Int) {
         when (cardType) {
             CARDTYPE_ANSWERCARD -> {
                 initInputBar()
@@ -85,7 +91,7 @@ class LearningCardBindingHelper(private val context: Context, private val lifecy
         binding.executePendingBindings()
     }
 
-    fun bindModeFunctions(binding: ViewLearningCardBinding, mode: Int) {
+    private fun bindBehavior(binding: ViewLearningCardBinding, mode: Int) {
         binding.apply {
             loCardFrontFlk.collideDpPadding = 24f
             loCardBackFlk.collideDpPadding = 24f
@@ -108,10 +114,22 @@ class LearningCardBindingHelper(private val context: Context, private val lifecy
         binding.executePendingBindings()
     }
 
-    fun resetVisual(binding: ViewLearningCardBinding) {
-        binding.apply {
-            loCardFrontFlk.toggleVisibility(true)
-            loCardBackFlk.toggleVisibility(true)
+    fun resetVisual() {
+        binding?.apply {
+            loCardFrontFlk.apply {
+                animate()
+                    .translationX(0f)
+                    .translationY(0f)
+                    .start()
+                toggleVisibility(true)
+            }
+            loCardBackFlk.apply {
+                animate()
+                    .translationX(0f)
+                    .translationY(0f)
+                    .start()
+                toggleVisibility(true)
+            }
         }
     }
 
@@ -127,6 +145,13 @@ class LearningCardBindingHelper(private val context: Context, private val lifecy
         const val MODE_PREVIEW = 0
         const val MODE_NO_RATING = 1
         const val MODE_SRS_RATING = 2
+
+        const val COLLIDE_NONE = FlickableConstraintLayout.COLLIDING_NONE
+        const val COLLIDE_WEST = FlickableConstraintLayout.COLLIDING_WEST
+        const val COLLIDE_NORTH = FlickableConstraintLayout.COLLIDING_NORTH
+        const val COLLIDE_EAST = FlickableConstraintLayout.COLLIDING_EAST
+        const val COLLIDE_SOUTH = FlickableConstraintLayout.COLLIDING_SOUTH
+        const val COLLIDE_ALL = COLLIDE_NONE - 1
 
         private val CARDTYPE_FLASHCARD = LearningCardConst.Type.TYPE_FLASHCARD.id
         private val CARDTYPE_ANSWERCARD = LearningCardConst.Type.TYPE_ANSWERCARD.id

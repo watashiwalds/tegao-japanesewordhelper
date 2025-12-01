@@ -49,11 +49,8 @@ class CardManageCardPreviewFragment: Fragment() {
 
     private lateinit var _learningCardBindingHelper: LearningCardBindingHelper
     private fun initView() {
-        if (!::_learningCardBindingHelper.isInitialized) _learningCardBindingHelper = LearningCardBindingHelper(requireContext(), viewLifecycleOwner, _cardEntry)
-        _learningCardBindingHelper.apply {
-            bindCardBasis(_binding.viewLearningCard)
-            bindModeFunctions(_binding.viewLearningCard, LearningCardBindingHelper.MODE_NO_RATING)
-        }
+        if (!::_learningCardBindingHelper.isInitialized) _learningCardBindingHelper = LearningCardBindingHelper(requireContext(), viewLifecycleOwner, _cardEntry, _binding.viewLearningCard)
+        _learningCardBindingHelper.bindOnMode(LearningCardBindingHelper.MODE_NO_RATING)
         _binding.viewLearningCard.apply {
             FlickableConstraintLayout.apply {
                 loCardFrontFlk.setOnCollideListener(
@@ -75,7 +72,7 @@ class CardManageCardPreviewFragment: Fragment() {
             }
         }
         _binding.resetCardStateBtn.setOnClickListener { view ->
-            _learningCardBindingHelper.resetVisual(_binding.viewLearningCard)
+            _learningCardBindingHelper.resetVisual()
             view.setEnableWithBackgroundCue(false)
         }
     }

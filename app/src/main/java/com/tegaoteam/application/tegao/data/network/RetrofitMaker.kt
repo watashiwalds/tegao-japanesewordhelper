@@ -25,11 +25,6 @@ object RetrofitMaker {
      * Make a new Retrofit client connected to the link of ```url``` value
      */
     fun createWithUrl(url: String): Retrofit {
-//        //TODO: Barebone Moshi, need more configuration
-//        val moshi = Moshi.Builder()
-//            .add(KotlinJsonAdapterFactory())
-//            .build()
-
         return Retrofit.Builder()
             .baseUrl(if (!url.isBlank()) url else "http://example.com")
             .client(okHttpClient)

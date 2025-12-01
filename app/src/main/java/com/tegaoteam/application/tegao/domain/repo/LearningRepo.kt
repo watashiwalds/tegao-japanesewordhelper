@@ -25,6 +25,7 @@ interface LearningRepo {
     //region streak manager
     fun currentStreak(): Stream<Long>
     fun highestStreak(): Stream<Long>
-    suspend fun streakCheckin()
+    suspend fun streakCheckIn()
+    suspend fun streakLaunchCheck()
     //endregion
 }

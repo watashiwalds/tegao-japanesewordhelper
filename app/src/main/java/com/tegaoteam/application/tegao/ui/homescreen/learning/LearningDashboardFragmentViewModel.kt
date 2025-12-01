@@ -31,6 +31,7 @@ class LearningDashboardFragmentViewModel(private val _learningRepo: LearningRepo
         viewModelScope.launch {
             val groupsCount = cardGroups.value?.size?: _learningRepo.getCardGroups().asFlow().first().size
             val dueCardsCount = dueCardIds.value?.size?: _learningRepo.getTodayDueCardIds(Time.getCurrentTimestamp().toString()).asFlow().first().size
+            _learningRepo.streakLaunchCheck()
             val currentStreak = _learningRepo.currentStreak().asFlow().first()
             val highestStreak = _learningRepo.highestStreak().asFlow().first()
             withContext(Dispatchers.Main) {

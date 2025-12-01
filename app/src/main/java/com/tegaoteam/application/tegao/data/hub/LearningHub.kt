@@ -46,6 +46,8 @@ class LearningHub: LearningRepo {
     //region streak manager
     override fun currentStreak(): FlowStream<Long> = FlowStream(_learningConfig.currentStreak)
     override fun highestStreak(): FlowStream<Long> = FlowStream(_learningConfig.highestStreak)
-    override suspend fun streakCheckin() { _learningConfig.streakCheckin() }
+    override suspend fun streakCheckIn() { _learningConfig.streakCheckIn() }
+    override suspend fun streakLaunchCheck() { _learningConfig.streakLaunchCheck() }
+
     //endregion
 }

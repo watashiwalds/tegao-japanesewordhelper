@@ -13,12 +13,15 @@ object LearningConfig {
 
     //region Learning streak manager
     private val LEARNING_STREAK_LAST_CHECKIN = stringPreferencesKey("learning_streak_last_checkin")
-    val streakLastCheckin by lazy { dataStore.data.map { it[LEARNING_STREAK_LAST_CHECKIN]?: Time.getTodayMidnightTimestamp().toString() } }
-    suspend fun streakCheckin() {
-        when (Time.absoluteTimeDifferenceBetween(streakLastCheckin, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY)) {
-            0L -> { return }
-            1L -> { updateCurrentStreak() }
-            else -> { updateCurrentStreak(resetToZero = true) }
+    val streakLastCheckIn by lazy { dataStore.data.map { it[LEARNING_STREAK_LAST_CHECKIN]?: Time.getTodayMidnightTimestamp().toString() } }
+    suspend fun streakLaunchCheck() {
+        if (Time.absoluteTimeDifferenceBetween(streakLastCheckIn, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) > 1) {
+            updateCurrentStreak(true)
+        }
+    }
+    suspend fun streakCheckIn() {
+        if (Time.absoluteTimeDifferenceBetween(streakLastCheckIn, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) > 0) {
+            updateCurrentStreak()
         }
         dataStore.edit { it[LEARNING_STREAK_LAST_CHECKIN] = Time.getTodayMidnightTimestamp().toString() }
     }

@@ -1,6 +1,5 @@
 package com.tegaoteam.application.tegao.ui.homescreen.learning
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.map
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.FragmentMainLearningDashboardBinding
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
+import com.tegaoteam.application.tegao.ui.learning.cardlearn.CardLearnActivityGate
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityGate
-import kotlinx.coroutines.flow.first
 
 class LearningDashboardFragment : Fragment() {
     private lateinit var _binding: FragmentMainLearningDashboardBinding
@@ -58,13 +56,14 @@ class LearningDashboardFragment : Fragment() {
                         val new = it.count{ type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_NEW }
                         ((total.toDouble() - new)*100 / (if (total == 0) 1 else total)).toInt()
                     }
+                    val clickLambda = { groupId: Long -> startActivity(CardLearnActivityGate.departIntent(requireContext(), groupId))}
                     LearningInfoDataClasses.DashboardCardGroupInfo(
                         groupEntry = group,
                         newCardsCount = new,
                         dueCardsCount = due,
                         clearProgress = progress,
-                        onStartLearnClickListener = {},
-                        onGroupClickListener = {},
+                        onStartLearnClickListener = { clickLambda.invoke(group.groupId) },
+                        onGroupClickListener = { clickLambda.invoke(group.groupId) },
                         lifecycleOwner = viewLifecycleOwner
                     )
                 })
@@ -77,6 +76,9 @@ class LearningDashboardFragment : Fragment() {
 
         _binding.cardGroupEditBtn.setOnClickListener {
             startActivity(CardManageActivityGate.departIntent(requireContext()))
+        }
+        _binding.learnAllBtn.setOnClickListener {
+            startActivity(CardLearnActivityGate.departIntent(requireContext(), CardLearnActivityGate.GROUP_ALLGROUP))
         }
     }
 

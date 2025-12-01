@@ -73,6 +73,7 @@
     </style>
 
     <style name="Theme.Tegao.LabelButton">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="backgroundTint">@null</item>
         <item name="iconSize">@dimen/img_icon</item>
     </style>

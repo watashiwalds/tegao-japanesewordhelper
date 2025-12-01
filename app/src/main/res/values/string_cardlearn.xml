@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="card_learn_config_headerTitle">Thiết lập phiên học</string>
+    <string name="card_learn_config_group">Nhóm thẻ: %s</string>
+    <string name="card_learn_config_cardsLimit">Số thẻ trong phiên học</string>
+    <string name="card_learn_config_newCardsCap_hint">Mới</string>
+    <string name="card_learn_config_dueCardsCap_hint">Nhắc lại</string>
+    <string name="card_learn_config_options_label">Lựa chọn</string>
+    <string name="card_learn_config_options_noRatingMode_title">Không đánh giá</string>
+    <string name="card_learn_config_options_noRatingMode_desc">Lật mở thẻ không yêu cầu đánh giá mức độ ghi nhớ. Thuận tiện cho việc học nhanh.</string>
+    <string name="card_learn_config_submit_startLearning">Bắt đầu học</string>
+</resources>

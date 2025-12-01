@@ -95,7 +95,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
             COLLIDING_SOUTH to (y + borderSouth - 2*dpToPixel(collideDpPadding)))
         val nowColliding = run{
             val maxCollide = deltas.maxBy { it.second }
-            if (maxCollide.second - dpToPixel(collideDpPadding) <= 0) COLLIDING_NONE else maxCollide.first
+            if (maxCollide.second <= 0) COLLIDING_NONE else maxCollide.first
         }
         if (nowColliding != collidingState) {
             collidingState = nowColliding
@@ -107,6 +107,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
 
     //region small function for niche
     private fun flickAway() {
+        //flick not strong enough to cause collide -> no outro
         if (!enableFlickAway || collidingState == COLLIDING_NONE) {
             animate()
                 .translationX(0f)
@@ -114,9 +115,11 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 .setInterpolator(DecelerateInterpolator())
                 .setDuration(200)
                 .start()
-        } else when (collidingState) {
+        }
+        //has collided -> do outro
+        else when (collidingState) {
             COLLIDING_WEST -> animate()
-                .translationX(-width.toFloat())
+                .translationX(-(width.toFloat() - borderEast))
                 .translationY(0f)
                 .setInterpolator(DecelerateInterpolator())
                 .setDuration(200)
@@ -127,7 +130,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 .start()
             COLLIDING_NORTH -> animate()
                 .translationX(0f)
-                .translationY(-height.toFloat())
+                .translationY(-(height.toFloat() - borderSouth))
                 .setInterpolator(DecelerateInterpolator())
                 .setDuration(200)
                 .withEndAction {
@@ -136,7 +139,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 }
                 .start()
             COLLIDING_EAST -> animate()
-                .translationX(width + borderEast)
+                .translationX(width - borderEast)
                 .translationY(0f)
                 .setInterpolator(DecelerateInterpolator())
                 .setDuration(200)
@@ -147,7 +150,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 .start()
             COLLIDING_SOUTH -> animate()
                 .translationX(0f)
-                .translationY(height + borderSouth)
+                .translationY(height - borderSouth)
                 .setInterpolator(DecelerateInterpolator())
                 .setDuration(200)
                 .withEndAction {

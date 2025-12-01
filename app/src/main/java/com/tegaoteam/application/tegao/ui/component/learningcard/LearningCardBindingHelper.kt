@@ -103,10 +103,7 @@ class LearningCardBindingHelper(
                 binding.loCardFrontFlk.flickable = true
             }
             MODE_NO_RATING -> {
-                binding.collideCueIcl.let {
-                    _collideCue = CollideCueController(it)
-                    it.root.toggleVisibility(true)
-                }
+                setupCollideCue(binding)
                 binding.loCardFrontFlk.apply {
                     flickable = true
                     enableFlickAway = true
@@ -123,32 +120,43 @@ class LearningCardBindingHelper(
         binding.executePendingBindings()
     }
 
-    fun setOnFrontCollideListener(vararg sides: Int, lambda: () -> Unit) {
+    private fun setupCollideCue(binding: ViewLearningCardBinding) {
+        binding.collideCueIcl.let {
+            _collideCue = CollideCueController(it)
+            it.root.toggleVisibility(true)
+        }
+        setOnFrontCollideListener(*COLLIDE_ALL, lambda = null)
+        setOnBackCollideListener(*COLLIDE_ALL, lambda = null)
+        setOnFrontFinalCollideListener(*COLLIDE_ALL, lambda = null)
+        setOnBackFinalCollideListener(*COLLIDE_ALL, lambda = null)
+    }
+
+    fun setOnFrontCollideListener(vararg sides: Int, lambda: (() -> Unit)?) {
         sides.forEach { binding?.loCardFrontFlk!!.setOnCollideListener(it) {
             _collideCue.showCue(it)
-            lambda.invoke()
+            lambda?.invoke()
         } }
     }
-    fun setOnFrontFinalCollideListener(vararg sides: Int, lambda: () -> Unit) {
+    fun setOnFrontFinalCollideListener(vararg sides: Int, lambda: (() -> Unit)?) {
         sides.forEach { binding?.loCardFrontFlk!!.setOnFinalCollideListener(it) {
             _collideCue.apply {
                 showCue(COLLIDE_NONE)
                 if (currentMode == MODE_SRS_RATING) applyTint(CollideCueController.MODE_SRS)
             }
-            lambda.invoke()
+            lambda?.invoke()
         } }
     }
 
-    fun setOnBackCollideListener(vararg sides: Int, lambda: () -> Unit) {
+    fun setOnBackCollideListener(vararg sides: Int, lambda: (() -> Unit)?) {
         sides.forEach { binding?.loCardBackFlk!!.setOnCollideListener(it) {
             _collideCue.showCue(it)
-            lambda.invoke()
+            lambda?.invoke()
         } }
     }
-    fun setOnBackFinalCollideListener(vararg sides: Int, lambda: () -> Unit) {
+    fun setOnBackFinalCollideListener(vararg sides: Int, lambda: (() -> Unit)?) {
         sides.forEach { binding?.loCardBackFlk!!.setOnFinalCollideListener(it) {
             _collideCue.showCue(COLLIDE_NONE)
-            lambda.invoke()
+            lambda?.invoke()
         } }
     }
 
@@ -193,6 +201,7 @@ class LearningCardBindingHelper(
         const val COLLIDE_NORTH = FlickableConstraintLayout.COLLIDING_NORTH
         const val COLLIDE_EAST = FlickableConstraintLayout.COLLIDING_EAST
         const val COLLIDE_SOUTH = FlickableConstraintLayout.COLLIDING_SOUTH
+        val COLLIDE_ALL = intArrayOf(COLLIDE_NONE, COLLIDE_WEST, COLLIDE_NORTH, COLLIDE_EAST, COLLIDE_SOUTH)
 
         private val CARDTYPE_FLASHCARD = LearningCardConst.Type.TYPE_FLASHCARD.id
         private val CARDTYPE_ANSWERCARD = LearningCardConst.Type.TYPE_ANSWERCARD.id

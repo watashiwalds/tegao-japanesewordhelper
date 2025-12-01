@@ -94,9 +94,6 @@ class LearningCardBindingHelper(
     }
 
     private fun bindBehavior(binding: ViewLearningCardBinding, mode: Int) {
-        _collideCue = CollideCueController(binding.collideCueIcl)
-        binding.collideCueIcl.root.toggleVisibility(true)
-
         binding.apply {
             loCardFrontFlk.collideDpPadding = 24f
             loCardBackFlk.collideDpPadding = 24f
@@ -106,13 +103,19 @@ class LearningCardBindingHelper(
                 binding.loCardFrontFlk.flickable = true
             }
             MODE_NO_RATING -> {
+                binding.collideCueIcl.let {
+                    _collideCue = CollideCueController(it)
+                    it.root.toggleVisibility(true)
+                }
                 binding.loCardFrontFlk.apply {
                     flickable = true
                     enableFlickAway = true
+                    ignoreFinalCollidingOnLongCollide = true
                 }
                 binding.loCardBackFlk.apply {
                     flickable = true
                     enableFlickAway = true
+                    ignoreFinalCollidingOnLongCollide = true
                 }
             }
         }

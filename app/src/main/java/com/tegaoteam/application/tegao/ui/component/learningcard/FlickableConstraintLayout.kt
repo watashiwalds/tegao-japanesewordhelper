@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.tegaoteam.application.tegao.utils.Time
 import com.tegaoteam.application.tegao.utils.dpToPixel
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
@@ -16,6 +17,8 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
     var flickable = false
     var enableFlickAway = false
     var collideDpPadding = 0f
+    var ignoreFinalCollidingOnLongCollide = false
+    var maxSecondsForLongCollide: Long = 2
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
@@ -37,6 +40,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
             MotionEvent.ACTION_DOWN -> {
                 thumbStartX = eventX
                 thumbStartY = eventY
+                collideStartTime = 0
             }
             MotionEvent.ACTION_MOVE -> {
                 translationX = eventX - thumbStartX
@@ -84,6 +88,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
         borderSouth = height - borderSouth
     }
 
+    private var collideStartTime: Long = 0
     var collidingState = COLLIDING_NONE
         private set
     private fun updateCollidingState() {
@@ -93,10 +98,14 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
             COLLIDING_NORTH to (0 - y - 2*dpToPixel(collideDpPadding)),
             COLLIDING_EAST to (x + borderEast - dpToPixel(collideDpPadding)),
             COLLIDING_SOUTH to (y + borderSouth - 2*dpToPixel(collideDpPadding)))
-        val nowColliding = run{
+        var nowColliding = run{
             val maxCollide = deltas.maxBy { it.second }
-            if (maxCollide.second <= 0) COLLIDING_NONE else maxCollide.first
+            if (maxCollide.second <= 0) COLLIDING_NONE else {
+                if (collideStartTime == 0L) collideStartTime = Time.getCurrentTimestamp().epochSecond
+                maxCollide.first
+            }
         }
+        if (ignoreFinalCollidingOnLongCollide && Time.getCurrentTimestamp().epochSecond - collideStartTime > maxSecondsForLongCollide) nowColliding = COLLIDING_NONE
         if (nowColliding != collidingState) {
             collidingState = nowColliding
             Timber.i("Colliding on $collidingState")

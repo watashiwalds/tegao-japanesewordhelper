@@ -16,4 +16,11 @@
     <color name="const_black">#FF000000</color>
     <color name="const_white">#FFFFFFFF</color>
     <color name="secondary_halfAlpha">#4DFFE100</color>
+
+    <color name="neutral_halfAlpha">#68C8C8C8</color>
+
+    <color name="srs_forget">#FFEE0808</color>
+    <color name="srs_hard">#FFEEB108</color>
+    <color name="srs_good">#FF3EC20E</color>
+    <color name="srs_easy">#FF08B1EE</color>
 </resources>

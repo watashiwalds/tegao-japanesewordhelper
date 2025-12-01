@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:clickable="false">
+
+        <ImageView
+            android:id="@+id/west_cue"
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|start"
+            android:background="@drawable/require_tint_collide_cue_start"
+            />
+
+        <ImageView
+            android:id="@+id/north_cue"
+            android:layout_height="16dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@drawable/require_tint_collide_cue_top"
+            />
+
+        <ImageView
+            android:id="@+id/east_cue"
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/require_tint_collide_cue_end"
+            />
+
+        <ImageView
+            android:id="@+id/south_cue"
+            android:layout_height="16dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@drawable/require_tint_collide_cue_bottom"
+            />
+
+        <TextView
+            style="@style/Theme.Tegao.ContentText.Normal"
+            android:id="@+id/text_cue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="@dimen/padding_large"
+            tools:text="Text Cue Here"
+            />
+
+    </FrameLayout>
+
+</layout>

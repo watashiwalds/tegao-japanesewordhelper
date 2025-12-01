@@ -50,27 +50,37 @@ class CardManageCardPreviewFragment: Fragment() {
     private lateinit var _learningCardBindingHelper: LearningCardBindingHelper
     private fun initView() {
         if (!::_learningCardBindingHelper.isInitialized) _learningCardBindingHelper = LearningCardBindingHelper(requireContext(), viewLifecycleOwner, _cardEntry, _binding.viewLearningCard)
-        _learningCardBindingHelper.bindOnMode(LearningCardBindingHelper.MODE_NO_RATING)
-        _binding.viewLearningCard.apply {
-            FlickableConstraintLayout.apply {
-                loCardFrontFlk.setOnCollideListener(
-                    COLLIDING_NORTH,
-                    COLLIDING_WEST,
-                    COLLIDING_EAST,
-                    COLLIDING_SOUTH
-                ) {
-                    AppToast.show("COLLIDE", AppToast.LENGTH_SHORT)
-                }
-                loCardFrontFlk.setOnFinalCollideListener(
-                    COLLIDING_NORTH,
-                    COLLIDING_WEST,
-                    COLLIDING_EAST,
-                    COLLIDING_SOUTH
-                ) {
+        _learningCardBindingHelper.apply {
+            bindOnMode(LearningCardBindingHelper.MODE_NO_RATING)
+            LearningCardBindingHelper.apply {
+                setOnFrontCollideListener(COLLIDE_NONE, COLLIDE_WEST, COLLIDE_NORTH, COLLIDE_EAST, COLLIDE_SOUTH) {}
+                setOnBackCollideListener(COLLIDE_NONE, COLLIDE_WEST, COLLIDE_NORTH, COLLIDE_EAST, COLLIDE_SOUTH) {}
+                setOnFrontFinalCollideListener(COLLIDE_NORTH, COLLIDE_WEST, COLLIDE_EAST, COLLIDE_SOUTH) {
                     _binding.resetCardStateBtn.setEnableWithBackgroundCue(true)
                 }
+                setOnBackFinalCollideListener(COLLIDE_NONE, COLLIDE_WEST, COLLIDE_NORTH, COLLIDE_EAST, COLLIDE_SOUTH) {}
             }
         }
+//        _binding.viewLearningCard.apply {
+//            FlickableConstraintLayout.apply {
+//                loCardFrontFlk.setOnCollideListener(
+//                    COLLIDING_NORTH,
+//                    COLLIDING_WEST,
+//                    COLLIDING_EAST,
+//                    COLLIDING_SOUTH
+//                ) {
+//                    AppToast.show("COLLIDE", AppToast.LENGTH_SHORT)
+//                }
+//                loCardFrontFlk.setOnFinalCollideListener(
+//                    COLLIDING_NORTH,
+//                    COLLIDING_WEST,
+//                    COLLIDING_EAST,
+//                    COLLIDING_SOUTH
+//                ) {
+//                    _binding.resetCardStateBtn.setEnableWithBackgroundCue(true)
+//                }
+//            }
+//        }
         _binding.resetCardStateBtn.setOnClickListener { view ->
             _learningCardBindingHelper.resetVisual()
             view.setEnableWithBackgroundCue(false)

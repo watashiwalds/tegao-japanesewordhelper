@@ -3,6 +3,7 @@
     <color name="background">#00000000</color>
     <color name="background_fill">#FF000000</color>
     <color name="neutral">#FF686868</color>
+    <color name="neutral_halfAlpha">#68686868</color>
     <color name="disable">#FF252525</color>
     <color name="text_normal">#FFDDDDDD</color>
     <color name="text_reverse">#FFDDDDDD</color>

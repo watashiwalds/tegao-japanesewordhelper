@@ -88,6 +88,15 @@
                 />
         </com.tegaoteam.application.tegao.ui.component.learningcard.FlickableConstraintLayout>
 
+        <include layout="@layout/include_flickcard_collide_effect"
+            android:id="@+id/collideCue_icl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

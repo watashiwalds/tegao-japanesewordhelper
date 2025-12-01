@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.LifecycleOwner
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.AddonHub
+import com.tegaoteam.application.tegao.databinding.IncludeFlickcardCollideEffectBinding
 import com.tegaoteam.application.tegao.databinding.ViewLearningCardBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
@@ -26,6 +27,7 @@ class LearningCardBindingHelper(
     private val defaultContext =
         ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
     private lateinit var _inputBarView: InputBarView
+    private lateinit var _collideCue: CollideCueController
     var currentMode = MODE_PREVIEW
         private set
 
@@ -92,6 +94,9 @@ class LearningCardBindingHelper(
     }
 
     private fun bindBehavior(binding: ViewLearningCardBinding, mode: Int) {
+        _collideCue = CollideCueController(binding.collideCueIcl)
+        binding.collideCueIcl.root.toggleVisibility(true)
+
         binding.apply {
             loCardFrontFlk.collideDpPadding = 24f
             loCardBackFlk.collideDpPadding = 24f
@@ -111,10 +116,44 @@ class LearningCardBindingHelper(
                 }
             }
         }
+
         binding.executePendingBindings()
     }
 
+    fun setOnFrontCollideListener(vararg sides: Int, lambda: () -> Unit) {
+        sides.forEach { binding?.loCardFrontFlk!!.setOnCollideListener(it) {
+            _collideCue.showCue(it)
+            lambda.invoke()
+        } }
+    }
+    fun setOnFrontFinalCollideListener(vararg sides: Int, lambda: () -> Unit) {
+        sides.forEach { binding?.loCardFrontFlk!!.setOnFinalCollideListener(it) {
+            _collideCue.apply {
+                showCue(COLLIDE_NONE)
+                if (currentMode == MODE_SRS_RATING) applyTint(CollideCueController.MODE_SRS)
+            }
+            lambda.invoke()
+        } }
+    }
+
+    fun setOnBackCollideListener(vararg sides: Int, lambda: () -> Unit) {
+        sides.forEach { binding?.loCardBackFlk!!.setOnCollideListener(it) {
+            _collideCue.showCue(it)
+            lambda.invoke()
+        } }
+    }
+    fun setOnBackFinalCollideListener(vararg sides: Int, lambda: () -> Unit) {
+        sides.forEach { binding?.loCardBackFlk!!.setOnFinalCollideListener(it) {
+            _collideCue.showCue(COLLIDE_NONE)
+            lambda.invoke()
+        } }
+    }
+
     fun resetVisual() {
+        _collideCue.apply {
+            clearCue()
+            applyTint(CollideCueController.MODE_NEUTRAL)
+        }
         binding?.apply {
             loCardFrontFlk.apply {
                 animate()
@@ -151,7 +190,6 @@ class LearningCardBindingHelper(
         const val COLLIDE_NORTH = FlickableConstraintLayout.COLLIDING_NORTH
         const val COLLIDE_EAST = FlickableConstraintLayout.COLLIDING_EAST
         const val COLLIDE_SOUTH = FlickableConstraintLayout.COLLIDING_SOUTH
-        const val COLLIDE_ALL = COLLIDE_NONE - 1
 
         private val CARDTYPE_FLASHCARD = LearningCardConst.Type.TYPE_FLASHCARD.id
         private val CARDTYPE_ANSWERCARD = LearningCardConst.Type.TYPE_ANSWERCARD.id

@@ -76,3 +76,8 @@ fun View.setEnableWithBackgroundCue(enable: Boolean) {
     isEnabled = enable
     backgroundTintList = if (!enable) ColorStateList.valueOf(getColorFromAppRes(R.color.disable)) else null
 }
+
+@BindingAdapter("tintResId")
+fun View.setBackgroundTintByResId(colorResId: Int) {
+    backgroundTintList = if (colorResId != 0) ColorStateList.valueOf(getColorFromAppRes(colorResId)) else null
+}

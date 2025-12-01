@@ -19,7 +19,7 @@ import com.tegaoteam.application.tegao.utils.toggleVisibility
 class LearningCardBindingHelper(
     private val context: Context,
     private val lifecycleOwner: LifecycleOwner,
-    val cardEntry: CardEntry,
+    private var cardEntry: CardEntry,
     val binding: ViewLearningCardBinding? = null
 ) {
     private val themedContext =
@@ -30,6 +30,11 @@ class LearningCardBindingHelper(
     private lateinit var _collideCue: CollideCueController
     var currentMode = MODE_PREVIEW
         private set
+
+    fun setCardEntry(newCardEntry: CardEntry) {
+        cardEntry = newCardEntry
+        bindOnMode(currentMode)
+    }
 
     fun bindOnMode(mode: Int): View? {
         if (mode !in listOf(MODE_PREVIEW, MODE_NO_RATING, MODE_SRS_RATING)) return null
@@ -106,6 +111,18 @@ class LearningCardBindingHelper(
                 setupCollideCue(binding)
                 binding.loCardFrontFlk.apply {
                     flickable = true
+                    enableFlickAway = true
+                    ignoreFinalCollidingOnLongCollide = true
+                }
+                binding.loCardBackFlk.apply {
+                    flickable = true
+                    enableFlickAway = true
+                    ignoreFinalCollidingOnLongCollide = true
+                }
+            }
+            MODE_SRS_RATING -> {
+                setupCollideCue(binding)
+                binding.loCardFrontFlk.apply {
                     enableFlickAway = true
                     ignoreFinalCollidingOnLongCollide = true
                 }

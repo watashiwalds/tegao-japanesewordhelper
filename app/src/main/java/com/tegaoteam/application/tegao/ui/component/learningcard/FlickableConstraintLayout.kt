@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.component.flickcard
+package com.tegaoteam.application.tegao.ui.component.learningcard
 
 import android.content.Context
 import android.util.AttributeSet

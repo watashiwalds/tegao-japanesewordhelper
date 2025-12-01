@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tegaoteam.application.tegao.databinding.FragmentCardManagePreviewBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
-import com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
-import com.tegaoteam.application.tegao.ui.component.learningpack.LearningCardBindingHelper
+import com.tegaoteam.application.tegao.ui.component.learningcard.FlickableConstraintLayout
+import com.tegaoteam.application.tegao.ui.component.learningcard.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityViewModel
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.setEnableWithBackgroundCue

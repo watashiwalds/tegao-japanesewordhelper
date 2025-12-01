@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.component.learningpack
+package com.tegaoteam.application.tegao.ui.component.learningcard
 
 import android.content.Context
 import android.view.Gravity
@@ -16,8 +16,10 @@ import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 
 class LearningCardBindingHelper(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val cardEntry: CardEntry) {
-    private val themedContext = ContextThemeWrapper(context, R.style.Theme_Tegao_LearningCardText_Default)
-    private val defaultContext = ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
+    private val themedContext =
+        ContextThemeWrapper(context, R.style.Theme_Tegao_LearningCardText_Default)
+    private val defaultContext =
+        ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
     private lateinit var _inputBarView: InputBarView
 
     fun inflate(mode: Int): View {

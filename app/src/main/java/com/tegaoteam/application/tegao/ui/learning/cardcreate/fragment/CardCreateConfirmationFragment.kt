@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardCreateValueInputBinding
-import com.tegaoteam.application.tegao.ui.component.learningpack.LearningCardBindingHelper
+import com.tegaoteam.application.tegao.ui.component.learningcard.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardPlaceholder
 import com.tegaoteam.application.tegao.utils.AppToast

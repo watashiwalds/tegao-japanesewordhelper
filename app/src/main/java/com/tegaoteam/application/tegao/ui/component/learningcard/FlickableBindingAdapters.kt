@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.component.flickcard
+package com.tegaoteam.application.tegao.ui.component.learningcard
 
 import androidx.databinding.BindingAdapter
 

@@ -8,7 +8,7 @@
         android:background="@drawable/background_bordermark_bars"
         >
 
-        <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
+        <com.tegaoteam.application.tegao.ui.component.learningcard.FlickableConstraintLayout
             android:id="@+id/lo_cardBack_flk"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -46,9 +46,9 @@
                 android:layout_marginBottom="@dimen/padding_small"
                 android:visibility="gone"
                 />
-        </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout>
+        </com.tegaoteam.application.tegao.ui.component.learningcard.FlickableConstraintLayout>
 
-        <com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout
+        <com.tegaoteam.application.tegao.ui.component.learningcard.FlickableConstraintLayout
             android:id="@+id/lo_cardFront_flk"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -86,7 +86,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:visibility="gone"
                 />
-        </com.tegaoteam.application.tegao.ui.component.flickcard.FlickableConstraintLayout>
+        </com.tegaoteam.application.tegao.ui.component.learningcard.FlickableConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

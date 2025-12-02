@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentLearningSessionRunBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
@@ -128,7 +129,7 @@ class LearningSessionRunFragment: Fragment() {
         //if there is no other card to go through, end the session and go to metrics fragment
         if (_viewModel.sessionDeck.isEmpty()) {
             if (!preFinishSession) preFinishSession = true
-            else findNavController().navigate(LearningSessionRunFragmentDirections.actionLearningSessionRunFragmentToLearningSessionMetricsFragment())
+            else findNavController().navigate(R.id.learningSessionMetricsFragment, null, navOptions { popUpTo(R.id.learningSessionRunFragment) {inclusive = true} })
         } else {
             preFinishSession = false
         }

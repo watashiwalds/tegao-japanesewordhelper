@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentLearningSessionConfigureBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
@@ -66,7 +68,7 @@ class LearningSessionConfigureFragment : Fragment() {
         _binding.apply {
             startLearningBtn.setOnClickListener {
                 submitConfigs()
-                findNavController().navigate(LearningSessionConfigureFragmentDirections.actionLearningSessionConfigureFragmentToLearningSessionRunFragment())
+                findNavController().navigate(R.id.learningSessionRunFragment, null, navOptions { popUpTo(R.id.learningSessionConfigureFragment) {inclusive = true} })
             }
             loNoRatingOptionCst.setOnClickListener { noRatingModeSwt.toggle() }
             executePendingBindings()

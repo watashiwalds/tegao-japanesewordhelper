@@ -106,15 +106,26 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
             }
         }
         if (ignoreFinalCollidingOnLongCollide && Time.getCurrentTimestamp().epochSecond - collideStartTime > maxSecondsForLongCollide) nowColliding = COLLIDING_NONE
-        if (nowColliding != collidingState) {
-            collidingState = nowColliding
+        reactOnCollidingState(nowColliding)
+    }
+    private fun reactOnCollidingState(newState: Int) {
+        if (newState != collidingState) {
+            collidingState = newState
             Timber.i("Colliding on $collidingState")
             onCollide[collidingState]?.invoke()
         }
     }
     //endregion
 
-    //region small function for niche
+    //Explicitly invoke colliding
+    fun doFlick(colliding: Int) {
+        reactOnCollidingState(colliding)
+        onFinalCollide[colliding]?.invoke()
+        Timber.i("Final colliding on $collidingState")
+        flickAway()
+    }
+
+    //region Animation function for flick away
     private fun flickAway() {
         //flick not strong enough to cause collide -> no outro
         if (!enableFlickAway || collidingState == COLLIDING_NONE) {

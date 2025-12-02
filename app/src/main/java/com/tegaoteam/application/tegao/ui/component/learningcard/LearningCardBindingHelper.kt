@@ -200,6 +200,9 @@ class LearningCardBindingHelper(
         }
     }
 
+    fun flickFront(colliding: Int) { binding?.loCardFrontFlk?.doFlick(colliding) }
+    fun flickBack(colliding: Int) { binding?.loCardBackFlk?.doFlick(colliding) }
+
     private fun initInputBar() {
         _inputBarView = InputBarView(
             context = context,

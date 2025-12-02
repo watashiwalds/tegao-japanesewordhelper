@@ -17,6 +17,7 @@ import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setEnableWithBackgroundCue
 import com.tegaoteam.application.tegao.utils.toggleVisibility
+import timber.log.Timber
 
 class LearningSessionRunFragment: Fragment() {
     private lateinit var _binding: FragmentLearningSessionRunBinding
@@ -42,6 +43,7 @@ class LearningSessionRunFragment: Fragment() {
         _parentViewModel.apply {
             sessionDeck.observe(viewLifecycleOwner) {
                 if (_viewModel.sessionDeck.isEmpty()) _viewModel.sessionDeck.addAll(it)
+                Timber.i("Received ${it.size} cards for deck")
                 initView()
             }
         }
@@ -73,8 +75,10 @@ class LearningSessionRunFragment: Fragment() {
                 binding = _binding.viewLearningCardSecond
             )
         }
-        listOf(cardViewOnFront, cardViewInBack).forEach {
-            if (!_parentViewModel.noRatingMode) {
+        Timber.i("Binding start cards result: \n${cardViewOnFront}, \n${cardViewInBack}. \nCard deck remain ${_viewModel.sessionDeck.size}")
+
+        if (!_parentViewModel.noRatingMode) {
+            listOf(cardViewOnFront, cardViewInBack).forEach {
                 it?.apply {
                     setMode(LearningCardBindingHelper.MODE_SRS_RATING)
                     setOnFrontFinalCollideListener(*LearningCardBindingHelper.COLLIDE_ALL) {
@@ -85,10 +89,12 @@ class LearningSessionRunFragment: Fragment() {
                     setOnBackFinalCollideListener(RATING_HARD) { finishACards(getCardEntry().cardId, RATING_HARD) }
                     setOnBackFinalCollideListener(RATING_FORGET) { finishACards(getCardEntry().cardId, RATING_FORGET) }
                 }
-                cardViewOnFront?.bindOnMode(LearningCardBindingHelper.MODE_SRS_RATING)
-                cardViewInBack?.bindOnMode(LearningCardBindingHelper.MODE_SRS_RATING)
             }
+            cardViewOnFront?.bindOnMode(LearningCardBindingHelper.MODE_SRS_RATING)
+            cardViewInBack?.bindOnMode(LearningCardBindingHelper.MODE_SRS_RATING)
         }
+
+        showFooterControl(if (cardViewOnFront!!.getCardEntry().type == LearningCardConst.Type.TYPE_ANSWERCARD.id) FOOTER_FRONTANSWER else FOOTER_FRONTFLASH)
     }
 
     private fun bindingStaticButtons() {
@@ -133,6 +139,8 @@ class LearningSessionRunFragment: Fragment() {
 
         //change footer control accordingly to card type
         showFooterControl(if (cardViewOnFront!!.getCardEntry().type == LearningCardConst.Type.TYPE_ANSWERCARD.id) FOOTER_FRONTANSWER else FOOTER_FRONTFLASH)
+
+        Timber.i("Card deck remain ${_viewModel.sessionDeck.size}")
     }
 
     private val FOOTER_FRONTFLASH = 0

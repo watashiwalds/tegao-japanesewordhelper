@@ -105,7 +105,7 @@ class LearningSessionConfigureFragment : Fragment() {
             _parentViewModel.submitConfigs(
                 newCardCapEdt.text.toString().toIntOrNull()?: 0,
                 dueCardCapEdt.text.toString().toIntOrNull()?: 0,
-                noRatingModeSwt.isEnabled)
+                false)
         }
     }
 

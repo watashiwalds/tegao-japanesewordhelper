@@ -49,10 +49,6 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
 //                Timber.i("dragCoordinate [$x; $y]")
             }
             MotionEvent.ACTION_UP -> {
-                if (collidingState != COLLIDING_NONE) {
-                    onFinalCollide[collidingState]?.invoke()
-                    Timber.i("Final colliding on $collidingState")
-                }
                 flickAway()
             }
         }
@@ -120,8 +116,6 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
     //Explicitly invoke colliding
     fun doFlick(colliding: Int) {
         reactOnCollidingState(colliding)
-        onFinalCollide[colliding]?.invoke()
-        Timber.i("Final colliding on $collidingState")
         flickAway()
     }
 
@@ -137,6 +131,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 .start()
         }
         //has collided -> do outro
+        // final colliding invoke should be called after animation, so.. it's here (italia spaghetti at it's finest)
         else when (collidingState) {
             COLLIDING_WEST -> animate()
                 .translationX(-(width.toFloat() - borderEast))
@@ -145,6 +140,8 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 .setDuration(200)
                 .withEndAction {
                     toggleVisibility(false)
+                    onFinalCollide[collidingState]?.invoke()
+                    Timber.i("Final colliding on $collidingState")
                     animate().translationX(0f).translationY(0f).start()
                 }
                 .start()
@@ -155,6 +152,8 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 .setDuration(200)
                 .withEndAction {
                     toggleVisibility(false)
+                    onFinalCollide[collidingState]?.invoke()
+                    Timber.i("Final colliding on $collidingState")
                     animate().translationX(0f).translationY(0f).start()
                 }
                 .start()
@@ -165,6 +164,8 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 .setDuration(200)
                 .withEndAction {
                     toggleVisibility(false)
+                    onFinalCollide[collidingState]?.invoke()
+                    Timber.i("Final colliding on $collidingState")
                     animate().translationX(0f).translationY(0f).start()
                 }
                 .start()
@@ -175,6 +176,8 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 .setDuration(200)
                 .withEndAction {
                     toggleVisibility(false)
+                    onFinalCollide[collidingState]?.invoke()
+                    Timber.i("Final colliding on $collidingState")
                     animate().translationX(0f).translationY(0f).start()
                 }
                 .start()

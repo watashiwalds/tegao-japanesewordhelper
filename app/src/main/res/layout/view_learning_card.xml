@@ -15,7 +15,6 @@
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="9:15"
 
             android:background="@drawable/view_flickcard_back"
             android:paddingHorizontal="@dimen/padding_large"
@@ -55,7 +54,6 @@
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="9:15"
 
             android:background="@drawable/view_flickcard_front"
             android:paddingHorizontal="@dimen/padding_large"

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/lo_headerBar_frm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:background="@drawable/neutral_stroke_underline"
+            >
+            <ImageButton
+                android:id="@+id/pauseSession_btn"
+                style="@style/Theme.Tegao.IconButton"
+                android:layout_width="@dimen/img_icon_big"
+                android:layout_height="@dimen/img_icon_big"
+                android:layout_margin="@dimen/padding_small"
+                android:src="@drawable/ftc_round_pause_128"
+                android:padding="@dimen/padding_tiny"
+                android:layout_gravity="center_vertical|start"
+                />
+            <TextView
+                android:id="@+id/sessionProgress_txt"
+                style="@style/Theme.Tegao.Label.Normal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/padding_small"
+
+                tools:text="94  ●  2  ●  5"
+                />
+        </FrameLayout>
+
+        <include layout="@layout/view_learning_card"
+            android:id="@+id/view_learningCard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/lo_headerBar_frm"
+            app:layout_constraintBottom_toTopOf="@id/lo_footerBar_frm"/>
+
+        <FrameLayout
+            android:id="@+id/lo_footerBar_frm"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginBottom="@dimen/padding_normal"
+            android:background="@drawable/neutral_stroke_overline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <FrameLayout
+                android:id="@+id/lo_frontControl_frm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <Button
+                    android:id="@+id/frontCardAction_btn"
+                    style="@style/Theme.Tegao.LabelButton.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    tools:text="Flick the card"
+                    />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/lo_backControl_frm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+                <Button
+                    android:id="@+id/ratingForget_btn"
+                    style="@style/Theme.Tegao.LabelButton"
+                    android:paddingHorizontal="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/srs_forget"
+                    android:maxLines="2"
+                    tools:text="Forgot\n5m"
+                    />
+                <Button
+                    android:id="@+id/ratingHard_btn"
+                    style="@style/Theme.Tegao.LabelButton"
+                    android:paddingHorizontal="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/srs_hard"
+                    android:maxLines="2"
+                    tools:text="Hard\n10m"
+                    />
+                <Button
+                    android:id="@+id/ratingGood_btn"
+                    style="@style/Theme.Tegao.LabelButton"
+                    android:paddingHorizontal="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/srs_good"
+                    android:maxLines="2"
+                    tools:text="Good\n1d"
+                    />
+                <Button
+                    android:id="@+id/ratingEasy_btn"
+                    style="@style/Theme.Tegao.LabelButton"
+                    android:paddingHorizontal="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/srs_easy"
+                    android:maxLines="2"
+                    tools:text="Easy\n4d"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

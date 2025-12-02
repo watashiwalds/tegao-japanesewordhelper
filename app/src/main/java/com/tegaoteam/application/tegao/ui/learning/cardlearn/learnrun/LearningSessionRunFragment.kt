@@ -170,7 +170,10 @@ class LearningSessionRunFragment: Fragment() {
                     frontCardActionBtn.apply {
                         setEnableWithBackgroundCue(true)
                         text = getString(R.string.card_learn_frontControl_doAnswer)
-                        setOnClickListener { relatedCardBinder?.submitAnswer(relatedCardBinder.getAnswer()) }
+                        setOnClickListener {
+                            relatedCardBinder?.submitAnswer(relatedCardBinder.getAnswer())
+                            relatedCardBinder?.flickFront(LearningCardBindingHelper.COLLIDE_WEST)
+                        }
                     }
                 }
                 FOOTER_BACKRATING -> {

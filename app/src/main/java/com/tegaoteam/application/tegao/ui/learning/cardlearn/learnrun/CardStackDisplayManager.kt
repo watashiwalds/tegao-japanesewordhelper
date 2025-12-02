@@ -64,9 +64,4 @@ class CardStackDisplayManager(val context: Context, val learnMode: Int, private 
             getTheOtherView().binding!!.root.toggleVisibility(false)
         }
     }
-
-    companion object {
-        const val MODE_NO_RATING = LearningCardBindingHelper.MODE_NO_RATING
-        const val MODE_SRS_RATING = LearningCardBindingHelper.MODE_SRS_RATING
-    }
 }

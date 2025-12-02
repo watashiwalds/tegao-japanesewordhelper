@@ -133,19 +133,19 @@ class LearningCardBindingHelper(
             _collideCue = CollideCueController(it)
             it.root.toggleVisibility(true)
         }
-        setOnFrontCollideListener(*COLLIDE_ALL, lambda = null)
-        setOnBackCollideListener(*COLLIDE_ALL, lambda = null)
-        setOnFrontFinalCollideListener(*COLLIDE_ALL, lambda = null)
-        setOnBackFinalCollideListener(*COLLIDE_ALL, lambda = null)
+        COLLIDE_ALL.forEach {
+            if (binding.loCardFrontFlk.getOnCollideListener(it) == null) { setOnFrontCollideListener(it) }
+            if (binding.loCardBackFlk.getOnCollideListener(it) == null) { setOnBackCollideListener(it) }
+        }
     }
 
-    fun setOnFrontCollideListener(vararg sides: Int, lambda: (() -> Unit)?) {
+    fun setOnFrontCollideListener(vararg sides: Int, lambda: (() -> Unit)? = null) {
         sides.forEach { binding?.loCardFrontFlk!!.setOnCollideListener(it) {
             _collideCue.showCue(it)
             lambda?.invoke()
         } }
     }
-    fun setOnFrontFinalCollideListener(vararg sides: Int, lambda: (() -> Unit)?) {
+    fun setOnFrontFinalCollideListener(vararg sides: Int, lambda: (() -> Unit)? = null) {
         sides.forEach { binding?.loCardFrontFlk!!.setOnFinalCollideListener(it) {
             _collideCue.apply {
                 showCue(COLLIDE_NONE)
@@ -155,13 +155,13 @@ class LearningCardBindingHelper(
         } }
     }
 
-    fun setOnBackCollideListener(vararg sides: Int, lambda: (() -> Unit)?) {
+    fun setOnBackCollideListener(vararg sides: Int, lambda: (() -> Unit)? = null) {
         sides.forEach { binding?.loCardBackFlk!!.setOnCollideListener(it) {
             _collideCue.showCue(it)
             lambda?.invoke()
         } }
     }
-    fun setOnBackFinalCollideListener(vararg sides: Int, lambda: (() -> Unit)?) {
+    fun setOnBackFinalCollideListener(vararg sides: Int, lambda: (() -> Unit)? = null) {
         sides.forEach { binding?.loCardBackFlk!!.setOnFinalCollideListener(it) {
             _collideCue.showCue(COLLIDE_NONE)
             lambda?.invoke()

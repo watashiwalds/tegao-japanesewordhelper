@@ -26,7 +26,7 @@ class LearningCardBindingHelper(
         ContextThemeWrapper(context, R.style.Theme_Tegao_LearningCardText_Default)
     private val defaultContext =
         ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
-    private lateinit var _inputBarView: InputBarView
+    private var _inputBarView: InputBarView? = null
     private lateinit var _collideCue: CollideCueController
     var currentMode = MODE_PREVIEW
         private set
@@ -57,14 +57,6 @@ class LearningCardBindingHelper(
             })
         }
         // Back
-        cardEntry.answer?.let {
-            initInputBar()
-            binding.loFrontFooterBarFrm.apply {
-                removeAllViews()
-                addView(_inputBarView.view)
-                toggleVisibility(true)
-            }
-        }
         binding.loCardBackContentsLst.apply {
             removeAllViews()
             addView(AppCompatTextView(themedContext).apply {
@@ -80,7 +72,7 @@ class LearningCardBindingHelper(
                 initInputBar()
                 binding.loFrontFooterBarFrm.apply {
                     removeAllViews()
-                    addView(_inputBarView.view)
+                    addView(_inputBarView?.view)
                     toggleVisibility(true)
                 }
                 binding.loBackFooterBarFrm.apply {
@@ -204,12 +196,14 @@ class LearningCardBindingHelper(
     fun flickBack(colliding: Int) { binding?.loCardBackFlk?.doFlick(colliding) }
 
     private fun initInputBar() {
-        _inputBarView = InputBarView(
+        if (_inputBarView == null) _inputBarView = InputBarView(
             context = context,
             lifecycleOwner = lifecycleOwner,
             addonRepo = AddonHub()
         )
     }
+
+    fun getAnswer(): String? = _inputBarView?.getInputValue()
 
     companion object {
         const val MODE_PREVIEW = 0

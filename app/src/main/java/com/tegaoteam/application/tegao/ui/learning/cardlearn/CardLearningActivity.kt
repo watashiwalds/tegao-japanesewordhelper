@@ -32,7 +32,7 @@ class CardLearningActivity : AppCompatActivity() {
         }
 
         _viewModel = ViewModelProvider(this, CardLearningViewModel.Companion.ViewModelFactory(LearningHub()))[CardLearningViewModel::class.java]
-        _viewModel.fetchLearnableCardsByGroupId(CardLearnActivityGate.arriveGroupId(intent))
+        _viewModel.learnCardGroupId = (CardLearningActivityGate.arriveGroupId(intent))
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

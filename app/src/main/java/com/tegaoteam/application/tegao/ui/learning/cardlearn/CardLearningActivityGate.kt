@@ -2,11 +2,12 @@ package com.tegaoteam.application.tegao.ui.learning.cardlearn
 
 import android.content.Context
 import android.content.Intent
-import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivity
+import android.os.Build
+import com.tegaoteam.application.tegao.ui.learning.cardlearn.model.LearnCardInfo
 
-object CardLearnActivityGate {
+object CardLearningActivityGate {
     const val KEY_GROUPID = "groupId"
-    const val GROUP_ALLGROUP = 0L
+    const val GROUP_ALLGROUP = -1L
 
     fun departIntent(context: Context, groupId: Long = GROUP_ALLGROUP): Intent {
         return Intent(context, CardLearningActivity::class.java).apply {

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("androidx.room") version "2.8.3"
     id("com.google.devtools.ksp") version "2.2.21-2.0.4"
     kotlin("plugin.serialization") version "2.2.21"

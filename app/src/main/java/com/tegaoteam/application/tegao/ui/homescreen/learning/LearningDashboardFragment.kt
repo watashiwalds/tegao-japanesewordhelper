@@ -12,7 +12,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.FragmentMainLearningDashboardBinding
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
-import com.tegaoteam.application.tegao.ui.learning.cardlearn.CardLearnActivityGate
+import com.tegaoteam.application.tegao.ui.learning.cardlearn.CardLearningActivityGate
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityGate
 
 class LearningDashboardFragment : Fragment() {
@@ -56,7 +56,7 @@ class LearningDashboardFragment : Fragment() {
                         val new = it.count{ type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_NEW }
                         ((total.toDouble() - new)*100 / (if (total == 0) 1 else total)).toInt()
                     }
-                    val clickLambda = { groupId: Long -> startActivity(CardLearnActivityGate.departIntent(requireContext(), groupId))}
+                    val clickLambda = { groupId: Long -> startActivity(CardLearningActivityGate.departIntent(requireContext(), groupId))}
                     LearningInfoDataClasses.DashboardCardGroupInfo(
                         groupEntry = group,
                         newCardsCount = new,
@@ -78,7 +78,7 @@ class LearningDashboardFragment : Fragment() {
             startActivity(CardManageActivityGate.departIntent(requireContext()))
         }
         _binding.learnAllBtn.setOnClickListener {
-            startActivity(CardLearnActivityGate.departIntent(requireContext(), CardLearnActivityGate.GROUP_ALLGROUP))
+            startActivity(CardLearningActivityGate.departIntent(requireContext(), CardLearningActivityGate.GROUP_ALLGROUP))
         }
     }
 

@@ -32,16 +32,21 @@
                 android:orientation="vertical"
                 >
                 <TextView
-                    android:id="@+id/learningCardGroup_txt"
                     style="@style/Theme.Tegao.Label.Normal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginBottom="@dimen/padding_small"
+                    android:text="@string/card_learn_config_groups"
+                    />
+                <TextView
+                    style="@style/Theme.Tegao.Label.NormalSlim"
+                    android:id="@+id/learningCardGroup_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_normal"
                     android:layout_marginBottom="@dimen/padding_normal"
-                    android:layout_gravity="center_horizontal"
-
-                    tools:text="Card group (Title|All)"
                     />
                 <TextView
                     style="@style/Theme.Tegao.Label.Normal"
@@ -54,7 +59,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="@dimen/padding_normal"
                     >
                     <ImageButton
                         android:id="@+id/maxNewCards_btn"
@@ -70,9 +76,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/padding_tiny"
-                        android:ems="7"
+                        android:ems="4"
                         android:inputType="number"
                         android:backgroundTint="@color/neutral"
+                        android:enabled="false"
                         android:hint="@string/card_learn_config_newCardsCap_hint"
                         />
                     <ImageButton
@@ -90,9 +97,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/padding_tiny"
-                        android:ems="7"
+                        android:ems="4"
                         android:inputType="number"
                         android:backgroundTint="@color/neutral"
+                        android:enabled="false"
                         android:hint="@string/card_learn_config_dueCardsCap_hint"
                         />
                 </LinearLayout>
@@ -154,6 +162,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="@dimen/padding_normal"
             android:text="@string/card_learn_config_submit_startLearning"
+            app:cueEnabled="@{false}"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

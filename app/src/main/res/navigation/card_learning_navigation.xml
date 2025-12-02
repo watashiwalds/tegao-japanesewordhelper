@@ -13,5 +13,20 @@
         <argument
             android:name="groupId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_learningSessionConfigureFragment_to_learningSessionRunFragment"
+            app:destination="@id/learningSessionRunFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/learningSessionRunFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardlearn.fragment.LearningSessionRunFragment"
+        android:label="LearningSessionRunFragment" >
+        <action
+            android:id="@+id/action_learningSessionRunFragment_to_learningSessionMetricsFragment"
+            app:destination="@id/learningSessionMetricsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/learningSessionMetricsFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardlearn.fragment.LearningSessionMetricsFragment"
+        android:label="LearningSessionMetricsFragment" />
 </navigation>

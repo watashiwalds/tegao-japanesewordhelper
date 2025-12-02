@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.data.model.asFlow
+import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.model.CardRepeat
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.model.LearnCardInfo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -44,9 +46,9 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
     //endregion
 
     //region Keep learning session config values
-    var newCards = -1
+    var newCards = 0
         private set
-    var dueCards = -1
+    var dueCards = 0
         private set
     var noRatingMode = false
         private set
@@ -54,6 +56,31 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
         this.newCards = newCards
         this.dueCards = dueCards
         this.noRatingMode = noRatingMode
+    }
+    //endregion
+
+    //region Make a card deck of this learning session
+    private val _sessionDeck = MutableLiveData<List<CardEntry>>()
+    val sessionDeck: LiveData<List<CardEntry>> = _sessionDeck
+    fun fetchSessionDeck() {
+        viewModelScope.launch {
+            val newCardIds = _learnableCardsStatus.value!!.filter { it.status == LearnCardInfo.STATUS_NEW }.map { it.cardId }
+            val dueCardIds = _learnableCardsStatus.value!!.filter { it.status == LearnCardInfo.STATUS_DUE }.map { it.cardId }
+            val randNew = newCardIds.shuffled().take(newCards)
+            val randDue = dueCardIds.shuffled().take(dueCards)
+            val learnCardIds = mutableListOf<Long>().apply {
+                addAll(randNew)
+                addAll(randDue)
+                shuffled()
+            }
+            val learnCardEntries = mutableListOf<CardEntry>()
+            learnCardIds.forEach {
+                learnCardEntries.add(_learningRepo.getCardByCardId(it).asFlow().first())
+            }
+            withContext(Dispatchers.Main) {
+                _sessionDeck.value = learnCardEntries
+            }
+        }
     }
     //endregion
 

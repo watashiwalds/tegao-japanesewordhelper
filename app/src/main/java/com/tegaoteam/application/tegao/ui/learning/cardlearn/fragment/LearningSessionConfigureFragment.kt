@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentLearningSessionConfigureBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
@@ -65,7 +66,7 @@ class LearningSessionConfigureFragment : Fragment() {
         _binding.apply {
             startLearningBtn.setOnClickListener {
                 submitConfigs()
-                AppToast.show("Ready to learn!", AppToast.LENGTH_SHORT)
+                findNavController().navigate(LearningSessionConfigureFragmentDirections.actionLearningSessionConfigureFragmentToLearningSessionRunFragment())
             }
             loNoRatingOptionCst.setOnClickListener { noRatingModeSwt.toggle() }
             executePendingBindings()

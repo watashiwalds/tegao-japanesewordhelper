@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.ui.component.learningcard
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,7 +10,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.LifecycleOwner
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.AddonHub
-import com.tegaoteam.application.tegao.databinding.IncludeFlickcardCollideEffectBinding
 import com.tegaoteam.application.tegao.databinding.ViewLearningCardBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
@@ -19,7 +19,7 @@ import com.tegaoteam.application.tegao.utils.toggleVisibility
 class LearningCardBindingHelper(
     private val context: Context,
     private val lifecycleOwner: LifecycleOwner,
-    private var cardEntry: CardEntry,
+    private var cardEntry: CardEntry = CardEntry.default(),
     val binding: ViewLearningCardBinding? = null
 ) {
     private val themedContext =
@@ -31,9 +31,16 @@ class LearningCardBindingHelper(
     var currentMode = MODE_PREVIEW
         private set
 
+    fun getCardEntry() = cardEntry.copy()
+
     fun setCardEntry(newCardEntry: CardEntry) {
         cardEntry = newCardEntry
         bindOnMode(currentMode)
+        resetVisual()
+    }
+
+    fun setMode(mode: Int) {
+        if (mode !in listOf(MODE_PREVIEW, MODE_NO_RATING, MODE_SRS_RATING)) currentMode = MODE_NO_RATING
     }
 
     fun bindOnMode(mode: Int): View? {
@@ -75,16 +82,6 @@ class LearningCardBindingHelper(
                     addView(_inputBarView?.view)
                     toggleVisibility(true)
                 }
-                binding.loBackFooterBarFrm.apply {
-                    removeAllViews()
-                    cardEntry.answer?.let {
-                        addView(AppCompatTextView(defaultContext).apply {
-                            gravity = Gravity.CENTER
-                            text = it
-                        })
-                        toggleVisibility(true)
-                    }
-                }
             }
         }
         binding.executePendingBindings()
@@ -115,6 +112,7 @@ class LearningCardBindingHelper(
             MODE_SRS_RATING -> {
                 setupCollideCue(binding)
                 binding.loCardFrontFlk.apply {
+                    if (cardEntry.type == CARDTYPE_FLASHCARD) flickable = true
                     enableFlickAway = true
                     ignoreFinalCollidingOnLongCollide = true
                 }
@@ -204,6 +202,20 @@ class LearningCardBindingHelper(
     }
 
     fun getAnswer(): String? = _inputBarView?.getInputValue()
+
+    @SuppressLint("SetTextI18n")
+    fun submitAnswer(ans: String?) {
+        if (cardEntry.type == CARDTYPE_ANSWERCARD) {
+            binding?.loBackFooterBarFrm?.apply {
+                removeAllViews()
+                addView(AppCompatTextView(defaultContext).apply {
+                    gravity = Gravity.CENTER
+                    text = "$ans (${if (ans == cardEntry.answer || cardEntry.answer == null) "✔" else "✘" }) ${cardEntry.answer}"
+                })
+                toggleVisibility(true)
+            }
+        }
+    }
 
     companion object {
         const val MODE_PREVIEW = 0

@@ -17,4 +17,10 @@
     <string name="card_learn_rating_hard">Khó\n%s</string>
     <string name="card_learn_rating_good">Tốt\n%s</string>
     <string name="card_learn_rating_easy">Dễ\n%s</string>
+
+    <string name="card_learn_pause_title">Kết thúc sớm phiên học</string>
+    <string name="card_learn_pause_message">Thống kê chỉ số từ đầu phiên đến hiện tại sẽ được tổng kết. Phiên học sẽ kết thúc khi xác nhận. Bạn chắc chắn chứ?</string>
+
+    <string name="card_learn_frontControl_doFlick">Lật thẻ</string>
+    <string name="card_learn_frontControl_doAnswer">Trả lời</string>
 </resources>

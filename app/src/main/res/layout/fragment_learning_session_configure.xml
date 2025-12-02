@@ -104,18 +104,23 @@
                         android:hint="@string/card_learn_config_dueCardsCap_hint"
                         />
                 </LinearLayout>
+<!--                TODO: Re-enable Options list if have time to develop-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_normal"
                     android:layout_marginBottom="@dimen/padding_small"
                     android:text="@string/card_learn_config_options_label"
+
+                    android:visibility="gone"
                     />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/lo_noRatingOption_cst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/padding_normal"
+
+                    android:visibility="gone"
                     >
                     <TextView
                         style="@style/Theme.Tegao.Label.Normal"

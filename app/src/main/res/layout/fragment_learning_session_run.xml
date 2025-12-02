@@ -133,6 +133,23 @@
             </LinearLayout>
         </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/lo_loadingScreen_frm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/background_fill"
+            tools:visibility="gone"
+            >
+            <ProgressBar
+                android:layout_width="@dimen/img_headerBackButton"
+                android:layout_height="@dimen/img_headerBackButton"
+                android:indeterminate="true"
+                android:layout_gravity="center"
+                />
+        </FrameLayout>
+        
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

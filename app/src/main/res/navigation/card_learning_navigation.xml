@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/learningSessionRunFragment"
-        android:name="com.tegaoteam.application.tegao.ui.learning.cardlearn.fragment.LearningSessionRunFragment"
+        android:name="com.tegaoteam.application.tegao.ui.learning.cardlearn.learnrun.LearningSessionRunFragment"
         android:label="LearningSessionRunFragment" >
         <action
             android:id="@+id/action_learningSessionRunFragment_to_learningSessionMetricsFragment"

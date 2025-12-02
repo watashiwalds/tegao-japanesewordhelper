@@ -15,6 +15,7 @@ import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.utils.toggleVisibility
+import timber.log.Timber
 
 class LearningCardBindingHelper(
     private val context: Context,
@@ -40,7 +41,7 @@ class LearningCardBindingHelper(
     }
 
     fun setMode(mode: Int) {
-        if (mode !in listOf(MODE_PREVIEW, MODE_NO_RATING, MODE_SRS_RATING)) currentMode = MODE_NO_RATING
+        if (mode !in listOf(MODE_PREVIEW, MODE_NO_RATING, MODE_SRS_RATING)) currentMode = MODE_NO_RATING else currentMode = mode
     }
 
     fun bindOnMode(mode: Int): View? {

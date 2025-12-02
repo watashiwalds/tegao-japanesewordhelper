@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.learning.cardlearn.fragment
+package com.tegaoteam.application.tegao.ui.learning.cardlearn.learnrun
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentLearningSessionRunBinding
+import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.learningcard.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.CardLearningViewModel
@@ -31,6 +32,7 @@ class LearningSessionRunFragment: Fragment() {
     ): View? {
         _binding = FragmentLearningSessionRunBinding.inflate(layoutInflater, container, false)
         _viewModel = ViewModelProvider(this)[LearningSessionRunViewModel::class]
+        _viewModel.sessionMode = if (_parentViewModel.noRatingMode) LearningCardBindingHelper.MODE_NO_RATING else LearningCardBindingHelper.MODE_SRS_RATING
 
         initObservers()
 
@@ -60,41 +62,41 @@ class LearningSessionRunFragment: Fragment() {
         }
     }
 
+    private lateinit var _cardStackDisplayManager: CardStackDisplayManager
     private fun bindingStartCards() {
-        cardViewOnFront = LearningCardBindingHelper(
-            context = requireContext(),
-            lifecycleOwner = viewLifecycleOwner,
-            cardEntry = _viewModel.sessionDeck.removeAt(0),
-            binding = _binding.viewLearningCardFirst
-        )
-        if (_viewModel.sessionDeck.isNotEmpty()) {
-            cardViewInBack = LearningCardBindingHelper(
-                context = requireContext(),
-                lifecycleOwner = viewLifecycleOwner,
-                cardEntry = _viewModel.sessionDeck.removeAt(0),
-                binding = _binding.viewLearningCardSecond
-            )
-        }
-        Timber.i("Binding start cards result: \n${cardViewOnFront}, \n${cardViewInBack}. \nCard deck remain ${_viewModel.sessionDeck.size}")
+        _cardStackDisplayManager = CardStackDisplayManager(requireContext(), _viewModel.sessionMode, _binding)
+        _cardStackDisplayManager.initComponents(viewLifecycleOwner)
 
-        if (!_parentViewModel.noRatingMode) {
-            listOf(cardViewOnFront, cardViewInBack).forEach {
-                it?.apply {
-                    setMode(LearningCardBindingHelper.MODE_SRS_RATING)
-                    setOnFrontFinalCollideListener(*LearningCardBindingHelper.COLLIDE_ALL) {
-                        showFooterControl(FOOTER_BACKRATING)
+        _cardStackDisplayManager.getCardBinders().forEach {
+            it.apply {
+                setOnBackFinalCollideListener(RATING_EASY) { finishACards(getCardEntry().cardId, RATING_EASY) }
+                setOnBackFinalCollideListener(RATING_GOOD) { finishACards(getCardEntry().cardId, RATING_GOOD) }
+                setOnBackFinalCollideListener(RATING_HARD) { finishACards(getCardEntry().cardId, RATING_HARD) }
+                setOnBackFinalCollideListener(RATING_FORGET) { finishACards(getCardEntry().cardId, RATING_FORGET) }
+            }
+        }
+        when (_viewModel.sessionMode) {
+            LearningCardBindingHelper.MODE_SRS_RATING -> {
+                _cardStackDisplayManager.getCardBinders().forEach {
+                    it.apply {
+                        setOnFrontFinalCollideListener(*LearningCardBindingHelper.COLLIDE_ALL) {
+                            showFooterControl(FOOTER_BACKRATING, null)
+                        }
                     }
-                    setOnBackFinalCollideListener(RATING_EASY) { finishACards(getCardEntry().cardId, RATING_EASY) }
-                    setOnBackFinalCollideListener(RATING_GOOD) { finishACards(getCardEntry().cardId, RATING_GOOD) }
-                    setOnBackFinalCollideListener(RATING_HARD) { finishACards(getCardEntry().cardId, RATING_HARD) }
-                    setOnBackFinalCollideListener(RATING_FORGET) { finishACards(getCardEntry().cardId, RATING_FORGET) }
                 }
             }
-            cardViewOnFront?.bindOnMode(LearningCardBindingHelper.MODE_SRS_RATING)
-            cardViewInBack?.bindOnMode(LearningCardBindingHelper.MODE_SRS_RATING)
         }
 
-        showFooterControl(if (cardViewOnFront!!.getCardEntry().type == LearningCardConst.Type.TYPE_ANSWERCARD.id) FOOTER_FRONTANSWER else FOOTER_FRONTFLASH)
+        val firstCard = _viewModel.sessionDeck.removeAt(0)
+        inLineCard = if (_viewModel.sessionDeck.isNotEmpty()) _viewModel.sessionDeck.removeAt(0) else null
+        _cardStackDisplayManager.prepareDisplay(firstCard, inLineCard)
+
+        val footerType = when (firstCard.type) {
+            LearningCardConst.Type.TYPE_FLASHCARD.id -> FOOTER_FRONTFLASH
+            LearningCardConst.Type.TYPE_ANSWERCARD.id -> FOOTER_FRONTANSWER
+            else -> FOOTER_FRONTFLASH
+        }
+        showFooterControl(footerType, _cardStackDisplayManager.getCurrentTopView()!!)
     }
 
     private fun bindingStaticButtons() {
@@ -107,10 +109,10 @@ class LearningSessionRunFragment: Fragment() {
                     lambdaRun = { AppToast.show("TODO: Early finish this learning session", AppToast.LENGTH_SHORT) }
                 )
             }
-            ratingEasyBtn.setOnClickListener { cardViewOnFront?.flickBack(RATING_EASY) }
-            ratingGoodBtn.setOnClickListener { cardViewOnFront?.flickBack(RATING_GOOD) }
-            ratingHardBtn.setOnClickListener { cardViewOnFront?.flickBack(RATING_HARD) }
-            ratingForgetBtn.setOnClickListener { cardViewOnFront?.flickBack(RATING_FORGET) }
+            ratingEasyBtn.setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_EASY) }
+            ratingGoodBtn.setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_GOOD) }
+            ratingHardBtn.setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_HARD) }
+            ratingForgetBtn.setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_FORGET) }
         }
     }
 
@@ -118,8 +120,7 @@ class LearningSessionRunFragment: Fragment() {
     private val RATING_GOOD = LearningCardBindingHelper.COLLIDE_WEST
     private val RATING_HARD = LearningCardBindingHelper.COLLIDE_EAST
     private val RATING_FORGET = LearningCardBindingHelper.COLLIDE_SOUTH
-    private var cardViewOnFront: LearningCardBindingHelper? = null
-    private var cardViewInBack: LearningCardBindingHelper? = null
+    private var inLineCard: CardEntry? = null
     private var preFinishSession = false
     private fun finishACards(cardId: Long, rating: Int) {
         //TODO: Calculate and update repeat entry by using SRS algorithm
@@ -128,17 +129,22 @@ class LearningSessionRunFragment: Fragment() {
         if (_viewModel.sessionDeck.isEmpty()) {
             if (!preFinishSession) preFinishSession = true
             else findNavController().navigate(LearningSessionRunFragmentDirections.actionLearningSessionRunFragmentToLearningSessionMetricsFragment())
+        } else {
+            preFinishSession = false
         }
 
         //swapping cardView display order for "stack" immersion
-        run { val temp = cardViewOnFront; cardViewOnFront = cardViewInBack; cardViewInBack = temp }
-        cardViewOnFront?.binding!!.root.bringToFront()
-        if (_viewModel.sessionDeck.isNotEmpty()) {
-            cardViewInBack?.setCardEntry(_viewModel.sessionDeck.removeAt(0))
-        }
+        val nowCard = inLineCard?.copy()
+        inLineCard = if (_viewModel.sessionDeck.isNotEmpty()) _viewModel.sessionDeck.removeAt(0) else null
+        _cardStackDisplayManager.prepareDisplay(nowCard, inLineCard)
 
-        //change footer control accordingly to card type
-        showFooterControl(if (cardViewOnFront!!.getCardEntry().type == LearningCardConst.Type.TYPE_ANSWERCARD.id) FOOTER_FRONTANSWER else FOOTER_FRONTFLASH)
+        //change footer control layout according to current front card
+        val footerType = when (nowCard?.type) {
+            LearningCardConst.Type.TYPE_FLASHCARD.id -> FOOTER_FRONTFLASH
+            LearningCardConst.Type.TYPE_ANSWERCARD.id -> FOOTER_FRONTANSWER
+            else -> FOOTER_FRONTFLASH
+        }
+        showFooterControl(footerType, _cardStackDisplayManager.getCurrentTopView()!!)
 
         Timber.i("Card deck remain ${_viewModel.sessionDeck.size}")
     }
@@ -146,7 +152,7 @@ class LearningSessionRunFragment: Fragment() {
     private val FOOTER_FRONTFLASH = 0
     private val FOOTER_BACKRATING = 1
     private val FOOTER_FRONTANSWER = 2
-    private fun showFooterControl(footerType: Int) {
+    private fun showFooterControl(footerType: Int, relatedCardBinder: LearningCardBindingHelper?) {
         _binding.apply {
             loBackControlFrm.toggleVisibility(false)
             loFrontControlFrm.toggleVisibility(false)
@@ -156,7 +162,7 @@ class LearningSessionRunFragment: Fragment() {
                     frontCardActionBtn.apply {
                         setEnableWithBackgroundCue(true)
                         text = getString(R.string.card_learn_frontControl_doFlick)
-                        setOnClickListener { cardViewOnFront?.flickFront(LearningCardBindingHelper.COLLIDE_WEST) }
+                        setOnClickListener { relatedCardBinder?.flickFront(LearningCardBindingHelper.COLLIDE_WEST) }
                     }
                 }
                 FOOTER_FRONTANSWER -> {
@@ -164,10 +170,11 @@ class LearningSessionRunFragment: Fragment() {
                     frontCardActionBtn.apply {
                         setEnableWithBackgroundCue(true)
                         text = getString(R.string.card_learn_frontControl_doAnswer)
-                        setOnClickListener { cardViewOnFront?.submitAnswer(cardViewOnFront?.getAnswer()) }
+                        setOnClickListener { relatedCardBinder?.submitAnswer(relatedCardBinder.getAnswer()) }
                     }
                 }
                 FOOTER_BACKRATING -> {
+                    Timber.i("Backrating invoked")
                     loBackControlFrm.toggleVisibility(true)
                 }
             }

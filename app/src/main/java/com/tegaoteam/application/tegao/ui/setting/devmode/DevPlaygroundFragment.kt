@@ -34,7 +34,7 @@ class DevPlaygroundFragment : Fragment() {
     private fun initObservers() {
         viewModel.evMakePrint.beacon.observe(viewLifecycleOwner) {
             if (viewModel.evMakePrint.receive()) {
-                _binding.textView.text = cardsOfGroups.joinToString("\n") { "${it.cardId}: \n\t${it.lastRepeat} \n\t${it.nextRepeat}" }
+                _binding.textView.text = cardsOfGroups.joinToString("\n") { "${it.cardId}: \n\t${it.lastRepeat} \n\t${it.nextRepeat} \n\t${it.easeFactor}" }
             }
         }
         viewModel.queriedCardRepeat.observe(viewLifecycleOwner) {

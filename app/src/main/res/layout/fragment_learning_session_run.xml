@@ -85,10 +85,11 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:visibility="gone"
+                tools:visibility="visible"
                 >
                 <Button
                     android:id="@+id/ratingForget_btn"
-                    style="@style/Theme.Tegao.LabelButton"
+                    style="@style/Theme.Tegao.ContentText.Normal"
                     android:paddingHorizontal="0dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -99,7 +100,7 @@
                     />
                 <Button
                     android:id="@+id/ratingHard_btn"
-                    style="@style/Theme.Tegao.LabelButton"
+                    style="@style/Theme.Tegao.ContentText.Normal"
                     android:paddingHorizontal="0dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -110,7 +111,7 @@
                     />
                 <Button
                     android:id="@+id/ratingGood_btn"
-                    style="@style/Theme.Tegao.LabelButton"
+                    style="@style/Theme.Tegao.ContentText.Normal"
                     android:paddingHorizontal="0dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -121,7 +122,7 @@
                     />
                 <Button
                     android:id="@+id/ratingEasy_btn"
-                    style="@style/Theme.Tegao.LabelButton"
+                    style="@style/Theme.Tegao.ContentText.Normal"
                     android:paddingHorizontal="0dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

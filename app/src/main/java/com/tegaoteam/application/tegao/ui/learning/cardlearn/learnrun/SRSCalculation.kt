@@ -41,10 +41,10 @@ class SRSCalculation {
     }
 
     private fun generateText() {
-        val txtF = decimalInterval[RATING_FORGET]!!.let { if (it < 1.0) "5m" else "${floor(it)}d" }
-        val txtH = decimalInterval[RATING_HARD]!!.let { if (it < 1.0) "10m" else "${floor(it)}d" }
-        val txtG = "${floor(decimalInterval[RATING_GOOD]!!)}d"
-        val txtE = "${floor(decimalInterval[RATING_EASY]!!)}d"
+        val txtF = decimalInterval[RATING_FORGET]!!.let { if (it < 1.0) "5m" else "${floor(it).toLong()}d" }
+        val txtH = decimalInterval[RATING_HARD]!!.let { if (it < 1.0) "10m" else "${floor(it).toLong()}d" }
+        val txtG = "${floor(decimalInterval[RATING_GOOD]!!).toLong()}d"
+        val txtE = "${floor(decimalInterval[RATING_EASY]!!).toLong()}d"
         srsText_forget.value = formatText(R.string.card_learn_rating_forget, txtF)
         srsText_hard.value = formatText(R.string.card_learn_rating_hard, txtH)
         srsText_good.value = formatText(R.string.card_learn_rating_good, txtG)

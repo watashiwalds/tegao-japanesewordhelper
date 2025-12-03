@@ -12,7 +12,6 @@ import com.tegaoteam.application.tegao.domain.model.CardRepeat
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.model.LearnCardInfo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -60,9 +59,11 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
     //endregion
 
     //region Make a card deck of this learning session
-    private val _sessionDeck = MutableLiveData<List<CardEntry>>()
-    val sessionDeck: LiveData<List<CardEntry>> = _sessionDeck
-    fun fetchSessionDeck() {
+    private val _sessionCards = MutableLiveData<List<CardEntry>>()
+    val sessionCards: LiveData<List<CardEntry>> = _sessionCards
+    private val _sessionRepeats = MutableLiveData<List<CardRepeat>>()
+    val sessionRepeats: LiveData<List<CardRepeat>> = _sessionRepeats
+    fun fetchSessionData() {
         viewModelScope.launch {
             val newCardIds = _learnableCardsStatus.value!!.filter { it.status == LearnCardInfo.STATUS_NEW }.map { it.cardId }
             val dueCardIds = _learnableCardsStatus.value!!.filter { it.status == LearnCardInfo.STATUS_DUE }.map { it.cardId }
@@ -78,7 +79,8 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
                 learnCardEntries.add(_learningRepo.getCardByCardId(it).asFlow().first())
             }
             withContext(Dispatchers.Main) {
-                _sessionDeck.value = learnCardEntries
+                _sessionRepeats.value = _learnableCardRepeats.value?.filter { it.cardId in learnCardIds }
+                _sessionCards.value = learnCardEntries
             }
         }
     }

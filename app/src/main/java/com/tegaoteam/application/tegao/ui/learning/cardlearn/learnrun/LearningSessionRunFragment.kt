@@ -37,15 +37,16 @@ class LearningSessionRunFragment: Fragment() {
 
         initObservers()
 
-        _parentViewModel.fetchSessionDeck()
+        _parentViewModel.fetchSessionData()
 
         return _binding.root
     }
 
     private fun initObservers() {
         _parentViewModel.apply {
-            sessionDeck.observe(viewLifecycleOwner) {
-                if (_viewModel.sessionDeck.isEmpty()) _viewModel.sessionDeck.addAll(it)
+            sessionCards.observe(viewLifecycleOwner) {
+//                if (_viewModel.sessionCards.isEmpty()) _viewModel.sessionCards.addAll(it)
+                _viewModel.submitSessionData(it, sessionRepeats.value!!)
                 Timber.i("Received ${it.size} cards for deck")
                 initView()
             }
@@ -88,8 +89,8 @@ class LearningSessionRunFragment: Fragment() {
             }
         }
 
-        val firstCard = _viewModel.sessionDeck.removeAt(0)
-        inLineCard = if (_viewModel.sessionDeck.isNotEmpty()) _viewModel.sessionDeck.removeAt(0) else null
+        val firstCard = _viewModel.popNextCardOrNull()!!
+        inLineCard = _viewModel.popNextCardOrNull()
         _cardStackDisplayManager.prepareDisplay(firstCard, inLineCard)
 
         val footerType = when (firstCard.type) {
@@ -135,7 +136,7 @@ class LearningSessionRunFragment: Fragment() {
 
         //swapping cardView display order for "stack" immersion
         val nowCard = inLineCard?.copy()
-        inLineCard = if (_viewModel.sessionDeck.isNotEmpty()) _viewModel.sessionDeck.removeAt(0) else null
+        inLineCard = _viewModel.popNextCardOrNull()
         _cardStackDisplayManager.prepareDisplay(nowCard, inLineCard)
 
         //change footer control layout according to current front card
@@ -145,8 +146,6 @@ class LearningSessionRunFragment: Fragment() {
             else -> FOOTER_FRONTFLASH
         }
         showFooterControl(footerType, _cardStackDisplayManager.getCurrentTopView()!!)
-
-        Timber.i("Card deck remain ${_viewModel.sessionDeck.size}")
     }
 
     private val FOOTER_FRONTFLASH = 0

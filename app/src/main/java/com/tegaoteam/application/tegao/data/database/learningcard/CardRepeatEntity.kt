@@ -12,24 +12,28 @@ import com.tegaoteam.application.tegao.utils.Time
 data class CardRepeatEntity(
     @PrimaryKey @ColumnInfo(name = COL_ID) val cardId: Long,
     @ColumnInfo(name = COL_LASTREPEAT) var lastRepeat: String = Time.getTodayMidnightTimestamp().toString(),
-    @ColumnInfo(name = COL_NEXTREPEAT) var nextRepeat: String? = null
+    @ColumnInfo(name = COL_NEXTREPEAT) var nextRepeat: String? = null,
+    @ColumnInfo(name = COL_EASEFACTOR, defaultValue = "2.5") var easeFactor: Double = 2.5
 ) {
     companion object {
         const val TABLE_NAME = "learning_card_repeat"
         const val COL_ID = CardEntity.COL_ID
         const val COL_LASTREPEAT = "lastRepeat"
         const val COL_NEXTREPEAT = "nextRepeat"
+        const val COL_EASEFACTOR = "easeFactor"
 
         fun toDomainCardRepeat(entity: CardRepeatEntity) = CardRepeat(
             entity.cardId,
             entity.lastRepeat,
-            entity.nextRepeat
+            entity.nextRepeat,
+            entity.easeFactor
         )
 
         fun fromDomainCardRepeat(entry: CardRepeat) = CardRepeatEntity(
             entry.cardId,
             entry.lastRepeat,
-            entry.nextRepeat
+            entry.nextRepeat,
+            entry.easeFactor
         )
     }
 }

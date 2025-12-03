@@ -68,7 +68,10 @@ class LearningSessionConfigureFragment : Fragment() {
         _binding.apply {
             startLearningBtn.setOnClickListener {
                 submitConfigs()
-                findNavController().navigate(R.id.learningSessionRunFragment, null, navOptions { popUpTo(R.id.learningSessionConfigureFragment) {inclusive = true} })
+                findNavController().navigate(R.id.learningSessionRunFragment, null, navOptions {
+                    popUpTo(R.id.learningSessionConfigureFragment) {inclusive = true}
+                    anim { popExit = R.anim.fadeout }
+                })
             }
             loNoRatingOptionCst.setOnClickListener { noRatingModeSwt.toggle() }
             executePendingBindings()

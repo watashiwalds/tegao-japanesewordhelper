@@ -122,16 +122,15 @@ class LearningSessionRunFragment: Fragment() {
     private val RATING_HARD = LearningCardBindingHelper.COLLIDE_EAST
     private val RATING_FORGET = LearningCardBindingHelper.COLLIDE_SOUTH
     private var inLineCard: CardEntry? = null
-    private var preFinishSession = false
     private fun finishACards(cardId: Long, rating: Int) {
         //TODO: Calculate and update repeat entry by using SRS algorithm
 
         //if there is no other card to go through, end the session and go to metrics fragment
-        if (_viewModel.sessionDeck.isEmpty()) {
-            if (!preFinishSession) preFinishSession = true
-            else findNavController().navigate(R.id.learningSessionMetricsFragment, null, navOptions { popUpTo(R.id.learningSessionRunFragment) {inclusive = true} })
-        } else {
-            preFinishSession = false
+        if (inLineCard == null) {
+            findNavController().navigate(R.id.learningSessionMetricsFragment, null, navOptions {
+                popUpTo(R.id.learningSessionRunFragment) {inclusive = true}
+                anim { enter = R.anim.pushin_endover_easein }
+            })
         }
 
         //swapping cardView display order for "stack" immersion

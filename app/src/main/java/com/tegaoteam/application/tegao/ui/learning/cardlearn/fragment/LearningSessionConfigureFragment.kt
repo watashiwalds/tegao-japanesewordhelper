@@ -68,6 +68,7 @@ class LearningSessionConfigureFragment : Fragment() {
         _binding.apply {
             startLearningBtn.setOnClickListener {
                 submitConfigs()
+                _parentViewModel.streakCheckIn()
                 findNavController().navigate(R.id.learningSessionRunFragment, null, navOptions {
                     popUpTo(R.id.learningSessionConfigureFragment) {inclusive = true}
                     anim { popExit = R.anim.fadeout }

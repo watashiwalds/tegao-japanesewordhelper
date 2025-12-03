@@ -53,6 +53,8 @@ object Time {
         }
     }
     const val DIFF_DAY = 0
+
+    fun addDays(instant: Instant, days: Long) = instant.plus(Duration.ofDays(days))
 }
 
 fun getMD5HashedValue(input: Any): String {

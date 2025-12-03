@@ -32,6 +32,7 @@ class InputBarView(
         }
     }
 
+    fun clearInput() { _binding.unvInputFieldEdt.editableText.clear() }
     fun getInputValue() = _binding.unvInputFieldEdt.text.toString()
     fun getEditTextView() = _binding.unvInputFieldEdt
     fun getSwitchButton() = _binding.switchHandwritingModeIcl

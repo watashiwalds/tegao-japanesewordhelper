@@ -49,11 +49,23 @@ class LearningCardBindingHelper(
         currentMode = mode
 
         val bindComp = binding?: ViewLearningCardBinding.inflate(LayoutInflater.from(context), null, false)
+        resetBinding(bindComp)
         bindContents(bindComp)
         bindCardType(bindComp, cardEntry.type)
         bindBehavior(bindComp, currentMode)
 
         return bindComp.root
+    }
+
+    private fun resetBinding(binding: ViewLearningCardBinding) {
+        binding.apply {
+            loCardFrontContentsLst.removeAllViews()
+            loCardBackContentsLst.removeAllViews()
+            loFrontFooterBarFrm.removeAllViews()
+            loBackFooterBarFrm.removeAllViews()
+        }
+        _inputBarView?.clearInput()
+        resetVisual()
     }
 
     private fun bindContents(binding: ViewLearningCardBinding) {
@@ -97,23 +109,10 @@ class LearningCardBindingHelper(
             MODE_PREVIEW -> {
                 binding.loCardFrontFlk.flickable = true
             }
-            MODE_NO_RATING -> {
+            MODE_NO_RATING, MODE_SRS_RATING -> {
                 setupCollideCue(binding)
                 binding.loCardFrontFlk.apply {
-                    flickable = true
-                    enableFlickAway = true
-                    ignoreFinalCollidingOnLongCollide = true
-                }
-                binding.loCardBackFlk.apply {
-                    flickable = true
-                    enableFlickAway = true
-                    ignoreFinalCollidingOnLongCollide = true
-                }
-            }
-            MODE_SRS_RATING -> {
-                setupCollideCue(binding)
-                binding.loCardFrontFlk.apply {
-                    if (cardEntry.type == CARDTYPE_FLASHCARD) flickable = true
+                    flickable = (cardEntry.type == CARDTYPE_FLASHCARD)
                     enableFlickAway = true
                     ignoreFinalCollidingOnLongCollide = true
                 }
@@ -124,7 +123,6 @@ class LearningCardBindingHelper(
                 }
             }
         }
-
         binding.executePendingBindings()
     }
 
@@ -169,7 +167,7 @@ class LearningCardBindingHelper(
     }
 
     fun resetVisual() {
-        _collideCue.apply {
+        if (::_collideCue.isInitialized) _collideCue.apply {
             clearCue()
             applyTint(CollideCueController.MODE_NEUTRAL)
         }

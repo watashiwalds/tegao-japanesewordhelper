@@ -7,20 +7,22 @@ import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.utils.Time
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 object LearningConfig {
     private val dataStore = TegaoApplication.instance.learningDataStore
 
     //region Learning streak manager
     private val LEARNING_STREAK_LAST_CHECKIN = stringPreferencesKey("learning_streak_last_checkin")
-    val streakLastCheckIn by lazy { dataStore.data.map { it[LEARNING_STREAK_LAST_CHECKIN]?: Time.getTodayMidnightTimestamp().toString() } }
+    val streakLastCheckIn by lazy { dataStore.data.map { it[LEARNING_STREAK_LAST_CHECKIN]?: Time.addDays(Time.getTodayMidnightTimestamp(), -1).toString() } }
     suspend fun streakLaunchCheck() {
-        if (Time.absoluteTimeDifferenceBetween(streakLastCheckIn, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) > 1) {
+        Timber.i("streakLaunchCheck: ${streakLastCheckIn.first()}, ${Time.getTodayMidnightTimestamp().toString()}, ${Time.absoluteTimeDifferenceBetween(streakLastCheckIn.first(), Time.getTodayMidnightTimestamp(), Time.DIFF_DAY)}")
+        if (Time.absoluteTimeDifferenceBetween(streakLastCheckIn.first(), Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) > 1) {
             updateCurrentStreak(true)
         }
     }
     suspend fun streakCheckIn() {
-        if (Time.absoluteTimeDifferenceBetween(streakLastCheckIn, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) > 0) {
+        if (Time.absoluteTimeDifferenceBetween(streakLastCheckIn.first(), Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) > 0) {
             updateCurrentStreak()
         }
         dataStore.edit { it[LEARNING_STREAK_LAST_CHECKIN] = Time.getTodayMidnightTimestamp().toString() }
@@ -38,7 +40,7 @@ object LearningConfig {
     val highestStreak by lazy { dataStore.data.map { it[LEARNING_STREAK_HIGHEST]?: 0 } }
     private suspend fun updateHighestStreak(newStreak: Long) {
         val finRes = highestStreak.first().takeUnless { it < newStreak }?: newStreak
-        dataStore.edit { it[LEARNING_STREAK_CURRENT] = finRes }
+        dataStore.edit { it[LEARNING_STREAK_HIGHEST] = finRes }
     }
     //endregion
 }

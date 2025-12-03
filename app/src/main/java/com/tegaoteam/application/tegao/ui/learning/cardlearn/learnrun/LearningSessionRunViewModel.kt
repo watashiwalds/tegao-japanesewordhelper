@@ -22,4 +22,8 @@ class LearningSessionRunViewModel: ViewModel() {
         val res = if (_sessionCards.isNotEmpty()) _sessionCards.removeAt(0) else null
         return res
     }
+    fun getRepeatByCardId(cardId: Long): CardRepeat? = _sessionRepeats[cardId]
+    fun updateRepeat(rpt: CardRepeat) {
+        _sessionRepeats[rpt.cardId] = rpt
+    }
 }

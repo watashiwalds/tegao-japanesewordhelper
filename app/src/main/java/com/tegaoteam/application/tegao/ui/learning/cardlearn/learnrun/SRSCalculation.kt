@@ -3,8 +3,10 @@ package com.tegaoteam.application.tegao.ui.learning.cardlearn.learnrun
 import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.domain.model.CardRepeat
+import com.tegaoteam.application.tegao.ui.component.learningcard.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.utils.Time
 import com.tegaoteam.application.tegao.utils.getStringFromAppRes
+import timber.log.Timber
 import kotlin.math.floor
 
 class SRSCalculation {
@@ -17,6 +19,7 @@ class SRSCalculation {
 
     private lateinit var currentRepeat: CardRepeat
     fun calculateRepeat(rpt: CardRepeat) {
+        Timber.i("Receive request to calculate repeat $rpt")
         currentRepeat = rpt
         val repeatGap = Time.absoluteTimeDifferenceBetween(rpt.lastRepeat, rpt.nextRepeat, Time.DIFF_DAY)
         val easeFactor = rpt.easeFactor
@@ -74,9 +77,9 @@ class SRSCalculation {
     companion object {
         const val EASY_BONUS = 1.3
 
-        const val RATING_FORGET = 0
-        const val RATING_HARD = 1
-        const val RATING_GOOD = 2
-        const val RATING_EASY = 3
+        const val RATING_EASY = LearningCardBindingHelper.COLLIDE_NORTH
+        const val RATING_GOOD = LearningCardBindingHelper.COLLIDE_WEST
+        const val RATING_HARD = LearningCardBindingHelper.COLLIDE_EAST
+        const val RATING_FORGET = LearningCardBindingHelper.COLLIDE_SOUTH
     }
 }

@@ -24,6 +24,7 @@ import timber.log.Timber
 class LearningSessionRunFragment: Fragment() {
     private lateinit var _binding: FragmentLearningSessionRunBinding
     private lateinit var _viewModel: LearningSessionRunViewModel
+    private lateinit var _srsCalculation: SRSCalculation
     private val _parentViewModel: CardLearningViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -35,11 +36,16 @@ class LearningSessionRunFragment: Fragment() {
         _viewModel = ViewModelProvider(this)[LearningSessionRunViewModel::class]
         _viewModel.sessionMode = if (_parentViewModel.noRatingMode) LearningCardBindingHelper.MODE_NO_RATING else LearningCardBindingHelper.MODE_SRS_RATING
 
+        initVariables()
         initObservers()
 
         _parentViewModel.fetchSessionData()
 
         return _binding.root
+    }
+
+    private fun initVariables() {
+        _srsCalculation = SRSCalculation()
     }
 
     private fun initObservers() {
@@ -71,10 +77,9 @@ class LearningSessionRunFragment: Fragment() {
 
         _cardStackDisplayManager.getCardBinders().forEach {
             it.apply {
-                setOnBackFinalCollideListener(RATING_EASY) { finishACards(getCardEntry().cardId, RATING_EASY) }
-                setOnBackFinalCollideListener(RATING_GOOD) { finishACards(getCardEntry().cardId, RATING_GOOD) }
-                setOnBackFinalCollideListener(RATING_HARD) { finishACards(getCardEntry().cardId, RATING_HARD) }
-                setOnBackFinalCollideListener(RATING_FORGET) { finishACards(getCardEntry().cardId, RATING_FORGET) }
+                listOf(RATING_EASY, RATING_GOOD, RATING_HARD, RATING_FORGET).forEach { rate ->
+                    setOnBackFinalCollideListener(rate) { finishACards(getCardEntry().cardId, rate) }
+                }
             }
         }
         when (_viewModel.sessionMode) {
@@ -82,6 +87,7 @@ class LearningSessionRunFragment: Fragment() {
                 _cardStackDisplayManager.getCardBinders().forEach {
                     it.apply {
                         setOnFrontFinalCollideListener(*LearningCardBindingHelper.COLLIDE_ALL) {
+                            _viewModel.getRepeatByCardId(getCardEntry().cardId)?.let { rpt -> _srsCalculation.calculateRepeat(rpt) }
                             showFooterControl(FOOTER_BACKRATING, null)
                         }
                     }
@@ -111,10 +117,22 @@ class LearningSessionRunFragment: Fragment() {
                     lambdaRun = { AppToast.show("TODO: Early finish this learning session", AppToast.LENGTH_SHORT) }
                 )
             }
-            ratingEasyBtn.setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_EASY) }
-            ratingGoodBtn.setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_GOOD) }
-            ratingHardBtn.setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_HARD) }
-            ratingForgetBtn.setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_FORGET) }
+            ratingEasyBtn.apply {
+                _srsCalculation.srsText_easy.observe(viewLifecycleOwner) { text = it }
+                setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_EASY) }
+            }
+            ratingGoodBtn.apply {
+                _srsCalculation.srsText_good.observe(viewLifecycleOwner) { text = it }
+                setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_GOOD) }
+            }
+            ratingHardBtn.apply {
+                _srsCalculation.srsText_hard.observe(viewLifecycleOwner) { text = it }
+                setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_HARD) }
+            }
+            ratingForgetBtn.apply {
+                _srsCalculation.srsText_forget.observe(viewLifecycleOwner) { text = it }
+                setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_FORGET) }
+            }
         }
     }
 

@@ -15,7 +15,6 @@ import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.learningcard.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.CardLearningViewModel
-import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setEnableWithBackgroundCue
 import com.tegaoteam.application.tegao.utils.toggleVisibility
@@ -205,6 +204,7 @@ class LearningSessionRunFragment: Fragment() {
         _parentViewModel.apply {
             repeatedReview = _viewModel.repeatedCardCount
             rememberedReview = _viewModel.rememberedCardCount
+            sessionLearnedRepeats = _viewModel.sessionLearnedRepeats.values.toList()
         }
         findNavController().navigate(R.id.learningSessionMetricsFragment, null, navOptions {
             popUpTo(R.id.learningSessionRunFragment) {inclusive = true}

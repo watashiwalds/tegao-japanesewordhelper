@@ -4,5 +4,5 @@ data class ReviewHistoryInfo(
     val id: Long,
     val label: String,
     val quickInfo: String,
-    val dueIn: Int
+    val dueIn: Long
 )

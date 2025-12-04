@@ -28,7 +28,7 @@
                 />
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/circularProgressIndicator"
+                android:id="@+id/lo_sessionProgress_cpi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_small"
@@ -63,11 +63,11 @@
                 android:layout_marginEnd="@dimen/padding_normal"
                 android:maxLines="1"
                 android:text="@string/card_learn_metrics_rememberedReview"
-                app:layout_constraintBottom_toBottomOf="@id/circularProgressIndicator"
-                app:layout_constraintEnd_toStartOf="@+id/circularProgressIndicator" />
+                app:layout_constraintBottom_toBottomOf="@id/lo_sessionProgress_cpi"
+                app:layout_constraintEnd_toStartOf="@+id/lo_sessionProgress_cpi" />
 
             <TextView
-                android:id="@+id/repeateddReview_txt"
+                android:id="@+id/repeatedReview_txt"
                 style="@style/Theme.Tegao.RemoveDefaultTextPad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,8 +87,8 @@
                 android:layout_marginStart="@dimen/padding_few"
                 android:maxLines="1"
                 android:text="@string/card_learn_metrics_repeatedReview"
-                app:layout_constraintBottom_toBottomOf="@id/circularProgressIndicator"
-                app:layout_constraintStart_toEndOf="@+id/circularProgressIndicator" />
+                app:layout_constraintBottom_toBottomOf="@id/lo_sessionProgress_cpi"
+                app:layout_constraintStart_toEndOf="@+id/lo_sessionProgress_cpi" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -99,8 +99,9 @@
             android:layout_marginTop="@dimen/padding_normal"
             app:layout_constraintBottom_toTopOf="@+id/finishSession_btn"
             app:layout_constraintTop_toBottomOf="@id/lo_staticalDisplay_cst"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             tools:itemCount="5"
-            tools:layout_editor_absoluteX="16dp"
             tools:listitem="@layout/item_card_learn_reviewed_quickinfo" />
 
         <Button

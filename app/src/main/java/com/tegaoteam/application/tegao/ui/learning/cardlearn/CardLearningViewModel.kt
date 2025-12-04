@@ -80,6 +80,7 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
                 addAll(randDue)
                 shuffled()
             }
+            Timber.i("Session card deck: $learnCardIds")
             val learnCardEntries = mutableListOf<CardEntry>()
             learnCardIds.forEach {
                 learnCardEntries.add(_learningRepo.getCardByCardId(it).asFlow().first())
@@ -105,6 +106,7 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
     //region Values for learning session metrics to use for visualizing (from learningRun)
     var repeatedReview: Int = 0
     var rememberedReview: Int = 0
+    lateinit var sessionLearnedRepeats: List<CardRepeat>
     //endregion
 
     companion object {

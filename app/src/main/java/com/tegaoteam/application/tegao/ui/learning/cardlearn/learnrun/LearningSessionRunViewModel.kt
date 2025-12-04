@@ -86,6 +86,9 @@ class LearningSessionRunViewModel: ViewModel() {
     //endregion
 
     //region Sync with parent viewModel on database changes
+    private val _sessionLearnedRepeats = mutableMapOf<Long, CardRepeat>()
+    val sessionLearnedRepeats: Map<Long, CardRepeat> = _sessionLearnedRepeats
+
     fun updateRepeat(rpt: CardRepeat) {
         updateProgress(PROGRESS_RATECARD)
 
@@ -100,6 +103,7 @@ class LearningSessionRunViewModel: ViewModel() {
         }
 
         _sessionRepeats[rpt.cardId] = rpt
+        _sessionLearnedRepeats[rpt.cardId] = rpt
     }
     //endregion
 

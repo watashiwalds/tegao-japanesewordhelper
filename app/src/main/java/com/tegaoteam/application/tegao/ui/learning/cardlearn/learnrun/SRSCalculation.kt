@@ -21,7 +21,7 @@ class SRSCalculation {
     fun calculateRepeat(rpt: CardRepeat) {
         Timber.i("Receive request to calculate repeat $rpt")
         currentRepeat = rpt
-        val repeatGap = Time.absoluteTimeDifferenceBetween(rpt.lastRepeat, rpt.nextRepeat, Time.DIFF_DAY)
+        var repeatGap = Time.absoluteTimeDifferenceBetween(rpt.lastRepeat, rpt.nextRepeat?: rpt.lastRepeat, Time.DIFF_DAY)
         val easeFactor = rpt.easeFactor
 
         // New card - Old card
@@ -31,9 +31,10 @@ class SRSCalculation {
             decimalInterval[RATING_GOOD] = 1.0
             decimalInterval[RATING_EASY] = 4.0
         } else {
+            if (repeatGap < 1) repeatGap = 1
             decimalInterval[RATING_FORGET] = 0.0
-            decimalInterval[RATING_HARD] = repeatGap * 1.2
-            decimalInterval[RATING_GOOD] = repeatGap * easeFactor
+            decimalInterval[RATING_HARD] = repeatGap * 0.8
+            decimalInterval[RATING_GOOD] = repeatGap * (easeFactor - 0.5)
             decimalInterval[RATING_EASY] = repeatGap * easeFactor * EASY_BONUS
         }
 
@@ -56,12 +57,14 @@ class SRSCalculation {
         if (rating !in listOf(RATING_FORGET, RATING_HARD, RATING_GOOD, RATING_EASY)) return plc
 
         val interval = floor(decimalInterval[rating]!!)
-        val updEaseFactor = plc.easeFactor + when (rating) {
-            RATING_FORGET -> -0.2
-            RATING_GOOD -> -0.15
-            RATING_EASY -> 0.15
+        var updEaseFactor = plc.easeFactor + when (rating) {
+            RATING_FORGET -> -0.3
+            RATING_HARD -> -0.1
+            RATING_GOOD -> 0.1
+            RATING_EASY -> 0.2
             else -> 0.0
         }
+        if (updEaseFactor < 1.6) updEaseFactor = 1.6
 
         plc.apply {
             lastRepeat = Time.getTodayMidnightTimestamp().toString()
@@ -75,7 +78,7 @@ class SRSCalculation {
     private fun formatText(resId: Int, s: String) = String.format(getStringFromAppRes(resId), s)
 
     companion object {
-        const val EASY_BONUS = 1.3
+        const val EASY_BONUS = 2.0
 
         const val RATING_EASY = LearningCardBindingHelper.COLLIDE_NORTH
         const val RATING_GOOD = LearningCardBindingHelper.COLLIDE_WEST

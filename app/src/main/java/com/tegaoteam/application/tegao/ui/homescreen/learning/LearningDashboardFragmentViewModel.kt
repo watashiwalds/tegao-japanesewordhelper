@@ -56,7 +56,7 @@ class LearningDashboardFragmentViewModel(private val _learningRepo: LearningRepo
                 repeat.cardId,
                 if (repeat.nextRepeat == null)
                     CARDSTATUS_NEW
-                else if (Time.absoluteTimeDifferenceBetween(repeat.nextRepeat, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) <= 0)
+                else if (Time.absoluteTimeDifferenceBetween(Time.getTodayMidnightTimestamp(), repeat.nextRepeat, Time.DIFF_DAY) <= 0)
                     CARDSTATUS_DUE
                 else
                     CARDSTATUS_LEARNED

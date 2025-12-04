@@ -12,7 +12,7 @@ data class LearnCardInfo(
             cardId = rpt.cardId,
             status = if (rpt.nextRepeat == null)
                 STATUS_NEW
-            else if (Time.absoluteTimeDifferenceBetween(rpt.nextRepeat, Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) <= 0)
+            else if (Time.absoluteTimeDifferenceBetween(Time.getTodayMidnightTimestamp(), rpt.nextRepeat, Time.DIFF_DAY) <= 0)
                 STATUS_DUE
             else
                 STATUS_FIN

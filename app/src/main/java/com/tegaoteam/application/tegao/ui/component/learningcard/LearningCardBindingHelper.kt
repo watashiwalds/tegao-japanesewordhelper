@@ -14,6 +14,7 @@ import com.tegaoteam.application.tegao.databinding.ViewLearningCardBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
+import com.tegaoteam.application.tegao.utils.dpToPixel
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import timber.log.Timber
 
@@ -205,12 +206,13 @@ class LearningCardBindingHelper(
     @SuppressLint("SetTextI18n")
     fun submitAnswer(ans: String?) {
         if (cardEntry.type == CARDTYPE_ANSWERCARD) {
-            binding?.loBackFooterBarFrm?.apply {
-                removeAllViews()
+            binding?.loCardBackContentsLst?.apply {
                 addView(AppCompatTextView(defaultContext).apply {
+                    setBackgroundResource(R.drawable.neutral_stroke_underline)
+                    setPadding(0, 0, 0, dpToPixel(8f).toInt())
                     gravity = Gravity.CENTER
-                    text = "$ans (${if (ans == cardEntry.answer || cardEntry.answer == null) "✔" else "✘" }) ${cardEntry.answer}"
-                })
+                    text = "$ans\n${if (ans == cardEntry.answer || cardEntry.answer == null) "✔" else "✘" }\n${cardEntry.answer}"
+                }, 0)
                 toggleVisibility(true)
             }
         }

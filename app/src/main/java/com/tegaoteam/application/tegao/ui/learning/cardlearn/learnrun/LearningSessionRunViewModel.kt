@@ -81,7 +81,7 @@ class LearningSessionRunViewModel: ViewModel() {
                 rememberedCardCount++
             }
         }
-        _sessionProgress.value = "$originSize  ●  $onReview  ●  ${repeatedCardCount + rememberedCardCount}"
+        _sessionProgress.value = "$originSize  •  $onReview  •  ${repeatedCardCount + rememberedCardCount}"
     }
     //endregion
 

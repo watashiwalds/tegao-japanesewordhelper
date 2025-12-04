@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.tegaoteam.application.tegao.R
@@ -121,10 +120,14 @@ class LearningSessionConfigureFragment : Fragment() {
     }
 
     private val REJECT_NOCARD = 0
+    private val REJECT_NONEWORDUE = 1
     private fun rejectLearningSession(reason: Int) {
         when (reason) {
             REJECT_NOCARD -> {
                 AppToast.show(R.string.card_learn_terminate_noCardToLearn, AppToast.LENGTH_SHORT)
+            }
+            REJECT_NONEWORDUE -> {
+                AppToast.show(R.string.card_learn_terminate_noNewOrDueCard, AppToast.LENGTH_SHORT)
             }
         }
     }

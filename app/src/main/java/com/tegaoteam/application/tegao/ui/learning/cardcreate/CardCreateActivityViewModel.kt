@@ -107,20 +107,15 @@ class CardCreateActivityViewModel(private val learningRepo: LearningRepo): ViewM
     val saveResultCode: LiveData<Int> = _saveResultCode
 
     fun saveCardToDatabase() {
-//        Timber.i("Receive saving card request")
         if (_inSavingProcess.value == true) return
         if (parsedCardPlaceholder == null) return
-//        Timber.i("Accept saving card request")
         _inSavingProcess.value = true
 
         parsedCardPlaceholder!!.dateCreated = Time.getCurrentTimestamp().toString()
         val domainCard = CardPlaceholder.toDomainCardEntry(parsedCardPlaceholder!!)
 
-//        Timber.i("Change scope to perform saving card")
         viewModelScope.launch(Dispatchers.IO) {
-//            Timber.i("Start saving card: $domainCard")
             val res = learningRepo.upsertCard(domainCard)
-//            Timber.i("Finished saving card")
             withContext(Dispatchers.Main) {
                 _inSavingProcess.value = false
                 _saveResultCode.value = res.toInt()

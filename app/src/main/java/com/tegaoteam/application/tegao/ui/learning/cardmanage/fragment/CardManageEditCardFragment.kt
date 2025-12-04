@@ -176,7 +176,6 @@ class CardManageEditCardFragment: Fragment() {
                     this.setChipsOnSelectedListener { item ->
                         cardPlaceholder.type = item.id.toInt()
                         _showAnswerField.value = (item.id == LearningCardConst.Type.TYPE_ANSWERCARD.id.toString())
-                        Timber.i("${_showAnswerField.value}")
                     }
                     chips.firstOrNull {it -> it.id == cardEntry.type.toString()}?.nowSelected()
                 }

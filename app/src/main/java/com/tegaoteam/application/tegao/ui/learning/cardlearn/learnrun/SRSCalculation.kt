@@ -19,7 +19,6 @@ class SRSCalculation {
 
     private lateinit var currentRepeat: CardRepeat
     fun calculateRepeat(rpt: CardRepeat) {
-        Timber.i("Receive request to calculate repeat $rpt")
         currentRepeat = rpt
         var repeatGap = Time.absoluteTimeDifferenceBetween(rpt.lastRepeat, rpt.nextRepeat?: rpt.lastRepeat, Time.DIFF_DAY)
         val easeFactor = rpt.easeFactor

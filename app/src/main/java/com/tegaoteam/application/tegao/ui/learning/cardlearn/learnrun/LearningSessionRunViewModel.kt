@@ -87,10 +87,6 @@ class LearningSessionRunViewModel: ViewModel() {
     fun updateRepeat(rpt: CardRepeat) {
         updateProgress(PROGRESS_RATECARD)
 
-        val currentRepeat = _sessionRepeats[rpt.cardId]?.nextRepeat
-        Timber.i("Current repeat date: $currentRepeat, New repeat date: ${rpt.nextRepeat}, Comparison: ${currentRepeat?.compareTo(rpt.nextRepeat?:"")}")
-
-//        if (currentRepeat == null) updateProgress(PROGRESS_NEWCARDVIEW)
         if (rpt.lastRepeat < rpt.nextRepeat!!)
             updateProgress(PROGRESS_CARDREMEMBERED)
         else {
@@ -100,8 +96,6 @@ class LearningSessionRunViewModel: ViewModel() {
             _reviewStatus.add(addAt, CARDSTATUS_REPEATED)
             updateProgress(PROGRESS_CARDREPEATED)
         }
-
-        Timber.i("Current card deck: $_sessionCardIds")
 
         _sessionRepeats[rpt.cardId] = rpt
     }

@@ -122,7 +122,6 @@ class CardCreateConfirmationFragment: Fragment() {
                 0,
                 R.string.card_create_last_confirm_message,
                 {
-                    Timber.i("Confirm saving card")
                     _parentViewModel.saveCardToDatabase()
                 }
             )

@@ -199,7 +199,6 @@ class LearningSessionRunFragment: Fragment() {
                     }
                 }
                 FOOTER_BACKRATING -> {
-                    Timber.i("Backrating invoked")
                     loBackControlFrm.toggleVisibility(true)
                 }
             }

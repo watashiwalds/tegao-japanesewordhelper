@@ -35,13 +35,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <FrameLayout
-            android:id="@+id/unv_customInputHolder_frm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            />
-
     </FrameLayout>
 
 </layout>

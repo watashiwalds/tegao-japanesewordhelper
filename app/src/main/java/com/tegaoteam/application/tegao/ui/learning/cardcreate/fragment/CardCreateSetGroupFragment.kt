@@ -38,8 +38,8 @@ class CardCreateSetGroupFragment : Fragment() {
     }
 
     private fun initVariables() {
-        _binding.lifecycleOwner = this
-        _adapter = ThemedChipListAdapter(this, ItemChipCheckboxTextBinding::inflate).apply {
+        _binding.lifecycleOwner = viewLifecycleOwner
+        _adapter = ThemedChipListAdapter(viewLifecycleOwner, ItemChipCheckboxTextBinding::inflate).apply {
             themedChipManager = ThemedChipManager(ThemedChipManager.MODE_SINGLE)
         }
         _binding.loSelectableGroupListRcy.adapter = _adapter

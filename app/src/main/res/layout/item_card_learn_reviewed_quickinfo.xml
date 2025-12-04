@@ -28,6 +28,8 @@
             app:layout_constraintEnd_toStartOf="@+id/lo_sideInfo_lnr"
             android:maxLines="1"
             android:ellipsize="end"
+            android:drawablePadding="@dimen/padding_tiny"
+            app:drawableStartCompatResId="@{dataInfo.labelIcon}"
             android:text="@{dataInfo.label}"
 
             tools:text="Label here"

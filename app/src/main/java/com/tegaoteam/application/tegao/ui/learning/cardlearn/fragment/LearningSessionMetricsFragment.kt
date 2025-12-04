@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentLearningSessionMetricsBinding
+import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.CardLearningViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.adapter.ReviewHistoryListAdapter
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.model.ReviewHistoryInfo
@@ -46,12 +47,16 @@ class LearningSessionMetricsFragment: Fragment() {
         }
 
         val adapter = ReviewHistoryListAdapter()
-        val histories = _parentViewModel.sessionLearnedRepeats.map { ReviewHistoryInfo(
-            id = it.cardId,
-            label = getString(R.string.card_manage_cardItem_label, it.cardId.toString()),
-            quickInfo = _parentViewModel.sessionCards.value?.find { card -> it.cardId == card.cardId }?.front?: "",
-            dueIn = Time.absoluteTimeDifferenceBetween(it.lastRepeat, it.nextRepeat, Time.DIFF_DAY)
-        ) }
+        val histories = _parentViewModel.sessionLearnedRepeats.map {
+            val entry = _parentViewModel.sessionCards.value?.find { card -> it.cardId == card.cardId }
+            ReviewHistoryInfo(
+                id = it.cardId,
+                label = getString(R.string.card_manage_cardItem_label, it.cardId.toString()),
+                quickInfo = entry?.front?: "",
+                dueIn = Time.absoluteTimeDifferenceBetween(it.lastRepeat, it.nextRepeat, Time.DIFF_DAY),
+                labelIcon = entry?.type.let { etype -> LearningCardConst.Type.entries.find { ctype -> ctype.id == etype }?.iconResId }
+            )
+        }
         _binding.sessionCardsHistoryRcy.apply {
             this.adapter = adapter
             adapter.submitList(histories)

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import com.tegaoteam.application.tegao.R
+import timber.log.Timber
 
 @BindingAdapter("toggleVisibility")
 fun View.toggleVisibility(allowShow: Boolean) {
@@ -80,4 +81,9 @@ fun View.setEnableWithBackgroundCue(enable: Boolean) {
 @BindingAdapter("tintResId")
 fun View.setBackgroundTintByResId(colorResId: Int) {
     backgroundTintList = if (colorResId != 0) ColorStateList.valueOf(getColorFromAppRes(colorResId)) else null
+}
+
+@BindingAdapter("drawableStartCompatResId")
+fun TextView.setDrawableStartWithResId(drawableResId: Int?) {
+    drawableResId?.let { setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawableFromAppRes(drawableResId), null, null, null) }
 }

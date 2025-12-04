@@ -10,5 +10,6 @@ data class QuickCrudItemInfo(
     var onEditQabClickListener: ((Long) -> Unit)? = null,
     var onDeleteQabClickListener: ((Long) -> Unit)? = null,
     var onItemClickListener: ((Long) -> Unit)? = null,
-    val lifecycleOwner: LifecycleOwner? = null
+    val lifecycleOwner: LifecycleOwner? = null,
+    val labelIcon: Int? = null
 )

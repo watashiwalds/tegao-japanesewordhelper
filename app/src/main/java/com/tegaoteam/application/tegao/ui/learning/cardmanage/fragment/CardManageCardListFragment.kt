@@ -14,11 +14,13 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardManageQuickcrudListBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.model.CardGroup
+import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.adapter.QuickCrudItemListAdapter
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.model.QuickCrudItemInfo
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.toggleVisibility
+import timber.log.Timber
 import kotlin.getValue
 
 class CardManageCardListFragment: Fragment() {
@@ -99,6 +101,7 @@ class CardManageCardListFragment: Fragment() {
                             )
                         )
                     },
+                    labelIcon = LearningCardConst.Type.entries.find { ctype -> ctype.id == card.type }?.iconResId
                 )
             } )
             _binding.itemCountTxt.text = getString(R.string.card_manage_card_count, cards.size)

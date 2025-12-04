@@ -13,6 +13,7 @@ import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.utils.Time
 import com.tegaoteam.application.tegao.utils.getMD5HashedValue
 import timber.log.Timber
+import java.lang.Math.max
 
 class DictionaryHub: DictionaryRepo {
     private fun getAvailableDictionaryPacks(): Map<DictionaryNetworkApi, DictionaryResponseConverter> = DictionaryConfig.getDictionariesPack()
@@ -36,7 +37,10 @@ class DictionaryHub: DictionaryRepo {
             return when (res) {
                 is RepoResult.Error<*> -> {
                     // failed to search but have cache -> show cache
-                    if (cache != null) RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json))
+                    if (cache != null) {
+                        extendsDictionaryCache(cache, 1)
+                        RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json))
+                    }
                     else res
                 }
                 is RepoResult.Success<*> -> {
@@ -64,7 +68,10 @@ class DictionaryHub: DictionaryRepo {
             return when (res) {
                 is RepoResult.Error<*> -> {
                     // failed to search but have cache -> show cache
-                    if (cache != null) RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json))
+                    if (cache != null) {
+                        extendsDictionaryCache(cache, 1)
+                        RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json))
+                    }
                     else res
                 }
                 is RepoResult.Success<*> -> {
@@ -112,6 +119,20 @@ class DictionaryHub: DictionaryRepo {
 
         val resCode = _cacheDAO.upsertCache(newCacheEntity)
         Timber.i("Attempt upsert cache: ${newCacheEntity.jsonMD5} with result $resCode")
+        return resCode
+    }
+    private suspend fun extendsDictionaryCache(cache: DictionaryCacheEntity, byDays: Long): Long {
+        val newCacheEntity = DictionaryCacheEntity(
+            keyword = cache.keyword,
+            type = cache.type,
+            dictionary = cache.dictionary,
+            cacheDate = Time.addDays(cache.cacheDate, byDays).toString(),
+            jsonMD5 = cache.jsonMD5,
+            json = cache.json
+        )
+
+        val resCode = _cacheDAO.upsertCache(newCacheEntity)
+        Timber.i("Attempt renewal cache by upsert: ${cache.keyword}-${cache.dictionary} with result $resCode")
         return resCode
     }
 }

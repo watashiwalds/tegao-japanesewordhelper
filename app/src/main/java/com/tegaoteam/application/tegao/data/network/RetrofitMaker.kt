@@ -18,7 +18,6 @@ object RetrofitMaker {
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
-            .connectTimeout(3, TimeUnit.SECONDS)
 //            .addInterceptor(logging)
             .build()
     }

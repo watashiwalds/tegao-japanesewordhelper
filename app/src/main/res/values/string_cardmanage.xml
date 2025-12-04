@@ -32,4 +32,5 @@
     <string name="card_manage_delete_card_message">Thẻ và bản ghi học tập của thẻ sẽ được xoá. Thao tác không thể hoàn tác. Bạn chắc chắn chứ?</string>
 
     <string name="card_manage_preview_resetCardState">Khôi phục thẻ</string>
+    <string name="card_manage_preview_flickCard">Lật thẻ</string>
 </resources>

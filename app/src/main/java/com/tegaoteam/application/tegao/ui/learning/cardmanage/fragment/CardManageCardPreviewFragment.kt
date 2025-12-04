@@ -52,13 +52,19 @@ class CardManageCardPreviewFragment: Fragment() {
             bindOnMode(LearningCardBindingHelper.MODE_NO_RATING)
             LearningCardBindingHelper.apply {
                 setOnFrontFinalCollideListener(COLLIDE_NORTH, COLLIDE_WEST, COLLIDE_EAST, COLLIDE_SOUTH) {
+                    _binding.flickCardBtn.setEnableWithBackgroundCue(false)
                     _binding.resetCardStateBtn.setEnableWithBackgroundCue(true)
                 }
             }
         }
+        _binding.flickCardBtn.setOnClickListener { view ->
+            _learningCardBindingHelper.flickFront(LearningCardBindingHelper.COLLIDE_WEST)
+            view.setEnableWithBackgroundCue(false)
+        }
         _binding.resetCardStateBtn.setOnClickListener { view ->
             _learningCardBindingHelper.resetVisual()
             view.setEnableWithBackgroundCue(false)
+            _binding.flickCardBtn.setEnableWithBackgroundCue(true)
         }
     }
 }

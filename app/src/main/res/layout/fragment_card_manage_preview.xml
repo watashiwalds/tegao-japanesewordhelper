@@ -15,12 +15,24 @@
             />
 
         <Button
-            android:id="@+id/resetCardState_btn"
+            android:id="@+id/flickCard_btn"
             style="@style/Theme.Tegao.LabelButton.Secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/view_learningCard"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/resetCardState_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/card_manage_preview_flickCard"
+            />
+
+        <Button
+            android:id="@+id/resetCardState_btn"
+            style="@style/Theme.Tegao.LabelButton.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/view_learningCard"
+            app:layout_constraintStart_toEndOf="@id/flickCard_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:cueEnabled="@{false}"

@@ -9,6 +9,7 @@
     <dimen name="padding_large">24dp</dimen>
     <dimen name="padding_midDecent">16dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_few">12dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_middleSmall">7dp</dimen>
     <dimen name="padding_tiny">4dp</dimen>
@@ -20,6 +21,7 @@
     <dimen name="img_icon_large">48dp</dimen>
     <dimen name="img_navbar3Strike">64dp</dimen>
     <dimen name="img_headerBackButton">64dp</dimen>
+    <dimen name="img_circularProgress">72dp</dimen>
     <dimen name="img_oneKanji">160sp</dimen>
 
     <dimen name="writing_writeRegion">240dp</dimen>

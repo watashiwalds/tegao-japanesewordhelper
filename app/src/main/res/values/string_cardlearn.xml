@@ -24,4 +24,9 @@
 
     <string name="card_learn_frontControl_doFlick">Lật thẻ</string>
     <string name="card_learn_frontControl_doAnswer">Trả lời</string>
+    
+    <string name="card_learn_metrics_totalReview">Số thẻ đã xem: %d</string>
+    <string name="card_learn_metrics_rememberedReview">Thẻ đã nhớ</string>
+    <string name="card_learn_metrics_repeatedReview">Thẻ xem lại</string>
+    <string name="card_learn_metrics_close">Hoàn thành</string>
 </resources>

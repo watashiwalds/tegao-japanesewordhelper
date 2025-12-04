@@ -1,26 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        style="@style/Theme.Tegao.Screen.PaddingBorder">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lo_staticalDisplay_cst"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/padding_normal"
+            android:background="@drawable/neutral_stroke_underline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="TOP TEST\nTOP TEST\nTOP TEST\nTOP TEST\nTOP TEST\nTOP TEST\nTOP TEST\nTOP TEST"
-            />
+            >
+            <TextView
+                android:id="@+id/totalReview_txt"
+                style="@style/Theme.Tegao.Label.Normal"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/card_learn_metrics_totalReview"
+                />
 
-        <TextView
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/circularProgressIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                android:progress="75"
+                app:trackThickness="6dp"
+                app:indicatorColor="@color/primary"
+                app:indicatorSize="@dimen/img_circularProgress"
+                app:indicatorTrackGapSize="@dimen/padding_tiny"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/totalReview_txt"
+                app:trackColor="@color/primary_light" />
+
+            <TextView
+                android:id="@+id/rememberedReview_txt"
+                style="@style/Theme.Tegao.RemoveDefaultTextPad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baumans_regular"
+                android:maxLines="1"
+
+                android:textSize="@dimen/textSize_large"
+                app:layout_constraintBottom_toTopOf="@+id/lo_rememeredLabel_txt"
+                app:layout_constraintEnd_toEndOf="@+id/lo_rememeredLabel_txt"
+                tools:text="12" />
+
+            <TextView
+                android:id="@+id/lo_rememeredLabel_txt"
+                style="@style/Theme.Tegao.Label.Normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_normal"
+                android:maxLines="1"
+                android:text="@string/card_learn_metrics_rememberedReview"
+                app:layout_constraintBottom_toBottomOf="@id/circularProgressIndicator"
+                app:layout_constraintEnd_toStartOf="@+id/circularProgressIndicator" />
+
+            <TextView
+                android:id="@+id/repeateddReview_txt"
+                style="@style/Theme.Tegao.RemoveDefaultTextPad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baumans_regular"
+                android:maxLines="1"
+
+                android:textSize="@dimen/textSize_large"
+                app:layout_constraintBottom_toTopOf="@+id/lo_repeatedLabel_txt"
+                app:layout_constraintStart_toStartOf="@+id/lo_repeatedLabel_txt"
+                tools:text="45" />
+
+            <TextView
+                android:id="@+id/lo_repeatedLabel_txt"
+                style="@style/Theme.Tegao.Label.Normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_few"
+                android:maxLines="1"
+                android:text="@string/card_learn_metrics_repeatedReview"
+                app:layout_constraintBottom_toBottomOf="@id/circularProgressIndicator"
+                app:layout_constraintStart_toEndOf="@+id/circularProgressIndicator" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sessionCardsHistory_rcy"
+            style="@style/Theme.Tegao.ScrollableViewFadeEdge"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/padding_normal"
+            app:layout_constraintBottom_toTopOf="@+id/finishSession_btn"
+            app:layout_constraintTop_toBottomOf="@id/lo_staticalDisplay_cst"
+            tools:itemCount="5"
+            tools:layout_editor_absoluteX="16dp"
+            tools:listitem="@layout/item_card_learn_reviewed_quickinfo" />
+
+        <Button
+            android:id="@+id/finishSession_btn"
+            style="@style/Theme.Tegao.LabelButton.Secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/card_learn_metrics_close"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="BOTTOM TEST\nBOTTOM TEST\nBOTTOM TEST\nBOTTOM TEST\nBOTTOM TEST\nBOTTOM TEST\nBOTTOM TEST\"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

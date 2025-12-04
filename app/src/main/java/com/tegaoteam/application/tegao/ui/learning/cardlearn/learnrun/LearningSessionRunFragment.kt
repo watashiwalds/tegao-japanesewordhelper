@@ -95,8 +95,8 @@ class LearningSessionRunFragment: Fragment() {
             }
         }
 
-        val firstCard = _viewModel.popNextCardOrNull()!!
-        inLineCard = _viewModel.popNextCardOrNull()
+        val firstCard = _viewModel.popTopCard()!!
+        inLineCard = _viewModel.nextCardOrNull()
         _cardStackDisplayManager.prepareDisplay(firstCard, inLineCard)
 
         val footerType = when (firstCard.type) {
@@ -144,8 +144,12 @@ class LearningSessionRunFragment: Fragment() {
     private fun finishACards(cardId: Long, rating: Int) {
         //TODO: Calculate and update repeat entry by using SRS algorithm
 
-        //if there is no other card to go through, end the session and go to metrics fragment
-        if (inLineCard == null) {
+        //get the next card in line or null
+        val nowCard = _viewModel.popTopCard()
+        inLineCard = _viewModel.nextCardOrNull()
+
+        //if there is no other card to go through (even the nowCard was cleared), end the session and go to metrics fragment
+        if (nowCard == null) {
             findNavController().navigate(R.id.learningSessionMetricsFragment, null, navOptions {
                 popUpTo(R.id.learningSessionRunFragment) {inclusive = true}
                 anim { enter = R.anim.pushin_endover_easein }
@@ -153,8 +157,6 @@ class LearningSessionRunFragment: Fragment() {
         }
 
         //swapping cardView display order for "stack" immersion
-        val nowCard = inLineCard?.copy()
-        inLineCard = _viewModel.popNextCardOrNull()
         _cardStackDisplayManager.prepareDisplay(nowCard, inLineCard)
 
         //change footer control layout according to current front card

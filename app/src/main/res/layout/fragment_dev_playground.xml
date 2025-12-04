@@ -10,20 +10,65 @@
         style="@style/Theme.Tegao.Screen"
         tools:context=".ui.setting.devmode.DevPlaygroundFragment">
 
-        <ScrollView
+        <TextView
+            android:id="@+id/repeatData_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ratingControl_frm"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </ScrollView>
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/ratingForget_btn"
+                style="@style/Theme.Tegao.ContentText.Normal"
+                android:paddingHorizontal="0dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/srs_forget"
+                android:maxLines="2"
+                tools:text="Forgot\n5m"
+                />
+            <Button
+                android:id="@+id/ratingHard_btn"
+                style="@style/Theme.Tegao.ContentText.Normal"
+                android:paddingHorizontal="0dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/srs_hard"
+                android:maxLines="2"
+                tools:text="Hard\n10m"
+                />
+            <Button
+                android:id="@+id/ratingGood_btn"
+                style="@style/Theme.Tegao.ContentText.Normal"
+                android:paddingHorizontal="0dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/srs_good"
+                android:maxLines="2"
+                tools:text="Good\n1d"
+                />
+            <Button
+                android:id="@+id/ratingEasy_btn"
+                style="@style/Theme.Tegao.ContentText.Normal"
+                android:paddingHorizontal="0dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/srs_easy"
+                android:maxLines="2"
+                tools:text="Easy\n4d"
+                />
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

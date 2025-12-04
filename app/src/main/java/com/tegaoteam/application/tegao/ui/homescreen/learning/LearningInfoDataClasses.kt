@@ -15,6 +15,7 @@ class LearningInfoDataClasses {
         val groupEntry: CardGroup,
         val newCardsCount: LiveData<Int>,
         val dueCardsCount: LiveData<Int>,
+        val allCardsCount: LiveData<Int>,
         val clearProgress: LiveData<Int>,
         var onStartLearnClickListener: ((Long) -> Unit)? = null,
         var onGroupClickListener: ((Long) -> Unit)? = null,

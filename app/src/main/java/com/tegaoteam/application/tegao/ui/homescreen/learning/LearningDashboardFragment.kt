@@ -51,6 +51,7 @@ class LearningDashboardFragment : Fragment() {
                     val cardsType = _viewModel.fetchCardsTypeOfGroup(group.groupId)
                     val new = cardsType.map { it.count { type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_NEW } }
                     val due = cardsType.map { it.count { type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_DUE } }
+                    val total = cardsType.map { it.size }
                     val progress = cardsType.map {
                         val total = it.size
                         val new = it.count{ type -> type.second == LearningDashboardFragmentViewModel.CARDSTATUS_NEW }
@@ -61,6 +62,7 @@ class LearningDashboardFragment : Fragment() {
                         groupEntry = group,
                         newCardsCount = new,
                         dueCardsCount = due,
+                        allCardsCount = total,
                         clearProgress = progress,
                         onStartLearnClickListener = { clickLambda.invoke(group.groupId) },
                         onGroupClickListener = { clickLambda.invoke(group.groupId) },

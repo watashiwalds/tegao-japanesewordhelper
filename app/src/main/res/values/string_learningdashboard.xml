@@ -4,6 +4,7 @@
     <string name="learning_dashboard_streak_title">Kỷ lục chuỗi: %s</string>
     <string name="learning_dashboard_groupCount">%d bộ thẻ</string>
     <string name="learning_dashboard_newCount">Mới %d</string>
-    <string name="learning_dashboard_dueCount">Đến hạn %d</string>
+    <string name="learning_dashboard_dueCount">Hạn %d</string>
+    <string name="learning_dashboard_cardsCount">%d thẻ</string>
     <string name="learning_startAll_title">Bắt đầu học</string>
 </resources>

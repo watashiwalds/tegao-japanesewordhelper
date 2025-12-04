@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_normal"
+        android:clickable="@{dataInfo.onStartLearnClickListener != null}"
+        android:onClick="@{() -> dataInfo.onStartLearnClickListener.invoke(dataInfo.groupEntry.groupId)}"
         >
 
         <LinearLayout
@@ -64,6 +66,17 @@
                     app:drawableStartCompat="@drawable/ftc_round_clock_16"
                     android:text="@{String.format(@string/learning_dashboard_dueCount, dataInfo.dueCardsCount)}"
                     tools:text="Due 0" />
+
+                <ImageView style="@style/Theme.Tegao.Divider.Vertical" />
+
+                <TextView
+                    android:id="@+id/totalCardsOfGroup_txt"
+                    style="@style/Theme.Tegao.ContentText.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/padding_tiny"
+                    android:text="@{String.format(@string/learning_dashboard_cardsCount, dataInfo.allCardsCount)}"
+                    tools:text="Size 0" />
             </LinearLayout>
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -83,7 +96,7 @@
             android:id="@+id/learnGroup_btn"
             style="@style/Theme.Tegao.IconButton"
             android:layout_width="@dimen/img_icon_big"
-            android:layout_height="@dimen/img_icon_big"
+            android:layout_height="0dp"
             android:src="@drawable/material3_round_chevron_forward_24px"
             app:toggleVisibility="@{dataInfo.onStartLearnClickListener != null}"
             android:onClick="@{() -> dataInfo.onStartLearnClickListener.invoke(dataInfo.groupEntry.groupId)}"

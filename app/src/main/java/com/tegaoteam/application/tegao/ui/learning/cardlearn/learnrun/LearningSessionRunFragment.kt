@@ -142,8 +142,8 @@ class LearningSessionRunFragment: Fragment() {
     private val RATING_FORGET = LearningCardBindingHelper.COLLIDE_SOUTH
     private var inLineCard: CardEntry? = null
     private fun finishCard(rating: Int) {
-        //TODO: Calculate and update repeat entry by using SRS algorithm
         val ratedRpt = _srsCalculation.makeRepeatOfRating(rating)
+        _parentViewModel.updateRepeatToDatabase(ratedRpt)
         _viewModel.updateRepeat(ratedRpt)
 
         //get the next card in line or null

@@ -92,6 +92,16 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
     }
     //endregion
 
+    //region Update repeat on request of learningRun
+    fun updateRepeatToDatabase(rpt: CardRepeat) {
+        _sessionRepeats.value?.find { it.cardId == rpt.cardId }?.let {
+            viewModelScope.launch {
+                _learningRepo.updateRepeatTime(rpt)
+            }
+        }
+    }
+    //endregion
+
     companion object {
         class ViewModelFactory(
             private val learningRepo: LearningRepo

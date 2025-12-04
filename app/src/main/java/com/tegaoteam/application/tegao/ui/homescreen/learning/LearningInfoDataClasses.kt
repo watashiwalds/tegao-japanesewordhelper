@@ -20,13 +20,4 @@ class LearningInfoDataClasses {
         var onGroupClickListener: ((Long) -> Unit)? = null,
         val lifecycleOwner: LifecycleOwner? = null
     )
-    data class QuickCrudItemInfo(
-        val id: Long,
-        val label: String,
-        val quickInfo: LiveData<String>,
-        var onEditQabClickListener: ((Long) -> Unit)? = null,
-        var onDeleteQabClickListener: ((Long) -> Unit)? = null,
-        var onItemClickListener: ((Long) -> Unit)? = null,
-        val lifecycleOwner: LifecycleOwner? = null
-    )
 }

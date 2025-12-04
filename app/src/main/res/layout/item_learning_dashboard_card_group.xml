@@ -72,6 +72,7 @@
                 android:layout_height="wrap_content"
                 app:indicatorColor="@color/primary"
                 app:trackColor="@color/primary_light"
+                app:indicatorTrackGapSize="@dimen/padding_tiny"
                 android:layout_marginTop="@dimen/padding_small"
                 android:progress="@{dataInfo.clearProgress}"
                 tools:progress="33"/>

@@ -14,9 +14,9 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardManageQuickcrudListBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.model.CardGroup
-import com.tegaoteam.application.tegao.ui.homescreen.learning.LearningInfoDataClasses
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.adapter.QuickCrudItemListAdapter
+import com.tegaoteam.application.tegao.ui.learning.cardmanage.model.QuickCrudItemInfo
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import kotlin.getValue
@@ -66,20 +66,39 @@ class CardManageCardListFragment: Fragment() {
     private fun observeCardListLiveData(liveData: LiveData<List<CardEntry>>) {
         liveData.observe(viewLifecycleOwner) { cards ->
             _adapter.submitList( cards.map { card ->
-                LearningInfoDataClasses.QuickCrudItemInfo(
+                QuickCrudItemInfo(
                     id = card.cardId,
                     label = getString(R.string.card_manage_cardItem_label, "${card.cardId}"),
-                    quickInfo = MutableLiveData<String>().apply { value = card.front.split("\n").apply { subList(0, if (this.size < 2) this.size else 2) }.joinToString("\n") },
-                    onEditQabClickListener = { cardId -> _navController.navigate(CardManageCardListFragmentDirections.actionCardManageCardListFragmentToCardManageEditCardFragment(cardId)) },
+                    quickInfo = MutableLiveData<String>().apply {
+                        value = card.front.split("\n")
+                            .apply { subList(0, if (this.size < 2) this.size else 2) }
+                            .joinToString("\n")
+                    },
+                    onEditQabClickListener = { cardId ->
+                        _navController.navigate(
+                            CardManageCardListFragmentDirections.actionCardManageCardListFragmentToCardManageEditCardFragment(
+                                cardId
+                            )
+                        )
+                    },
                     onDeleteQabClickListener = { cardId ->
                         DialogPreset.requestConfirmation(
                             context = requireContext(),
-                            title = getString(R.string.card_manage_delete_card_title, card.cardId.toString()),
+                            title = getString(
+                                R.string.card_manage_delete_card_title,
+                                card.cardId.toString()
+                            ),
                             message = R.string.card_manage_delete_card_message,
                             lambdaRun = { _parentViewModel.deleteCard(cardId) }
                         )
                     },
-                    onItemClickListener = { cardId -> _navController.navigate(CardManageCardListFragmentDirections.actionCardManageCardListFragmentToCardManageCardPreviewFragment(cardId)) },
+                    onItemClickListener = { cardId ->
+                        _navController.navigate(
+                            CardManageCardListFragmentDirections.actionCardManageCardListFragmentToCardManageCardPreviewFragment(
+                                cardId
+                            )
+                        )
+                    },
                 )
             } )
             _binding.itemCountTxt.text = getString(R.string.card_manage_card_count, cards.size)

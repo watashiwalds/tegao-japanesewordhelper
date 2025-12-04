@@ -6,7 +6,7 @@
     <data>
         <variable
             name="dataInfo"
-            type="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningInfoDataClasses.QuickCrudItemInfo" />
+            type="com.tegaoteam.application.tegao.ui.learning.cardmanage.model.QuickCrudItemInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

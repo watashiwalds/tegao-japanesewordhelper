@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.ItemCardManageInfoCrudqabBinding
-import com.tegaoteam.application.tegao.ui.homescreen.learning.LearningInfoDataClasses
+import com.tegaoteam.application.tegao.ui.learning.cardmanage.model.QuickCrudItemInfo
 
-class QuickCrudItemListAdapter: ListAdapter<LearningInfoDataClasses.QuickCrudItemInfo, QuickCrudItemListAdapter.ViewHolder>(DiffCallback()) {
+class QuickCrudItemListAdapter: ListAdapter<QuickCrudItemInfo, QuickCrudItemListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -24,7 +24,7 @@ class QuickCrudItemListAdapter: ListAdapter<LearningInfoDataClasses.QuickCrudIte
     }
 
     class ViewHolder private constructor(private val binding: ItemCardManageInfoCrudqabBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: LearningInfoDataClasses.QuickCrudItemInfo) {
+        fun bind(item: QuickCrudItemInfo) {
             binding.dataInfo = item
             binding.lifecycleOwner = item.lifecycleOwner
             binding.executePendingBindings()
@@ -37,17 +37,17 @@ class QuickCrudItemListAdapter: ListAdapter<LearningInfoDataClasses.QuickCrudIte
         }
     }
 
-    class DiffCallback: DiffUtil.ItemCallback<LearningInfoDataClasses.QuickCrudItemInfo>() {
+    class DiffCallback: DiffUtil.ItemCallback<QuickCrudItemInfo>() {
         override fun areItemsTheSame(
-            oldItem: LearningInfoDataClasses.QuickCrudItemInfo,
-            newItem: LearningInfoDataClasses.QuickCrudItemInfo
+            oldItem: QuickCrudItemInfo,
+            newItem: QuickCrudItemInfo
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: LearningInfoDataClasses.QuickCrudItemInfo,
-            newItem: LearningInfoDataClasses.QuickCrudItemInfo
+            oldItem: QuickCrudItemInfo,
+            newItem: QuickCrudItemInfo
         ): Boolean {
             return oldItem == newItem
         }

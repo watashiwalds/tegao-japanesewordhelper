@@ -11,9 +11,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentCardManageQuickcrudListBinding
-import com.tegaoteam.application.tegao.ui.homescreen.learning.LearningInfoDataClasses
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.adapter.QuickCrudItemListAdapter
+import com.tegaoteam.application.tegao.ui.learning.cardmanage.model.QuickCrudItemInfo
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
 
@@ -46,19 +46,26 @@ class CardManageGroupListFragment: Fragment() {
         _parentViewModel.apply {
             cardGroups.observe(viewLifecycleOwner) { groups ->
                 _adapter.submitList(groups.map { group ->
-                    LearningInfoDataClasses.QuickCrudItemInfo(
+                    QuickCrudItemInfo(
                         id = group.groupId,
                         label = group.label,
-                        quickInfo = _parentViewModel.fetchCardsOfGroupLiveData(group.groupId).map { getString(R.string.card_manage_card_count, it.size) },
+                        quickInfo = _parentViewModel.fetchCardsOfGroupLiveData(group.groupId)
+                            .map { getString(R.string.card_manage_card_count, it.size) },
                         onEditQabClickListener = { groupId ->
                             _navController.navigate(
                                 CardManageGroupListFragmentDirections
-                                    .actionCardManageGroupListFragmentToCardManageEditGroupFragment(groupId))
+                                    .actionCardManageGroupListFragmentToCardManageEditGroupFragment(
+                                        groupId
+                                    )
+                            )
                         },
                         onDeleteQabClickListener = { groupId ->
                             DialogPreset.requestConfirmation(
                                 context = requireContext(),
-                                title = getString(R.string.card_manage_delete_group_title, group.label),
+                                title = getString(
+                                    R.string.card_manage_delete_group_title,
+                                    group.label
+                                ),
                                 message = R.string.card_manage_delete_group_message,
                                 lambdaRun = { _parentViewModel.deleteGroup(groupId) }
                             )
@@ -66,7 +73,10 @@ class CardManageGroupListFragment: Fragment() {
                         onItemClickListener = { groupId ->
                             _navController.navigate(
                                 CardManageGroupListFragmentDirections
-                                    .actionCardManageGroupListFragmentToCardManageCardListFragment(groupId))
+                                    .actionCardManageGroupListFragmentToCardManageCardListFragment(
+                                        groupId
+                                    )
+                            )
                         },
                         lifecycleOwner = viewLifecycleOwner
                     )

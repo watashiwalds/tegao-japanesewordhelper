@@ -48,10 +48,11 @@ class LearningSessionConfigureFragment : Fragment() {
                 }
             }
             learnableCardsStatus.observe(viewLifecycleOwner) { stats ->
+                val maxNew = stats.count { it.status == LearnCardInfo.STATUS_NEW }
+                val maxDue = stats.count { it.status == LearnCardInfo.STATUS_DUE }
                 if (stats.isEmpty()) rejectLearningSession(REJECT_NOCARD)
+                else if (maxNew + maxDue <= 0) rejectLearningSession(REJECT_NONEWORDUE)
                 else {
-                    val maxNew = stats.count { it.status == LearnCardInfo.STATUS_NEW }
-                    val maxDue = stats.count { it.status == LearnCardInfo.STATUS_DUE }
                     restraintLearnCardsLimit(maxNew, maxDue)
                     markReadyToLearn()
                 }

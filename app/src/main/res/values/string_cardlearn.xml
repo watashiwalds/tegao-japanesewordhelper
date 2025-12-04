@@ -12,6 +12,7 @@
     <string name="card_learn_config_submit_startLearning">Bắt đầu học</string>
 
     <string name="card_learn_terminate_noCardToLearn">Bộ thẻ trống, không thể học</string>
+    <string name="card_learn_terminate_noNewOrDueCard">Đã học toàn bộ các thẻ, hãy quay lại khi khác nhé</string>
 
     <string name="card_learn_rating_forget">Quên\n%s</string>
     <string name="card_learn_rating_hard">Khó\n%s</string>

@@ -63,7 +63,10 @@ object Time {
     }
     const val DIFF_DAY = 0
 
-    fun addDays(dateTime: LocalDateTime, days: Long) = dateTime.plus(Duration.ofDays(days))
+    fun addDays(dateTime: Any, days: Long): LocalDateTime? {
+        val dt = transformToTimeType(dateTime)
+        return dt?.plus(Duration.ofDays(days))
+    }
 }
 
 fun getMD5HashedValue(input: Any): String {

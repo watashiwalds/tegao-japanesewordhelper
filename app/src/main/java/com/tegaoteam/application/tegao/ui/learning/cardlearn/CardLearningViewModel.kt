@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel() {
     val cardGroups = _learningRepo.getCardGroups().asFlow().asLiveData()
@@ -44,7 +45,7 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
     }
     //endregion
 
-    //region Keep learning session config values
+    //region Learning config finishing its work and other related things
     var newCards = 0
         private set
     var dueCards = 0
@@ -55,6 +56,11 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
         this.newCards = newCards
         this.dueCards = dueCards
         this.noRatingMode = noRatingMode
+    }
+    fun streakCheckIn() {
+        viewModelScope.launch{
+            _learningRepo.streakCheckIn()
+        }
     }
     //endregion
 

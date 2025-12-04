@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tegaoteam.application.tegao.databinding.FragmentCardManagePreviewBinding
@@ -47,7 +48,7 @@ class CardManageCardPreviewFragment: Fragment() {
 
     private lateinit var _learningCardBindingHelper: LearningCardBindingHelper
     private fun initView() {
-        if (!::_learningCardBindingHelper.isInitialized) _learningCardBindingHelper = LearningCardBindingHelper(requireContext(), viewLifecycleOwner, _cardEntry, _binding.viewLearningCard)
+        if (!::_learningCardBindingHelper.isInitialized) _learningCardBindingHelper = LearningCardBindingHelper(requireActivity() as AppCompatActivity, viewLifecycleOwner, _cardEntry, _binding.viewLearningCard)
         _learningCardBindingHelper.apply {
             bindOnMode(LearningCardBindingHelper.MODE_NO_RATING)
             LearningCardBindingHelper.apply {

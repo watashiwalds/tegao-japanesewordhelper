@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -71,7 +72,7 @@ class LearningSessionRunFragment: Fragment() {
 
     private lateinit var _cardStackDisplayManager: CardStackDisplayManager
     private fun bindingStartCards() {
-        _cardStackDisplayManager = CardStackDisplayManager(requireContext(), _viewModel.sessionMode, _binding)
+        _cardStackDisplayManager = CardStackDisplayManager(requireActivity() as AppCompatActivity, _viewModel.sessionMode, _binding)
         _cardStackDisplayManager.initComponents(viewLifecycleOwner)
 
         _cardStackDisplayManager.getCardBinders().forEach {

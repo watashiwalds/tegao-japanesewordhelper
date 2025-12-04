@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.LifecycleOwner
@@ -13,21 +15,21 @@ import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.databinding.ViewLearningCardBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
+import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewBindingHelper
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.utils.dpToPixel
 import com.tegaoteam.application.tegao.utils.toggleVisibility
-import timber.log.Timber
 
 class LearningCardBindingHelper(
-    private val context: Context,
+    private val activity: AppCompatActivity,
     private val lifecycleOwner: LifecycleOwner,
     private var cardEntry: CardEntry = CardEntry.default(),
     val binding: ViewLearningCardBinding? = null
 ) {
     private val themedContext =
-        ContextThemeWrapper(context, R.style.Theme_Tegao_LearningCardText_Default)
+        ContextThemeWrapper(activity, R.style.Theme_Tegao_LearningCardText_Default)
     private val defaultContext =
-        ContextThemeWrapper(context, R.style.Theme_Tegao_ContentText_Normal)
+        ContextThemeWrapper(activity, R.style.Theme_Tegao_ContentText_Normal)
     private var _inputBarView: InputBarView? = null
     private lateinit var _collideCue: CollideCueController
     var currentMode = MODE_PREVIEW
@@ -49,7 +51,7 @@ class LearningCardBindingHelper(
         if (mode !in listOf(MODE_PREVIEW, MODE_NO_RATING, MODE_SRS_RATING)) return null
         currentMode = mode
 
-        val bindComp = binding?: ViewLearningCardBinding.inflate(LayoutInflater.from(context), null, false)
+        val bindComp = binding?: ViewLearningCardBinding.inflate(LayoutInflater.from(activity), null, false)
         resetBinding(bindComp)
         bindContents(bindComp)
         bindCardType(bindComp, cardEntry.type)
@@ -196,11 +198,23 @@ class LearningCardBindingHelper(
     fun flickBack(colliding: Int) { binding?.loCardBackFlk?.doFlick(colliding) }
 
     private fun initInputBar() {
+        val addonRepo = AddonHub()
         if (_inputBarView == null) _inputBarView = InputBarView(
-            context = context,
+            context = activity,
             lifecycleOwner = lifecycleOwner,
-            addonRepo = AddonHub()
+            addonRepo = addonRepo
         )
+        activity.findViewById<FrameLayout>(R.id.unv_customInputHolder_frm)?.let {
+            if (_inputBarView?.isHandwritingEnabled?: false) {
+                WritingViewBindingHelper.fullSuggestionBoard(
+                    addonRepo = addonRepo,
+                    activity = activity,
+                    linkedEditText = _inputBarView!!.getEditTextView(),
+                    boardHolder = it,
+                    switchButtonBinding = _inputBarView!!.getSwitchButton()
+                )
+            }
+        }
     }
 
     fun getAnswer(): String? = _inputBarView?.getInputValue()

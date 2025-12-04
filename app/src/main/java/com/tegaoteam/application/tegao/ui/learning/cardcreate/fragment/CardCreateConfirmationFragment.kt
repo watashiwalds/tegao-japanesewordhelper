@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
@@ -24,7 +25,6 @@ import com.tegaoteam.application.tegao.utils.dpToPixel
 import com.tegaoteam.application.tegao.utils.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
 import com.tegaoteam.application.tegao.utils.toggleVisibility
-import timber.log.Timber
 import kotlin.getValue
 
 class CardCreateConfirmationFragment: Fragment() {
@@ -108,7 +108,7 @@ class CardCreateConfirmationFragment: Fragment() {
             setOnClickListener {
                 updateContents()
                 val preview = LearningCardBindingHelper(
-                    context = requireContext(),
+                    activity = requireActivity() as AppCompatActivity,
                     lifecycleOwner = viewLifecycleOwner,
                     cardEntry = CardPlaceholder.toDomainCardEntry(_parentViewModel.parsedCardPlaceholder!!)
                 ).bindOnMode(LearningCardBindingHelper.MODE_PREVIEW)

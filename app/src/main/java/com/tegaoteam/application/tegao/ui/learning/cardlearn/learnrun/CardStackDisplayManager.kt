@@ -1,14 +1,14 @@
 package com.tegaoteam.application.tegao.ui.learning.cardlearn.learnrun
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import com.tegaoteam.application.tegao.databinding.FragmentLearningSessionRunBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.learningcard.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.utils.toggleVisibility
-import timber.log.Timber
 
-class CardStackDisplayManager(val context: Context, val learnMode: Int, private val binding: FragmentLearningSessionRunBinding) {
+class CardStackDisplayManager(val activity: AppCompatActivity, val learnMode: Int, private val binding: FragmentLearningSessionRunBinding) {
     private lateinit var firstView: LearningCardBindingHelper
     private lateinit var secondView: LearningCardBindingHelper
     private val currentView = mutableListOf<LearningCardBindingHelper>()
@@ -18,12 +18,12 @@ class CardStackDisplayManager(val context: Context, val learnMode: Int, private 
 
     fun initComponents(lifecycleOwner: LifecycleOwner) {
         firstView = LearningCardBindingHelper(
-            context = context,
+            activity = activity,
             lifecycleOwner = lifecycleOwner,
             binding = binding.viewLearningCardFirst
         )
         secondView = LearningCardBindingHelper(
-            context = context,
+            activity = activity,
             lifecycleOwner = lifecycleOwner,
             binding = binding.viewLearningCardSecond
         )

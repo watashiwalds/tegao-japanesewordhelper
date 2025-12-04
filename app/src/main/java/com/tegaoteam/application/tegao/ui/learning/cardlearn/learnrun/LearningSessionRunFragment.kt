@@ -114,7 +114,7 @@ class LearningSessionRunFragment: Fragment() {
                     context = requireContext(),
                     title = R.string.card_learn_pause_title,
                     message = R.string.card_learn_pause_message,
-                    lambdaRun = { AppToast.show("TODO: Early finish this learning session", AppToast.LENGTH_SHORT) }
+                    lambdaRun = { endSession() }
                 )
             }
             ratingEasyBtn.apply {
@@ -151,12 +151,7 @@ class LearningSessionRunFragment: Fragment() {
         inLineCard = _viewModel.nextCardOrNull()
 
         //if there is no other card to go through (even the nowCard was cleared), end the session and go to metrics fragment
-        if (nowCard == null) {
-            findNavController().navigate(R.id.learningSessionMetricsFragment, null, navOptions {
-                popUpTo(R.id.learningSessionRunFragment) {inclusive = true}
-                anim { enter = R.anim.pushin_endover_easein }
-            })
-        }
+        if (nowCard == null) endSession()
 
         //swapping cardView display order for "stack" immersion
         _cardStackDisplayManager.prepareDisplay(nowCard, inLineCard)
@@ -204,5 +199,16 @@ class LearningSessionRunFragment: Fragment() {
             }
             executePendingBindings()
         }
+    }
+
+    private fun endSession() {
+        _parentViewModel.apply {
+            repeatedReview = _viewModel.repeatedCardCount
+            rememberedReview = _viewModel.rememberedCardCount
+        }
+        findNavController().navigate(R.id.learningSessionMetricsFragment, null, navOptions {
+            popUpTo(R.id.learningSessionRunFragment) {inclusive = true}
+            anim { enter = R.anim.pushin_endover_easein }
+        })
     }
 }

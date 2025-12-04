@@ -55,8 +55,10 @@ class LearningSessionRunViewModel: ViewModel() {
     private var originSize = 0
     private var onReview = 0
 
-    private var repeatedCardCount = 0
-    private var rememberedCardCount = 0
+    var repeatedCardCount = 0
+        private set
+    var rememberedCardCount = 0
+        private set
 
     private fun updateProgress(status: Int) {
         when (status) {

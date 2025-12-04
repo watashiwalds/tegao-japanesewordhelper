@@ -102,6 +102,11 @@ class CardLearningViewModel(private val _learningRepo: LearningRepo): ViewModel(
     }
     //endregion
 
+    //region Values for learning session metrics to use for visualizing (from learningRun)
+    var repeatedReview: Int = 0
+    var rememberedReview: Int = 0
+    //endregion
+
     companion object {
         class ViewModelFactory(
             private val learningRepo: LearningRepo

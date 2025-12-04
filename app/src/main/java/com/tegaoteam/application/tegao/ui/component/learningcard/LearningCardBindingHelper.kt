@@ -135,6 +135,8 @@ class LearningCardBindingHelper(
         COLLIDE_ALL.forEach {
             if (binding.loCardFrontFlk.getOnCollideListener(it) == null) { setOnFrontCollideListener(it) }
             if (binding.loCardBackFlk.getOnCollideListener(it) == null) { setOnBackCollideListener(it) }
+            if (binding.loCardFrontFlk.getOnFinalCollideListener(it) == null) { setOnFrontFinalCollideListener(it) }
+            if (binding.loCardBackFlk.getOnFinalCollideListener(it) == null) { setOnBackFinalCollideListener(it) }
         }
     }
 

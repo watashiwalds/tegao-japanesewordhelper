@@ -41,7 +41,7 @@ class CardLearningActivity : AppCompatActivity() {
             inputView = currentFocus!!,
             focusedView = currentFocus,
             imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager,
-            currentFocus
+            currentFocus, findViewById(R.id.unv_customInputHolder_frm)
         )
         return super.dispatchTouchEvent(ev)
     }

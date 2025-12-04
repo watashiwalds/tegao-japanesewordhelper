@@ -19,18 +19,19 @@ import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewBindi
 import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.utils.dpToPixel
 import com.tegaoteam.application.tegao.utils.toggleVisibility
+import timber.log.Timber
 
 class LearningCardBindingHelper(
     private val activity: AppCompatActivity,
     private val lifecycleOwner: LifecycleOwner,
     private var cardEntry: CardEntry = CardEntry.default(),
-    val binding: ViewLearningCardBinding? = null
+    val binding: ViewLearningCardBinding? = null,
+    private var inputBarView: InputBarView? = null
 ) {
     private val themedContext =
         ContextThemeWrapper(activity, R.style.Theme_Tegao_LearningCardText_Default)
     private val defaultContext =
         ContextThemeWrapper(activity, R.style.Theme_Tegao_ContentText_Normal)
-    private var _inputBarView: InputBarView? = null
     private lateinit var _collideCue: CollideCueController
     var currentMode = MODE_PREVIEW
         private set
@@ -60,14 +61,14 @@ class LearningCardBindingHelper(
         return bindComp.root
     }
 
-    private fun resetBinding(binding: ViewLearningCardBinding) {
+    fun resetBinding(binding: ViewLearningCardBinding) {
         binding.apply {
             loCardFrontContentsLst.removeAllViews()
             loCardBackContentsLst.removeAllViews()
             loFrontFooterBarFrm.removeAllViews()
             loBackFooterBarFrm.removeAllViews()
         }
-        _inputBarView?.clearInput()
+        inputBarView?.clearInput()
         resetVisual()
     }
 
@@ -95,7 +96,7 @@ class LearningCardBindingHelper(
                 initInputBar()
                 binding.loFrontFooterBarFrm.apply {
                     removeAllViews()
-                    addView(_inputBarView?.view)
+                    addView(inputBarView?.view)
                     toggleVisibility(true)
                 }
             }
@@ -194,30 +195,38 @@ class LearningCardBindingHelper(
         }
     }
 
+    fun hideVisual() {
+        binding?.apply {
+            loCardFrontFlk.toggleVisibility(false)
+            loCardBackFlk.toggleVisibility(false)
+        }
+    }
+
     fun flickFront(colliding: Int) { binding?.loCardFrontFlk?.doFlick(colliding) }
     fun flickBack(colliding: Int) { binding?.loCardBackFlk?.doFlick(colliding) }
 
     private fun initInputBar() {
         val addonRepo = AddonHub()
-        if (_inputBarView == null) _inputBarView = InputBarView(
+        if (inputBarView == null) inputBarView = InputBarView(
             context = activity,
             lifecycleOwner = lifecycleOwner,
             addonRepo = addonRepo
         )
+        Timber.i("Check for inputHolder availability: ${activity.findViewById<FrameLayout>(R.id.unv_customInputHolder_frm)}")
         activity.findViewById<FrameLayout>(R.id.unv_customInputHolder_frm)?.let {
-            if (_inputBarView?.isHandwritingEnabled?: false) {
+            if (inputBarView?.isHandwritingEnabled?: false) {
                 WritingViewBindingHelper.fullSuggestionBoard(
                     addonRepo = addonRepo,
                     activity = activity,
-                    linkedEditText = _inputBarView!!.getEditTextView(),
+                    linkedEditText = inputBarView!!.getEditTextView(),
                     boardHolder = it,
-                    switchButtonBinding = _inputBarView!!.getSwitchButton()
+                    switchButtonBinding = inputBarView!!.getSwitchButton()
                 )
             }
         }
     }
 
-    fun getAnswer(): String? = _inputBarView?.getInputValue()
+    fun getAnswer(): String? = inputBarView?.getInputValue()
 
     @SuppressLint("SetTextI18n")
     fun submitAnswer(ans: String?) {

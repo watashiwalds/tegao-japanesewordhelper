@@ -3,8 +3,10 @@ package com.tegaoteam.application.tegao.ui.learning.cardlearn.learnrun
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
+import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.databinding.FragmentLearningSessionRunBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
+import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
 import com.tegaoteam.application.tegao.ui.component.learningcard.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 
@@ -17,15 +19,22 @@ class CardStackDisplayManager(val activity: AppCompatActivity, val learnMode: In
     private fun getTheOtherView() = listOf(firstView, secondView).first { it != getCurrentTopView() }
 
     fun initComponents(lifecycleOwner: LifecycleOwner) {
+        val sharedInputBarView = InputBarView(
+            context = activity,
+            lifecycleOwner = lifecycleOwner,
+            addonRepo = AddonHub()
+        )
         firstView = LearningCardBindingHelper(
             activity = activity,
             lifecycleOwner = lifecycleOwner,
-            binding = binding.viewLearningCardFirst
+            binding = binding.viewLearningCardFirst,
+            inputBarView = sharedInputBarView
         )
         secondView = LearningCardBindingHelper(
             activity = activity,
             lifecycleOwner = lifecycleOwner,
-            binding = binding.viewLearningCardSecond
+            binding = binding.viewLearningCardSecond,
+            inputBarView = sharedInputBarView
         )
         firstView.setMode(learnMode)
         secondView.setMode(learnMode)
@@ -47,6 +56,7 @@ class CardStackDisplayManager(val activity: AppCompatActivity, val learnMode: In
         }
 
         //on chain assign
+        getCurrentTopView()?.let { it.resetBinding(it.binding!!) }
         val swappedView = getTheOtherView()
         currentView.apply {
             clear()
@@ -54,6 +64,6 @@ class CardStackDisplayManager(val activity: AppCompatActivity, val learnMode: In
         }
         getCurrentTopView()?.binding!!.root.bringToFront()
         currentCard?.let { getCurrentTopView()?.setCardEntry(currentCard) }
-        nextCard?.let { getTheOtherView().setCardEntry(nextCard) }
+        if (nextCard == null) getTheOtherView().hideVisual()
     }
 }

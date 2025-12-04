@@ -53,15 +53,7 @@ class CardStackDisplayManager(val context: Context, val learnMode: Int, private 
             add(swappedView)
         }
         getCurrentTopView()?.binding!!.root.bringToFront()
-        currentCard?.let { if (getCurrentTopView()?.getCardEntry()?.cardId != currentCard.cardId) getCurrentTopView()?.setCardEntry(currentCard) }
+        currentCard?.let { getCurrentTopView()?.setCardEntry(currentCard) }
         nextCard?.let { getTheOtherView().setCardEntry(nextCard) }
-
-        // either empty -> session ending (soon)
-        if (currentCard == null) {
-            getCurrentTopView()?.binding!!.root.toggleVisibility(false)
-        }
-        if (nextCard == null) {
-            getTheOtherView().binding!!.root.toggleVisibility(false)
-        }
     }
 }

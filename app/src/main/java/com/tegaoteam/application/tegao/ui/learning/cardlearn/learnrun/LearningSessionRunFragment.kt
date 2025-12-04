@@ -51,18 +51,18 @@ class LearningSessionRunFragment: Fragment() {
     private fun initObservers() {
         _parentViewModel.apply {
             sessionCards.observe(viewLifecycleOwner) {
-//                if (_viewModel.sessionCards.isEmpty()) _viewModel.sessionCards.addAll(it)
+                Timber.i("Session received cards from _parentViewModel : ${it.size}")
                 _viewModel.submitSessionData(it, sessionRepeats.value!!)
-                Timber.i("Received ${it.size} cards for deck")
                 initView()
             }
         }
     }
 
     private fun initView() {
+        bindingStartCards()
+        bindingStaticButtons()
         _binding.apply {
-            bindingStartCards()
-            bindingStaticButtons()
+            _viewModel.sessionProgress.observe(viewLifecycleOwner) { sessionProgressTxt.text = it }
 
             //GONE loading screen and ready to flick some cards
             loLoadingScreenFrm.toggleVisibility(false)
@@ -78,7 +78,7 @@ class LearningSessionRunFragment: Fragment() {
         _cardStackDisplayManager.getCardBinders().forEach {
             it.apply {
                 listOf(RATING_EASY, RATING_GOOD, RATING_HARD, RATING_FORGET).forEach { rate ->
-                    setOnBackFinalCollideListener(rate) { finishACards(getCardEntry().cardId, rate) }
+                    setOnBackFinalCollideListener(rate) { finishCard(rate) }
                 }
             }
         }
@@ -141,11 +141,13 @@ class LearningSessionRunFragment: Fragment() {
     private val RATING_HARD = LearningCardBindingHelper.COLLIDE_EAST
     private val RATING_FORGET = LearningCardBindingHelper.COLLIDE_SOUTH
     private var inLineCard: CardEntry? = null
-    private fun finishACards(cardId: Long, rating: Int) {
+    private fun finishCard(rating: Int) {
         //TODO: Calculate and update repeat entry by using SRS algorithm
+        val ratedRpt = _srsCalculation.makeRepeatOfRating(rating)
+        _viewModel.updateRepeat(ratedRpt)
 
         //get the next card in line or null
-        val nowCard = _viewModel.popTopCard()
+        var nowCard = _viewModel.popTopCard()
         inLineCard = _viewModel.nextCardOrNull()
 
         //if there is no other card to go through (even the nowCard was cleared), end the session and go to metrics fragment
@@ -158,6 +160,7 @@ class LearningSessionRunFragment: Fragment() {
 
         //swapping cardView display order for "stack" immersion
         _cardStackDisplayManager.prepareDisplay(nowCard, inLineCard)
+
 
         //change footer control layout according to current front card
         val footerType = when (nowCard?.type) {

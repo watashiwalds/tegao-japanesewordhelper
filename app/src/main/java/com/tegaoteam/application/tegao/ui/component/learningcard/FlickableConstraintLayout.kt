@@ -97,11 +97,11 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
         var nowColliding = run{
             val maxCollide = deltas.maxBy { it.second }
             if (maxCollide.second <= 0) COLLIDING_NONE else {
-                if (collideStartTime == 0L) collideStartTime = Time.getCurrentTimestamp().epochSecond
+                if (collideStartTime == 0L) collideStartTime = Time.getCurrentTimeInSeconds()
                 maxCollide.first
             }
         }
-        if (ignoreFinalCollidingOnLongCollide && Time.getCurrentTimestamp().epochSecond - collideStartTime > maxSecondsForLongCollide) nowColliding = COLLIDING_NONE
+        if (ignoreFinalCollidingOnLongCollide && Time.getCurrentTimeInSeconds() - collideStartTime > maxSecondsForLongCollide) nowColliding = COLLIDING_NONE
         reactOnCollidingState(nowColliding)
     }
     private fun reactOnCollidingState(newState: Int) {

@@ -16,7 +16,6 @@ object LearningConfig {
     private val LEARNING_STREAK_LAST_CHECKIN = stringPreferencesKey("learning_streak_last_checkin")
     val streakLastCheckIn by lazy { dataStore.data.map { it[LEARNING_STREAK_LAST_CHECKIN]?: Time.addDays(Time.getTodayMidnightTimestamp(), -1).toString() } }
     suspend fun streakLaunchCheck() {
-        Timber.i("streakLaunchCheck: ${streakLastCheckIn.first()}, ${Time.getTodayMidnightTimestamp().toString()}, ${Time.absoluteTimeDifferenceBetween(streakLastCheckIn.first(), Time.getTodayMidnightTimestamp(), Time.DIFF_DAY)}")
         if (Time.absoluteTimeDifferenceBetween(streakLastCheckIn.first(), Time.getTodayMidnightTimestamp(), Time.DIFF_DAY) > 1) {
             updateCurrentStreak(true)
         }

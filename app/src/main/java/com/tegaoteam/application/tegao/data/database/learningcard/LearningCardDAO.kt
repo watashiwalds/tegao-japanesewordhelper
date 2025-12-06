@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LearningCardDAO {
     //region [GET functions]
-    @Query("""select * from ${CardGroupEntity.TABLE_NAME}""")
+    @Query("""select * from ${CardGroupEntity.TABLE_NAME} order by ${CardGroupEntity.COL_ID} DESC""")
     fun getCardGroups(): Flow<List<CardGroupEntity>>
 
-    @Query("""select * from ${CardEntity.TABLE_NAME} where ${CardGroupEntity.COL_ID} = :groupId""")
+    @Query("""select * from ${CardEntity.TABLE_NAME} where ${CardGroupEntity.COL_ID} = :groupId order by ${CardEntity.COL_ID} DESC""")
     fun getCardsByGroupId(groupId: Long): Flow<List<CardEntity>>
 
     @Query("""select * from ${CardEntity.TABLE_NAME} where ${CardEntity.COL_ID} = :cardId""")

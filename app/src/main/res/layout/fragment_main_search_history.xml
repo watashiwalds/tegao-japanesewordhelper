@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/padding_large"
                 android:paddingStart="@dimen/padding_large"
-                android:text="@string/hint_enter_search_keyword_here"
+                android:text="@string/hint_example_keyword"
                 android:textColor="@color/neutral"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

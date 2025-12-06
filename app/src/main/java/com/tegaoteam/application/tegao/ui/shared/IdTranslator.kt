@@ -2,7 +2,6 @@ package com.tegaoteam.application.tegao.ui.shared
 
 import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.R
-import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.utils.getStringFromAppRes
 
@@ -20,13 +19,13 @@ object IdTranslator {
         when (navId) {
             MAINNAV_TOLOOKUP -> return ThemedChipItem(
                 id = (R.id.main_searchHistoryFragment).toString(),
-                label = TegaoApplication.instance.getString(R.string.title_label_lookup),
+                label = getStringFromAppRes(R.string.title_label_lookup),
                 _isSelected = MutableLiveData<Boolean>(),
                 iconResId = R.drawable.ftc_round_search_128
             )
             MAINNAV_TOTRANSLATE -> return ThemedChipItem(
                 id = (R.id.main_translateFragment).toString(),
-                label = TegaoApplication.instance.getString(R.string.title_label_lookup),
+                label = getStringFromAppRes(R.string.title_label_translate),
                 _isSelected = MutableLiveData<Boolean>(),
                 iconResId = R.drawable.ftc_round_translate_128
             )

@@ -6,18 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.FragmentMainLearningDashboardBinding
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
+import com.tegaoteam.application.tegao.ui.homescreen.MainActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.CardLearningActivityGate
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityGate
+import kotlin.getValue
 
 class LearningDashboardFragment : Fragment() {
     private lateinit var _binding: FragmentMainLearningDashboardBinding
     private lateinit var _viewModel: LearningDashboardFragmentViewModel
+    private val _parentViewModel: MainActivityViewModel by activityViewModels()
     private lateinit var _learningRepo: LearningRepo
     private lateinit var _adapter: DashboardGroupListAdapter
 
@@ -32,6 +36,11 @@ class LearningDashboardFragment : Fragment() {
         initView()
 
         return _binding.root
+    }
+
+    override fun onResume() {
+        _parentViewModel.fragmentChanged(R.id.main_learningDashboardFragment.toString())
+        super.onResume()
     }
 
     private fun initVariables() {

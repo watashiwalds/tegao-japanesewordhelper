@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.tegaoteam.application.tegao.R
@@ -21,6 +22,7 @@ import com.tegaoteam.application.tegao.ui.shared.IdTranslator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding
+    private lateinit var _viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        _viewModel = ViewModelProvider(this)[MainActivityViewModel::class]
 
         setupBottomNavbar()
         bindOptionButton()
@@ -58,6 +62,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         _binding.navItemsRcy.adapter = navAdapter
+
+        _viewModel.fragmentChangeId.observe(this) {
+            val matched = navItems.find { item -> item.id == it }
+            matched?.let { m ->
+                if (m.isSelected.value != true) m.nowSelected()
+            }
+        }
+
         _binding.executePendingBindings()
     }
 

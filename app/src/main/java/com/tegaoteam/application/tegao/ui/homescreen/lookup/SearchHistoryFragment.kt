@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.tegaoteam.application.tegao.databinding.FragmentMainSearchHistoryBind
 import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryKanjiBinding
 import com.tegaoteam.application.tegao.databinding.ItemSearchhistoryWordBinding
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
+import com.tegaoteam.application.tegao.ui.homescreen.MainActivityViewModel
 import com.tegaoteam.application.tegao.ui.homescreen.lookup.searchhistory.SearchHistoryListAdapter
 import com.tegaoteam.application.tegao.ui.lookup.LookupActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
@@ -30,6 +32,7 @@ import timber.log.Timber
 class SearchHistoryFragment : Fragment() {
     private lateinit var _binding: FragmentMainSearchHistoryBinding
     private lateinit var _viewModel: SearchHistoryFragmentViewModel
+    private val _parentViewModel: MainActivityViewModel by activityViewModels()
 
     private lateinit var _searchHistoryRepo: SearchHistoryRepo
     private lateinit var _wordSearchHistoryAdapter: SearchHistoryListAdapter<ItemSearchhistoryWordBinding>
@@ -49,6 +52,11 @@ class SearchHistoryFragment : Fragment() {
         updateSearchHistoryDisplay()
 
         return _binding.root
+    }
+
+    override fun onResume() {
+        _parentViewModel.fragmentChanged(R.id.main_searchHistoryFragment.toString())
+        super.onResume()
     }
 
     private fun initVariables() {

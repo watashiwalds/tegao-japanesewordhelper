@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.domain.model.Translator
 
 object TermBank {
     private var appContext: Context = TegaoApplication.instance.applicationContext
@@ -53,6 +54,15 @@ object TermBank {
         "jlpt" to "Cấp độ xếp loại theo thang N-level tiếng Nhật"
     )
     fun getTermDescription(key: String) = termDescriptions[key]?: ""
+}
+
+object LabelBank {
+    private val langNames = mapOf(
+        Translator.Companion.Language.JAPANESE to getStringFromAppRes(R.string.language_japanese),
+        Translator.Companion.Language.VIETNAMESE to getStringFromAppRes(R.string.language_vietnamese),
+        Translator.Companion.Language.ENGLISH to getStringFromAppRes(R.string.language_english)
+    )
+    fun getLanguageName(languageEnum: Translator.Companion.Language?): String? = langNames[languageEnum]
 }
 
 fun getStringFromAppRes(resId: Int): String {

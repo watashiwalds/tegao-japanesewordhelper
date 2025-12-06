@@ -2,6 +2,10 @@ package com.tegaoteam.application.tegao.ui.homescreen
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.FrameLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,6 +21,7 @@ import com.tegaoteam.application.tegao.databinding.ItemChipNavbarIconNLabelBindi
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.setting.SettingActivity
+import com.tegaoteam.application.tegao.ui.shared.BehaviorPreset
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.IdTranslator
 
@@ -78,5 +83,16 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (currentFocus is EditText) BehaviorPreset.cancelInputWhenTouchOutside(
+            motionEvent = ev,
+            inputView = currentFocus!!,
+            focusedView = currentFocus,
+            imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager,
+            currentFocus, findViewById(R.id.unv_customInputHolder_frm), findViewById(R.id.switch_handwritingMode_icl)
+        )
+        return super.dispatchTouchEvent(ev)
     }
 }

@@ -10,7 +10,7 @@ object TranslatorConfig {
         id = "google_translate",
         name = "Google Translate",
         supportedSourceLang = listOf(Language.JAPANESE, Language.VIETNAMESE, Language.ENGLISH),
-        supportedTransLang = listOf(Language.JAPANESE, Language.VIETNAMESE, Language.ENGLISH)
+        supportedTransLang = listOf(Language.VIETNAMESE, Language.ENGLISH, Language.JAPANESE)
     )
 
     fun getTranslatorApis() = listOf<TranslatorApi>(GoogleTranslateApi.api)

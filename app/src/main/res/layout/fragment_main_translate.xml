@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="showHandwritingSwitch"
+            type="kotlinx.coroutines.flow.StateFlow&lt;Boolean&gt;" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,15 +38,18 @@
                 <include layout="@layout/view_button_pushswitch_icononly"
                     android:id="@+id/switch_handwritingMode_icl"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    app:toggleVisibility="@{showHandwritingSwitch}"
+                    />
                 <ImageButton
                     android:id="@+id/ocrFromImage_btn"
                     style="@style/Theme.Tegao.IconButton"
                     android:src="@drawable/ftc_round_image_128"
-                    android:layout_marginStart="@dimen/padding_small"
                     />
             </LinearLayout>
             <EditText
+                android:id="@+id/sourceText_edt"
                 style="@style/Theme.Tegao.ContentText.ThinlyDecent"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -65,7 +75,7 @@
                     android:inputType="none"
                     android:maxLines="1"
 
-                    android:text="JA"
+                    tools:text="JA"
                     />
                 <Button
                     style="@style/Theme.Tegao.LabelButton.Secondary"
@@ -87,12 +97,13 @@
                     android:inputType="none"
                     android:maxLines="1"
 
-                    android:text="VI"
+                    tools:text="VI"
                     />
             </LinearLayout>
             <ImageView style="@style/Theme.Tegao.Divider.Horizontal"/>
 
             <TextView
+                android:id="@+id/translatedText_txt"
                 style="@style/Theme.Tegao.ContentText.ThinlyDecent"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

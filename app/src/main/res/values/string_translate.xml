@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="language_japanese">Nhật</string>
+    <string name="language_vietnamese">Việt</string>
+    <string name="language_english">Anh</string>
+
     <string name="title_label_translate">Dịch</string>
 
     <string name="translate_originalText_title">Văn bản gốc</string>

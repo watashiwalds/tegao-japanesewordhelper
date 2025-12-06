@@ -2,10 +2,11 @@ package com.tegaoteam.application.tegao.data.config
 
 import android.content.pm.PackageManager
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.data.config.setting.SettingConfig
 import timber.log.Timber
 
 object AddonConfig {
-    const val handwritingPackagePath = "com.tegaoteam.addon.tegao.handwritingrecognition"
+    private const val handwritingPackagePath = "com.tegaoteam.addon.tegao.handwritingrecognition"
 
     private fun checkHandwritingAvailability(): Boolean {
         Timber.i("Check for appearance of Handwriting Recognition")

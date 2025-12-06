@@ -8,7 +8,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.databinding.FragmentMainTranslateBinding
 import com.tegaoteam.application.tegao.ui.homescreen.MainActivityViewModel
 import timber.log.Timber
@@ -16,6 +18,7 @@ import kotlin.getValue
 
 class TranslateFragment: Fragment() {
     private lateinit var _binding: FragmentMainTranslateBinding
+    private lateinit var _viewModel: TranslateFragmentViewModel
     private val _parentViewModel: MainActivityViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -24,6 +27,7 @@ class TranslateFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainTranslateBinding.inflate(layoutInflater, container, false)
+        _viewModel = ViewModelProvider(requireActivity(), TranslateFragmentViewModel.Companion.ViewModelFactory(AddonHub()))[TranslateFragmentViewModel::class]
 
         initView()
 

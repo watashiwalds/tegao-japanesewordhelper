@@ -1,7 +1,6 @@
 package com.tegaoteam.application.tegao.ui.component.learningcard
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -209,8 +208,7 @@ class LearningCardBindingHelper(
         val addonRepo = AddonHub()
         if (inputBarView == null) inputBarView = InputBarView(
             context = activity,
-            lifecycleOwner = lifecycleOwner,
-            addonRepo = addonRepo
+            lifecycleOwner = lifecycleOwner
         )
         Timber.i("Check for inputHolder availability: ${activity.findViewById<FrameLayout>(R.id.unv_customInputHolder_frm)}")
         activity.findViewById<FrameLayout>(R.id.unv_customInputHolder_frm)?.let {

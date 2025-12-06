@@ -2,18 +2,16 @@ package com.tegaoteam.application.tegao.ui.component.generics
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ViewInputBarBinding
-import com.tegaoteam.application.tegao.domain.repo.AddonRepo
+import com.tegaoteam.application.tegao.ui.shared.FetchedConfigs
 
 class InputBarView(
     context: Context,
-    lifecycleOwner: LifecycleOwner,
-    addonRepo: AddonRepo? = null
+    lifecycleOwner: LifecycleOwner
 ) {
     private val _binding = ViewInputBarBinding.inflate(LayoutInflater.from(context))
     val view = _binding.root
@@ -40,7 +38,7 @@ class InputBarView(
 
     // Handwriting handling if enabled
     //todo: bind handwriting also when using this bar view
-    val isHandwritingEnabled = addonRepo?.isHandwritingAvailable()?: false
+    val isHandwritingEnabled = FetchedConfigs.isHandwritingEnabled.value
     init {
         if (isHandwritingEnabled) {
             _binding.switchHandwritingModeIcl.switchInfo = SwitchButtonInfo(

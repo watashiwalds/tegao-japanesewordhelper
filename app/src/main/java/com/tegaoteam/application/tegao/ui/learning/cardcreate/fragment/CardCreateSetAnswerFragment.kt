@@ -51,7 +51,7 @@ class CardCreateSetAnswerFragment: Fragment() {
     }
 
     private fun initVariables() {
-        _inputBarView = InputBarView(requireContext(), viewLifecycleOwner, AddonHub())
+        _inputBarView = InputBarView(requireContext(), viewLifecycleOwner)
     }
 
     private fun initView() {

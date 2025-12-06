@@ -1,9 +1,7 @@
 package com.tegaoteam.application.tegao.ui.learning.cardlearn.learnrun
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
-import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.databinding.FragmentLearningSessionRunBinding
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.ui.component.generics.InputBarView
@@ -21,8 +19,7 @@ class CardStackDisplayManager(val activity: AppCompatActivity, val learnMode: In
     fun initComponents(lifecycleOwner: LifecycleOwner) {
         val sharedInputBarView = InputBarView(
             context = activity,
-            lifecycleOwner = lifecycleOwner,
-            addonRepo = AddonHub()
+            lifecycleOwner = lifecycleOwner
         )
         firstView = LearningCardBindingHelper(
             activity = activity,

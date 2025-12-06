@@ -8,6 +8,7 @@ import com.tegaoteam.application.tegao.utils.getStringFromAppRes
 
 object IdTranslator {
     const val MAINNAV_TOLOOKUP = "lookup"
+    const val MAINNAV_TOTRANSLATE = "translate"
     const val MAINNAV_TOLEARNING = "learning"
 
     /**
@@ -22,6 +23,12 @@ object IdTranslator {
                 label = TegaoApplication.instance.getString(R.string.title_label_lookup),
                 _isSelected = MutableLiveData<Boolean>(),
                 iconResId = R.drawable.ftc_round_search_128
+            )
+            MAINNAV_TOTRANSLATE -> return ThemedChipItem(
+                id = (R.id.main_translateFragment).toString(),
+                label = TegaoApplication.instance.getString(R.string.title_label_lookup),
+                _isSelected = MutableLiveData<Boolean>(),
+                iconResId = R.drawable.ftc_round_translate_128
             )
             MAINNAV_TOLEARNING -> return ThemedChipItem(
                 id = (R.id.main_learningDashboardFragment).toString(),

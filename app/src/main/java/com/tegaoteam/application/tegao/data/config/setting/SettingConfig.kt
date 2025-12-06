@@ -23,7 +23,7 @@ object SettingConfig {
         app.settingDataStore.edit { settings -> settings[ENABLE_HANDWRITING_ADDON] = !(settings[ENABLE_HANDWRITING_ADDON]?: true) }
     }
 
-    val mainNavbarItemIds = listOf("lookup", "learning")
+    val mainNavbarItemIds = listOf("lookup", "translate", "learning")
 
     init {
         useHepburnConverter

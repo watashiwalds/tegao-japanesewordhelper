@@ -16,5 +16,10 @@
         android:name="com.tegaoteam.application.tegao.ui.homescreen.learning.LearningDashboardFragment"
         android:label="fragment_main_learning_dashboard"
         tools:layout="@layout/fragment_main_learning_dashboard" />
+    <fragment
+        android:id="@+id/main_translateFragment"
+        android:name="com.tegaoteam.application.tegao.ui.homescreen.translate.TranslateFragment"
+        android:label="fragment_main_translate"
+        tools:layout="@layout/fragment_main_translate"/>
 
 </navigation>

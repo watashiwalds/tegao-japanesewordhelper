@@ -17,9 +17,11 @@
     <fragment
         android:id="@+id/learningSessionRunFragment"
         android:name="com.tegaoteam.application.tegao.ui.learning.cardlearn.learnrun.LearningSessionRunFragment"
-        android:label="LearningSessionRunFragment" />
+        android:label="LearningSessionRunFragment"
+        tools:layout="@layout/fragment_learning_session_run"/>
     <fragment
         android:id="@+id/learningSessionMetricsFragment"
         android:name="com.tegaoteam.application.tegao.ui.learning.cardlearn.fragment.LearningSessionMetricsFragment"
-        android:label="LearningSessionMetricsFragment" />
+        android:label="LearningSessionMetricsFragment"
+        tools:layout="@layout/fragment_learning_session_metrics"/>
 </navigation>

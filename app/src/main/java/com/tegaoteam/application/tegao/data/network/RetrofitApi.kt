@@ -16,19 +16,19 @@ interface RetrofitApi {
     @POST("{endpoint}")
     suspend fun postFunctionFetchJson(
         @Path("endpoint") endpoint: String = "",
-        @QueryMap params: Map<String, String>,
-        @Body body: JsonObject
+        @QueryMap params: Map<String, String> = mapOf(),
+        @Body body: JsonObject = JsonObject()
     ): Response<JsonObject>
 
     @GET("{endpoint}")
     suspend fun getFunctionFetchJson(
         @Path("endpoint", encoded = true) endpoint: String = "",
-        @QueryMap params: Map<String, String>
+        @QueryMap params: Map<String, String> = mapOf()
     ): Response<JsonObject>
 
     @GET("{endpoint}")
     suspend fun getFunctionFetchRaw(
         @Path("endpoint", encoded = true) endpoint: String = "",
-        @QueryMap params: Map<String, String>
+        @QueryMap params: Map<String, String> = mapOf()
     ): Response<ResponseBody>
 }

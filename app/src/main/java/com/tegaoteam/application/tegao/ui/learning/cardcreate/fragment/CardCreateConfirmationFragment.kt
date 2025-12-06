@@ -112,7 +112,7 @@ class CardCreateConfirmationFragment: Fragment() {
                     lifecycleOwner = viewLifecycleOwner,
                     cardEntry = CardPlaceholder.toDomainCardEntry(_parentViewModel.parsedCardPlaceholder!!)
                 ).bindOnMode(LearningCardBindingHelper.MODE_PREVIEW)
-                preview?.let{ DialogPreset.quickView(requireContext(), preview, R.string.card_create_preview_gesture_hint) }
+                preview?.let{ DialogPreset.quickView(requireContext(), preview, R.string.card_create_preview_gesture_hint, "9:15") }
             }
             toggleVisibility(true)
         }

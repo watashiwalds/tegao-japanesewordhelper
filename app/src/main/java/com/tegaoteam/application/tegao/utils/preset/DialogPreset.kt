@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.tegaoteam.application.tegao.R
@@ -47,8 +48,17 @@ object DialogPreset {
         dialog.show()
     }
 
-    fun quickView(context: Context, view: View, message: Any? = null) {
+    fun quickView(context: Context, view: View, message: Any? = null, ratioHbyW: String? = null) {
         val binding = DataBindingUtil.inflate<DialogQuickViewBinding>(LayoutInflater.from(context), R.layout.dialog_quick_view, null, false)
+        ratioHbyW?.let {
+            val plc = binding.frame.layoutParams as ConstraintLayout.LayoutParams
+            plc.height = 0
+            plc.dimensionRatio = ratioHbyW
+            binding.frame.apply {
+                layoutParams = plc
+                requestLayout()
+            }
+        }
         handleSetText(message, binding.message)
         val dialog = AlertDialog.Builder(context).apply {
             setView(binding.root)

@@ -238,7 +238,6 @@ class LearningCardBindingHelper(
                     gravity = Gravity.CENTER
                     text = "$ans\n${if (ans == cardEntry.answer || cardEntry.answer == null) "✔" else "✘" }\n${cardEntry.answer}"
                 }, 0)
-                toggleVisibility(true)
             }
         }
     }

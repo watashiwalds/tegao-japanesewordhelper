@@ -13,7 +13,14 @@ class GoogleTranslateApi private constructor(): TranslatorApi{
         val api by lazy { GoogleTranslateApi() }
 
         private val rootUrl = "https://translate.googleapis.com/translate_a/"
-        private val paramsUrl = "single?client=gtx&sl=%s&tl=%s&dt=t&q=%s"
+        private val endpoint = "single"
+        private val params = mapOf(
+            "client" to "gtx",
+            "sl" to "",
+            "tl" to "",
+            "dt" to "t",
+            "q" to ""
+        )
 
         private val langIds = mapOf<Language, String>(
             Language.JAPANESE to "ja",
@@ -25,8 +32,12 @@ class GoogleTranslateApi private constructor(): TranslatorApi{
     override val translator = TranslatorConfig.TRANSLATOR_GOOGLETRANSLATE
     private val retrofit by lazy { RetrofitMaker.createWithUrl(rootUrl).create(RetrofitApi::class.java) }
 
-    private fun generateParamsUrl(text: String, sourceLang: Language, transLang: Language): String {
-        return String.format(paramsUrl, langIds[sourceLang], langIds[transLang], text)
+    private fun generateParamsMap(text: String, sourceLang: Language, transLang: Language): Map<String, String> {
+        val res = params.toMutableMap()
+        res["sl"] = langIds[sourceLang]?: ""
+        res["tl"] = langIds[transLang]?: ""
+        res["q"] = text
+        return res
     }
 
     override suspend fun translate(
@@ -34,7 +45,7 @@ class GoogleTranslateApi private constructor(): TranslatorApi{
         sourceLang: Language,
         transLang: Language
     ): RepoResult<String> {
-        val res = RetrofitResult.wrapper { retrofit.postFunctionFetchJson(endpoint = generateParamsUrl(text, sourceLang, transLang)) }
+        val res = RetrofitResult.wrapper { retrofit.postFunctionFetchJson(endpoint = endpoint, params = generateParamsMap(text, sourceLang, transLang)) }
         return when (res) {
             is RepoResult.Error<*> -> res
             is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonArray.get(0).asJsonArray.get(0).asJsonArray.get(0).asString)

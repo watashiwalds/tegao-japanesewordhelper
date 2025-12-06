@@ -1,9 +1,9 @@
 package com.tegaoteam.application.tegao.data.network
 
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 /**
  * Make Retrofit client with 1 shared OkHttpClient for reduced connection load

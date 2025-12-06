@@ -2,7 +2,6 @@ package com.tegaoteam.application.tegao.data.config
 
 import android.content.pm.PackageManager
 import com.tegaoteam.application.tegao.TegaoApplication
-import com.tegaoteam.application.tegao.data.config.setting.SettingConfig
 import timber.log.Timber
 
 object AddonConfig {

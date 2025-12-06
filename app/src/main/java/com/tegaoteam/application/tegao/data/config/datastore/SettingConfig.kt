@@ -1,9 +1,8 @@
-package com.tegaoteam.application.tegao.data.config.setting
+package com.tegaoteam.application.tegao.data.config.datastore
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import com.tegaoteam.application.tegao.TegaoApplication
-import com.tegaoteam.application.tegao.data.config.settingDataStore
 import kotlinx.coroutines.flow.map
 
 @Suppress("KotlinConstantConditions", "UnusedFlow")

@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.data.config
+package com.tegaoteam.application.tegao.data.config.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

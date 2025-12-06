@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.data.config.setting
+package com.tegaoteam.application.tegao.data.config.datastore
 
 object DefaultSettingValue {
     const val USE_HEPBURN_CONVERTER = true

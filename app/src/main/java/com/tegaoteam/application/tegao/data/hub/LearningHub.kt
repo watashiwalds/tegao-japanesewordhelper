@@ -1,6 +1,6 @@
 package com.tegaoteam.application.tegao.data.hub
 
-import com.tegaoteam.application.tegao.data.config.LearningConfig
+import com.tegaoteam.application.tegao.data.config.datastore.LearningConfig
 import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
 import com.tegaoteam.application.tegao.data.database.learningcard.CardEntity
 import com.tegaoteam.application.tegao.data.database.learningcard.CardGroupEntity

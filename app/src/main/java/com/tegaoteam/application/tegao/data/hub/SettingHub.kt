@@ -1,6 +1,6 @@
 package com.tegaoteam.application.tegao.data.hub
 
-import com.tegaoteam.application.tegao.data.config.setting.SettingConfig
+import com.tegaoteam.application.tegao.data.config.datastore.SettingConfig
 import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import timber.log.Timber

@@ -1,15 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        style="@style/Theme.Tegao.Screen.PaddingBorder">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="TRANSLATE"
-            />
+            android:background="@drawable/neutral_stroke_background"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_normal"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_small"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/Theme.Tegao.Label.Normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:text="@string/translate_originalText_title"
+                    />
+                <ImageView style="@style/Theme.Tegao.Divider.Vertical"/>
+                <include layout="@layout/view_button_pushswitch_icononly"
+                    android:id="@+id/switch_handwritingMode_icl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/ocrFromImage_btn"
+                    style="@style/Theme.Tegao.IconButton"
+                    android:src="@drawable/ftc_round_image_128"
+                    android:layout_marginStart="@dimen/padding_small"
+                    />
+            </LinearLayout>
+            <EditText
+                style="@style/Theme.Tegao.ContentText.ThinlyDecent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="top|start"
+
+                tools:text="ニュースのご紹介をはじめ、朝ドラ・大河ドラマ・紅白歌合戦など多彩な番組、イベント情報、受信契約や経営情報"
+                />
+
+            <ImageView style="@style/Theme.Tegao.Divider.Horizontal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <AutoCompleteTextView
+                    android:id="@+id/translateFrom_ctx"
+                    style="@style/Theme.Tegao.Label.Normal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="@dimen/padding_normal"
+
+                    android:text="JA"
+                    />
+                <Button
+                    style="@style/Theme.Tegao.LabelButton.Secondary"
+                    android:id="@+id/translateText_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/translate_doTranslating"
+                    />
+                <AutoCompleteTextView
+                    android:id="@+id/translateTo_ctx"
+                    style="@style/Theme.Tegao.Label.Normal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="@dimen/padding_normal"
+                    android:gravity="center_vertical|end"
+
+                    android:text="VI"
+                    />
+            </LinearLayout>
+            <ImageView style="@style/Theme.Tegao.Divider.Horizontal"/>
+
+            <TextView
+                style="@style/Theme.Tegao.ContentText.ThinlyDecent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="top|start"
+                android:scrollbars="vertical"
+                android:textIsSelectable="true"
+
+                android:text="ニュースのご紹介をはじめ、\n朝ドラ・\n大河ドラマ・\n紅白歌合戦など多彩な番組、\nイベント情報、\n受\n信\n契\n約\nや\n経\n営\n情\n報"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/Theme.Tegao.Label.Normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:text="@{String.format(@string/translate_translatedText_title, @string/translate_model_googleTranslate_name)}"
+                    tools:text="@string/translate_translatedText_title"
+                    />
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

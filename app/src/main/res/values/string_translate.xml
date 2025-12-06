@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="translate_originalText_title">Văn bản gốc</string>
+    <string name="translate_translatedText_title">Bản dịch %s</string>
+    <string name="translate_doTranslating">Dịch</string>
+
+    <string name="translate_model_googleTranslate_name">Google Dịch</string>
+</resources>

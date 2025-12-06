@@ -10,6 +10,7 @@ import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
+import com.google.gson.JsonElement
 import timber.log.Timber
 
 class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
@@ -47,7 +48,7 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(res.data)
+            is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonObject)
         }
     }
 
@@ -58,7 +59,7 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(res.data)
+            is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonObject)
         }
     }
 

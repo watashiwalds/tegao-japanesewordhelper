@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.data.network.dictionaries.jisho
 
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
@@ -46,7 +47,7 @@ class JishoDictionaryApi private constructor():
         val res = RetrofitResult.wrapper { instance.getFunctionFetchJson(endpoint = _wordPath, params = _wordParams.toMap().mapValues { it.value.toString() }) }
         return when (res) {
             is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonObject> -> RepoResult.Success(res.data)
+            is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonObject)
         }
     }
 

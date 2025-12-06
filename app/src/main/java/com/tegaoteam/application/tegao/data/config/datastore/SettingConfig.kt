@@ -11,13 +11,13 @@ object SettingConfig {
 
     //setting preference keys
     private val USE_HEPBURN_CONVERTER = booleanPreferencesKey("use_hepburn_converter")
-    val useHepburnConverter by lazy { app.settingDataStore.data.map { prefs -> prefs[USE_HEPBURN_CONVERTER] ?: DefaultValues.USE_HEPBURN_CONVERTER } }
+    val useHepburnConverter by lazy { app.settingDataStore.data.map { prefs -> prefs[USE_HEPBURN_CONVERTER] ?: DefaultConfigs.USE_HEPBURN_CONVERTER } }
     suspend fun toggleHepburnConverter() {
         app.settingDataStore.edit { settings -> settings[USE_HEPBURN_CONVERTER] = !(settings[USE_HEPBURN_CONVERTER]?: true) }
     }
 
     private val ENABLE_HANDWRITING_ADDON = booleanPreferencesKey("enable_handwriting_addon")
-    val enableHandwritingAddon by lazy { app.settingDataStore.data.map { prefs -> prefs[ENABLE_HANDWRITING_ADDON] ?: DefaultValues.ENABLE_HANDWRITING_ADDON } }
+    val enableHandwritingAddon by lazy { app.settingDataStore.data.map { prefs -> prefs[ENABLE_HANDWRITING_ADDON] ?: DefaultConfigs.ENABLE_HANDWRITING_ADDON } }
     suspend fun toggleHandwritingAddon() {
         app.settingDataStore.edit { settings -> settings[ENABLE_HANDWRITING_ADDON] = !(settings[ENABLE_HANDWRITING_ADDON]?: true) }
     }

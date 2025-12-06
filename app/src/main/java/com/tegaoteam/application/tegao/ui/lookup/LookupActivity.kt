@@ -47,7 +47,6 @@ class LookupActivity : AppCompatActivity() {
     private lateinit var _dictionaryRepo: DictionaryRepo
     private lateinit var _searchHistoryRepo: SearchHistoryRepo
     private lateinit var _addonRepo: AddonRepo
-    private lateinit var _settingRepo: SettingRepo
 
     private var _handwritingBoardView: View? = null
 
@@ -67,6 +66,7 @@ class LookupActivity : AppCompatActivity() {
         initVariables()
         initListeners()
         initObservers()
+        initAddons()
 
         displayDictionaryOptions()
         updateSearchResultAdapter()
@@ -83,9 +83,8 @@ class LookupActivity : AppCompatActivity() {
         _dictionaryRepo = DictionaryHub()
         _searchHistoryRepo = SearchHistoryHub()
         _addonRepo = AddonHub()
-        _settingRepo = SettingHub()
 
-        _viewModel = ViewModelProvider(this, LookupActivityViewModel.Companion.ViewModelFactory(_dictionaryRepo, _searchHistoryRepo, _addonRepo, _settingRepo))[LookupActivityViewModel::class.java]
+        _viewModel = ViewModelProvider(this, LookupActivityViewModel.Companion.ViewModelFactory(_dictionaryRepo, _searchHistoryRepo))[LookupActivityViewModel::class.java]
         _binding.viewModel = _viewModel
 
         _wordSearchResultAdapter = WordDefinitionCardListAdapter(this)
@@ -132,17 +131,13 @@ class LookupActivity : AppCompatActivity() {
         _viewModel.searchResultList.observe(this) {
             updateSearchResultValue(it)
         }
-        _viewModel.isHandwritingEnabled.observe(this) {
-            if (it && _addonRepo.isHandwritingAvailable()) initAddons()
-        }
         _viewModel.nonResult.observe(this) {
             AppToast.show(it, AppToast.LENGTH_SHORT)
         }
     }
 
     private fun initAddons() {
-        // handwriting addon components init
-        if (_addonRepo.isHandwritingAvailable()) _handwritingBoardView = WritingViewBindingHelper.fullSuggestionBoard(
+        if (_viewModel.isHandwritingEnabled.value) _handwritingBoardView = WritingViewBindingHelper.fullSuggestionBoard(
             _addonRepo,
             this,
             _binding.unvInputFieldEdt,

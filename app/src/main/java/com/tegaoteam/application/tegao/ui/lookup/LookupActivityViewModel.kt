@@ -18,6 +18,7 @@ import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.component.generics.SwitchButtonInfo
+import com.tegaoteam.application.tegao.ui.shared.FetchedConfigs
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.EventBeacon
@@ -31,7 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val searchHistoryRepo: SearchHistoryRepo, private val addonRepo: AddonRepo, private val settingRepo: SettingRepo): ViewModel() {
+class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, private val searchHistoryRepo: SearchHistoryRepo): ViewModel() {
     //Coroutine stuff
     //old way (?)
 //    private var viewModelJob = Job()
@@ -71,16 +72,10 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
     val evIsRcyAdapterAvailable = MutableLiveData<Boolean>()
 
     //handwriting addon variables
-    val isHandwritingEnabled: LiveData<Boolean> = settingRepo.isHandwritingAddonEnable().asFlow().asLiveData()
+    val isHandwritingEnabled = FetchedConfigs.isHandwritingEnabled
 
     //preference values
-    private var _useHepburnConverter = true
-
-    init {
-        viewModelScope.launch {
-            _useHepburnConverter = settingRepo.isHepburnConverterEnable().asFlow().first()
-        }
-    }
+    private val _useHepburnConverter = FetchedConfigs.isHepburnConverterEnabled.value
 
     fun setSearchString(s: String) {
         var t = s.toSafeQueryString()
@@ -150,26 +145,15 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
         searchJob?.cancel()
     }
 
-    // todo: add some kind of cooldown for the switch of input mode for best animation transition
-    // handle state display things
-    val handwritingSwitchInfo by lazy {
-        SwitchButtonInfo(
-            iconResId = R.drawable.ftc_round_handwriting_128,
-            switchState = MutableLiveData<Boolean>().apply { value = false }
-        )
-    }
-
     companion object {
         class ViewModelFactory(
             private val dictionaryRepo: DictionaryRepo,
-            private val searchHistoryRepo: SearchHistoryRepo,
-            private val addonRepo: AddonRepo,
-            private val settingRepo: SettingRepo
+            private val searchHistoryRepo: SearchHistoryRepo
         ) : ViewModelProvider.Factory {
             @Suppress("unchecked_cast")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(LookupActivityViewModel::class.java)) {
-                    return LookupActivityViewModel(dictionaryRepo, searchHistoryRepo, addonRepo, settingRepo) as T
+                    return LookupActivityViewModel(dictionaryRepo, searchHistoryRepo) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

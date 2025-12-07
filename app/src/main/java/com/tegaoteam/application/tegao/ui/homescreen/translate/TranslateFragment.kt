@@ -40,7 +40,6 @@ class TranslateFragment: Fragment() {
     ): View? {
         _binding = FragmentMainTranslateBinding.inflate(layoutInflater, container, false)
         _translatorRepo = TranslatorHub()
-        _imageOcrDialog = ImageOCRDialogFragment()
         _viewModel = ViewModelProvider(requireActivity(), TranslateFragmentViewModel.Companion.ViewModelFactory(_translatorRepo))[TranslateFragmentViewModel::class]
 
         initView()
@@ -77,6 +76,9 @@ class TranslateFragment: Fragment() {
                 boardHolder = requireActivity().findViewById(R.id.unv_customInputHolder_frm),
                 switchButtonBinding = _binding.switchHandwritingModeIcl
             )
+        }
+        if (!::_imageOcrDialog.isInitialized) _imageOcrDialog = ImageOCRDialogFragment { recognized ->
+            _binding.sourceTextEdt.text.append(recognized)
         }
         _binding.ocrFromImageBtn.setOnClickListener {
             _imageOcrDialog.show(requireActivity().supportFragmentManager, "DIALOG_IMAGE_OCR")

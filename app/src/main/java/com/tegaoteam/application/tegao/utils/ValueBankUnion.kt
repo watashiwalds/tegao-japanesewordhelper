@@ -75,5 +75,3 @@ fun getDrawableFromAppRes(resId: Int): Drawable? {
 fun getColorFromAppRes(resId: Int): Int {
     return ContextCompat.getColor(TegaoApplication.instance, resId)
 }
-
-fun getUriInputStream(uri: Uri) = TegaoApplication.instance.contentResolver.openInputStream(uri)

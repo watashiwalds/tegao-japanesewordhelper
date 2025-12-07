@@ -68,7 +68,10 @@ class ImageOCRDialogFragment(
         _viewModel.requestImageOCR(uri)
         _binding.apply {
             imagePreviewImg.setImageURI(uri)
-            recognizedTextTxt.text = getString(R.string.imageocr_recognizing_processing)
+            recognizedTextTxt.apply {
+                text = null
+                hint = getString(R.string.imageocr_recognizing_processing)
+            }
         }
     }
 }

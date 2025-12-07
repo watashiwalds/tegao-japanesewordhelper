@@ -9,8 +9,9 @@
     <string name="translate_originalText_title">Văn bản gốc</string>
     <string name="translate_originalText_hint">Nhập văn bản…</string>
     <string name="translate_translatedText_title">Bản dịch %s</string>
-    <string name="translate_translatedText_hint">\"Dịch\" để xem bản dịch</string>
+    <string name="translate_translatedText_hint">Bản dịch hiển thị ở đây</string>
     <string name="translate_doTranslating">Dịch</string>
+    <string name="translate_processing">Đang dịch…</string>
 
     <string name="translate_model_googleTranslate_name">Google Dịch</string>
 

@@ -1,9 +1,12 @@
 package com.tegaoteam.application.tegao.utils
 
 import android.content.res.Resources
+import android.net.Uri
+import android.webkit.MimeTypeMap
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import com.tegaoteam.application.tegao.TegaoApplication
 import timber.log.Timber
 import java.security.MessageDigest
 import java.time.Instant
@@ -75,4 +78,20 @@ fun getMD5HashedValue(input: Any): String {
 
 fun dpToPixel(value: Float): Float {
     return value * Resources.getSystem().displayMetrics.density
+}
+
+object UriHelper {
+    private val appContext = TegaoApplication.instance
+
+    fun getUriInputStream(uri: Uri) = appContext.contentResolver.openInputStream(uri)
+    fun getUriFileExtension(uri: Uri): String? {
+        var res: String? = null
+
+        val mime = appContext.contentResolver.getType(uri)
+        if (mime != null) {
+            res = MimeTypeMap.getSingleton().getExtensionFromMimeType(mime)
+        }
+
+        return res
+    }
 }

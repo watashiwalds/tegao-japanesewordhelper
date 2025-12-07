@@ -22,12 +22,12 @@ class OnlineServiceApi private constructor() {
         val api by lazy { OnlineServiceApi() }
     }
 
-    suspend fun requestImageOCR(image: RequestBody, imageName: String? = null): RepoResult<List<String>> {
+    suspend fun requestImageOCR(image: RequestBody, imageExtension: String? = null): RepoResult<List<String>> {
         if (!SystemStates.isInternetAvailable()!!) return ErrorResults.NO_INTERNET_CONNECTION
 
         val partParsing = MultipartBody.Part.createFormData(
             "file",
-            imageName,
+            imageExtension?.let { "requestedOCR.$it" }?: "requestedOCR",
             image
         )
         Timber.i("API received File from Hub request with body = ${partParsing.body.toString().let { it.substring(0, min(50, it.length)) }}")

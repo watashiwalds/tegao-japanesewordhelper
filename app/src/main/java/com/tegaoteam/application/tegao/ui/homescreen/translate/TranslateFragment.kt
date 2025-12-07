@@ -131,6 +131,10 @@ class TranslateFragment: Fragment() {
 
         _binding.translateTextBtn.setOnClickListener {
             _viewModel.requestTranslation()
+            _binding.translatedTextTxt.apply {
+                text = null
+                hint = getString(R.string.translate_processing)
+            }
         }
     }
 }

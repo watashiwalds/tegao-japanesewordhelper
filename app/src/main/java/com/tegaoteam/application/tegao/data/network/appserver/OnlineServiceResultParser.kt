@@ -1,10 +1,13 @@
 package com.tegaoteam.application.tegao.data.network.appserver
 
 import com.google.gson.JsonElement
+import com.tegaoteam.application.tegao.data.network.ErrorResults
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
+import timber.log.Timber
 
 class OnlineServiceResultParser {
     fun toRecognizedOCRResults(json: JsonElement): RepoResult<List<String>> {
+        Timber.i("Parser receive Element from API with data status: ${!json.isJsonNull}")
         val parseRes = mutableListOf<String>()
         try {
             val dataList = json.asJsonObject.get("data").asJsonArray.map { it.asJsonObject }
@@ -13,6 +16,9 @@ class OnlineServiceResultParser {
         } catch (_: Exception) {
             return RepoResult.Error<Nothing>(777, "Parsing Error")
         }
-        return RepoResult.Success<List<String>>(parseRes)
+        return if (parseRes.isNotEmpty())
+            RepoResult.Success<List<String>>(parseRes)
+        else
+            ErrorResults.EMPTY_RESULT
     }
 }

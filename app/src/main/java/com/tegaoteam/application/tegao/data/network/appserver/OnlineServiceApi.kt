@@ -9,7 +9,9 @@ import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import timber.log.Timber
 import java.io.File
+import kotlin.math.min
 
 class OnlineServiceApi private constructor() {
     private val retrofit: TegaoFirebaseApi by lazy { RetrofitMaker.createWithUrl(TegaoFirebaseConst.rootUrl).create(TegaoFirebaseApi::class.java) }
@@ -27,7 +29,9 @@ class OnlineServiceApi private constructor() {
             image.name,
             image.asRequestBody("image/*".toMediaTypeOrNull())
         )
+        Timber.i("API received File from Hub request with body = ${partParsing.body.toString().let { it.substring(0, min(50, it.length)) }}")
         val res = RetrofitResult.wrapper { retrofit.postImageOCR(TegaoFirebaseConst.obsoleteSoon, partParsing) }
+        Timber.i("API finish recognizing")
         return when (res) {
             is RepoResult.Error<*> -> res
             is RepoResult.Success<JsonElement> -> parser.toRecognizedOCRResults(res.data)

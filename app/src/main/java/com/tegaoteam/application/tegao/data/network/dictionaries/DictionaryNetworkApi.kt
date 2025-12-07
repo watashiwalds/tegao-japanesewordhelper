@@ -9,6 +9,4 @@ interface DictionaryNetworkApi {
     suspend fun searchWord(keyword: String): RepoResult<Any>
     suspend fun searchKanji(keyword: String): RepoResult<Any>
     suspend fun devTest(keyword: String): RepoResult<String>
-
-    fun onNoInternetAvailable(): RepoResult<Nothing>
 }

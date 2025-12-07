@@ -51,8 +51,4 @@ class GoogleTranslateApi private constructor(): TranslatorApi{
             is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonArray.get(0).asJsonArray.get(0).asJsonArray.get(0).asString)
         }
     }
-
-    override fun onNoInternetAvailable(): RepoResult<Nothing> {
-        return RepoResult.Error<Nothing>(-1, "No internet available")
-    }
 }

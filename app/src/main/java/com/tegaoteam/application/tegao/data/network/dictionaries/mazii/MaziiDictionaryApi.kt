@@ -11,6 +11,7 @@ import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetwo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.google.gson.JsonElement
+import com.tegaoteam.application.tegao.data.network.ErrorResults
 import timber.log.Timber
 
 class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
@@ -42,7 +43,7 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     }
 
     override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {
-        if (SystemStates.isInternetAvailable() != true) return onNoInternetAvailable()
+        if (SystemStates.isInternetAvailable() != true) return ErrorResults.NO_INTERNET_CONNECTION
 
         _wordPayloadRequest.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
@@ -53,7 +54,7 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     }
 
     override suspend fun searchKanji(keyword: String): RepoResult<JsonObject> {
-        if (SystemStates.isInternetAvailable() != true) return onNoInternetAvailable()
+        if (SystemStates.isInternetAvailable() != true) return ErrorResults.NO_INTERNET_CONNECTION
 
         _kanjiPayloadRequest.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest) }
@@ -70,10 +71,5 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
             is RepoResult.Error<*> -> res
             is RepoResult.Success<*> -> RepoResult.Success("${res.data}")
         }
-    }
-
-    override fun onNoInternetAvailable(): RepoResult<Nothing> {
-        Timber.w("No internet available, return RepoResult.Error with code -1")
-        return RepoResult.Error<Nothing>(-1, "No internet available")
     }
 }

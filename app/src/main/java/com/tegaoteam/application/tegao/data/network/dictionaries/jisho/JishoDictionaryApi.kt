@@ -68,8 +68,4 @@ class JishoDictionaryApi private constructor():
             is RepoResult.Success<*> -> RepoResult.Success("${res.data}")
         }
     }
-
-    override fun onNoInternetAvailable(): RepoResult<Nothing> {
-        return RepoResult.Error<Nothing>(-1, "No internet available")
-    }
 }

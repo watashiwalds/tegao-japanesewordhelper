@@ -5,7 +5,9 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.ui.component.generics.ListNavigationItemInfo
 
 class SettingListViewModel: ViewModel() {
-    val settingNavigations = listOf(
+    private val devTab: Boolean? = null
+
+    private val _settingsNavigations = mutableListOf(
         ListNavigationItemInfo(
             labelResId = R.string.setting_lookup_label,
             directionId = SettingListFragmentDirections.actionSettingListFragmentToSettingLookupFragment().actionId,
@@ -29,14 +31,19 @@ class SettingListViewModel: ViewModel() {
             directionId = SettingListFragmentDirections.actionSettingListFragmentToSettingAddonFragment().actionId,
             detailResId = R.string.setting_addon_detail,
             iconResId = R.drawable.ftc_round_addon_128
-        ),
-
-        //enable dev playground
-        ListNavigationItemInfo(
-            labelResId = R.string.dev_setting_label,
-            directionId = SettingListFragmentDirections.actionSettingListFragmentToDevPlaygroundFragment().actionId,
-            detailResId = R.string.dev_setting_detail,
-            iconResId = R.drawable.ftc_bold_lab_128
-        ),
+        )
     )
+
+    init {
+        devTab?.let {
+            _settingsNavigations.add( ListNavigationItemInfo(
+                labelResId = R.string.dev_setting_label,
+                directionId = SettingListFragmentDirections.actionSettingListFragmentToDevPlaygroundFragment().actionId,
+                detailResId = R.string.dev_setting_detail,
+                iconResId = R.drawable.ftc_bold_lab_128
+            ))
+        }
+    }
+
+    val settingNavigations: List<ListNavigationItemInfo> = _settingsNavigations
 }

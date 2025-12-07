@@ -230,4 +230,12 @@
         <item name="android:src">@drawable/neutral_stroke_start</item>
         <item name="android:layout_marginHorizontal">@dimen/padding_small</item>
     </style>
+
+
+
+    <style name="Theme.Tegao.MaterialRequire"/>
+    <style name="Theme.Tegao.MaterialRequire.ShapeableImageViewRoundedBorderOverlay">
+        <item name="cornerSize">5dp</item>
+    </style>
+
 </resources>

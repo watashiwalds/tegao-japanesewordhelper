@@ -13,4 +13,9 @@
     <string name="translate_doTranslating">Dịch</string>
 
     <string name="translate_model_googleTranslate_name">Google Dịch</string>
+
+    <string name="imageocr_selectAnImage_title">Chọn ảnh</string>
+    <string name="imageocr_recognizing_hint">Chọn một bức ảnh có chứa ký tự tiếng Nhật để quét</string>
+    <string name="imageocr_recognizing_processing">Đang nhận diện…</string>
+    <string name="imageocr_usingAll_title">Chọn tất cả</string>
 </resources>

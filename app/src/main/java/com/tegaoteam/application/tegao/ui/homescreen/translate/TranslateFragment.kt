@@ -18,6 +18,7 @@ import com.tegaoteam.application.tegao.databinding.FragmentMainTranslateBinding
 import com.tegaoteam.application.tegao.domain.model.Translator
 import com.tegaoteam.application.tegao.domain.repo.TranslatorRepo
 import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewBindingHelper
+import com.tegaoteam.application.tegao.ui.component.onlineocr.ImageOCRDialogFragment
 import com.tegaoteam.application.tegao.ui.homescreen.MainActivityViewModel
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.LabelBank
@@ -30,6 +31,7 @@ class TranslateFragment: Fragment() {
     private val _parentViewModel: MainActivityViewModel by activityViewModels()
     private lateinit var _translatorRepo: TranslatorRepo
     private lateinit var _translator: Translator
+    private lateinit var _imageOcrDialog: ImageOCRDialogFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +40,7 @@ class TranslateFragment: Fragment() {
     ): View? {
         _binding = FragmentMainTranslateBinding.inflate(layoutInflater, container, false)
         _translatorRepo = TranslatorHub()
+        _imageOcrDialog = ImageOCRDialogFragment()
         _viewModel = ViewModelProvider(requireActivity(), TranslateFragmentViewModel.Companion.ViewModelFactory(_translatorRepo))[TranslateFragmentViewModel::class]
 
         initView()
@@ -57,8 +60,7 @@ class TranslateFragment: Fragment() {
 
     private fun initView() {
         setupInputFunctions()
-        setupTranslatorConfig()
-        setupTranslating()
+        setupTranslator()
 
         _binding.lifecycleOwner = viewLifecycleOwner
         _binding.executePendingBindings()
@@ -76,10 +78,12 @@ class TranslateFragment: Fragment() {
                 switchButtonBinding = _binding.switchHandwritingModeIcl
             )
         }
-        _binding.ocrFromImageBtn.setOnClickListener { AppToast.show("Work in progress", AppToast.LENGTH_SHORT) }
+        _binding.ocrFromImageBtn.setOnClickListener {
+            _imageOcrDialog.show(requireActivity().supportFragmentManager, "DIALOG_IMAGE_OCR")
+        }
     }
 
-    private fun setupTranslatorConfig() {
+    private fun setupTranslator() {
         _translator = _translatorRepo.getAvailableTranslators().first()
         val sourceLangs = _translator.supportedSourceLang
         val transLangs = _translator.supportedTransLang
@@ -117,9 +121,7 @@ class TranslateFragment: Fragment() {
                 }
             }
         }
-    }
 
-    private fun setupTranslating() {
         _viewModel.translator = _translator
         _viewModel.translateResult.observe(viewLifecycleOwner) {
             _binding.translatedTextTxt.text = it

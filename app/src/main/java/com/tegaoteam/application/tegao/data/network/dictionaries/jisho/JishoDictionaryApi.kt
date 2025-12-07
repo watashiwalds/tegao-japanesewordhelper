@@ -39,7 +39,7 @@ class JishoDictionaryApi private constructor():
         }
     }
     private val instance: RetrofitApi by lazy {
-        RetrofitMaker.createWithUrl(_url).create(RetrofitApi::class.java)
+        RetrofitMaker.createWithUrl(_url, RetrofitMaker.TYPE_BROWSING).create(RetrofitApi::class.java)
     }
 
     override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {

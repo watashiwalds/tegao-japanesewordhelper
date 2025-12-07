@@ -6,16 +6,13 @@ import com.tegaoteam.application.tegao.data.network.ErrorResults
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
-import java.io.File
 import kotlin.math.min
 
 class OnlineServiceApi private constructor() {
-    private val retrofit: TegaoFirebaseApi by lazy { RetrofitMaker.createWithUrl(TegaoFirebaseConst.rootUrl).create(TegaoFirebaseApi::class.java) }
+    private val retrofit: TegaoFirebaseApi by lazy { RetrofitMaker.createWithUrl(TegaoFirebaseConst.rootUrl, RetrofitMaker.TYPE_PROCESSING).create(TegaoFirebaseApi::class.java) }
     private val parser = OnlineServiceResultParser()
 
     companion object {

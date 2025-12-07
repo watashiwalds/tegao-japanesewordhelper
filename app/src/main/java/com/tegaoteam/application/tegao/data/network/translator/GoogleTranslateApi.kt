@@ -32,7 +32,7 @@ class GoogleTranslateApi private constructor(): TranslatorApi{
     }
 
     override val translator = TranslatorConfig.TRANSLATOR_GOOGLETRANSLATE
-    private val retrofit by lazy { RetrofitMaker.createWithUrl(rootUrl).create(RetrofitApi::class.java) }
+    private val retrofit by lazy { RetrofitMaker.createWithUrl(rootUrl, RetrofitMaker.TYPE_BROWSING).create(RetrofitApi::class.java) }
 
     private fun generateParamsMap(text: String, sourceLang: Language, transLang: Language): Map<String, String> {
         val res = params.toMutableMap()

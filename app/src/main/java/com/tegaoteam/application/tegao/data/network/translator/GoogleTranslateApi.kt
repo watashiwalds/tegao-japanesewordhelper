@@ -6,6 +6,8 @@ import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.google.gson.JsonElement
+import com.tegaoteam.application.tegao.data.config.SystemStates
+import com.tegaoteam.application.tegao.data.network.ErrorResults
 import com.tegaoteam.application.tegao.domain.model.Translator.Companion.Language as Language
 
 class GoogleTranslateApi private constructor(): TranslatorApi{
@@ -45,6 +47,7 @@ class GoogleTranslateApi private constructor(): TranslatorApi{
         sourceLang: Language,
         transLang: Language
     ): RepoResult<String> {
+        if (!SystemStates.isInternetAvailable()!!) return ErrorResults.NO_INTERNET_CONNECTION
         val res = RetrofitResult.wrapper { retrofit.postFunctionFetchJson(endpoint = endpoint, params = generateParamsMap(text, sourceLang, transLang)) }
         return when (res) {
             is RepoResult.Error<*> -> res

@@ -1,6 +1,8 @@
 package com.tegaoteam.application.tegao.data.network.appserver
 
 import com.google.gson.JsonElement
+import com.tegaoteam.application.tegao.data.config.SystemStates
+import com.tegaoteam.application.tegao.data.network.ErrorResults
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
@@ -18,6 +20,8 @@ class OnlineServiceApi private constructor() {
     }
 
     suspend fun requestImageOCR(image: File): RepoResult<List<String>> {
+        if (!SystemStates.isInternetAvailable()!!) return ErrorResults.NO_INTERNET_CONNECTION
+
         val partParsing = MultipartBody.Part.createFormData(
             "file",
             image.name,

@@ -10,6 +10,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.data.hub.OnlineServiceHub
 import com.tegaoteam.application.tegao.databinding.DialogBottomsheetImageocrBinding
 import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 import timber.log.Timber
@@ -27,7 +29,7 @@ class ImageOCRDialogFragment(
         savedInstanceState: Bundle?
     ): View? {
         _binding = DialogBottomsheetImageocrBinding.inflate(layoutInflater, container, false)
-        _viewModel = ViewModelProvider(this)[ImageOCRDialogViewModel::class]
+        _viewModel = ViewModelProvider(this, ImageOCRDialogViewModel.Companion.ViewModelFactory(OnlineServiceHub()))[ImageOCRDialogViewModel::class]
         _selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri -> uri?.let { selectingImage(it) } }
 
         initDialog()
@@ -37,7 +39,14 @@ class ImageOCRDialogFragment(
 
     private fun initDialog() {
         _viewModel.recognizedText.observe(viewLifecycleOwner) {
-            _binding.recognizedTextTxt.text = it
+            _binding.recognizedTextTxt.text = it.joinToString("\n")
+        }
+        _viewModel.evRecognitionFailed.apply {
+            beacon.observe(viewLifecycleOwner) {
+                if (receive()) {
+                    getMessage()?.let { _binding.recognizedTextTxt.text = it }
+                }
+            }
         }
 
         _binding.apply {
@@ -49,14 +58,17 @@ class ImageOCRDialogFragment(
                 )
             }
             selectImageBtn.setOnClickListener { _selectImageLauncher.launch("image/*") }
-            usingAllBtn.setOnClickListener { onUsingAllRecognizedTextListener?.invoke(_viewModel.recognizedText.value) }
+            usingAllBtn.setOnClickListener { onUsingAllRecognizedTextListener?.invoke(_binding.recognizedTextTxt.text.toString()) }
             lifecycleOwner = viewLifecycleOwner
             executePendingBindings()
         }
     }
 
     private fun selectingImage(uri: Uri) {
-        _binding.imagePreviewImg.setImageURI(uri)
         _viewModel.requestImageOCR(uri)
+        _binding.apply {
+            imagePreviewImg.setImageURI(uri)
+            recognizedTextTxt.text = getString(R.string.imageocr_recognizing_processing)
+        }
     }
 }

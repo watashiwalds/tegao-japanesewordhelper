@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData
  */
 class EventBeacon {
     private val _beacon = MutableLiveData<Boolean>()
+    private var _message: String? = null
 
     /**
      * Watch event state with this LiveData
@@ -26,6 +27,10 @@ class EventBeacon {
      * @return Nothing
      */
     fun ignite() { _beacon.value = true }
+    fun ignite(message: String) {
+        _beacon.value = true
+        _message = message
+    }
 
     /**
      * Receive the event and turn off the beacon
@@ -38,5 +43,15 @@ class EventBeacon {
             _beacon.value = false
             true
         } else false
+    }
+
+    /**
+     * Get message that being sent with the beacon ignite
+     * Self-destruct after fetch
+     */
+    fun getMessage(): String? {
+        val msg = _message
+        _message = null
+        return msg
     }
 }

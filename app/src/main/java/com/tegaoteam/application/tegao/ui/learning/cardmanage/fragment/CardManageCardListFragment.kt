@@ -18,9 +18,8 @@ import com.tegaoteam.application.tegao.ui.learning.LearningCardConst
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.adapter.QuickCrudItemListAdapter
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.model.QuickCrudItemInfo
-import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.toggleVisibility
-import timber.log.Timber
 import kotlin.getValue
 
 class CardManageCardListFragment: Fragment() {

@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.utils.preset
+package com.tegaoteam.application.tegao.ui.shared.preset
 
 import android.content.Context
 import android.view.LayoutInflater

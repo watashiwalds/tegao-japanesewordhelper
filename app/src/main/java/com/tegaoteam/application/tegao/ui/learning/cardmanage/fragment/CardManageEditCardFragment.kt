@@ -32,9 +32,8 @@ import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardPlacehol
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityViewModel
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.dpToPixel
-import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.toggleVisibility
-import timber.log.Timber
 import kotlin.getValue
 
 class CardManageEditCardFragment: Fragment() {

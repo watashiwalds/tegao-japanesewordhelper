@@ -7,7 +7,7 @@ import androidx.core.view.isGone
 import androidx.databinding.ViewDataBinding
 import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
 import androidx.core.view.isVisible
-import com.tegaoteam.application.tegao.utils.preset.AnimationPreset
+import com.tegaoteam.application.tegao.ui.shared.preset.AnimationPreset
 import timber.log.Timber
 
 class WritingViewController(

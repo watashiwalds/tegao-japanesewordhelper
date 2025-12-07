@@ -16,7 +16,7 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAda
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
-import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
 
 class CardCreateSetGroupFragment : Fragment() {

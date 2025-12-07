@@ -21,8 +21,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.utils.dpToPixel
-import com.tegaoteam.application.tegao.utils.preset.DialogPreset
-import timber.log.Timber
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 import kotlin.getValue
 
 class CardCreateSetAnswerFragment: Fragment() {

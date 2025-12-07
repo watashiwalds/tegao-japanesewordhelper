@@ -21,7 +21,7 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardMaterial
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
-import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 
 class CardCreateSetBackFragment: Fragment() {
     private lateinit var _binding: FragmentCardCreateValueSelectBinding

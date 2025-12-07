@@ -22,7 +22,7 @@ import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivity
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.model.CardPlaceholder
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.dpToPixel
-import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import kotlin.getValue

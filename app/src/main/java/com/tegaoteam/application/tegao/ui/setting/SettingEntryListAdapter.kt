@@ -12,7 +12,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ItemSettingConfigDisplayBinding
 import com.tegaoteam.application.tegao.databinding.SubitemSettingConfigBtnBooleanBinding
 import com.tegaoteam.application.tegao.ui.setting.model.ConfigEntryItem
-import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 
 @Suppress("unchecked_cast")
 class SettingEntryListAdapter(private val lifecyclerOwner: LifecycleOwner): ListAdapter<ConfigEntryItem, SettingEntryListAdapter.ViewHolder>(DiffCallback()) {

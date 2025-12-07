@@ -23,7 +23,7 @@ import com.tegaoteam.application.tegao.ui.homescreen.lookup.searchhistory.Search
 import com.tegaoteam.application.tegao.ui.lookup.LookupActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
-import com.tegaoteam.application.tegao.utils.preset.DialogPreset
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.toggleVisibility
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

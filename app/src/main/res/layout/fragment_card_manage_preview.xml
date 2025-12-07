@@ -11,7 +11,9 @@
             android:id="@+id/view_learningCard"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="9:15"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/resetCardState_btn"
+            android:layout_marginBottom="@dimen/padding_normal"
             />
 
         <Button
@@ -19,7 +21,7 @@
             style="@style/Theme.Tegao.LabelButton.Secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/view_learningCard"
+            android:layout_marginBottom="@dimen/padding_normal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/resetCardState_btn"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +33,7 @@
             style="@style/Theme.Tegao.LabelButton.Secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/view_learningCard"
+            android:layout_marginBottom="@dimen/padding_normal"
             app:layout_constraintStart_toEndOf="@id/flickCard_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.utils
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.core.content.ContextCompat
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
@@ -74,3 +75,5 @@ fun getDrawableFromAppRes(resId: Int): Drawable? {
 fun getColorFromAppRes(resId: Int): Int {
     return ContextCompat.getColor(TegaoApplication.instance, resId)
 }
+
+fun getUriInputStream(uri: Uri) = TegaoApplication.instance.contentResolver.openInputStream(uri)

@@ -8,6 +8,7 @@ import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
 import java.io.File
@@ -21,13 +22,13 @@ class OnlineServiceApi private constructor() {
         val api by lazy { OnlineServiceApi() }
     }
 
-    suspend fun requestImageOCR(image: File): RepoResult<List<String>> {
+    suspend fun requestImageOCR(image: RequestBody, imageName: String? = null): RepoResult<List<String>> {
         if (!SystemStates.isInternetAvailable()!!) return ErrorResults.NO_INTERNET_CONNECTION
 
         val partParsing = MultipartBody.Part.createFormData(
             "file",
-            image.name,
-            image.asRequestBody("image/*".toMediaTypeOrNull())
+            imageName,
+            image
         )
         Timber.i("API received File from Hub request with body = ${partParsing.body.toString().let { it.substring(0, min(50, it.length)) }}")
         val res = RetrofitResult.wrapper { retrofit.postImageOCR(TegaoFirebaseConst.obsoleteSoon, partParsing) }

@@ -15,7 +15,6 @@ import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.data.hub.DictionaryHub
 import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
-import com.tegaoteam.application.tegao.data.hub.SettingHub
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipDictionaryPickBinding
 import com.tegaoteam.application.tegao.domain.model.Kanji
@@ -23,7 +22,6 @@ import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.repo.SearchHistoryRepo
-import com.tegaoteam.application.tegao.domain.repo.SettingRepo
 import com.tegaoteam.application.tegao.ui.component.handwriting.WritingViewBindingHelper
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.KanjisDefinitionWidgetRecyclerAdapter
 import com.tegaoteam.application.tegao.ui.component.searchdisplay.WordDefinitionCardListAdapter

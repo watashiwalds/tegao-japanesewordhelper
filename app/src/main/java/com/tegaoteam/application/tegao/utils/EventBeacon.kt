@@ -28,8 +28,8 @@ class EventBeacon {
      */
     fun ignite() { _beacon.value = true }
     fun ignite(message: String) {
-        _beacon.value = true
         _message = message
+        _beacon.value = true
     }
 
     /**

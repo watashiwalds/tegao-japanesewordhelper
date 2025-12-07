@@ -29,7 +29,8 @@ class ImageOCRDialogViewModel(private val _onlineServiceHub: OnlineServiceHub): 
         selectedImageUri = imageUri
         Timber.i("Receive request to OCR an image, sending to network...")
         viewModelScope.launch(Dispatchers.IO) {
-            val res = _onlineServiceHub.requestImageOCR(imageUri)
+            //TODO: lowerResolution as a setting value
+            val res = _onlineServiceHub.requestImageOCR(imageUri, true)
             withContext(Dispatchers.Main) {
                 when (res) {
                     is RepoResult.Success<List<String>> -> {

@@ -1,7 +1,11 @@
 package com.tegaoteam.application.tegao.utils
 
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -93,5 +97,15 @@ object UriHelper {
         }
 
         return res
+    }
+    fun getBitmapFromUri(uri: Uri): Bitmap? {
+        var bitmap: Bitmap? = null
+        if (Build.VERSION.SDK_INT >= 28) {
+            val source = ImageDecoder.createSource(appContext.contentResolver, uri)
+            bitmap = ImageDecoder.decodeBitmap(source)
+        } else {
+            bitmap = MediaStore.Images.Media.getBitmap(appContext.contentResolver, uri)
+        }
+        return bitmap
     }
 }

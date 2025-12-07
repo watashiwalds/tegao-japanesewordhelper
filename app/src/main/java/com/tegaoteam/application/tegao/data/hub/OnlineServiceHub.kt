@@ -1,13 +1,20 @@
 package com.tegaoteam.application.tegao.data.hub
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.core.graphics.scale
+import com.tegaoteam.application.tegao.data.network.ErrorResults
 import com.tegaoteam.application.tegao.data.network.appserver.OnlineServiceApi
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.utils.UriHelper
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okio.BufferedSink
 import okio.source
+import java.io.ByteArrayOutputStream
+import kotlin.math.min
 
 class OnlineServiceHub {
     private val api = OnlineServiceApi.api
@@ -23,9 +30,32 @@ class OnlineServiceHub {
         }
     }
 
-    suspend fun requestImageOCR(imageUri: Uri): RepoResult<List<String>> {
-        val requestBody = inputStreamToRequestBody(imageUri)
-        val imageExt = UriHelper.getUriFileExtension(imageUri)
-        return api.requestImageOCR(requestBody, imageExt)
+    private fun bitmapToRequestBody(bitmap: Bitmap): RequestBody {
+        val byteStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteStream)
+        return byteStream.toByteArray().toRequestBody("image/jpeg".toMediaType())
+    }
+
+    private fun downscaledByteArrayAsOCRInput(bitmap: Bitmap): Bitmap {
+        val maxSize = 512
+        val w = bitmap.width
+        val h = bitmap.height
+        val scale = if (w >= h) {
+            maxSize.toFloat() / w
+        } else {
+            maxSize.toFloat() / h
+        }
+        val newW = (w * scale).toInt()
+        val newH = (h * scale).toInt()
+        return bitmap.copy(Bitmap.Config.ARGB_8888, false).scale(newW, newH)
+    }
+
+    suspend fun requestImageOCR(imageUri: Uri, lowerResolution: Boolean): RepoResult<List<String>> {
+        val sourceBitmap = UriHelper.getBitmapFromUri(imageUri)
+        if (sourceBitmap == null) return ErrorResults.EMPTY_INPUT
+
+        val inpBitmap = if (lowerResolution) downscaledByteArrayAsOCRInput(sourceBitmap) else sourceBitmap
+        val requestBody = bitmapToRequestBody(inpBitmap)
+        return api.requestImageOCR(requestBody, "jpeg")
     }
 }

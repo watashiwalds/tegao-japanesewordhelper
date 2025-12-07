@@ -15,7 +15,7 @@ interface TegaoFirebaseApi {
     @POST("ocr")
     suspend fun postImageOCR(
         @Header("x-api-key") sessionKey: String,
-        @Part("file") part: MultipartBody.Part
+        @Part part: MultipartBody.Part
     ): Response<JsonElement>
 
     @POST("chat")

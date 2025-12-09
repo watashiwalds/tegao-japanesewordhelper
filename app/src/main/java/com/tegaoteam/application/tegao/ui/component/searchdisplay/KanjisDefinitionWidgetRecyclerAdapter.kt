@@ -121,7 +121,10 @@ class KanjisDefinitionWidgetRecyclerAdapter(private val lifecycleOwner: Lifecycl
             })
 
             //functions for qab button
-            binding.qabMakeNewCardBtn.setOnClickListener { context.startActivity(CardCreateActivityGate.departIntent(context, kanji)) }
+            if (kanji.character.isNotBlank()) binding.qabMakeNewCardBtn.apply {
+                toggleVisibility(true)
+                setOnClickListener { context.startActivity(CardCreateActivityGate.departIntent(context, kanji)) }
+            }
 
             binding.lifecycleOwner = lifecycleOwner
             binding.executePendingBindings()

@@ -16,6 +16,7 @@ import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.utils.setTextWithVisibility
+import com.tegaoteam.application.tegao.utils.toggleVisibility
 
 class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner): ListAdapter<Word, WordDefinitionCardListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -45,11 +46,13 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
             if (binding.loWordTagsRcy.itemDecorationCount == 0) binding.loWordTagsRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
             binding.loWordTagsRcy.adapter = TagGroupListAdapter(ItemTagClassificationBinding::inflate).apply { submitRawTagList(word.tags?.map { it.termKey to it.label }) }
 
-            //TODO: Write DefinitionListAdapter to make definition list for RecyclerView
             binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter(lifecycleOwner).apply { submitList(word.definitions) }
 
             //functions binding for quick action buttons
-            binding.qabMakeNewCardBtn.setOnClickListener { context.startActivity(CardCreateActivityGate.departIntent(context, word)) }
+            if (word.reading.isNotBlank()) binding.qabMakeNewCardBtn.apply {
+                toggleVisibility(true)
+                setOnClickListener { context.startActivity(CardCreateActivityGate.departIntent(context, word)) }
+            }
 
             binding.executePendingBindings()
         }

@@ -12,41 +12,48 @@ import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.google.gson.JsonElement
 import com.tegaoteam.application.tegao.data.network.ErrorResults
-import timber.log.Timber
 
 class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
-
     companion object {
+        const val DICTIONARY_ID = "mazii"
+
+        private val rootUrl = "https://mazii.net/api/search/"
+
+        private val endpointWord = "word"
+        private val payloadWord = mapOf(
+            "dict" to "javi",
+            "type" to "word",
+            "query" to "",
+            "limit" to "5",
+            "page" to "1"
+        )
+
+        private val endpointKanji = "kanji"
+        private val payloadKanji = mapOf(
+            "dict" to "javi",
+            "type" to "kanji",
+            "query" to ""
+        )
+
         val api by lazy {
             MaziiDictionaryApi()
         }
     }
 
-    override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == "mazii" }
-
-    private var _url: String
-    private var _wordPath: String
-    private var _wordPayloadRequest: JsonObject
-    private var _kanjiPath: String
-    private var _kanjiPayloadRequest: JsonObject
-    init {
-        Gson().fromJson(dict?.jsonInfos, JsonObject::class.java).let {
-            _url = it.get(Dictionary.ONL_URL).asString
-            _wordPath = it.get(Dictionary.ONL_WORD_URLPATH).asString
-            _wordPayloadRequest = it.get(Dictionary.ONL_WORD_PAYLOADREQUEST).asJsonObject
-            _kanjiPath = it.get(Dictionary.ONL_KANJI_URLPATH).asString
-            _kanjiPayloadRequest = it.get(Dictionary.ONL_KANJI_PAYLOADREQUEST).asJsonObject
-        }
-    }
+    private val gson = Gson()
+    override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == DICTIONARY_ID }
     private val instance: RetrofitApi by lazy {
-        RetrofitMaker.createWithUrl(_url, RetrofitMaker.TYPE_BROWSING).create(RetrofitApi::class.java)
+        RetrofitMaker.createWithUrl(rootUrl, RetrofitMaker.TYPE_BROWSING).create(RetrofitApi::class.java)
     }
+
+    private var _wordPayloadObj: JsonObject = gson.toJsonTree(payloadWord).asJsonObject
+    private var _kanjiPayloadObj: JsonObject = gson.toJsonTree(payloadKanji).asJsonObject
 
     override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {
         if (SystemStates.isInternetAvailable() != true) return ErrorResults.NO_INTERNET_CONNECTION
 
-        _wordPayloadRequest.addProperty("query", keyword)
-        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
+        _wordPayloadObj.addProperty("query", keyword)
+        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = endpointWord, params = mapOf(), body = _wordPayloadObj) }
         return when (res) {
             is RepoResult.Error<*> -> res
             is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonObject)
@@ -56,8 +63,8 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     override suspend fun searchKanji(keyword: String): RepoResult<JsonObject> {
         if (SystemStates.isInternetAvailable() != true) return ErrorResults.NO_INTERNET_CONNECTION
 
-        _kanjiPayloadRequest.addProperty("query", keyword)
-        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _kanjiPath, params = mapOf(), body = _kanjiPayloadRequest) }
+        _kanjiPayloadObj.addProperty("query", keyword)
+        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = endpointKanji, params = mapOf(), body = _kanjiPayloadObj) }
         return when (res) {
             is RepoResult.Error<*> -> res
             is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonObject)
@@ -65,8 +72,8 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     }
 
     override suspend fun devTest(keyword: String): RepoResult<String> {
-        _wordPayloadRequest.addProperty("query", keyword)
-        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = _wordPath, params = mapOf(), body = _wordPayloadRequest) }
+        _wordPayloadObj.addProperty("query", keyword)
+        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = endpointWord, params = mapOf(), body = _wordPayloadObj) }
         return when (res) {
             is RepoResult.Error<*> -> res
             is RepoResult.Success<*> -> RepoResult.Success("${res.data}")

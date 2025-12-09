@@ -2,54 +2,27 @@ package com.tegaoteam.application.tegao.data.config
 
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
+import com.tegaoteam.application.tegao.data.network.dictionaries.jisho.JishoDictionaryApi
 import com.tegaoteam.application.tegao.data.network.dictionaries.mazii.MaziiDictionaryApi
 import com.tegaoteam.application.tegao.data.network.dictionaries.mazii.MaziiResponseConverter
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 
-//TODO: Config placeholder, change when doing actual work
 object DictionaryConfig {
-    const val DICT_LOCAL = 0
-    const val DICT_ONLINE = 1
+    const val DICT_ALL = 1
+    const val DICT_WORD = 2
+    const val DICT_KANJI = 3
 
     val SIMDICT_MAZII = Dictionary(
-        "mazii",
+        MaziiDictionaryApi.DICTIONARY_ID,
         "Mazii",
-        DICT_ONLINE,
-        """{
-            "url":"https://mazii.net/api/search/",
-            "path_word":"word",
-            "path_kanji":"kanji",
-            "type_word":"api",
-            "payloadRequest_word":{
-                "dict": "javi",
-                "type": "word",
-                "query": "%s",
-                "limit": 5,
-                "page": 1
-            },
-            "type_kanji":"api",
-            "payloadRequest_kanji": {
-                "dict": "javi",
-                "type": "kanji",
-                "query": "%s"
-            }
-            }""".trimIndent()
+        true,
+        DICT_ALL
     )
     val SIMDICT_JISHO = Dictionary(
-        "jisho",
+        JishoDictionaryApi.DICTIONARY_ID,
         "Jisho",
-        DICT_ONLINE,
-        """{
-            "url":"https://jisho.org/",
-            "path_word":"api/v1/search/words",
-            "type_word":"api",
-            "paramRequest_word":{
-                "keyword":"%s"
-            },
-            "path_kanji":"search/",
-            "type_kanji":"web",
-            "pathAppend_kanji":"%s#kanji"
-            }""".trimIndent()
+        true,
+        DICT_WORD
     )
 
     fun getDictionariesList() = listOf(

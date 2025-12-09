@@ -118,19 +118,19 @@ class LearningSessionRunFragment: Fragment() {
                 )
             }
             ratingEasyBtn.apply {
-                _srsCalculation.srsText_easy.observe(viewLifecycleOwner) { text = it }
+                _srsCalculation.srsDate_easy.observe(viewLifecycleOwner) { ratingEasyDateTxt.text = it }
                 setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_EASY) }
             }
             ratingGoodBtn.apply {
-                _srsCalculation.srsText_good.observe(viewLifecycleOwner) { text = it }
+                _srsCalculation.srsDate_good.observe(viewLifecycleOwner) { ratingGoodDateTxt.text = it }
                 setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_GOOD) }
             }
             ratingHardBtn.apply {
-                _srsCalculation.srsText_hard.observe(viewLifecycleOwner) { text = it }
+                _srsCalculation.srsDate_hard.observe(viewLifecycleOwner) { ratingHardDateTxt.text = it }
                 setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_HARD) }
             }
             ratingForgetBtn.apply {
-                _srsCalculation.srsText_forget.observe(viewLifecycleOwner) { text = it }
+                _srsCalculation.srsDate_forget.observe(viewLifecycleOwner) { ratingForgetDateTxt.text = it }
                 setOnClickListener { _cardStackDisplayManager.getCurrentTopView()?.flickBack(RATING_FORGET) }
             }
         }

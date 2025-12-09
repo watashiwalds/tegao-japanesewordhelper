@@ -87,50 +87,110 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 >
-                <Button
+                <LinearLayout
                     android:id="@+id/ratingForget_btn"
-                    style="@style/Theme.Tegao.ContentText.Normal"
-                    android:paddingHorizontal="0dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textColor="@color/srs_forget"
-                    android:maxLines="2"
-                    tools:text="Forgot\n5m"
-                    />
-                <Button
+                    android:layout_weight="1">
+                    <TextView
+                        style="@style/Theme.Tegao.Label.Normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_learn_rating_forget"
+                        android:maxLines="1"
+                        android:textColor="@color/srs_forget"
+                        android:gravity="center_horizontal"
+                        />
+                    <TextView
+                        android:id="@+id/ratingForgetDate_txt"
+                        style="@style/Theme.Tegao.ContentText.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textColor="@color/srs_forget"
+                        tools:text="5m"
+                        />
+                </LinearLayout>
+                <LinearLayout
                     android:id="@+id/ratingHard_btn"
-                    style="@style/Theme.Tegao.ContentText.Normal"
-                    android:paddingHorizontal="0dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textColor="@color/srs_hard"
-                    android:maxLines="2"
-                    tools:text="Hard\n10m"
-                    />
-                <Button
+                    android:layout_weight="1">
+                    <TextView
+                        style="@style/Theme.Tegao.Label.Normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_learn_rating_hard"
+                        android:maxLines="1"
+                        android:textColor="@color/srs_hard"
+                        android:gravity="center_horizontal"
+                        />
+                    <TextView
+                        android:id="@+id/ratingHardDate_txt"
+                        style="@style/Theme.Tegao.ContentText.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textColor="@color/srs_hard"
+                        tools:text="10m"
+                        />
+                </LinearLayout>
+                <LinearLayout
                     android:id="@+id/ratingGood_btn"
-                    style="@style/Theme.Tegao.ContentText.Normal"
-                    android:paddingHorizontal="0dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textColor="@color/srs_good"
-                    android:maxLines="2"
-                    tools:text="Good\n1d"
-                    />
-                <Button
+                    android:layout_weight="1">
+                    <TextView
+                        style="@style/Theme.Tegao.Label.Normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_learn_rating_good"
+                        android:maxLines="1"
+                        android:textColor="@color/srs_good"
+                        android:gravity="center_horizontal"
+                        />
+                    <TextView
+                        android:id="@+id/ratingGoodDate_txt"
+                        style="@style/Theme.Tegao.ContentText.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textColor="@color/srs_good"
+                        tools:text="1d"
+                        />
+                </LinearLayout>
+                <LinearLayout
                     android:id="@+id/ratingEasy_btn"
-                    style="@style/Theme.Tegao.ContentText.Normal"
-                    android:paddingHorizontal="0dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textColor="@color/srs_easy"
-                    android:maxLines="2"
-                    tools:text="Easy\n4d"
-                    />
+                    android:layout_weight="1">
+                    <TextView
+                        style="@style/Theme.Tegao.Label.Normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_learn_rating_easy"
+                        android:maxLines="1"
+                        android:textColor="@color/srs_easy"
+                        android:gravity="center_horizontal"
+                        />
+                    <TextView
+                        android:id="@+id/ratingEasyDate_txt"
+                        style="@style/Theme.Tegao.ContentText.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textColor="@color/srs_easy"
+                        tools:text="4d"
+                        />
+                </LinearLayout>
             </LinearLayout>
         </FrameLayout>
 

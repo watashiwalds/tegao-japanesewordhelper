@@ -14,10 +14,10 @@
     <string name="card_learn_terminate_noCardToLearn">Bộ thẻ trống, không thể học</string>
     <string name="card_learn_terminate_noNewOrDueCard">Đã học toàn bộ các thẻ, hãy quay lại khi khác nhé</string>
 
-    <string name="card_learn_rating_forget">Quên\n%s</string>
-    <string name="card_learn_rating_hard">Khó\n%s</string>
-    <string name="card_learn_rating_good">Tốt\n%s</string>
-    <string name="card_learn_rating_easy">Dễ\n%s</string>
+    <string name="card_learn_rating_forget">▽ Quên</string>
+    <string name="card_learn_rating_hard">▷ Khó</string>
+    <string name="card_learn_rating_good">◁ Tốt</string>
+    <string name="card_learn_rating_easy">△ Dễ</string>
 
     <string name="card_learn_pause_title">Kết thúc sớm phiên học</string>
     <string name="card_learn_pause_message">Thống kê chỉ số từ đầu phiên đến hiện tại sẽ được tổng kết. Phiên học sẽ kết thúc khi xác nhận. Bạn chắc chắn chứ?</string>

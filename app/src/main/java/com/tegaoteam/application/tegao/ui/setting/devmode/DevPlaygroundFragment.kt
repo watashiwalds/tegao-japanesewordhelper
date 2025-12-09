@@ -9,10 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.FragmentDevPlaygroundBinding
-import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.model.CardRepeat
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.learnrun.SRSCalculation
-import timber.log.Timber
 
 class DevPlaygroundFragment : Fragment() {
     private lateinit var _binding: FragmentDevPlaygroundBinding
@@ -51,7 +49,7 @@ class DevPlaygroundFragment : Fragment() {
             repeatDataTxt.text = "${testRepeat.cardId}\n\t${testRepeat.lastRepeat}\n\t${testRepeat.nextRepeat}\n\t${testRepeat.easeFactor}"
 
             ratingEasyBtn.apply {
-                srsCal.srsText_easy.observe(viewLifecycleOwner) { text = it }
+                srsCal.srsDate_easy.observe(viewLifecycleOwner) { text = it }
                 setOnClickListener {
                     val newRpt = srsCal.makeRepeatOfRating(SRSCalculation.RATING_EASY)
                     srsCal.calculateRepeat(newRpt)
@@ -59,7 +57,7 @@ class DevPlaygroundFragment : Fragment() {
                 }
             }
             ratingGoodBtn.apply {
-                srsCal.srsText_good.observe(viewLifecycleOwner) { text = it }
+                srsCal.srsDate_good.observe(viewLifecycleOwner) { text = it }
                 setOnClickListener {
                     val newRpt = srsCal.makeRepeatOfRating(SRSCalculation.RATING_GOOD)
                     srsCal.calculateRepeat(newRpt)
@@ -67,7 +65,7 @@ class DevPlaygroundFragment : Fragment() {
                 }
             }
             ratingHardBtn.apply {
-                srsCal.srsText_hard.observe(viewLifecycleOwner) { text = it }
+                srsCal.srsDate_hard.observe(viewLifecycleOwner) { text = it }
                 setOnClickListener {
                     val newRpt = srsCal.makeRepeatOfRating(SRSCalculation.RATING_HARD)
                     srsCal.calculateRepeat(newRpt)
@@ -75,7 +73,7 @@ class DevPlaygroundFragment : Fragment() {
                 }
             }
             ratingForgetBtn.apply {
-                srsCal.srsText_forget.observe(viewLifecycleOwner) { text = it }
+                srsCal.srsDate_forget.observe(viewLifecycleOwner) { text = it }
                 setOnClickListener {
                     val newRpt = srsCal.makeRepeatOfRating(SRSCalculation.RATING_FORGET)
                     srsCal.calculateRepeat(newRpt)

@@ -6,14 +6,13 @@ import com.tegaoteam.application.tegao.domain.model.CardRepeat
 import com.tegaoteam.application.tegao.ui.component.learningcard.LearningCardBindingHelper
 import com.tegaoteam.application.tegao.utils.Time
 import com.tegaoteam.application.tegao.utils.getStringFromAppRes
-import timber.log.Timber
 import kotlin.math.floor
 
 class SRSCalculation {
-    val srsText_forget = MutableLiveData<String>()
-    val srsText_hard = MutableLiveData<String>()
-    val srsText_good = MutableLiveData<String>()
-    val srsText_easy = MutableLiveData<String>()
+    val srsDate_forget = MutableLiveData<String>()
+    val srsDate_hard = MutableLiveData<String>()
+    val srsDate_good = MutableLiveData<String>()
+    val srsDate_easy = MutableLiveData<String>()
 
     private val decimalInterval = mutableMapOf<Int, Double>()
 
@@ -45,10 +44,10 @@ class SRSCalculation {
         val txtH = decimalInterval[RATING_HARD]!!.let { if (it < 1.0) "10m" else "${floor(it).toLong()}d" }
         val txtG = "${floor(decimalInterval[RATING_GOOD]!!).toLong()}d"
         val txtE = "${floor(decimalInterval[RATING_EASY]!!).toLong()}d"
-        srsText_forget.value = formatText(R.string.card_learn_rating_forget, txtF)
-        srsText_hard.value = formatText(R.string.card_learn_rating_hard, txtH)
-        srsText_good.value = formatText(R.string.card_learn_rating_good, txtG)
-        srsText_easy.value = formatText(R.string.card_learn_rating_easy, txtE)
+        srsDate_forget.value = txtF
+        srsDate_hard.value = txtH
+        srsDate_good.value = txtG
+        srsDate_easy.value = txtE
     }
 
     fun makeRepeatOfRating(rating: Int): CardRepeat {

@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.data.hub
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
 import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheEntity
+import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
@@ -12,6 +13,7 @@ import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.utils.Time
 import com.tegaoteam.application.tegao.utils.getMD5HashedValue
+import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import java.lang.Math.max
 
@@ -22,67 +24,69 @@ class DictionaryHub: DictionaryRepo {
 
     override fun getAvailableDictionariesList(): List<Dictionary> = DictionaryConfig.getDictionariesList()
 
-    override suspend fun searchWord(keyword: String, dictionaryId: String): RepoResult<List<Word>?> {
+    override suspend fun searchWord(keyword: String, dictionaryId: String): FlowStream<RepoResult<List<Word>?>> = FlowStream( flow {
         val cache = getDictionaryCache(keyword, Word.TYPE_VALUE, dictionaryId)
-        cache?.let{
-            // cache older than 7 days -> force refresh, newer -> return as result
-            if (Time.preciseTimeDifferenceBetween(it.cacheDate, Time.getCurrentTimestamp(), Time.DIFF_DAY) < 7) {
-                return RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json))
-            }
-        }
 
-        val requestedApi = getDictionaryApiById(dictionaryId)
-        requestedApi?.let {
-            val res = requestedApi.searchWord(keyword)
-            return when (res) {
-                is RepoResult.Error<*> -> {
-                    // failed to search but have cache -> show cache
-                    if (cache != null) {
-                        extendsDictionaryCache(cache, 1)
-                        RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json))
+        // have cache -> show it first
+        cache?.let { emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json))) }
+
+        // not have cache or cache is expiring (over 7 days)? searching is required
+        if (cache == null || Time.preciseTimeDifferenceBetween(cache.cacheDate, Time.getCurrentTimestamp(), Time.DIFF_DAY) < 7) {
+            val requestedApi = getDictionaryApiById(dictionaryId)
+            if (requestedApi == null) emit(RepoResult.Error<String>(message = "dictId not found (unsupported or misvalued)"))
+
+            requestedApi?.let {
+                val res = requestedApi.searchWord(keyword)
+                when (res) {
+                    is RepoResult.Error<*> -> {
+                        // failed to search but have cache -> extends cache expiring time to 1 more day
+                        if (cache != null) {
+                            extendsDictionaryCache(cache, 1)
+                            emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json)))
+                        }
+                        else emit(res)
                     }
-                    else res
-                }
-                is RepoResult.Success<*> -> {
-                    // attempt to upsert new response from net to cache
-                    upsertDictionaryCache(keyword, Word.TYPE_VALUE, dictionaryId, res.data, cache)
-                    RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(res.data))
+                    is RepoResult.Success<*> -> {
+                        // attempt to upsert new response from net to cache
+                        upsertDictionaryCache(keyword, Word.TYPE_VALUE, dictionaryId, res.data, cache)
+                        emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(res.data)))
+                    }
                 }
             }
         }
-        return RepoResult.Error<String>(message = "dictId not found (unsupported or misvalued)")
-    }
+    } )
 
-    override suspend fun searchKanji(keyword: String, dictionaryId: String): RepoResult<List<Kanji>?> {
+    override suspend fun searchKanji(keyword: String, dictionaryId: String): FlowStream<RepoResult<List<Kanji>?>> = FlowStream( flow {
         val cache = getDictionaryCache(keyword, Kanji.TYPE_VALUE, dictionaryId)
-        cache?.let{
-            // cache older than 7 days -> force refresh, newer -> return as result
-            if (Time.preciseTimeDifferenceBetween(it.cacheDate, Time.getCurrentTimestamp(), Time.DIFF_DAY) < 7) {
-                return RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json))
-            }
-        }
 
-        val requestedApi = getDictionaryApiById(dictionaryId)
-        requestedApi?.let {
-            val res = requestedApi.searchKanji(keyword)
-            return when (res) {
-                is RepoResult.Error<*> -> {
-                    // failed to search but have cache -> show cache
-                    if (cache != null) {
-                        extendsDictionaryCache(cache, 1)
-                        RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json))
+        // have cache -> show it first
+        cache?.let { emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json))) }
+
+        // not have cache or cache is expiring (over 7 days)? searching is required
+        if (cache == null || Time.preciseTimeDifferenceBetween(cache.cacheDate, Time.getCurrentTimestamp(), Time.DIFF_DAY) < 7) {
+            val requestedApi = getDictionaryApiById(dictionaryId)
+            if (requestedApi == null) emit(RepoResult.Error<String>(message = "dictId not found (unsupported or misvalued)"))
+
+            requestedApi?.let {
+                val res = requestedApi.searchKanji(keyword)
+                when (res) {
+                    is RepoResult.Error<*> -> {
+                        // failed to search but have cache -> extends cache expiring time to 1 more day
+                        if (cache != null) {
+                            extendsDictionaryCache(cache, 1)
+                            emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json)))
+                        }
+                        else emit(res)
                     }
-                    else res
-                }
-                is RepoResult.Success<*> -> {
-                    // attempt to upsert new response from net to cache
-                    upsertDictionaryCache(keyword, Kanji.TYPE_VALUE, dictionaryId, res.data, cache)
-                    RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(res.data))
+                    is RepoResult.Success<*> -> {
+                        // attempt to upsert new response from net to cache
+                        upsertDictionaryCache(keyword, Kanji.TYPE_VALUE, dictionaryId, res.data, cache)
+                        emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(res.data)))
+                    }
                 }
             }
         }
-        return RepoResult.Error<String>(message = "dictId not found (unsupported or misvalued)")
-    }
+    } )
 
     override suspend fun devTest(keyword: String, dictionaryId: String): RepoResult<String> {
         val requestedApi = getDictionaryApiById(dictionaryId)

@@ -103,18 +103,22 @@ class LookupActivityViewModel(private val dictionaryRepo: DictionaryRepo, privat
                 GlobalState.LookupMode.WORD -> dictionaryRepo.searchWord(_userSearchString.value!!, selectedDictionaryId)
                 GlobalState.LookupMode.KANJI -> dictionaryRepo.searchKanji(_userSearchString.value!!, selectedDictionaryId)
             }
-            withContext(Dispatchers.Main) {
-                when (result) {
-                    is RepoResult.Error<*> -> _nonResult.value = "Error [${result.code}] : ${result.message}"
-                    is RepoResult.Success<*> -> {
-                        //return search result to activity
-                        val data = result.data
-                        @Suppress("unchecked_cast")
-                        if (data is List<*>) {
-                            when (data.firstOrNull()) {
-                                is Word -> _searchResultList.value = data as List<Word>
-                                is Kanji -> _searchResultList.value = data as List<Kanji>
-                                else -> {}
+            result.collect { res ->
+                withContext(Dispatchers.Main) {
+                    when (res) {
+                        is RepoResult.Error<*> -> _nonResult.value =
+                            "Error [${res.code}] : ${res.message}"
+
+                        is RepoResult.Success<*> -> {
+                            //return search result to activity
+                            val data = res.data
+                            @Suppress("unchecked_cast")
+                            if (data is List<*>) {
+                                when (data.firstOrNull()) {
+                                    is Word -> _searchResultList.value = data as List<Word>
+                                    is Kanji -> _searchResultList.value = data as List<Kanji>
+                                    else -> {}
+                                }
                             }
                         }
                     }

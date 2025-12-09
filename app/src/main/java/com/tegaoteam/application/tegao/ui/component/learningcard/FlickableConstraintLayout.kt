@@ -41,6 +41,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                 thumbStartX = eventX
                 thumbStartY = eventY
                 collideStartTime = 0
+                flickHolding()
             }
             MotionEvent.ACTION_MOVE -> {
                 translationX = eventX - thumbStartX
@@ -119,6 +120,14 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
         flickAway()
     }
 
+    private fun flickHolding() {
+        animate()
+            .scaleX(1.01f)
+            .scaleY(1.01f)
+            .setDuration(50)
+            .start()
+    }
+
     //region Animation function for flick away
     private fun flickAway() {
         //flick not strong enough to cause collide -> no outro
@@ -126,6 +135,8 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
             animate()
                 .translationX(0f)
                 .translationY(0f)
+                .scaleX(1f)
+                .scaleY(1f)
                 .setInterpolator(DecelerateInterpolator())
                 .setDuration(200)
                 .start()
@@ -142,7 +153,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                     toggleVisibility(false)
                     onFinalCollide[collidingState]?.invoke()
                     Timber.i("Final colliding on $collidingState")
-                    animate().translationX(0f).translationY(0f).start()
+                    animate().translationX(0f).translationY(0f).scaleX(1f).scaleY(1f).start()
                 }
                 .start()
             COLLIDING_NORTH -> animate()
@@ -154,7 +165,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                     toggleVisibility(false)
                     onFinalCollide[collidingState]?.invoke()
                     Timber.i("Final colliding on $collidingState")
-                    animate().translationX(0f).translationY(0f).start()
+                    animate().translationX(0f).translationY(0f).scaleX(1f).scaleY(1f).start()
                 }
                 .start()
             COLLIDING_EAST -> animate()
@@ -166,7 +177,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                     toggleVisibility(false)
                     onFinalCollide[collidingState]?.invoke()
                     Timber.i("Final colliding on $collidingState")
-                    animate().translationX(0f).translationY(0f).start()
+                    animate().translationX(0f).translationY(0f).scaleX(1f).scaleY(1f).start()
                 }
                 .start()
             COLLIDING_SOUTH -> animate()
@@ -178,7 +189,7 @@ class FlickableConstraintLayout(context: Context, attrs: AttributeSet?): Constra
                     toggleVisibility(false)
                     onFinalCollide[collidingState]?.invoke()
                     Timber.i("Final colliding on $collidingState")
-                    animate().translationX(0f).translationY(0f).start()
+                    animate().translationX(0f).translationY(0f).scaleX(1f).scaleY(1f).start()
                 }
                 .start()
         }

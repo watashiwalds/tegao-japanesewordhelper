@@ -94,7 +94,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (word != null) words.add(word)
             }
         } catch (e: Exception) {
-            return ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.PARSING_ERROR, e.message)
+            return words.apply { addAll(ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.PARSING_ERROR, e.message)) }
         }
 
         if (words.isEmpty()) return ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.EMPTY_RESULT)
@@ -148,7 +148,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (kanji != null) kanjis.add(kanji)
             }
         } catch (e: Exception) {
-            return ErrorResults.DictionaryRes.kanjiRes(ErrorResults.DictionaryRes.EMPTY_RESULT, e.message)
+            return kanjis.apply { addAll(ErrorResults.DictionaryRes.kanjiRes(ErrorResults.DictionaryRes.EMPTY_RESULT, e.message)) }
         }
 
         if (kanjis.isEmpty()) return ErrorResults.DictionaryRes.kanjiRes(ErrorResults.DictionaryRes.EMPTY_RESULT)

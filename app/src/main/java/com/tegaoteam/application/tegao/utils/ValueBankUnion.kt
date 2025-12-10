@@ -37,7 +37,11 @@ object TermBank {
         "composite" to "Bộ",
         "detail" to "Chi tiết",
         "example" to "Ví dụ",
-        "tips" to "Mẹo"
+        "tips" to "Mẹo",
+        "definitionLabel" to "Phân loại",
+        "info" to "Thông tin thêm",
+        "restrictions" to "Hạn chế",
+        "related" to "Từ vựng liên quan"
     )
     fun getTermLabel(key: String) = termLabels[key]?: ""
 
@@ -55,11 +59,7 @@ object TermBank {
         "jlpt" to "Cấp độ xếp loại theo thang N-level tiếng Nhật",
         "alternateReadings" to "Các dạng khác của từ vựng này",
         "isCommon" to "Từ vựng được sử dụng thường xuyên",
-        "wanikani" to "Xuất hiện trong bộ từ vựng theo cấp độ của Wanikani",
-        "definitionLabel" to "Phân loại",
-        "info" to "Thông tin thêm",
-        "restrictions" to "Hạn chế",
-        "related" to "Từ vựng liên quan"
+        "wanikani" to "Xuất hiện trong bộ từ vựng theo cấp độ của Wanikani"
     )
     fun getTermDescription(key: String) = termDescriptions[key]?: ""
 }

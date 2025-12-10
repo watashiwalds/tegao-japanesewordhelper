@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.data.config
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.data.network.dictionaries.jisho.JishoDictionaryApi
+import com.tegaoteam.application.tegao.data.network.dictionaries.jisho.JishoResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.mazii.MaziiDictionaryApi
 import com.tegaoteam.application.tegao.data.network.dictionaries.mazii.MaziiResponseConverter
 import com.tegaoteam.application.tegao.domain.model.Dictionary
@@ -27,11 +28,11 @@ object DictionaryConfig {
 
     fun getDictionariesList() = listOf(
         SIMDICT_MAZII,
-//        SIMDICT_JISHO
+        SIMDICT_JISHO
     )
 
-    fun getDictionariesPack() = mapOf<DictionaryNetworkApi, DictionaryResponseConverter>(
-        MaziiDictionaryApi.api to MaziiResponseConverter()
-//        JishoDictionaryApi.api
+    fun getDictionariesPack() = mapOf(
+        MaziiDictionaryApi.api to MaziiResponseConverter(),
+        JishoDictionaryApi.api to JishoResponseConverter()
     )
 }

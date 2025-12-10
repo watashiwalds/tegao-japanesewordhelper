@@ -2,6 +2,7 @@ package com.tegaoteam.application.tegao.data.network.dictionaries.mazii
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.tegaoteam.application.tegao.data.network.ErrorResults
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
@@ -12,7 +13,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
     override fun <T> toDomainWordList(rawData: T): List<Word> {
         val words = mutableListOf<Word>()
         val rawJsonObj = JsonParser.parseString(rawData.toString()).asJsonObject
-        if (rawJsonObj !is JsonObject) return words
+        if (rawJsonObj !is JsonObject) return ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.PARSING_ERROR)
         try {
             val rawList = rawJsonObj.getAsJsonObject("data").getAsJsonArray("words")
             for (w in rawList) {
@@ -101,12 +102,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
             ))
             Timber.e(e, "Error")
         }
-        if (words.isEmpty()) words.add(Word(
-            id = -1,
-            reading = "",
-            furigana = listOf("Không tìm thấy kết quả nào"),
-            definitions = listOf()
-        ))
+        if (words.isEmpty()) return ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.EMPTY_RESULT)
 //        Timber.i("Converted result: $words")
         return words
     }
@@ -114,7 +110,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
     override fun <T> toDomainKanjiList(rawData: T): List<Kanji> {
         val kanjis = mutableListOf<Kanji>()
         val rawJsonObj = JsonParser.parseString(rawData.toString()).asJsonObject
-        if (rawJsonObj !is JsonObject) return kanjis
+        if (rawJsonObj !is JsonObject) return ErrorResults.DictionaryRes.kanjiRes(ErrorResults.DictionaryRes.PARSING_ERROR)
         try {
             val kanji = rawJsonObj.getAsJsonArray("results")
             for (k in kanji) {
@@ -165,11 +161,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
             ))
             Timber.e(e, "Error")
         }
-        if (kanjis.isEmpty()) kanjis.add(Kanji(
-            id = 0,
-            character = "",
-            meaning = "Không có kết quả nào khớp"
-        ))
+        if (kanjis.isEmpty()) return ErrorResults.DictionaryRes.kanjiRes(ErrorResults.DictionaryRes.EMPTY_RESULT)
 //        Timber.i("Converted result: $kanjis")
         return kanjis
     }

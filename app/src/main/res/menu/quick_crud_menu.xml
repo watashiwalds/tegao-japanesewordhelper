@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/crud_share"
+        android:title="@string/card_manage_crud_export_title"
+        />
+    <item
+        android:id="@+id/crud_edit"
+        android:title="@string/card_manage_crud_edit_title"
+        />
+    <item
+        android:id="@+id/crud_delete"
+        android:title="@string/card_manage_crud_delete_title"
+        />
+</menu>

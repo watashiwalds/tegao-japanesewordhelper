@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/neutral_stroke_background"
-        android:paddingHorizontal="@dimen/padding_normal"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_small"
         android:paddingVertical="@dimen/padding_small"
         android:layout_marginBottom="@dimen/padding_small"
         android:onClick="@{() -> dataInfo.onItemClickListener.invoke(dataInfo.id)}"
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/lo_crudQab_lnr"
+            app:layout_constraintEnd_toStartOf="@+id/optionsMenu_btn"
             android:maxLines="1"
             android:ellipsize="end"
             android:drawablePadding="@dimen/padding_tiny"
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_txt"
-            app:layout_constraintEnd_toStartOf="@+id/lo_crudQab_lnr"
+            app:layout_constraintEnd_toStartOf="@+id/optionsMenu_btn"
             android:maxLines="3"
             android:ellipsize="end"
             android:text="@{dataInfo.quickInfo}"
@@ -51,38 +52,17 @@
             tools:text="The condensed infomations\nthat you want to show the user with\nto aid them with coordinating the list\nwhich should not be too long"
             />
 
-        <LinearLayout
-            android:id="@+id/lo_crudQab_lnr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/optionsMenu_btn"
+            style="@style/Theme.Tegao.ImageIcon.Label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical">
-
-            <ImageButton
-                style="@style/Theme.Tegao.ImageIcon.Label"
-                android:foreground="?android:selectableItemBackground"
-                android:layout_width="@dimen/img_icon_big"
-                android:layout_height="@dimen/img_icon_big"
-                android:padding="@dimen/padding_tiny"
-                android:src="@drawable/ftc_round_pen_128"
-                app:toggleVisibility="@{dataInfo.onEditQabClickListener != null}"
-                android:onClick="@{() -> dataInfo.onEditQabClickListener.invoke(dataInfo.id)}"
-                android:layout_marginBottom="@dimen/padding_small"
-                />
-            <ImageButton
-                style="@style/Theme.Tegao.ImageIcon.Label"
-                android:foreground="?android:selectableItemBackground"
-                android:layout_width="@dimen/img_icon_big"
-                android:layout_height="@dimen/img_icon_big"
-                android:padding="@dimen/padding_tiny"
-                android:src="@drawable/ftc_round_trash_128"
-                app:toggleVisibility="@{dataInfo.onDeleteQabClickListener != null}"
-                android:onClick="@{() -> dataInfo.onDeleteQabClickListener.invoke(dataInfo.id)}"
-                />
-
-        </LinearLayout>
+            android:foreground="?android:selectableItemBackground"
+            android:layout_width="@dimen/img_icon_big"
+            android:layout_height="@dimen/img_icon_big"
+            android:padding="@dimen/padding_tiny"
+            android:src="@drawable/ftc_round_ellipsis_128"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,6 +7,7 @@ data class QuickCrudItemInfo(
     val id: Long,
     val label: String,
     val quickInfo: LiveData<String>,
+    var onExportQabClickListener: ((Long) -> Unit)? = null,
     var onEditQabClickListener: ((Long) -> Unit)? = null,
     var onDeleteQabClickListener: ((Long) -> Unit)? = null,
     var onItemClickListener: ((Long) -> Unit)? = null,

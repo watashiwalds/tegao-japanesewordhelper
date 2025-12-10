@@ -33,4 +33,8 @@
 
     <string name="card_manage_preview_resetCardState">Khôi phục thẻ</string>
     <string name="card_manage_preview_flickCard">Lật thẻ</string>
+
+    <string name="card_manage_crud_export_title">Xuất ra tệp</string>
+    <string name="card_manage_crud_edit_title">Sửa</string>
+    <string name="card_manage_crud_delete_title">Xoá</string>
 </resources>

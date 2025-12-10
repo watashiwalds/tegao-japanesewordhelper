@@ -33,7 +33,6 @@ import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.toggleVisibility
-import timber.log.Timber
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
@@ -67,7 +66,7 @@ class LookupActivity : AppCompatActivity() {
         initAddons()
 
         displayDictionaryOptions()
-        updateSearchResultAdapter()
+        updateSearchMode()
 
         getActivityLaunchArgument().let {
             if (it.isNullOrBlank())
@@ -117,13 +116,13 @@ class LookupActivity : AppCompatActivity() {
         _viewModel.evChangeToWordMode.beacon.observe(this) {
             if (_viewModel.evChangeToWordMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.WORD)
-                updateSearchResultAdapter()
+                updateSearchMode()
             }
         }
         _viewModel.evChangeToKanjiMode.beacon.observe(this) {
             if (_viewModel.evChangeToKanjiMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.KANJI)
-                updateSearchResultAdapter()
+                updateSearchMode()
             }
         }
         _viewModel.searchResultList.observe(this) {
@@ -176,7 +175,7 @@ class LookupActivity : AppCompatActivity() {
         }
     }
 
-    fun updateSearchResultAdapter() {
+    fun updateSearchMode() {
         val toAdapter = when (_viewModel.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchResultAdapter
             GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter

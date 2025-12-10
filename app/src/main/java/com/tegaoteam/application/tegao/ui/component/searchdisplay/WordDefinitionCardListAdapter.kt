@@ -43,7 +43,6 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
 
             //display func for tags
             binding.loWordTagsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(binding.loWordTagsRcy.context)
-            if (binding.loWordTagsRcy.itemDecorationCount == 0) binding.loWordTagsRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(0, TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_nano)))
             binding.loWordTagsRcy.adapter = TagGroupListAdapter(ItemTagClassificationBinding::inflate).apply { submitRawTagList(word.tags?.map { it.termKey to it.label }) }
 
             binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter(lifecycleOwner).apply { submitList(word.definitions) }

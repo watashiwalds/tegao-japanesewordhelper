@@ -16,6 +16,7 @@
         android:id="@+id/lo_definition_cst"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_tiny"
         tools:ignore="RtlSymmetry">
 
         <TextView
@@ -51,7 +52,7 @@
             android:paddingStart="@dimen/padding_tiny"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/padding_nano"
+            android:paddingBottom="@dimen/padding_nano"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/lo_definition_tags_rcy"
             app:layout_constraintTop_toBottomOf="@id/lo_definition_tags_rcy"

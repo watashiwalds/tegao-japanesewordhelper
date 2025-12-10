@@ -79,12 +79,12 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         meansT.add(temp)
                     }
 
-                    val idT = wObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt
+                    val idT = wObj.get("mobileId").takeUnless { it.isJsonNull }?.asString
                     val readingT = wObj.get("word").takeUnless { it.isJsonNull }?.asString
                     val phoneticT = wObj.get("phonetic").takeUnless { it.isJsonNull }?.asString?.split(" ")
 
                     word = Word(
-                        id = idT?: 0,
+                        id = idT?: "0",
                         reading = readingT?: "",
                         furigana = phoneticT?: listOf(),
                         tags = tagsT,
@@ -94,16 +94,10 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (word != null) words.add(word)
             }
         } catch (e: Exception) {
-            words.add(Word(
-                id = -1,
-                reading = "Converting error\n",
-                furigana = listOf(e.toString()),
-                definitions = listOf()
-            ))
-            Timber.e(e, "Error")
+            return ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.PARSING_ERROR, e.message)
         }
+
         if (words.isEmpty()) return ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.EMPTY_RESULT)
-//        Timber.i("Converted result: $words")
         return words
     }
 
@@ -134,14 +128,14 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                         if (kObj.has("tips")) add(Kanji.AdditionalInfo("tips", kObj.getAsJsonObject("tips").entrySet().map { it.value }.joinToString("\n")))
                     }
 
-                    val idT = kObj.get("mobileId").takeUnless { it.isJsonNull }?.asInt
+                    val idT = kObj.get("mobileId").takeUnless { it.isJsonNull }?.asString
                     val charT = kObj.get("kanji").takeUnless { it.isJsonNull }?.asString
                     val kunyomiT = kObj.get("kun").takeUnless { it.isJsonNull }?.asString?.split(' ')
                     val onyomiT = kObj.get("on").takeUnless { it.isJsonNull }?.asString?.split(' ')
                     val meaningT = kObj.get("mean").takeUnless { it.isJsonNull }?.asString
 
                     kanji = Kanji(
-                        id = idT?: 0,
+                        id = idT?: "0",
                         character = charT?: "",
                         kunyomi = kunyomiT,
                         onyomi = onyomiT,
@@ -154,15 +148,10 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (kanji != null) kanjis.add(kanji)
             }
         } catch (e: Exception) {
-            kanjis.add(Kanji(
-                id = -1,
-                character = "Converting error\n",
-                meaning = e.toString()
-            ))
-            Timber.e(e, "Error")
+            return ErrorResults.DictionaryRes.kanjiRes(ErrorResults.DictionaryRes.EMPTY_RESULT, e.message)
         }
+
         if (kanjis.isEmpty()) return ErrorResults.DictionaryRes.kanjiRes(ErrorResults.DictionaryRes.EMPTY_RESULT)
-//        Timber.i("Converted result: $kanjis")
         return kanjis
     }
 }

@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Word(
-    val id: Int,
+    val id: String,
     val reading: String,
     val furigana: List<String>? = null,
     var tags: List<Tag>? = null,
@@ -49,7 +49,7 @@ data class Word(
         const val TYPE_VALUE = 0
 
         fun default() = Word(
-            id = 0,
+            id = "0",
             reading = "",
             definitions = listOf()
         )

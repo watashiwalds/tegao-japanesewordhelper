@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Kanji(
-    val id: Int,
+    val id: String,
     val character: String,
     var kunyomi: List<String>? = null,
     var onyomi: List<String>? = null,
@@ -36,7 +36,7 @@ data class Kanji(
         const val TYPE_VALUE = 1
 
         fun default() = Kanji(
-            id = 0,
+            id = "0",
             character = "",
             meaning = ""
         )

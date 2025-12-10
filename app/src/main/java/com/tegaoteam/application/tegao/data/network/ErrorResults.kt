@@ -16,30 +16,30 @@ object ErrorResults {
         const val EMPTY_RESULT = 0
         const val PARSING_ERROR = 1
 
-        fun wordRes(errorType: Int): List<Word> {
+        fun wordRes(errorType: Int, msg: String? = null): List<Word> {
             var message = when (errorType) {
                 EMPTY_RESULT -> getStringFromAppRes(R.string.err_dict_emptyResult)
                 PARSING_ERROR -> getStringFromAppRes(R.string.err_dict_parsingError)
                 else -> ""
             }
             return listOf(Word(
-                id = -1,
+                id = "-1",
                 reading = "",
-                furigana = listOf(message),
+                furigana = listOf("$message ${msg?: ""}"),
                 definitions = listOf()
             ))
         }
 
-        fun kanjiRes(errorType: Int): List<Kanji> {
+        fun kanjiRes(errorType: Int, msg: String? = null): List<Kanji> {
             var message = when (errorType) {
                 EMPTY_RESULT -> getStringFromAppRes(R.string.err_dict_emptyResult)
                 PARSING_ERROR -> getStringFromAppRes(R.string.err_dict_parsingError)
                 else -> ""
             }
             return listOf(Kanji(
-                id = 0,
+                id = "-1",
                 character = "",
-                meaning = message
+                meaning = "$message ${msg?: ""}"
             ))
         }
     }

@@ -50,7 +50,7 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     private var _kanjiPayloadObj: JsonObject = gson.toJsonTree(payloadKanji).asJsonObject
 
     override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {
-        if (SystemStates.isInternetAvailable() != true) return ErrorResults.NO_INTERNET_CONNECTION
+        if (SystemStates.isInternetAvailable() != true) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
 
         _wordPayloadObj.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = endpointWord, params = mapOf(), body = _wordPayloadObj) }
@@ -61,7 +61,7 @@ class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     }
 
     override suspend fun searchKanji(keyword: String): RepoResult<JsonObject> {
-        if (SystemStates.isInternetAvailable() != true) return ErrorResults.NO_INTERNET_CONNECTION
+        if (SystemStates.isInternetAvailable() != true) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
 
         _kanjiPayloadObj.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = endpointKanji, params = mapOf(), body = _kanjiPayloadObj) }

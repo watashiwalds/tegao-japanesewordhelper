@@ -19,6 +19,6 @@ class OnlineServiceResultParser {
         return if (parseRes.isNotEmpty())
             RepoResult.Success<List<String>>(parseRes)
         else
-            ErrorResults.EMPTY_RESULT
+            ErrorResults.RepoRes.EMPTY_RESULT
     }
 }

@@ -20,7 +20,7 @@ class OnlineServiceApi private constructor() {
     }
 
     suspend fun requestImageOCR(image: RequestBody, imageExtension: String? = null): RepoResult<List<String>> {
-        if (!SystemStates.isInternetAvailable()!!) return ErrorResults.NO_INTERNET_CONNECTION
+        if (!SystemStates.isInternetAvailable()!!) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
 
         val partParsing = MultipartBody.Part.createFormData(
             "file",

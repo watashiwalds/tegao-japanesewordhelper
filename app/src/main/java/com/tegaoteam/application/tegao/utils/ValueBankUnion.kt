@@ -52,7 +52,14 @@ object TermBank {
         "tips" to "Cách nhớ nhanh không theo quy tắc",
         "frequency" to "Xếp hạng mức độ sử dụng trong văn bản tiếng Nhật thực tế",
         "stroke" to "Số nét tạo thành",
-        "jlpt" to "Cấp độ xếp loại theo thang N-level tiếng Nhật"
+        "jlpt" to "Cấp độ xếp loại theo thang N-level tiếng Nhật",
+        "alternateReadings" to "Các dạng khác của từ vựng này",
+        "isCommon" to "Từ vựng được sử dụng thường xuyên",
+        "wanikani" to "Xuất hiện trong bộ từ vựng theo cấp độ của Wanikani",
+        "definitionLabel" to "Phân loại",
+        "info" to "Thông tin thêm",
+        "restrictions" to "Hạn chế",
+        "related" to "Từ vựng liên quan"
     )
     fun getTermDescription(key: String) = termDescriptions[key]?: ""
 }

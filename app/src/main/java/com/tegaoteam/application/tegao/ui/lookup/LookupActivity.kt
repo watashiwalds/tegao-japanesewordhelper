@@ -11,12 +11,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
-import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.data.hub.DictionaryHub
 import com.tegaoteam.application.tegao.data.hub.SearchHistoryHub
 import com.tegaoteam.application.tegao.databinding.ActivityLookupBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipDictionaryPickBinding
+import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
@@ -29,10 +29,10 @@ import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipItem
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
 import com.tegaoteam.application.tegao.ui.shared.BehaviorPreset
-import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.GlobalState
 import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.toggleVisibility
+import timber.log.Timber
 
 class LookupActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLookupBinding
@@ -65,8 +65,8 @@ class LookupActivity : AppCompatActivity() {
         initObservers()
         initAddons()
 
-        displayDictionaryOptions()
-        updateSearchMode()
+        updateDictionaryAvailableDisplay()
+        updateSearchResultAdapter()
 
         getActivityLaunchArgument().let {
             if (it.isNullOrBlank())
@@ -116,13 +116,15 @@ class LookupActivity : AppCompatActivity() {
         _viewModel.evChangeToWordMode.beacon.observe(this) {
             if (_viewModel.evChangeToWordMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.WORD)
-                updateSearchMode()
+                updateDictionaryAvailableDisplay()
+                updateSearchResultAdapter()
             }
         }
         _viewModel.evChangeToKanjiMode.beacon.observe(this) {
             if (_viewModel.evChangeToKanjiMode.receive()) {
                 GlobalState.setLookupMode(GlobalState.LookupMode.KANJI)
-                updateSearchMode()
+                updateDictionaryAvailableDisplay()
+                updateSearchResultAdapter()
             }
         }
         _viewModel.searchResultList.observe(this) {
@@ -150,22 +152,27 @@ class LookupActivity : AppCompatActivity() {
         updateSearchString()
     }
 
-    fun displayDictionaryOptions() {
-        val availableDictionaries = _viewModel.availableDictionariesList
-        val dictChipAdapter = ThemedChipListAdapter(this, ItemChipDictionaryPickBinding::inflate)
-        dictChipAdapter.themedChipManager = ThemedChipManager(ThemedChipManager.MODE_SINGLE)
-        dictChipAdapter.submitList(availableDictionaries.map{ ThemedChipItem.fromDictionary(it) })
+    private lateinit var dictChipAdapter: ThemedChipListAdapter<ItemChipDictionaryPickBinding>
+    fun updateDictionaryAvailableDisplay() {
+        if (!::dictChipAdapter.isInitialized) {
+            dictChipAdapter = ThemedChipListAdapter(this, ItemChipDictionaryPickBinding::inflate)
+            dictChipAdapter.themedChipManager = ThemedChipManager(ThemedChipManager.MODE_SINGLE)
+            _binding.loDictionaryChipRcy.adapter = dictChipAdapter
+        }
+        val availDictsInMode = when (_viewModel.lookupMode.value) {
+            GlobalState.LookupMode.WORD -> _viewModel.availableDictionariesList.filterNot { it.supportType == Dictionary.SUPPORT_KANJI }
+            GlobalState.LookupMode.KANJI -> _viewModel.availableDictionariesList.filterNot{ it.supportType == Dictionary.SUPPORT_WORD }
+        }
+        val dictChips = availDictsInMode.map{ ThemedChipItem.fromDictionary(it) }
+        dictChipAdapter.submitList(dictChips)
         dictChipAdapter.themedChipManager?.apply {
             setChipsOnSelectedListener { dictChip ->
                 _viewModel.selectedDictionaryId = dictChip.id
                 _viewModel.evStartSearch.ignite()
             }
-            selectFirst()
+            val currentDict = dictChips.find { it.id == _viewModel.selectedDictionaryId }
+            if (currentDict == null) selectFirst() else currentDict.nowSelected()
         }
-        _binding.loDictionaryChipRcy.addItemDecoration(DisplayHelper.LinearDividerItemDecoration.make(
-            0,
-            TegaoApplication.instance.applicationContext.resources.getDimensionPixelSize(R.dimen.padding_tiny)))
-        _binding.loDictionaryChipRcy.adapter = dictChipAdapter
     }
 
     private fun clearSearchResult() {
@@ -175,7 +182,7 @@ class LookupActivity : AppCompatActivity() {
         }
     }
 
-    fun updateSearchMode() {
+    fun updateSearchResultAdapter() {
         val toAdapter = when (_viewModel.lookupMode.value) {
             GlobalState.LookupMode.WORD -> _wordSearchResultAdapter
             GlobalState.LookupMode.KANJI -> _kanjiSearchResultAdapter

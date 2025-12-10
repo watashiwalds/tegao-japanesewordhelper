@@ -20,6 +20,7 @@
             android:id="@+id/chip_button"
             android:background="@drawable/neutral_stroke_underline"
             android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginEnd="@dimen/padding_small"
             app:iconTint="@color/text_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
         <Button
             android:id="@+id/chip_button_selected"
             android:background="@drawable/primary_solid_background"
+            android:layout_marginEnd="@dimen/padding_small"
             app:icon="@drawable/ftc_round_tick_128"
             app:iconSize="@dimen/padding_normal"
             app:iconTint="@color/text_reverse"

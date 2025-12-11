@@ -1,20 +1,18 @@
 package com.tegaoteam.application.tegao.data.hub
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.core.graphics.scale
 import com.tegaoteam.application.tegao.data.network.ErrorResults
 import com.tegaoteam.application.tegao.data.network.appserver.OnlineServiceApi
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
-import com.tegaoteam.application.tegao.utils.UriHelper
+import com.tegaoteam.application.tegao.utils.FileHelper
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.BufferedSink
 import okio.source
 import java.io.ByteArrayOutputStream
-import kotlin.math.min
 
 class OnlineServiceHub {
     private val api = OnlineServiceApi.api
@@ -22,7 +20,7 @@ class OnlineServiceHub {
     private fun inputStreamToRequestBody(uri: Uri) = object : RequestBody() {
         override fun contentType() = "image/*".toMediaType()
         override fun writeTo(sink: BufferedSink) {
-            UriHelper.getUriInputStream(uri)?.use { stream ->
+            FileHelper.getUriInputStream(uri)?.use { stream ->
                 stream.source().use { source ->
                     sink.writeAll(source)
                 }
@@ -51,7 +49,7 @@ class OnlineServiceHub {
     }
 
     suspend fun requestImageOCR(imageUri: Uri, lowerResolution: Boolean): RepoResult<List<String>> {
-        val sourceBitmap = UriHelper.getBitmapFromUri(imageUri)
+        val sourceBitmap = FileHelper.getBitmapFromUri(imageUri)
         if (sourceBitmap == null) return ErrorResults.RepoRes.EMPTY_INPUT
 
         val inpBitmap = if (lowerResolution) downscaledByteArrayAsOCRInput(sourceBitmap) else sourceBitmap

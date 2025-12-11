@@ -12,6 +12,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.tegaoteam.application.tegao.TegaoApplication
 import timber.log.Timber
+import java.io.InputStream
 import java.security.MessageDigest
 import java.time.Instant
 import java.time.Duration
@@ -84,7 +85,7 @@ fun dpToPixel(value: Float): Float {
     return value * Resources.getSystem().displayMetrics.density
 }
 
-object UriHelper {
+object FileHelper {
     private val appContext = TegaoApplication.instance
 
     fun getUriInputStream(uri: Uri) = appContext.contentResolver.openInputStream(uri)
@@ -107,5 +108,17 @@ object UriHelper {
             bitmap = MediaStore.Images.Media.getBitmap(appContext.contentResolver, uri)
         }
         return bitmap
+    }
+
+    fun saveFileToUriExternalStorage(outputUri: Uri, inputStream: InputStream): Boolean {
+        try {
+            appContext.contentResolver.openOutputStream(outputUri).use { out ->
+                out?.let { inputStream.copyTo(out) }
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
+            return false
+        }
+        return true
     }
 }

@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.tegaoteam.application.tegao.R
-import com.tegaoteam.application.tegao.data.hub.ImexHub
+import com.tegaoteam.application.tegao.data.hub.SharingHub
 import com.tegaoteam.application.tegao.data.hub.LearningHub
 import com.tegaoteam.application.tegao.databinding.ActivityCardManageBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
@@ -44,7 +44,7 @@ class CardManageActivity : AppCompatActivity() {
     }
 
     private fun initVariables() {
-        _viewModel = ViewModelProvider(this, CardManageActivityViewModel.Companion.ViewModelFactory(LearningHub(), ImexHub.instance))[CardManageActivityViewModel::class.java]
+        _viewModel = ViewModelProvider(this, CardManageActivityViewModel.Companion.ViewModelFactory(LearningHub(), SharingHub.instance))[CardManageActivityViewModel::class.java]
         _navController = (supportFragmentManager.findFragmentById(R.id.cardManageFragmentContainerView) as NavHostFragment).navController
     }
 

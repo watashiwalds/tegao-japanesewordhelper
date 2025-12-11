@@ -11,12 +11,15 @@ import kotlinx.coroutines.flow.first
 import java.io.File
 import java.io.FileWriter
 
-class ImexHub private constructor() {
+class SharingHub private constructor() {
     companion object {
         private val appContext = TegaoApplication.instance
-        val instance by lazy { ImexHub() }
+        val instance by lazy { SharingHub() }
+
+        private const val defaultCardpackLink = "https://raw.githubusercontent.com/watashiwalds/tegaores-contents/refs/heads/main/demo_cardPack/pack.json"
     }
 
+    //region Json export and import of card deck
     suspend fun exportCardDeckToJsonString(learningRepo: LearningRepo, groupId: Long): String {
         val group = learningRepo.getCardGroupByGroupId(groupId).asFlow().first()
         val cards = learningRepo.getCardsByGroupId(groupId).asFlow().first()
@@ -47,4 +50,9 @@ class ImexHub private constructor() {
 
         return res.readText()
     }
+    //endregion
+
+    //region Related functions that serves card pack data retrieve
+        
+    //endregion
 }

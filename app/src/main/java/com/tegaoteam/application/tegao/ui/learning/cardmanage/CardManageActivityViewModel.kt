@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.tegaoteam.application.tegao.data.hub.ImexHub
+import com.tegaoteam.application.tegao.data.hub.SharingHub
 import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.model.CardGroup
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CardManageActivityViewModel(private val _learningRepo: LearningRepo, private val _imexHub: ImexHub): ViewModel() {
+class CardManageActivityViewModel(private val _learningRepo: LearningRepo, private val _sharingHub: SharingHub): ViewModel() {
     val cardGroups = _learningRepo.getCardGroups().asFlow().asLiveData()
 
     //region Cards by groupId data fetching
@@ -89,7 +89,7 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo, priva
     fun exportCardDeck(groupId: Long) {
         _exportCardDeckJob = viewModelScope.launch(Dispatchers.Default) {
             val resName = _learningRepo.getCardGroupByGroupId(groupId).asFlow().first().label
-            val resContent = _imexHub.exportCardDeckToJsonString(_learningRepo, groupId)
+            val resContent = _sharingHub.exportCardDeckToJsonString(_learningRepo, groupId)
             withContext(Dispatchers.Main) {
                 _exportedDeck.value = Pair("${resName}_tegaoDeck", resContent)
             }
@@ -108,12 +108,12 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo, priva
 
         class ViewModelFactory(
             private val learningRepo: LearningRepo,
-            private val imexHub: ImexHub
+            private val sharingHub: SharingHub
         ) : ViewModelProvider.Factory {
             @Suppress("unchecked_cast")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(CardManageActivityViewModel::class.java)) {
-                    return CardManageActivityViewModel(learningRepo, imexHub) as T
+                    return CardManageActivityViewModel(learningRepo, sharingHub) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

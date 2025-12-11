@@ -36,9 +36,10 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
     class ViewHolder private constructor(private val context: Context, private val binding: ItemDefinitionWordBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(word: Word, lifecycleOwner: LifecycleOwner) {
             binding.reading.setTextWithVisibility(word.reading)
+            if (word.reading.isNotBlank()) binding.reading.setTextIsSelectable(true)
             binding.furigana.setTextWithVisibility(word.furigana?.joinToString("、"))
+            if (word.furigana?.isNotEmpty()?: false) binding.reading.setTextIsSelectable(true)
 
-            //TODO: Figured out what was this intended to be for Jitendex and Jisho. For Mazii, it was just pronunciations
             binding.additionalInfo.setTextWithVisibility(word.additionalInfo?.joinToString("\n") { it.content })
 
             //display func for tags

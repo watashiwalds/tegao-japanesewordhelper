@@ -15,8 +15,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/trickMargin_furigana"
-            android:clickable="true"
-            android:longClickable="true"
             android:textIsSelectable="true"
             app:layout_constraintEnd_toEndOf="@+id/furigana"
             app:layout_constraintEnd_toStartOf="@+id/qab_makeNewCard_btn"
@@ -31,6 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:singleLine="false"
+            android:textIsSelectable="true"
             app:layout_constraintEnd_toStartOf="@+id/qab_makeNewCard_btn"
             app:layout_constraintStart_toStartOf="parent"
 
@@ -44,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/padding_small"
+            android:textIsSelectable="true"
             app:layout_constraintTop_toBottomOf="@id/reading"
             app:layout_constraintStart_toStartOf="parent"
 

@@ -164,7 +164,9 @@ class LookupActivity : AppCompatActivity() {
             GlobalState.LookupMode.KANJI -> _viewModel.availableDictionariesList.filterNot{ it.supportType == Dictionary.SUPPORT_WORD }
         }
         val dictChips = availDictsInMode.map{ ThemedChipItem.fromDictionary(it) }
-        dictChipAdapter.submitList(dictChips)
+        dictChipAdapter.apply {
+            submitList(dictChips)
+        }
         dictChipAdapter.themedChipManager?.apply {
             setChipsOnSelectedListener { dictChip ->
                 _viewModel.selectedDictionaryId = dictChip.id

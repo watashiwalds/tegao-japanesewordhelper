@@ -8,6 +8,7 @@ import com.tegaoteam.application.tegao.domain.model.CardRepeat
 interface LearningRepo {
     //region card crud(s)
     fun getCardGroups(): Stream<List<CardGroup>>
+    fun getCardGroupByGroupId(groupId: Long): Stream<CardGroup>
     fun getCardsByGroupId(groupId: Long): Stream<List<CardEntry>>
     fun getCardByCardId(cardId: Long): Stream<CardEntry>
     fun getCardRepeatsByCardIds(cardIds: List<Long>): Stream<List<CardRepeat>>

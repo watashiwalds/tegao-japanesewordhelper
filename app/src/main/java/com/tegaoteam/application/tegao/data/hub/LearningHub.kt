@@ -6,7 +6,6 @@ import com.tegaoteam.application.tegao.data.database.learningcard.CardEntity
 import com.tegaoteam.application.tegao.data.database.learningcard.CardGroupEntity
 import com.tegaoteam.application.tegao.data.database.learningcard.CardRepeatEntity
 import com.tegaoteam.application.tegao.data.model.FlowStream
-import com.tegaoteam.application.tegao.domain.independency.Stream
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.model.CardGroup
 import com.tegaoteam.application.tegao.domain.model.CardRepeat
@@ -17,7 +16,9 @@ class LearningHub: LearningRepo {
     private val _srsDb = SQLiteDatabase.getInstance().learningCardDAO
     //region card crud(s)
     override fun getCardGroups(): FlowStream<List<CardGroup>>
-        = FlowStream(_srsDb.getCardGroups().map { it.map { item -> CardGroupEntity.toDomainCardGroup(item) } })
+            = FlowStream(_srsDb.getCardGroups().map { it.map { item -> CardGroupEntity.toDomainCardGroup(item) } })
+    override fun getCardGroupByGroupId(groupId: Long): FlowStream<CardGroup>
+            = FlowStream(_srsDb.getCardGroupByGroupId(groupId).map { item -> CardGroupEntity.toDomainCardGroup(item) })
     override fun getCardsByGroupId(groupId: Long): FlowStream<List<CardEntry>>
         = FlowStream(_srsDb.getCardsByGroupId(groupId).map { it.map { item -> CardEntity.toDomainCardEntry(item) } })
     override fun getCardByCardId(cardId: Long): FlowStream<CardEntry>

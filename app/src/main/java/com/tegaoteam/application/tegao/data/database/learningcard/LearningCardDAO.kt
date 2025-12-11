@@ -12,6 +12,9 @@ interface LearningCardDAO {
     @Query("""select * from ${CardGroupEntity.TABLE_NAME} order by ${CardGroupEntity.COL_ID} DESC""")
     fun getCardGroups(): Flow<List<CardGroupEntity>>
 
+    @Query("""select * from ${CardGroupEntity.TABLE_NAME} where ${CardGroupEntity.COL_ID} = :groupId""")
+    fun getCardGroupByGroupId(groupId: Long): Flow<CardGroupEntity>
+
     @Query("""select * from ${CardEntity.TABLE_NAME} where ${CardGroupEntity.COL_ID} = :groupId order by ${CardEntity.COL_ID} DESC""")
     fun getCardsByGroupId(groupId: Long): Flow<List<CardEntity>>
 

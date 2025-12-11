@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.map
@@ -15,13 +17,17 @@ import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivity
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.adapter.QuickCrudItemListAdapter
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.model.QuickCrudItemInfo
 import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
+import com.tegaoteam.application.tegao.utils.FileHelper
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
+import timber.log.Timber
 
 class CardManageGroupListFragment: Fragment() {
     private lateinit var _binding: FragmentCardManageQuickcrudListBinding
     private val _parentViewModel: CardManageActivityViewModel by activityViewModels()
     private lateinit var _adapter: QuickCrudItemListAdapter
     private lateinit var _navController: NavController
+
+    private lateinit var _regSaveExportedDeck: ActivityResultLauncher<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +37,7 @@ class CardManageGroupListFragment: Fragment() {
         _binding = FragmentCardManageQuickcrudListBinding.inflate(inflater, container, false)
 
         initVariables()
-        initObservers()
+        initFunctions()
         initView()
 
         return _binding.root
@@ -42,7 +48,7 @@ class CardManageGroupListFragment: Fragment() {
         _navController = findNavController()
     }
 
-    private fun initObservers() {
+    private fun initFunctions() {
         _parentViewModel.apply {
             cardGroups.observe(viewLifecycleOwner) { groups ->
                 _adapter.submitList(groups.map { group ->
@@ -51,6 +57,9 @@ class CardManageGroupListFragment: Fragment() {
                         label = group.label,
                         quickInfo = _parentViewModel.fetchCardsOfGroupLiveData(group.groupId)
                             .map { getString(R.string.card_manage_card_count, it.size) },
+                        onExportQabClickListener = { groupId ->
+                            _parentViewModel.exportCardGroup(groupId)
+                        },
                         onEditQabClickListener = { groupId ->
                             _navController.navigate(
                                 CardManageGroupListFragmentDirections
@@ -84,6 +93,8 @@ class CardManageGroupListFragment: Fragment() {
                 _binding.itemCountTxt.text = getString(R.string.card_manage_group_count, groups.size)
             }
         }
+
+        setupExportingDeck()
     }
 
     private fun initView() {
@@ -105,5 +116,23 @@ class CardManageGroupListFragment: Fragment() {
 
         _binding.lifecycleOwner = viewLifecycleOwner
         _binding.executePendingBindings()
+    }
+
+    private fun setupExportingDeck() {
+        var exportedName: String? = null
+        var exportedString: String? = null
+        _regSaveExportedDeck = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+            if (uri != null && !exportedString.isNullOrBlank()) {
+                FileHelper.saveFileToUriExternalStorage(uri, exportedString!!.byteInputStream())
+            }
+        }
+        _parentViewModel.apply {
+            exportedDeck.observe(viewLifecycleOwner) {
+                exportedName = it.first
+                exportedString = it.second
+
+                _regSaveExportedDeck.launch("${exportedName}.json")
+            }
+        }
     }
 }

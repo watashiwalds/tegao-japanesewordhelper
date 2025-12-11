@@ -1,0 +1,46 @@
+package com.tegaoteam.application.tegao.data.hub
+
+import com.google.gson.stream.JsonWriter
+import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.data.model.asFlow
+import com.tegaoteam.application.tegao.domain.model.CardEntry
+import com.tegaoteam.application.tegao.domain.repo.LearningRepo
+import kotlinx.coroutines.flow.first
+import java.io.File
+import java.io.FileWriter
+
+class ImexHub private constructor() {
+    companion object {
+        private val appContext = TegaoApplication.instance
+        val instance by lazy { ImexHub() }
+    }
+
+    suspend fun exportCardDeckToJsonString(learningRepo: LearningRepo, groupId: Long): String {
+        val group = learningRepo.getCardGroupByGroupId(groupId).asFlow().first()
+        val cards = learningRepo.getCardsByGroupId(groupId).asFlow().first()
+
+        val res = File(appContext.getExternalFilesDir(null), "tempExport_cardDeck.json")
+        val fileWriter = FileWriter(res)
+        val jsonWriter = JsonWriter(fileWriter)
+        jsonWriter.apply {
+            beginObject()
+                name("label").value(group.label)
+                name("cards")
+                beginArray()
+                    cards.forEach { c ->
+                        beginObject()
+                        name("type").value(if (c.type == CardEntry.TYPE_ANSWERCARD) "answer" else "flash")
+                        name("front").value(c.front)
+                        name("back").value(c.back)
+                        if (c.type == CardEntry.TYPE_ANSWERCARD) name("answer").value(c.answer?: "")
+                        endObject()
+                    }
+                endArray()
+            endObject()
+        }
+        jsonWriter.close()
+        fileWriter.close()
+
+        return res.readText()
+    }
+}

@@ -11,6 +11,7 @@ object ErrorResults {
         val NO_INTERNET_CONNECTION = RepoResult.Error<Nothing>(638, getStringFromAppRes(R.string.err_repo_noInternet))
         val EMPTY_RESULT = RepoResult.Error<Nothing>(378, getStringFromAppRes(R.string.err_repo_emptyResult))
         val EMPTY_INPUT = RepoResult.Error<Nothing>(378, getStringFromAppRes(R.string.err_repo_emptyInput))
+        val LINK_ERROR = RepoResult.Error<Nothing>(378, getStringFromAppRes(R.string.err_repo_linkError))
     }
     object DictionaryRes {
         const val EMPTY_RESULT = 0

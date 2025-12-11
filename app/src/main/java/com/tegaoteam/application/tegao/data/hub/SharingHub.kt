@@ -3,11 +3,18 @@ package com.tegaoteam.application.tegao.data.hub
 import com.google.gson.stream.JsonWriter
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.data.database.cardpack.CardDeck
+import com.tegaoteam.application.tegao.data.database.cardpack.CardPack
+import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.data.model.asFlow
+import com.tegaoteam.application.tegao.data.network.appserver.cardpack.CardSharingApi
+import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.utils.getStringFromAppRes
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
 
@@ -53,6 +60,21 @@ class SharingHub private constructor() {
     //endregion
 
     //region Related functions that serves card pack data retrieve
-        
+    private val cardSharingApi = CardSharingApi()
+
+        //todo: Make a proper sql table to store added cardpack sources
+    fun getSavedCardpackSources() = listOf(
+        CardPack(
+            id = 0,
+            packName = "TegaoTeam Demo Cardpack",
+            link = defaultCardpackLink
+        )
+    )
+
+    suspend fun getCardpackContents(packLink: String) = FlowStream( flow {
+        //todo: Fetch the sql for cached version first
+        val res = cardSharingApi.getCardpackContentByLink(packLink)
+        emit(res)
+    } )
     //endregion
 }

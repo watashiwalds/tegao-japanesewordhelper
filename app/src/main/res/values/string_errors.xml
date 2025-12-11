@@ -3,6 +3,7 @@
     <string name="err_repo_noInternet">Không có kết nối Internet</string>
     <string name="err_repo_emptyResult">Không tìm thấy kết quả nào</string>
     <string name="err_repo_emptyInput">Không thể đọc đầu vào</string>
+    <string name="err_repo_linkError">Liên kết đầu vào lỗi</string>
 
     <string name="err_dict_emptyResult">Không tìm thấy kết quả nào</string>
     <string name="err_dict_parsingError">Có sự cố khi xử lý kết quả tìm kiếm</string>

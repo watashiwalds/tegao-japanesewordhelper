@@ -46,6 +46,9 @@
                 app:layout_constraintTop_toBottomOf="@id/sourceName_txt"
                 app:layout_constraintBottom_toTopOf="@id/addSource_btn"
 
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+
                 tools:listitem="@layout/item_carddeck_quickinfo"
                 />
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
+        android:foreground="?android:selectableItemBackground"
         android:background="@drawable/neutral_stroke_background"
         android:paddingHorizontal="@dimen/padding_normal"
         android:paddingVertical="@dimen/padding_small"

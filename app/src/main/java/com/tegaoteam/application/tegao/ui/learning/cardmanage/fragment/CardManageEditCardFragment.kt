@@ -105,9 +105,8 @@ class CardManageEditCardFragment: Fragment() {
         _groupFieldAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, mutableListOf<String>())
         _groupField = AppCompatAutoCompleteTextView(themedContext).apply {
             layoutParams = fieldLayoutParams
-            keyListener = null
             setHint(R.string.card_manage_cardDetail_field_group_hint)
-            onFocusChangeListener = View.OnFocusChangeListener { p0, focused -> if (focused) showDropDown() }
+            setOnClickListener { showDropDown() }
             onItemClickListener = AdapterView.OnItemClickListener { adapter, p1, position, p3 ->
                 cardPlaceholder.groupId = cardGroups[position].groupId
             }

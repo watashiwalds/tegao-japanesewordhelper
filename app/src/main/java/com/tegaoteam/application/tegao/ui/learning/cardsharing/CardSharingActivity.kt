@@ -58,7 +58,7 @@ class CardSharingActivity : AppCompatActivity() {
         }
         _binding.sourceNameTxt.apply {
             setAdapter(_sourceAutoFillAdapter)
-            onFocusChangeListener = View.OnFocusChangeListener { p0, focused -> if (focused) showDropDown() }
+            setOnClickListener { showDropDown() }
             onItemClickListener = AdapterView.OnItemClickListener { adapter, p1, position, p3 ->
                 _viewModel.fetchCardpackContents(sources[position])
             }

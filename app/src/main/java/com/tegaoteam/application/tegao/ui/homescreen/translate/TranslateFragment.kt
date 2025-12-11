@@ -98,7 +98,7 @@ class TranslateFragment: Fragment() {
                 setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, mutableListOf<String>()).apply {
                     sourceLangs.forEach { LabelBank.getLanguageName(it)?.let { label -> add(label) } }
                 })
-                onFocusChangeListener = View.OnFocusChangeListener { p0, focused -> if (focused) showDropDown() }
+                setOnClickListener { showDropDown() }
                 onItemClickListener = AdapterView.OnItemClickListener { adapter, p1, position, p3 ->
                     Timber.i("Change FROM language to ${sourceLangs[position]}")
                     _viewModel.sourceLang = sourceLangs[position]
@@ -112,7 +112,7 @@ class TranslateFragment: Fragment() {
                 setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, mutableListOf<String>()).apply {
                     transLangs.forEach { LabelBank.getLanguageName(it)?.let { label -> add(label) } }
                 })
-                onFocusChangeListener = View.OnFocusChangeListener { p0, focused -> if (focused) showDropDown() }
+                setOnClickListener { showDropDown() }
                 onItemClickListener = AdapterView.OnItemClickListener { adapter, p1, position, p3 ->
                     Timber.i("Change TO language to ${transLangs[position]}")
                     _viewModel.transLang = transLangs[position]

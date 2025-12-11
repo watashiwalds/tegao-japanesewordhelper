@@ -1,10 +1,12 @@
 package com.tegaoteam.application.tegao.data.hub
 
 import com.google.gson.stream.JsonWriter
+import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
+import com.tegaoteam.application.tegao.utils.getStringFromAppRes
 import kotlinx.coroutines.flow.first
 import java.io.File
 import java.io.FileWriter
@@ -25,6 +27,8 @@ class ImexHub private constructor() {
         jsonWriter.apply {
             beginObject()
                 name("label").value(group.label)
+                name("author").value(getStringFromAppRes(R.string.card_sharing_deckExport_defaultValue_author))
+                name("description").value(getStringFromAppRes(R.string.card_sharing_deckExport_defaultValue_description))
                 name("cards")
                 beginArray()
                     cards.forEach { c ->

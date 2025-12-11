@@ -19,6 +19,9 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.Tegao">
         <activity
+            android:name=".ui.learning.cardsharing.CardSharingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.learning.cardlearn.CardLearningActivity"
             android:exported="false" />
         <activity

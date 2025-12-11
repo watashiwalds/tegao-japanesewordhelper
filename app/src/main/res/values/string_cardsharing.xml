@@ -3,4 +3,8 @@
     <string name="card_sharing_deckExport_processing">Trích xuất nội dung từ bộ thẻ của bạn</string>
     <string name="card_sharing_deckExport_success">Xuất bộ thẻ thành công</string>
     <string name="card_sharing_deckExport_alert">Thao tác xuất trả về: %s</string>
+
+    <string name="card_sharing_addSource_label">Nguồn</string>
+    <string name="card_sharing_fileImport_label">Từ tệp</string>
+    <string name="card_sharing_importDeck_label">Thêm bộ thẻ</string>
 </resources>

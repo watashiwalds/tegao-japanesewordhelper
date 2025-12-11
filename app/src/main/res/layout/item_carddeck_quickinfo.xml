@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:background="@drawable/neutral_stroke_background"
+        android:paddingHorizontal="@dimen/padding_normal"
+        android:paddingVertical="@dimen/padding_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/padding_small">
+
+        <TextView
+            android:id="@+id/label"
+            style="@style/Theme.Tegao.Label.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Card deck's label"
+            />
+
+        <TextView
+            android:id="@+id/author"
+            style="@style/Theme.Tegao.Label.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Author's name"
+            />
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/Theme.Tegao.ContentText.Normal"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="A little bit of information about this card deck that the author has written. Nothing in this is dynamic and user would need to click this item to read the full text and actually add this deck into the device's database"
+            />
+
+    </LinearLayout>
+
+</layout>

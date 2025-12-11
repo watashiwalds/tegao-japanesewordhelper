@@ -10,11 +10,33 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.databinding.DialogProcessingBinding
 import com.tegaoteam.application.tegao.databinding.DialogQuickViewBinding
 import com.tegaoteam.application.tegao.databinding.DialogYesOrNoBinding
 import com.tegaoteam.application.tegao.utils.setTextWithResId
 
 object DialogPreset {
+    private var processingDialog: AlertDialog? = null
+    fun cancelCurrentProcessingDialog() {
+        processingDialog?.cancel()
+        processingDialog = null
+    }
+    fun processing(context: Context, message: Any? = null, cancelLambda: (() -> Unit)? = null) {
+        val binding = DataBindingUtil.inflate<DialogProcessingBinding>(LayoutInflater.from(context), R.layout.dialog_processing, null ,false)
+        handleSetText(message, binding.message)
+
+        processingDialog?.cancel()
+        processingDialog = AlertDialog.Builder(context).apply {
+            setView(binding.root)
+            setCancelable(false)
+        }.create()
+
+        binding.cancelBtn.setOnClickListener { cancelLambda?.invoke(); processingDialog?.cancel() }
+        binding.executePendingBindings()
+
+        processingDialog?.show()
+    }
+
     fun requestConfirmation(context: Context, title: Any? = null, message: Any? = null, lambdaRun: (() -> Unit)? = null) {
         val binding = DataBindingUtil.inflate<DialogYesOrNoBinding>(LayoutInflater.from(context), R.layout.dialog_yes_or_no, null, false)
         handleSetText(title, binding.label)

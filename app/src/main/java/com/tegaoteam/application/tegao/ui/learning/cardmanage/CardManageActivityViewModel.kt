@@ -13,6 +13,7 @@ import com.tegaoteam.application.tegao.domain.model.CardGroup
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -82,10 +83,11 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo, priva
 
     //region functions and vars of exporting
     val evExportedStatus = EventBeacon()
+    private var _exportCardDeckJob: Job? = null
     private val _exportedDeck = MutableLiveData<Pair<String, String>>()
     val exportedDeck: LiveData<Pair<String, String>> = _exportedDeck
-    fun exportCardGroup(groupId: Long) {
-        viewModelScope.launch(Dispatchers.Default) {
+    fun exportCardDeck(groupId: Long) {
+        _exportCardDeckJob = viewModelScope.launch(Dispatchers.Default) {
             val resName = _learningRepo.getCardGroupByGroupId(groupId).asFlow().first().label
             val resContent = _imexHub.exportCardDeckToJsonString(_learningRepo, groupId)
             withContext(Dispatchers.Main) {
@@ -93,7 +95,12 @@ class CardManageActivityViewModel(private val _learningRepo: LearningRepo, priva
             }
         }
     }
+    fun cancelExportCardDeck() {
+        _exportCardDeckJob?.cancel()
+        _exportCardDeckJob = null
+    }
     //endregion
+
     companion object {
         const val STATUS_PROCESSING = 0
         const val STATUS_SUCCESS = 1

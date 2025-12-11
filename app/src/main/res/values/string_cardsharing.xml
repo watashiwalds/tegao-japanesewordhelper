@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="card_sharing_deckExport_processing">Trích xuất nội dung từ bộ thẻ của bạn</string>
+    <string name="card_sharing_deckExport_success">Xuất bộ thẻ thành công</string>
+    <string name="card_sharing_deckExport_alert">Thao tác xuất trả về: %s</string>
+</resources>

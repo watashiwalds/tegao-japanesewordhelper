@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_large"
+        android:layout_margin="@dimen/padding_large"
+        android:minWidth="300dp"
+        android:background="@drawable/neutral_filled_stroke_background">
+
+        <ProgressBar
+            android:id="@+id/lo_progressAnim_pgb"
+            android:layout_width="@dimen/img_icon_large"
+            android:layout_height="@dimen/img_icon_large"
+            android:indeterminate="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label"
+            style="@style/Theme.Tegao.Label.Large"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_small"
+            android:text="@string/phrase_processing"
+            app:layout_constraintStart_toEndOf="@id/lo_progressAnim_pgb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lo_progressAnim_pgb" />
+
+        <TextView
+            style="@style/Theme.Tegao.ContentText.Normal"
+            android:id="@+id/message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label"
+            tools:text="Message would be shown here"
+            />
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/message"
+            android:layout_marginTop="@dimen/padding_normal"
+            />
+
+        <Button
+            style="@style/Theme.Tegao.LabelButton.Neutral"
+            android:id="@+id/cancel_btn"
+            android:foreground="?android:selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/phrase_cancel"
+            app:layout_constraintTop_toBottomOf="@id/frame"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -17,9 +17,9 @@ import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivity
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.adapter.QuickCrudItemListAdapter
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.model.QuickCrudItemInfo
 import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
+import com.tegaoteam.application.tegao.utils.AppToast
 import com.tegaoteam.application.tegao.utils.FileHelper
 import com.tegaoteam.application.tegao.utils.setSrcWithResId
-import timber.log.Timber
 
 class CardManageGroupListFragment: Fragment() {
     private lateinit var _binding: FragmentCardManageQuickcrudListBinding
@@ -58,7 +58,7 @@ class CardManageGroupListFragment: Fragment() {
                         quickInfo = _parentViewModel.fetchCardsOfGroupLiveData(group.groupId)
                             .map { getString(R.string.card_manage_card_count, it.size) },
                         onExportQabClickListener = { groupId ->
-                            _parentViewModel.exportCardGroup(groupId)
+                            _parentViewModel.exportCardDeck(groupId)
                         },
                         onEditQabClickListener = { groupId ->
                             _navController.navigate(
@@ -122,17 +122,28 @@ class CardManageGroupListFragment: Fragment() {
         var exportedName: String? = null
         var exportedString: String? = null
         _regSaveExportedDeck = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
-            if (uri != null && !exportedString.isNullOrBlank()) {
-                FileHelper.saveFileToUriExternalStorage(uri, exportedString!!.byteInputStream())
+            if (uri == null) {
+                _parentViewModel.evExportedStatus.ignite(getString(R.string.phrase_cancel))
+            } else if (!exportedString.isNullOrBlank()) {
+                val msg = FileHelper.saveFileToUriExternalStorage(uri, exportedString!!.byteInputStream())
+                _parentViewModel.evExportedStatus.apply { msg?.let { ignite(msg) }?: ignite() }
             }
         }
         _parentViewModel.apply {
             exportedDeck.observe(viewLifecycleOwner) {
                 exportedName = it.first
                 exportedString = it.second
-
+                DialogPreset.processing(requireContext(), R.string.card_sharing_deckExport_processing) { _parentViewModel.cancelExportCardDeck() }
                 _regSaveExportedDeck.launch("${exportedName}.json")
             }
+            evExportedStatus.beacon.observe(viewLifecycleOwner) { evExportedStatus.apply {
+                if (receive()) {
+                    DialogPreset.cancelCurrentProcessingDialog()
+                    getMessage()?.let {
+                        AppToast.show(getString(R.string.card_sharing_deckExport_alert, it), AppToast.LENGTH_SHORT)
+                    }?: AppToast.show(R.string.card_sharing_deckExport_success, AppToast.LENGTH_SHORT)
+                }
+            } }
         }
     }
 }

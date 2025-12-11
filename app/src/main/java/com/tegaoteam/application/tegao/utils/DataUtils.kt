@@ -110,15 +110,15 @@ object FileHelper {
         return bitmap
     }
 
-    fun saveFileToUriExternalStorage(outputUri: Uri, inputStream: InputStream): Boolean {
+    fun saveFileToUriExternalStorage(outputUri: Uri, inputStream: InputStream): String? {
         try {
             appContext.contentResolver.openOutputStream(outputUri).use { out ->
                 out?.let { inputStream.copyTo(out) }
             }
         } catch (e: Exception) {
             Timber.e(e)
-            return false
+            return e.message
         }
-        return true
+        return null
     }
 }

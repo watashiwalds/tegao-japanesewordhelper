@@ -125,16 +125,33 @@
                 tools:text="1 vài bộ thẻ"
                 />
 
-            <ImageButton
-                style="@style/Theme.Tegao.ImageIcon.Label"
-                android:id="@+id/cardGroupEdit_btn"
-                android:foreground="?android:selectableItemBackground"
-                android:layout_width="@dimen/img_icon_big"
-                android:layout_height="@dimen/img_icon_big"
-                android:padding="@dimen/padding_tiny"
-                android:src="@drawable/ftc_round_edit_128"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                />
+                android:orientation="horizontal"
+                android:gravity="end"
+                >
+                <ImageButton
+                    style="@style/Theme.Tegao.ImageIcon.Label"
+                    android:id="@+id/cardGroupImport_btn"
+                    android:foreground="?android:selectableItemBackground"
+                    android:layout_width="@dimen/img_icon_big"
+                    android:layout_height="@dimen/img_icon_big"
+                    android:padding="@dimen/padding_middleSmall"
+                    android:layout_marginEnd="@dimen/padding_tiny"
+                    android:src="@drawable/ftc_round_plus_128"
+                    />
+                <ImageButton
+                    style="@style/Theme.Tegao.ImageIcon.Label"
+                    android:id="@+id/cardGroupEdit_btn"
+                    android:foreground="?android:selectableItemBackground"
+                    android:layout_width="@dimen/img_icon_big"
+                    android:layout_height="@dimen/img_icon_big"
+                    android:padding="@dimen/padding_tiny"
+                    android:src="@drawable/ftc_round_edit_128"
+                    />
+            </LinearLayout>
             
         </FrameLayout>
 

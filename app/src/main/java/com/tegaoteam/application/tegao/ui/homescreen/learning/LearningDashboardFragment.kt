@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.ui.homescreen.learning
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.tegaoteam.application.tegao.domain.repo.LearningRepo
 import com.tegaoteam.application.tegao.ui.homescreen.MainActivityViewModel
 import com.tegaoteam.application.tegao.ui.learning.cardlearn.CardLearningActivityGate
 import com.tegaoteam.application.tegao.ui.learning.cardmanage.CardManageActivityGate
+import com.tegaoteam.application.tegao.ui.learning.cardsharing.CardSharingActivity
 import kotlin.getValue
 
 class LearningDashboardFragment : Fragment() {
@@ -85,6 +87,9 @@ class LearningDashboardFragment : Fragment() {
     private fun initView() {
         _binding.cardGroupListRcy.adapter = _adapter
 
+        _binding.cardGroupImportBtn.setOnClickListener {
+            startActivity(Intent(context, CardSharingActivity::class.java))
+        }
         _binding.cardGroupEditBtn.setOnClickListener {
             startActivity(CardManageActivityGate.departIntent(requireContext()))
         }

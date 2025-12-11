@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.DialogProcessingBinding
@@ -21,7 +22,7 @@ object DialogPreset {
         processingDialog?.cancel()
         processingDialog = null
     }
-    fun processing(context: Context, message: Any? = null, cancelLambda: (() -> Unit)? = null) {
+    fun processing(context: Context, message: Any? = null, cancelLambda: (() -> Unit)? = null): TextView {
         val binding = DataBindingUtil.inflate<DialogProcessingBinding>(LayoutInflater.from(context), R.layout.dialog_processing, null ,false)
         handleSetText(message, binding.message)
 
@@ -35,6 +36,7 @@ object DialogPreset {
         binding.executePendingBindings()
 
         processingDialog?.show()
+        return binding.progress
     }
 
     fun requestConfirmation(context: Context, title: Any? = null, message: Any? = null, lambdaRun: (() -> Unit)? = null) {

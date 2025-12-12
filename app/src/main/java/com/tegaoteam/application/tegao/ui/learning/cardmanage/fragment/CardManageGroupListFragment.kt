@@ -58,6 +58,7 @@ class CardManageGroupListFragment: Fragment() {
                         quickInfo = _parentViewModel.fetchCardsOfGroupLiveData(group.groupId)
                             .map { getString(R.string.card_manage_card_count, it.size) },
                         onExportQabClickListener = { groupId ->
+                            DialogPreset.processing(requireContext(), R.string.card_sharing_deckExport_processing) { _parentViewModel.cancelExportCardDeck() }
                             _parentViewModel.exportCardDeck(groupId)
                         },
                         onEditQabClickListener = { groupId ->
@@ -133,12 +134,11 @@ class CardManageGroupListFragment: Fragment() {
             exportedDeck.observe(viewLifecycleOwner) {
                 exportedName = it.first
                 exportedString = it.second
-                DialogPreset.processing(requireContext(), R.string.card_sharing_deckExport_processing) { _parentViewModel.cancelExportCardDeck() }
+                DialogPreset.cancelCurrentProcessingDialog()
                 _regSaveExportedDeck.launch("${exportedName}.json")
             }
             evExportedStatus.beacon.observe(viewLifecycleOwner) { evExportedStatus.apply {
                 if (receive()) {
-                    DialogPreset.cancelCurrentProcessingDialog()
                     getMessage()?.let {
                         AppToast.show(getString(R.string.card_sharing_deckExport_alert, it), AppToast.LENGTH_SHORT)
                     }?: AppToast.show(R.string.card_sharing_deckExport_success, AppToast.LENGTH_SHORT)

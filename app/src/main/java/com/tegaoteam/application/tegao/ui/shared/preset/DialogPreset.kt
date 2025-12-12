@@ -17,6 +17,7 @@ import com.tegaoteam.application.tegao.databinding.DialogProcessingBinding
 import com.tegaoteam.application.tegao.databinding.DialogQuickViewBinding
 import com.tegaoteam.application.tegao.databinding.DialogYesOrNoBinding
 import com.tegaoteam.application.tegao.utils.setTextWithResId
+import com.tegaoteam.application.tegao.utils.toggleVisibility
 
 object DialogPreset {
     private var processingDialog: AlertDialog? = null
@@ -34,7 +35,12 @@ object DialogPreset {
             setCancelable(false)
         }.create()
 
-        binding.cancelBtn.setOnClickListener { cancelLambda?.invoke(); processingDialog?.cancel() }
+        cancelLambda?.let {
+            binding.cancelBtn.setOnClickListener { cancelLambda.invoke(); processingDialog?.cancel() }
+        }?: {
+            binding.cancelBtn.toggleVisibility(false)
+        }
+
         binding.executePendingBindings()
 
         processingDialog?.show()
@@ -56,7 +62,7 @@ object DialogPreset {
 
         dialog.show()
     }
-    fun requestValueDialog(context: Context, title: Any? = null, message: Any? = null, lambdaRun: ((String) -> Unit)? = null) {
+    fun requestValueDialog(context: Context, title: Any? = null, message: Any? = null, defaultValue: String? = null, lambdaRun: ((String) -> Unit)? = null) {
         val binding = DataBindingUtil.inflate<DialogYesOrNoBinding>(LayoutInflater.from(context), R.layout.dialog_yes_or_no, null, false)
         handleSetText(title, binding.label)
         handleSetText(message, binding.message)
@@ -65,7 +71,7 @@ object DialogPreset {
             setView(binding.root)
         }.create()
 
-        val editText = EditText(context)
+        val editText = EditText(context).apply { editableText.append(defaultValue) }
         binding.frame.addView(editText)
         binding.confirmBtn.setOnClickListener { lambdaRun?.invoke(editText.text.toString()); dialog.dismiss() }
         binding.cancelBtn.setOnClickListener { dialog.dismiss() }

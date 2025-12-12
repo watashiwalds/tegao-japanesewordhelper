@@ -7,4 +7,7 @@
 
     <string name="err_dict_emptyResult">Không tìm thấy kết quả nào</string>
     <string name="err_dict_parsingError">Có sự cố khi xử lý kết quả tìm kiếm</string>
+
+    <string name="err_deckImport_cantCreateGroup">Không thể tạo nhóm để nhập bộ thẻ</string>
+
 </resources>

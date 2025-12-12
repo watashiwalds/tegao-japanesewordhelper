@@ -14,4 +14,10 @@
     <string name="card_sharing_importDeck_label">Thêm bộ thẻ</string>
     <string name="card_sharing_deckFrom_message">Từ %s</string>
     <string name="card_sharing_deckSize">Tổng số thẻ: %d</string>
+
+    <string name="card_sharing_importingDeck_confirmGroupLabel_title">Thêm bộ thẻ vào bộ nhớ</string>
+    <string name="card_sharing_importingDeck_confirmGroupLabel_message">Tên bộ thẻ sau khi nhập sẽ là:</string>
+    <string name="card_sharing_importingDeck_inProgress">Nhập các thẻ vào bộ nhớ</string>
+    <string name="card_sharing_importingDeck_success">Nhập bộ thẻ hoàn tất!</string>
+    <string name="card_sharing_importingDeck_partFail">Nhập bộ thẻ lỗi một phần %s</string>
 </resources>

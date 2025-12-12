@@ -14,7 +14,7 @@ object ErrorResults {
         val EMPTY_RESULT = RepoResult.Error<Nothing>(378,
             getStringFromAppRes(R.string.err_repo_emptyResult)
         )
-        val EMPTY_INPUT = RepoResult.Error<Nothing>(378,
+        val INPUT_ERROR = RepoResult.Error<Nothing>(378,
             getStringFromAppRes(R.string.err_repo_emptyInput)
         )
         val LINK_ERROR = RepoResult.Error<Nothing>(378,

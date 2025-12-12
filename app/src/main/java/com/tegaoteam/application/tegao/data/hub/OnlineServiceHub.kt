@@ -50,7 +50,7 @@ class OnlineServiceHub {
 
     suspend fun requestImageOCR(imageUri: Uri, lowerResolution: Boolean): RepoResult<List<String>> {
         val sourceBitmap = FileHelper.getBitmapFromUri(imageUri)
-        if (sourceBitmap == null) return ErrorResults.RepoRes.EMPTY_INPUT
+        if (sourceBitmap == null) return ErrorResults.RepoRes.INPUT_ERROR
 
         val inpBitmap = if (lowerResolution) downscaledByteArrayAsOCRInput(sourceBitmap) else sourceBitmap
         val requestBody = bitmapToRequestBody(inpBitmap)

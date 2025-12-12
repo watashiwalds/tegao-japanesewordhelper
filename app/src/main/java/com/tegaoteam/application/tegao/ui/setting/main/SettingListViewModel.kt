@@ -2,7 +2,7 @@ package com.tegaoteam.application.tegao.ui.setting.main
 
 import androidx.lifecycle.ViewModel
 import com.tegaoteam.application.tegao.R
-import com.tegaoteam.application.tegao.ui.component.generics.ListNavigationItemInfo
+import com.tegaoteam.application.tegao.ui.component.generics.listnavigation.ListNavigationItemInfo
 
 class SettingListViewModel: ViewModel() {
     private val devTab: Boolean? = null

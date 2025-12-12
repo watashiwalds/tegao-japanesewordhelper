@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.setting.main
+package com.tegaoteam.application.tegao.ui.component.generics.listnavigation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.ItemListNavigationBinding
-import com.tegaoteam.application.tegao.ui.component.generics.ListNavigationItemInfo
 
-class SettingListAdapter: ListAdapter<ListNavigationItemInfo, SettingListAdapter.ViewHolder>(DiffCallback()) {
+class ListNavigationListAdapter: ListAdapter<ListNavigationItemInfo, ListNavigationListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

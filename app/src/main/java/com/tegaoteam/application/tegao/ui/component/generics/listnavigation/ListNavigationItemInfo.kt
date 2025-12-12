@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.component.generics
+package com.tegaoteam.application.tegao.ui.component.generics.listnavigation
 
 data class ListNavigationItemInfo(
     val labelResId: Int,

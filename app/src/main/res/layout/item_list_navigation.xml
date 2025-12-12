@@ -6,7 +6,7 @@
     <data>
         <variable
             name="listNavInfo"
-            type="com.tegaoteam.application.tegao.ui.component.generics.ListNavigationItemInfo" />
+            type="com.tegaoteam.application.tegao.ui.component.generics.listnavigation.ListNavigationItemInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

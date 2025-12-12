@@ -204,7 +204,10 @@ class LearningCardBindingHelper(
     fun flickFront(colliding: Int) { binding?.loCardFrontFlk?.doFlick(colliding) }
     fun flickBack(colliding: Int) { binding?.loCardBackFlk?.doFlick(colliding) }
 
+    private var _hasBindedHandwritingBoardOnce = false
     private fun initInputBar() {
+        if (_hasBindedHandwritingBoardOnce) return
+
         val addonRepo = AddonHub()
         if (inputBarView == null) inputBarView = InputBarView(
             context = activity,
@@ -222,6 +225,8 @@ class LearningCardBindingHelper(
                 )
             }
         }
+
+        _hasBindedHandwritingBoardOnce = true
     }
 
     fun getAnswer(): String? = inputBarView?.getInputValue()

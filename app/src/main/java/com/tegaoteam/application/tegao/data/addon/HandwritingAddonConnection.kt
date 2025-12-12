@@ -31,7 +31,7 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
             recognitionService = IRecognitionService.Stub.asInterface(p1)
             if (recognitionCallback != null) recognitionService?.registerCallback(recognitionCallback)
             Timber.i("Linked with HandwritingRecognition addon")
-            Timber.i("Callback registered $recognitionCallback when service $recognitionService")
+            Timber.i("Register callback on service connecting $recognitionCallback when service $recognitionService")
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
@@ -73,7 +73,7 @@ class HandwritingAddonConnection private constructor (context: Context): Alterna
             }
         }
         recognitionService?.registerCallback(recognitionCallback)
-        Timber.i("Callback registered $callback when service $recognitionService")
+        Timber.i("Register callback via function $callback when service $recognitionService")
     }
 
     companion object {

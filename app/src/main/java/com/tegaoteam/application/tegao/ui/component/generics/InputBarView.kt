@@ -37,7 +37,6 @@ class InputBarView(
     //endregion
 
     // Handwriting handling if enabled
-    //todo: bind handwriting also when using this bar view
     val isHandwritingEnabled = FetchedConfigs.isHandwritingEnabled.value
     init {
         if (isHandwritingEnabled) {

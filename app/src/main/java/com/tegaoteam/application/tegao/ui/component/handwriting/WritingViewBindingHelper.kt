@@ -13,6 +13,7 @@ import com.tegaoteam.application.tegao.databinding.ViewButtonPushswitchIcononlyB
 import com.tegaoteam.application.tegao.databinding.ViewWritingBoardFullBinding
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 import com.tegaoteam.application.tegao.ui.component.generics.SwitchButtonInfo
+import timber.log.Timber
 
 class WritingViewBindingHelper {
     companion object {
@@ -41,7 +42,6 @@ class WritingViewBindingHelper {
                     writingBinding = handwritingBoardBinding,
                     onRequestRecognition = { bitmap -> addonRepo.handwritingAddonApi?.requestInputSuggestions(bitmap) },
                     editText = linkedEditText,
-                    //keep an eye, if crash or malfunction of writing view, probably 'cause of !!
                     onStrokeFinished = { writingViewController!!.requestSuggestions() },
                     onEnterKeyPressed = null
                 )
@@ -50,8 +50,9 @@ class WritingViewBindingHelper {
                 switchButtonBinding.apply {
                     switchInfo = SwitchButtonInfo(
                         iconResId = R.drawable.ftc_round_handwriting_128,
-                        switchState = MutableLiveData<Boolean>().apply { value = false }
+                        switchState = MutableLiveData<Boolean>().apply { value = switchInfo?.stateLiveData?.value }
                     ).apply {
+                        writingViewController.toggleWritingMode(stateLiveData.value)
                         onStateChangedListener = { switchState ->
                             writingViewController.toggleWritingMode(switchState)
                             activity.apply {

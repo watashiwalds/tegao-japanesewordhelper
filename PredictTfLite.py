@@ -18,7 +18,7 @@ def process_image(image_path):
     img = np.expand_dims(img, axis=0).astype(np.float32)
     return img
 
-interpreter = tf.lite.Interpreter(model_path="model_float16.tflite")
+interpreter = tf.lite.Interpreter(model_path="mobilenet_lite.tflite")
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
@@ -28,7 +28,7 @@ with open("class.json", "r", encoding="utf-8") as f:
     class_indices = json.load(f)
 idx_to_class = {v: k for k, v in class_indices.items()}
 
-img_path = "img_1.png"
+img_path = "img_12.png"
 img = process_image(img_path)
 plt.imshow(img[0].astype(np.uint8))
 plt.show()

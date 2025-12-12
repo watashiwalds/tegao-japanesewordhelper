@@ -71,7 +71,7 @@ object DialogPreset {
             setView(binding.root)
         }.create()
 
-        val editText = EditText(context).apply { editableText.append(defaultValue) }
+        val editText = EditText(context).apply { editableText.append(defaultValue?: "") }
         binding.frame.addView(editText)
         binding.confirmBtn.setOnClickListener { lambdaRun?.invoke(editText.text.toString()); dialog.dismiss() }
         binding.cancelBtn.setOnClickListener { dialog.dismiss() }

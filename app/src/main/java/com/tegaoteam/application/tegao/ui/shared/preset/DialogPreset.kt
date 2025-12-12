@@ -3,6 +3,8 @@ package com.tegaoteam.application.tegao.ui.shared.preset
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -90,9 +92,11 @@ object DialogPreset {
         binding.apply {
             frame.apply {
                 removeAllViews()
+                (view.parent as? ViewGroup?)?.removeView(view)
                 addView(view)
             }
             dismissBtn.setOnClickListener { dialog.dismiss() }
+            view.findViewById<Button>(R.id.cancel_btn)?.setOnClickListener { dialog.dismiss() }
             executePendingBindings()
         }
         dialog.show()

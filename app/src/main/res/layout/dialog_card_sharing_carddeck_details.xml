@@ -3,9 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="deckInfo"
+            type="com.tegaoteam.application.tegao.data.database.cardpack.CardDeck" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_normal"
         >
 
         <ScrollView
@@ -24,6 +31,7 @@
                     style="@style/Theme.Tegao.Label.Normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{deckInfo.label}"
                     tools:text="Card deck's label"
                     />
 
@@ -32,7 +40,18 @@
                     style="@style/Theme.Tegao.Label.Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{deckInfo.author}"
                     tools:text="Author's name"
+                    />
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/Theme.Tegao.ContentText.Normal"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{deckInfo.description}"
+                    tools:text="A little bit of information about this card deck that the author has written. Nothing in this is dynamic and user would need to click this item to read the full text and actually add this deck into the device's database"
                     />
 
                 <TextView
@@ -42,17 +61,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="67 cards"
-                    android:visibility="gone"
+                    app:setTextWithVisibility='@{deckInfo.parsedCards != null ? @string/card_sharing_deckSize(deckInfo.parsedCards.size()) : ""}'
                     tools:visibility="visible"
-                    />
-
-                <TextView
-                    android:id="@+id/description"
-                    style="@style/Theme.Tegao.ContentText.Normal"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="A little bit of information about this card deck that the author has written. Nothing in this is dynamic and user would need to click this item to read the full text and actually add this deck into the device's database"
                     />
 
             </LinearLayout>
@@ -83,6 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/card_sharing_importDeck_label"
+                app:cueEnabled="@{deckInfo.parsedCards != null &amp;&amp; deckInfo.parsedCards.size() > 0}"
                 />
 
         </LinearLayout>

@@ -76,5 +76,7 @@ class SharingHub private constructor() {
         val res = cardSharingApi.getCardpackContentByLink(packLink)
         emit(res)
     } )
+
+    suspend fun getCarddeckContent(deckLink: String) = cardSharingApi.getCarddeckContentByLink(deckLink)
     //endregion
 }

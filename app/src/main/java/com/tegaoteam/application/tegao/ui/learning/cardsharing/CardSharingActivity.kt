@@ -13,7 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.data.hub.SharingHub
 import com.tegaoteam.application.tegao.databinding.ActivityCardSharingBinding
+import com.tegaoteam.application.tegao.databinding.DialogCardSharingCarddeckDetailsBinding
+import com.tegaoteam.application.tegao.databinding.ItemCarddeckQuickinfoBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
+import com.tegaoteam.application.tegao.ui.shared.preset.DialogPreset
 import com.tegaoteam.application.tegao.utils.AppToast
 
 class CardSharingActivity : AppCompatActivity() {
@@ -42,8 +45,22 @@ class CardSharingActivity : AppCompatActivity() {
             label = getString(R.string.card_sharing_headerLabel),
             backOnClickListener = { finish() }
         )
-        setupCarddecks()
+        _viewModel.evFetchFailed.apply {
+            beacon.observe(this@CardSharingActivity) {
+                if (receive()) {
+                    getMessage()?.let { msg ->
+                        msg.let {
+                            it.toIntOrNull()?.let { resId ->
+                                AppToast.show(resId, AppToast.LENGTH_SHORT)
+                            }?: AppToast.show(msg, AppToast.LENGTH_SHORT)
+                        }
+                    }
+                }
+            }
+        }
+        setupCarddecksListing()
         setupCardpacks()
+        setupCarddeckDetails()
     }
 
     private lateinit var _sourceAutoFillAdapter: ArrayAdapter<String>
@@ -70,12 +87,34 @@ class CardSharingActivity : AppCompatActivity() {
     }
 
     private lateinit var _deckRcyAdapter: CardDeckListAdapter
-    private fun setupCarddecks() {
-        _deckRcyAdapter = CardDeckListAdapter { deck -> AppToast.show(deck.label, AppToast.LENGTH_SHORT) }
+    private fun setupCarddecksListing() {
+        _deckRcyAdapter = CardDeckListAdapter { deck ->
+            _viewModel.fetchCarddeckContent(deck)
+            DialogPreset.quickView(
+                context = this,
+                view = _deckDialogBinding.root,
+                message = getString(R.string.card_sharing_deckFrom_message, _binding.sourceNameTxt.text)
+            )
+        }
         _binding.packListRcy.adapter = _deckRcyAdapter
 
         _viewModel.fetchedPack.observe(this) {
             _deckRcyAdapter.submitList(it)
+        }
+    }
+
+    private lateinit var _deckDialogBinding: DialogCardSharingCarddeckDetailsBinding
+    private fun setupCarddeckDetails() {
+        if (!::_deckDialogBinding.isInitialized) {
+            _deckDialogBinding = DialogCardSharingCarddeckDetailsBinding.inflate(layoutInflater)
+            _deckDialogBinding.apply {
+                cancelBtn.setOnClickListener { findViewById<View>(R.id.dismiss_btn)?.callOnClick() }
+                importBtn.setOnClickListener { AppToast.show("${deckInfo?.label} ${deckInfo?.parsedCards?.size}", AppToast.LENGTH_SHORT) }
+            }
+        }
+        _viewModel.fetchedDeck.observe(this) {
+            _deckDialogBinding.deckInfo = it
+            _deckDialogBinding.executePendingBindings()
         }
     }
 }

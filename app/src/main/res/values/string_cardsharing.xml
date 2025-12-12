@@ -12,4 +12,6 @@
     <string name="card_sharing_addSource_label">Nguồn</string>
     <string name="card_sharing_fileImport_label">Từ tệp</string>
     <string name="card_sharing_importDeck_label">Thêm bộ thẻ</string>
+    <string name="card_sharing_deckFrom_message">Từ %s</string>
+    <string name="card_sharing_deckSize">Tổng số thẻ: %d</string>
 </resources>

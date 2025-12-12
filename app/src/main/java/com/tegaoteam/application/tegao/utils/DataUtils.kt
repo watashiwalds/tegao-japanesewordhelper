@@ -109,6 +109,12 @@ object FileHelper {
         }
         return bitmap
     }
+    fun getStringDataFromUri(uri: Uri): String {
+        appContext.contentResolver.openInputStream(uri).use { stream ->
+            if (stream == null) return ""
+            return stream.bufferedReader().use { it.readText() }
+        }
+    }
 
     fun saveFileToUriExternalStorage(outputUri: Uri, inputStream: InputStream): String? {
         try {

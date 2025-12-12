@@ -1,5 +1,6 @@
 package com.tegaoteam.application.tegao.ui.learning.cardsharing
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,7 @@ class CardSharingViewModel(private val _sharingHub: SharingHub, private val _lea
     val evFetchFailed = EventBeacon()
     val packSources = _sharingHub.getSavedCardpackSources()
 
-    //region Card pack fetching (get deck list)
+    //region Card pack fetching (get deck list from online repo)
     private val _fetchedPack = MutableLiveData<List<CardDeck>>()
     val fetchedPack: LiveData<List<CardDeck>> = _fetchedPack
     fun fetchCardpackContents(cardPack: CardPack) {
@@ -43,14 +44,29 @@ class CardSharingViewModel(private val _sharingHub: SharingHub, private val _lea
     }
     //endregion
 
-    //region Deck fetching (information and cards list for import)
     private val _fetchedDeck = MutableLiveData<CardDeck>()
     val fetchedDeck: LiveData<CardDeck> = _fetchedDeck
+    //region Deck fetching from online repo
     fun fetchCarddeckContent(deck: CardDeck) {
         _fetchedDeck.value = deck
         if (deck.link.isBlank()) evFetchFailed.ignite("${R.string.err_repo_linkError}")
         else viewModelScope.launch(Dispatchers.IO) {
             val res = _sharingHub.getCarddeckContent(deck.link)
+            res.flow.collect { repoRes ->
+                withContext(Dispatchers.Main) {
+                    when (repoRes) {
+                        is RepoResult.Success<CardDeck> -> _fetchedDeck.value = repoRes.data
+                        is RepoResult.Error<*> -> evFetchFailed.ignite("${repoRes.code} ${repoRes.message}")
+                    }
+                }
+            }
+        }
+    }
+    //endregion
+    //region Deck parsing from selected Json file
+    fun parsingJsonFile(uri: Uri) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = _sharingHub.readCardDeckFromLocalJson(uri)
             res.flow.collect { repoRes ->
                 withContext(Dispatchers.Main) {
                     when (repoRes) {

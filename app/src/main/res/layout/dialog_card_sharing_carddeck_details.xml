@@ -31,7 +31,7 @@
                     style="@style/Theme.Tegao.Label.Normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{deckInfo.label}"
+                    android:text="@{deckInfo.label.length() > 0 ? deckInfo.label : @string/card_sharing_default_noLabel}"
                     tools:text="Card deck's label"
                     />
 
@@ -40,7 +40,7 @@
                     style="@style/Theme.Tegao.Label.Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{deckInfo.author}"
+                    android:text="@{deckInfo.author.length() > 0 ? deckInfo.author : @string/card_sharing_default_noAuthor}"
                     tools:text="Author's name"
                     />
 

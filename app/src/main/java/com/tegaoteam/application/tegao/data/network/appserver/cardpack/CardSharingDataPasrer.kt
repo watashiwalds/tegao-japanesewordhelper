@@ -3,6 +3,7 @@ package com.tegaoteam.application.tegao.data.network.appserver.cardpack
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
+import com.google.gson.JsonParser
 import com.tegaoteam.application.tegao.data.database.cardpack.CardDeck
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import timber.log.Timber
@@ -25,6 +26,10 @@ object CardSharingDataPasrer {
         return res
     }
 
+    fun parseToInformationCardDeck(rawJson: String): CardDeck {
+        val rawJElem = JsonParser.parseString(rawJson)
+        return parseToInformationCardDeck(rawJElem)
+    }
     fun parseToInformationCardDeck(deckData: JsonElement): CardDeck {
         val pDeck = deckData.takeIf { it.isJsonObject }?.asJsonObject!!
         val res = CardDeck(
@@ -38,17 +43,16 @@ object CardSharingDataPasrer {
         return res
     }
 
+    fun parseToCompletedCardDeck(rawJson: String, infoDeck: CardDeck? = null): CardDeck {
+        val rawJElem = JsonParser.parseString(rawJson)
+        return parseToCompletedCardDeck(rawJElem, infoDeck)
+    }
     fun parseToCompletedCardDeck(deckData: JsonElement, infoDeck: CardDeck? = null): CardDeck {
         val pDeck = deckData.takeIf { it.isJsonObject }?.asJsonObject!!
         val pCards = pDeck.get("cards").takeIf { it.isJsonArray }?.asJsonArray!!
 
         val res = (infoDeck?: parseToInformationCardDeck(deckData)).apply { setParsedCards(jsonArrayToListCards(pCards)) }
         return res
-    }
-
-    fun parseJsonToCardsList(json: String): List<CardEntry> {
-        val jArr = Gson().toJsonTree(json).takeIf { it.isJsonArray }?.asJsonArray
-        return jsonArrayToListCards(jArr)
     }
 
     private fun jsonArrayToListCards(pCards: JsonArray?): List<CardEntry> {

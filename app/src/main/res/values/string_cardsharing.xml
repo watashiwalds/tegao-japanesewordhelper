@@ -15,6 +15,10 @@
     <string name="card_sharing_deckFrom_message">Từ %s</string>
     <string name="card_sharing_deckSize">Tổng số thẻ: %d</string>
 
+    <string name="card_sharing_default_noLabel">Không tiêu đề</string>
+    <string name="card_sharing_default_noAuthor">Không xác định</string>
+    <string name="card_sharing_deckFromLocal_message">Từ bộ nhớ trong</string>
+
     <string name="card_sharing_importingDeck_confirmGroupLabel_title">Thêm bộ thẻ vào bộ nhớ</string>
     <string name="card_sharing_importingDeck_confirmGroupLabel_message">Tên bộ thẻ sau khi nhập sẽ là:</string>
     <string name="card_sharing_importingDeck_inProgress">Nhập các thẻ vào bộ nhớ</string>

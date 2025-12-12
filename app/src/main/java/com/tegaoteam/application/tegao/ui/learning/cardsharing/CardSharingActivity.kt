@@ -2,13 +2,12 @@ package com.tegaoteam.application.tegao.ui.learning.cardsharing
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -52,28 +51,36 @@ class CardSharingActivity : AppCompatActivity() {
             label = getString(R.string.card_sharing_headerLabel),
             backOnClickListener = { finish() }
         )
-        _viewModel.evFetchFailed.apply {
-            beacon.observe(this@CardSharingActivity) {
-                if (receive()) {
-                    getMessage()?.let { AppToast.show(it, AppToast.LENGTH_SHORT) }
+        _binding.apply {
+            fileImportBtn.setOnClickListener { selectLocalDeckJsonFile() }
+        }
+        _viewModel.apply {
+            evFetchFailed.apply {
+                beacon.observe(this@CardSharingActivity) {
+                    if (receive()) {
+                        getMessage()?.let { AppToast.show(it, AppToast.LENGTH_SHORT) }
+                    }
                 }
             }
-        }
-        _viewModel.evImportFinished.apply {
-            beacon.observe(this@CardSharingActivity) {
-                if (receive()) {
-                    DialogPreset.cancelCurrentProcessingDialog()
-                    getMessage()?.let {
-                        AppToast.show(getString(R.string.card_sharing_importingDeck_partFail, it), AppToast.LENGTH_SHORT)
-                    }?: AppToast.show(R.string.card_sharing_importingDeck_success, AppToast.LENGTH_SHORT)
+            evImportFinished.apply {
+                beacon.observe(this@CardSharingActivity) {
+                    if (receive()) {
+                        DialogPreset.cancelCurrentProcessingDialog()
+                        getMessage()?.let {
+                            AppToast.show(getString(R.string.card_sharing_importingDeck_partFail, it), AppToast.LENGTH_SHORT)
+                        }?: AppToast.show(R.string.card_sharing_importingDeck_success, AppToast.LENGTH_SHORT)
+                    }
                 }
             }
         }
         setupCarddecksListing()
         setupCardpacks()
         setupCarddeckDetails()
+
+        _binding.executePendingBindings()
     }
 
+    //region online fetching of cardpacks and carddecks from internet JSON
     private lateinit var _sourceAutoFillAdapter: ArrayAdapter<String>
     private fun setupCardpacks() {
         val sources = _viewModel.packSources
@@ -128,7 +135,25 @@ class CardSharingActivity : AppCompatActivity() {
             _deckDialogBinding.executePendingBindings()
         }
     }
+    //endregion
 
+    //region offline file picker to import card deck
+    private var _regLocalJsonSelect = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            _viewModel.parsingJsonFile(uri)
+            DialogPreset.quickView(
+                context = this,
+                view = _deckDialogBinding.root,
+                message = getString(R.string.card_sharing_deckFromLocal_message)
+            )
+        }
+    }
+    private fun selectLocalDeckJsonFile() {
+        _regLocalJsonSelect.launch("application/json")
+    }
+    //endregion
+
+    //region perform importing deck of choice
     private fun performImportDeck(cards: List<CardEntry>?, defaultGroupLabel: String? = null) {
         if (cards == null) return
         val confirmImport = { selectedLabel: String ->
@@ -158,4 +183,5 @@ class CardSharingActivity : AppCompatActivity() {
             observe(this@CardSharingActivity) { updateText.text = "($it/$finValue)" }
         }
     }
+    //endregion
 }

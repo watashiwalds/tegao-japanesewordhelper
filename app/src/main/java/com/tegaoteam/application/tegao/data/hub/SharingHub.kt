@@ -1,5 +1,7 @@
 package com.tegaoteam.application.tegao.data.hub
 
+import android.net.Uri
+import androidx.core.net.toFile
 import com.google.gson.stream.JsonWriter
 import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.TegaoApplication
@@ -8,9 +10,12 @@ import com.tegaoteam.application.tegao.data.database.cardpack.CardPack
 import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.data.model.asFlow
 import com.tegaoteam.application.tegao.data.network.appserver.cardpack.CardSharingApi
+import com.tegaoteam.application.tegao.data.network.appserver.cardpack.CardSharingDataPasrer
+import com.tegaoteam.application.tegao.data.utils.ErrorResults
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.model.CardEntry
 import com.tegaoteam.application.tegao.domain.repo.LearningRepo
+import com.tegaoteam.application.tegao.utils.FileHelper
 import com.tegaoteam.application.tegao.utils.getStringFromAppRes
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -59,7 +64,7 @@ class SharingHub private constructor() {
     }
     //endregion
 
-    //region Related functions that serves card pack data retrieve
+    //region Related functions that serves online card pack data retrieve
     private val cardSharingApi = CardSharingApi()
 
         //todo: Make a proper sql table to store added cardpack sources
@@ -78,5 +83,26 @@ class SharingHub private constructor() {
     } )
 
     suspend fun getCarddeckContent(deckLink: String) = cardSharingApi.getCarddeckContentByLink(deckLink)
+    //endregion
+
+    //region import card deck via local json file
+    suspend fun readCardDeckFromLocalJson(uri: Uri) = FlowStream(flow {
+        var rawJson: String?
+        var deck: CardDeck?
+
+        //the two are undefine json file until passed parsing try-catch
+        try {
+            rawJson = FileHelper.getStringDataFromUri(uri)
+            deck = CardSharingDataPasrer.parseToInformationCardDeck(rawJson)
+        } catch(e: Exception) {
+            Timber.e(e)
+            emit(ErrorResults.RepoRes.INPUT_ERROR)
+            return@flow
+        }
+        emit(RepoResult.Success(deck))
+
+        deck = CardSharingDataPasrer.parseToCompletedCardDeck(rawJson, deck)
+        emit(RepoResult.Success(deck))
+    } )
     //endregion
 }

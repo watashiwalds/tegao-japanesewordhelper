@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.FrameLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,7 +19,7 @@ import com.tegaoteam.application.tegao.databinding.ActivityMainBinding
 import com.tegaoteam.application.tegao.databinding.ItemChipNavbarIconNLabelBinding
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipListAdapter
 import com.tegaoteam.application.tegao.ui.component.themedchip.ThemedChipManager
-import com.tegaoteam.application.tegao.ui.setting.SettingActivity
+import com.tegaoteam.application.tegao.ui.options.OptionsActivity
 import com.tegaoteam.application.tegao.ui.shared.BehaviorPreset
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.ui.shared.IdTranslator
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindOptionButton() {
         _binding.optionMenuBtn.setOnClickListener {
-            val intent = Intent(this, SettingActivity::class.java)
+            val intent = Intent(this, OptionsActivity::class.java)
             startActivity(intent)
         }
     }

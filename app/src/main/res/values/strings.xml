@@ -10,7 +10,7 @@
     <string name="hint_enter_search_keyword_here">漢字, かな, romaji, …</string>
     <string name="title_label_lookup">Tra cứu</string>
     <string name="title_label_learning">Học tập</string>
-    <string name="title_label_option">Lựa chọn</string>
+    <string name="title_label_options">Lựa chọn</string>
     <string name="title_label_setting">Cài đặt</string>
     <string name="hint_is_an_input_field">Nhập tại đây…</string>
 

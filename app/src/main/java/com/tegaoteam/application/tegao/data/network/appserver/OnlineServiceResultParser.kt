@@ -1,7 +1,7 @@
 package com.tegaoteam.application.tegao.data.network.appserver
 
 import com.google.gson.JsonElement
-import com.tegaoteam.application.tegao.data.network.ErrorResults
+import com.tegaoteam.application.tegao.data.utils.ErrorResults
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import timber.log.Timber
 

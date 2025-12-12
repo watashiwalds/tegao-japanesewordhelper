@@ -7,7 +7,7 @@ import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.google.gson.JsonElement
 import com.tegaoteam.application.tegao.data.config.SystemStates
-import com.tegaoteam.application.tegao.data.network.ErrorResults
+import com.tegaoteam.application.tegao.data.utils.ErrorResults
 import com.tegaoteam.application.tegao.domain.model.Translator.Companion.Language as Language
 
 class GoogleTranslateApi private constructor(): TranslatorApi{

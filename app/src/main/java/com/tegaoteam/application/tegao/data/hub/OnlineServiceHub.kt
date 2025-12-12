@@ -3,7 +3,7 @@ package com.tegaoteam.application.tegao.data.hub
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.core.graphics.scale
-import com.tegaoteam.application.tegao.data.network.ErrorResults
+import com.tegaoteam.application.tegao.data.utils.ErrorResults
 import com.tegaoteam.application.tegao.data.network.appserver.OnlineServiceApi
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.utils.FileHelper

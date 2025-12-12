@@ -2,7 +2,7 @@ package com.tegaoteam.application.tegao.data.network.dictionaries.mazii
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.tegaoteam.application.tegao.data.network.ErrorResults
+import com.tegaoteam.application.tegao.data.utils.ErrorResults
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.domain.model.Kanji
 import com.tegaoteam.application.tegao.domain.model.Word

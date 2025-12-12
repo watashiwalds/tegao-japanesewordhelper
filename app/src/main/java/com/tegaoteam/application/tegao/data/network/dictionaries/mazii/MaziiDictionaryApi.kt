@@ -11,7 +11,7 @@ import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetwo
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.google.gson.JsonElement
-import com.tegaoteam.application.tegao.data.network.ErrorResults
+import com.tegaoteam.application.tegao.data.utils.ErrorResults
 
 class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
     companion object {

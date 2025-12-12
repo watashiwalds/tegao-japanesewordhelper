@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#00FFFFFF</color>
-    <color name="background_fill">#FFFFFFFF</color>
+    <color name="background_fill">#FFFDFDFD</color>
     <color name="neutral">#FFC8C8C8</color>
     <color name="disable">#FF919191</color>
-    <color name="text_normal">#FF000000</color>
-    <color name="text_reverse">#FFFFFFFF</color>
+    <color name="text_normal">#FF111111</color>
+    <color name="text_reverse">#FFFDFDFD</color>
     <color name="primary">#FFB31B1B</color>
     <color name="primary_light">#FFE08E8E</color>
     <color name="primary_dark">#FF350808</color>
@@ -13,8 +13,8 @@
     <color name="secondary_light">#FFFFFA85</color>
     <color name="secondary_dark">#FFFFC21F</color>
 
-    <color name="const_black">#FF000000</color>
-    <color name="const_white">#FFFFFFFF</color>
+    <color name="const_black">#FF111111</color>
+    <color name="const_white">#FFFDFDFD</color>
     <color name="secondary_halfAlpha">#4DFFE100</color>
 
     <color name="neutral_halfAlpha">#68C8C8C8</color>

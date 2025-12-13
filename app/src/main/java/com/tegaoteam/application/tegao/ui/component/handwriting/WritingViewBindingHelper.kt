@@ -50,7 +50,7 @@ class WritingViewBindingHelper {
                 switchButtonBinding.apply {
                     switchInfo = SwitchButtonInfo(
                         iconResId = R.drawable.ftc_round_handwriting_128,
-                        switchState = MutableLiveData<Boolean>().apply { value = switchInfo?.stateLiveData?.value }
+                        switchState = MutableLiveData<Boolean>().apply { value = switchInfo?.stateLiveData?.value?: false }
                     ).apply {
                         writingViewController.toggleWritingMode(stateLiveData.value)
                         onStateChangedListener = { switchState ->

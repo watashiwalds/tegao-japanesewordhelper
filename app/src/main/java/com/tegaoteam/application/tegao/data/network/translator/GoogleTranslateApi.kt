@@ -47,7 +47,7 @@ class GoogleTranslateApi private constructor(): TranslatorApi{
         sourceLang: Language,
         transLang: Language
     ): RepoResult<String> {
-        if (!SystemStates.isInternetAvailable()!!) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
+        if (SystemStates.isInternetAvailable() != true) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
         val res = RetrofitResult.wrapper { retrofit.postFunctionFetchJson(endpoint = endpoint, params = generateParamsMap(text, sourceLang, transLang)) }
         return when (res) {
             is RepoResult.Error<*> -> res

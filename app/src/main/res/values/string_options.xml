@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <string name="options_setting_label">Cài đặt</string>
     <string name="options_setting_description">Tra cứu • Thẻ học • Add-on • …</string>
     <string name="options_info_label">Tegao</string>
-    <string name="options_info_description">v0.3.3-alpha</string>
+    <string name="options_info_description">v0.4.0-alpha</string>
 </resources>

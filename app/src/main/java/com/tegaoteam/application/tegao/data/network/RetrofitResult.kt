@@ -11,7 +11,7 @@ class RetrofitResult {
                 if (res.isSuccessful && res.body() != null) {
                     RepoResult.Success(res.body()!!)
                 } else {
-                    RepoResult.Error<T>(code = res.code(), message = res.errorBody().toString())
+                    RepoResult.Error<T>(code = res.code(), message = res.errorBody()?.string()?: "Can't read error")
                 }
             } catch(e: Exception) {
                 RepoResult.Error<T>(message = e.toString())

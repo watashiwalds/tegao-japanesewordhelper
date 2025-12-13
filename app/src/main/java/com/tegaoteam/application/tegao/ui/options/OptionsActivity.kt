@@ -12,6 +12,7 @@ import com.tegaoteam.application.tegao.R
 import com.tegaoteam.application.tegao.databinding.ActivityOptionsBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
 import com.tegaoteam.application.tegao.ui.component.generics.listnavigation.ListNavigationListAdapter
+import com.tegaoteam.application.tegao.ui.options.account.SignInHelper
 import com.tegaoteam.application.tegao.ui.setting.SettingActivity
 
 class OptionsActivity : AppCompatActivity() {
@@ -30,6 +31,11 @@ class OptionsActivity : AppCompatActivity() {
         _viewModel = ViewModelProvider(this)[OptionsActivityViewModel::class.java]
 
         initView()
+
+        setupAccountAction()
+
+        _binding.lifecycleOwner = this
+        _binding.executePendingBindings()
     }
 
     private fun initView() {
@@ -48,6 +54,15 @@ class OptionsActivity : AppCompatActivity() {
                 submitList(_viewModel.navigationList)
             }
             adapter = _adapter
+        }
+    }
+
+    private lateinit var _signInHelper: SignInHelper
+    private fun setupAccountAction() {
+        _signInHelper = SignInHelper(this)
+        _signInHelper.displayCurrentAccount(_binding.loAccountCardIcl)
+        _binding.loAccountCardIcl.apply {
+            accountIOBtn.setOnClickListener { _signInHelper.requestSignIn() }
         }
     }
 }

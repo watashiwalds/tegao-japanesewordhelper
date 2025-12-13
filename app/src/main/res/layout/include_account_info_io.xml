@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Theme.Tegao.Screen.PaddingBorder"
+        android:background="@drawable/neutral_stroke_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            >
+            <TextView
+                android:id="@+id/accountEmail_txt"
+                style="@style/Theme.Tegao.Label.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                tools:text="theloggedaccount.demo@gmail.com" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/accountAvatar_img"
+                android:layout_width="@dimen/img_accountAvatar"
+                android:layout_height="@dimen/img_accountAvatar"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/neutral"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/Theme.Tegao.MaterialRequire.ShapeableImageViewRoundedBorderOverlay"
+                android:layout_marginBottom="@dimen/padding_tiny"
+                android:layout_marginTop="@dimen/padding_normal"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/accountName_txt"
+                style="@style/Theme.Tegao.Label.LargeMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Account Name"/>
+
+            <TextView
+                android:id="@+id/accountType_txt"
+                style="@style/Theme.Tegao.Label.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_normal"
+                tools:text="Normal account"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/accountIO_btn"
+            style="@style/Theme.Tegao.LabelButton.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/padding_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Action" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

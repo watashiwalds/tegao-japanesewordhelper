@@ -28,52 +28,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/Theme.Tegao.Screen.PaddingBorder"
-                    android:background="@drawable/neutral_stroke_background"
-                    android:layout_marginTop="@dimen/padding_normal"
+                <include layout="@layout/include_account_info_io"
+                    android:id="@+id/lo_accountCard_icl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/accountIO_btn"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="@dimen/padding_small"
-                        android:gravity="center_vertical"
-                        >
-                        <TextView
-                            android:id="@+id/lo_accountType_txt"
-                            style="@style/Theme.Tegao.Label.Small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            tools:text="Account Type" />
-
-                        <TextView
-                            android:id="@+id/lo_accountName_txt"
-                            style="@style/Theme.Tegao.Label.LargeMedium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="Unique Name Account"/>
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/accountIO_btn"
-                        style="@style/Theme.Tegao.LabelButton.Secondary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/padding_small"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Sign in /\nLog out" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginTop="@dimen/padding_normal"
+                    />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/optionsList_rcy"

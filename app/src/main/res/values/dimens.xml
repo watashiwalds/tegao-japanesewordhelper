@@ -19,6 +19,7 @@
     <dimen name="img_icon_small">16dp</dimen>
     <dimen name="img_icon_big">32dp</dimen>
     <dimen name="img_icon_large">48dp</dimen>
+    <dimen name="img_accountAvatar">64dp</dimen>
     <dimen name="img_navbar3Strike">64dp</dimen>
     <dimen name="img_headerBackButton">64dp</dimen>
     <dimen name="img_circularProgress">72dp</dimen>

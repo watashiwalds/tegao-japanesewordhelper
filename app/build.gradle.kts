@@ -7,6 +7,7 @@ plugins {
     id("androidx.room") version "2.8.3"
     id("com.google.devtools.ksp") version "2.2.21-2.0.4"
     kotlin("plugin.serialization") version "2.2.21"
+    id("com.google.gms.google-services")
 }
 
 android {

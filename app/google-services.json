@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "135658289710",
+    "project_id": "auth-tegao",
+    "storage_bucket": "auth-tegao.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135658289710:android:863c85079d0fa3a8f47dbf",
+        "android_client_info": {
+          "package_name": "com.tegaoteam.application.tegao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135658289710-539rdchabu0kgip35aotehjskip85dj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_E0EgI2WIZ-8HqJir1A89uPWdbgyhkTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135658289710-539rdchabu0kgip35aotehjskip85dj4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

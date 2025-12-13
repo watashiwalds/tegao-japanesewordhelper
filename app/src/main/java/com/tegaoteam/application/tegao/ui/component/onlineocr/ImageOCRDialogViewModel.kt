@@ -9,6 +9,7 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.tegaoteam.application.tegao.data.hub.OnlineServiceHub
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
+import com.tegaoteam.application.tegao.ui.account.SignInHelper
 import com.tegaoteam.application.tegao.utils.EventBeacon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,20 +29,22 @@ class ImageOCRDialogViewModel(private val _onlineServiceHub: OnlineServiceHub): 
     fun requestImageOCR(imageUri: Uri) {
         selectedImageUri = imageUri
         Timber.i("Receive request to OCR an image, sending to network...")
-        viewModelScope.launch(Dispatchers.IO) {
-            //TODO: lowerResolution as a setting value
-            val res = _onlineServiceHub.requestImageOCR(imageUri, true)
-            withContext(Dispatchers.Main) {
-                when (res) {
-                    is RepoResult.Success<List<String>> -> {
-                        Timber.i("OCR success with data = ${res.data}")
-                        isRecognizingSuccessful = true
-                        _recognizedText.value = res.data
-                    }
-                    is RepoResult.Error<*> -> {
-                        Timber.i("OCR failed with message = ${res.message}")
-                        isRecognizingSuccessful = false
-                        evRecognitionFailed.ignite("${res.code} ${res.message}")
+        SignInHelper.getUserToken { userToken ->
+            viewModelScope.launch(Dispatchers.IO) {
+                //TODO: lowerResolution as a setting value
+                val res = _onlineServiceHub.requestImageOCR(userToken?: "", imageUri, true)
+                withContext(Dispatchers.Main) {
+                    when (res) {
+                        is RepoResult.Success<List<String>> -> {
+                            Timber.i("OCR success with data = ${res.data}")
+                            isRecognizingSuccessful = true
+                            _recognizedText.value = res.data
+                        }
+                        is RepoResult.Error<*> -> {
+                            Timber.i("OCR failed with message = ${res.message}")
+                            isRecognizingSuccessful = false
+                            evRecognitionFailed.ignite("${res.code} ${res.message}")
+                        }
                     }
                 }
             }

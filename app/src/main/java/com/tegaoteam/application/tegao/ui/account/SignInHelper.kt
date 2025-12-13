@@ -1,4 +1,4 @@
-package com.tegaoteam.application.tegao.ui.options.account
+package com.tegaoteam.application.tegao.ui.account
 
 import android.content.Intent
 import androidx.activity.result.ActivityResult
@@ -20,10 +20,17 @@ import timber.log.Timber
 //todo: Really investigate in a new way to handle account credentials
 @Suppress("DEPRECATION")
 class SignInHelper(private val activity: AppCompatActivity, private val launcher: ActivityResultLauncher<Intent>, private val binding: IncludeAccountInfoIoBinding) {
+    companion object {
+        private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+        fun getUserToken(callback: (String?) -> Unit) {
+            auth.currentUser?.getIdToken(true)?.addOnSuccessListener { result ->
+                Timber.d("Token: ${result.token}")
+                callback.invoke(result.token)
+            }
+        }
+    }
 
     private var googleSignInClient: GoogleSignInClient
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-
     init {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("135658289710-539rdchabu0kgip35aotehjskip85dj4.apps.googleusercontent.com")
@@ -39,8 +46,7 @@ class SignInHelper(private val activity: AppCompatActivity, private val launcher
         }
     }
 
-    fun processSignInResult(res: ActivityResult): String? {
-        var idToken: String? = null
+    fun processSignInResult(res: ActivityResult, notifyLambda: (String) -> Unit) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(res.data)
         try {
             val account = task.getResult(ApiException::class.java)
@@ -50,7 +56,7 @@ class SignInHelper(private val activity: AppCompatActivity, private val launcher
                     auth.currentUser?.getIdToken(true)?.addOnSuccessListener { result ->
                         val token = result.token
                         if (token != null) {
-                            idToken = token
+                            notifyLambda.invoke(token)
                         } else {
                             AppToast.show("Failed to get token credential from Firebase", AppToast.LENGTH_SHORT)
                         }
@@ -64,7 +70,6 @@ class SignInHelper(private val activity: AppCompatActivity, private val launcher
             Timber.e(e)
             AppToast.show("Error when login: ${e.message}", AppToast.LENGTH_SHORT)
         }
-        return idToken
     }
 
     private fun displayCurrentAccount() {

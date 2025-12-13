@@ -6,6 +6,7 @@ import androidx.core.graphics.scale
 import com.tegaoteam.application.tegao.data.utils.ErrorResults
 import com.tegaoteam.application.tegao.data.network.appserver.OnlineServiceApi
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
+import com.tegaoteam.application.tegao.ui.account.SignInHelper
 import com.tegaoteam.application.tegao.utils.FileHelper
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
@@ -49,14 +50,15 @@ class OnlineServiceHub {
     }
 
     suspend fun notifyLoginTokenToServer(token: String): RepoResult<Nothing> {
-        return api.notifyLoginTokenToServer(token)
+        return api.notifyLoginTokenToServer(token) as RepoResult<Nothing>
     }
 
-    suspend fun requestImageOCR(imageUri: Uri, lowerResolution: Boolean): RepoResult<List<String>> {
+    suspend fun requestImageOCR(userToken: String, imageUri: Uri, lowerResolution: Boolean): RepoResult<List<String>> {
         val sourceBitmap = FileHelper.getBitmapFromUri(imageUri) ?: return ErrorResults.RepoRes.INPUT_ERROR
 
         val inpBitmap = if (lowerResolution) downscaledByteArrayAsOCRInput(sourceBitmap) else sourceBitmap
         val requestBody = bitmapToRequestBody(inpBitmap)
-        return api.requestImageOCR(requestBody, "jpeg")
+
+        return api.requestImageOCR(userToken, requestBody, "jpeg")
     }
 }

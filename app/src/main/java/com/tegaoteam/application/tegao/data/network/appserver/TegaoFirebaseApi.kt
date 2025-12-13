@@ -13,19 +13,21 @@ import retrofit2.http.Part
 interface TegaoFirebaseApi {
     @POST("login")
     suspend fun notifyLoginToken(
-        @Body body: JsonObject
-    ): Response<Nothing>
+        @Body body: JsonObject = JsonObject()
+    ): Response<JsonElement>
 
     @Multipart
     @POST("ocr")
     suspend fun postImageOCR(
         @Header("x-api-key") sessionKey: String,
+        @Header("Authorization") token: String,
         @Part part: MultipartBody.Part
     ): Response<JsonElement>
 
     @POST("chat")
     suspend fun postChatbotConversation(
         @Header("x-api-key") sessionKey: String,
+        @Header("Authorization") token: String,
         @Body body: JsonObject
     ): Response<JsonElement>
 }

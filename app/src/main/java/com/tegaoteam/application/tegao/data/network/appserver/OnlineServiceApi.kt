@@ -20,13 +20,14 @@ class OnlineServiceApi private constructor() {
         val api by lazy { OnlineServiceApi() }
     }
 
-    suspend fun notifyLoginTokenToServer(token: String): RepoResult<Nothing> {
+    suspend fun notifyLoginTokenToServer(token: String): RepoResult<JsonElement> {
         val body = JsonObject().apply { addProperty("idToken", token) }
+        Timber.d("${body}")
         val res = RetrofitResult.wrapper { retrofit.notifyLoginToken(body) }
         return res
     }
 
-    suspend fun requestImageOCR(image: RequestBody, imageExtension: String? = null): RepoResult<List<String>> {
+    suspend fun requestImageOCR(userToken: String, image: RequestBody, imageExtension: String? = null): RepoResult<List<String>> {
         if (SystemStates.isInternetAvailable() != true) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
 
         val partParsing = MultipartBody.Part.createFormData(
@@ -34,11 +35,11 @@ class OnlineServiceApi private constructor() {
             imageExtension?.let { "requestedOCR.$it" }?: "requestedOCR",
             image
         )
-        Timber.i("API received File from Hub request with body = ${partParsing.body.toString().let { it.substring(0, min(50, it.length)) }}")
-        val res = RetrofitResult.wrapper { retrofit.postImageOCR(TegaoFirebaseConst.obsoleteSoon, partParsing) }
+        Timber.i("API received File from Hub request, userId = $userToken")
+        val res = RetrofitResult.wrapper { retrofit.postImageOCR(TegaoFirebaseConst.obsoleteSoon, userToken, partParsing) }
         Timber.i("API finish recognizing")
         return when (res) {
-            is RepoResult.Error<*> -> res
+            is RepoResult.Error<*> -> RepoResult.Error<Nothing>(res.code, res.message)
             is RepoResult.Success<JsonElement> -> parser.toRecognizedOCRResults(res.data)
         }
     }

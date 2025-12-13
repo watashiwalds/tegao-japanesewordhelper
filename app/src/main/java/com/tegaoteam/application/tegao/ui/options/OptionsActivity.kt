@@ -1,6 +1,5 @@
 package com.tegaoteam.application.tegao.ui.options
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -15,7 +14,7 @@ import com.tegaoteam.application.tegao.data.hub.OnlineServiceHub
 import com.tegaoteam.application.tegao.databinding.ActivityOptionsBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
 import com.tegaoteam.application.tegao.ui.component.generics.listnavigation.ListNavigationListAdapter
-import com.tegaoteam.application.tegao.ui.options.account.SignInHelper
+import com.tegaoteam.application.tegao.ui.account.SignInHelper
 import com.tegaoteam.application.tegao.ui.setting.SettingActivity
 import com.tegaoteam.application.tegao.utils.AppToast
 import timber.log.Timber
@@ -64,8 +63,7 @@ class OptionsActivity : AppCompatActivity() {
 
     private val _regSignInActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { res ->
         Timber.d("Receive Google login result, send to SignInHelper")
-        val token = _signInHelper.processSignInResult(res)
-        token?.let { _viewModel.notifyLoginTokenToServer(token) }
+        _signInHelper.processSignInResult(res) { userToken -> _viewModel.notifyLoginTokenToServer(userToken) }
     }
     private lateinit var _signInHelper: SignInHelper
     private fun setupAccountAction() {

@@ -98,7 +98,6 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.kotlinx.coroutines.play.services)
     implementation(libs.glide)
-    implementation(libs.okhttp)
     implementation(libs.com.google.gms.google.services.gradle.plugin)
 
 }

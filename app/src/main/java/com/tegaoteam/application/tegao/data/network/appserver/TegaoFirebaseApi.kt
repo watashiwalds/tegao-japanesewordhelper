@@ -11,6 +11,11 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface TegaoFirebaseApi {
+    @POST("login")
+    suspend fun notifyLoginToken(
+        @Body body: JsonObject
+    ): Response<Nothing>
+
     @Multipart
     @POST("ocr")
     suspend fun postImageOCR(

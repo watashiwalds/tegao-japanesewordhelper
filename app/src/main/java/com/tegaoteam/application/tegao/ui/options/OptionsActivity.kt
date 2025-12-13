@@ -1,19 +1,24 @@
 package com.tegaoteam.application.tegao.ui.options
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.tegaoteam.application.tegao.R
+import com.tegaoteam.application.tegao.data.hub.OnlineServiceHub
 import com.tegaoteam.application.tegao.databinding.ActivityOptionsBinding
 import com.tegaoteam.application.tegao.ui.component.generics.HeaderBarBindingHelper
 import com.tegaoteam.application.tegao.ui.component.generics.listnavigation.ListNavigationListAdapter
 import com.tegaoteam.application.tegao.ui.options.account.SignInHelper
 import com.tegaoteam.application.tegao.ui.setting.SettingActivity
+import com.tegaoteam.application.tegao.utils.AppToast
+import timber.log.Timber
 
 class OptionsActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityOptionsBinding
@@ -28,7 +33,7 @@ class OptionsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        _viewModel = ViewModelProvider(this)[OptionsActivityViewModel::class.java]
+        _viewModel = ViewModelProvider(this, OptionsActivityViewModel.Companion.ViewModelFactory(OnlineServiceHub()))[OptionsActivityViewModel::class.java]
 
         initView()
 
@@ -57,12 +62,18 @@ class OptionsActivity : AppCompatActivity() {
         }
     }
 
+    private val _regSignInActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { res ->
+        Timber.d("Receive Google login result, send to SignInHelper")
+        val token = _signInHelper.processSignInResult(res)
+        token?.let { _viewModel.notifyLoginTokenToServer(token) }
+    }
     private lateinit var _signInHelper: SignInHelper
     private fun setupAccountAction() {
-        _signInHelper = SignInHelper(this)
-        _signInHelper.displayCurrentAccount(_binding.loAccountCardIcl)
-        _binding.loAccountCardIcl.apply {
-            accountIOBtn.setOnClickListener { _signInHelper.requestSignIn() }
+        _signInHelper = SignInHelper(this, _regSignInActivityResult, _binding.loAccountCardIcl)
+        _viewModel.evNotifiedToken.apply {
+            beacon.observe(this@OptionsActivity) {
+                if (receive()) AppToast.show(getMessage()?: "", AppToast.LENGTH_SHORT)
+            }
         }
     }
 }

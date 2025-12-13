@@ -53,6 +53,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_normal"
                 tools:text="Normal account"/>
+
+            <ProgressBar
+                android:id="@+id/lo_logging_pgb"
+                android:layout_width="@dimen/img_icon_large"
+                android:layout_height="@dimen/img_icon_large"
+                android:indeterminate="true"
+                android:visibility="gone"
+                />
+
         </LinearLayout>
 
         <Button

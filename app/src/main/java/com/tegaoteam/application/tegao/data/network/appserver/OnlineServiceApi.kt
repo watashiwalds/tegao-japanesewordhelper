@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.data.network.appserver
 
 import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.SystemStates
 import com.tegaoteam.application.tegao.data.utils.ErrorResults
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
@@ -17,6 +18,12 @@ class OnlineServiceApi private constructor() {
 
     companion object {
         val api by lazy { OnlineServiceApi() }
+    }
+
+    suspend fun notifyLoginTokenToServer(token: String): RepoResult<Nothing> {
+        val body = JsonObject().apply { addProperty("idToken", token) }
+        val res = RetrofitResult.wrapper { retrofit.notifyLoginToken(body) }
+        return res
     }
 
     suspend fun requestImageOCR(image: RequestBody, imageExtension: String? = null): RepoResult<List<String>> {

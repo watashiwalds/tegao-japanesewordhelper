@@ -48,9 +48,12 @@ class OnlineServiceHub {
         return bitmap.copy(Bitmap.Config.ARGB_8888, false).scale(newW, newH)
     }
 
+    suspend fun notifyLoginTokenToServer(token: String): RepoResult<Nothing> {
+        return api.notifyLoginTokenToServer(token)
+    }
+
     suspend fun requestImageOCR(imageUri: Uri, lowerResolution: Boolean): RepoResult<List<String>> {
-        val sourceBitmap = FileHelper.getBitmapFromUri(imageUri)
-        if (sourceBitmap == null) return ErrorResults.RepoRes.INPUT_ERROR
+        val sourceBitmap = FileHelper.getBitmapFromUri(imageUri) ?: return ErrorResults.RepoRes.INPUT_ERROR
 
         val inpBitmap = if (lowerResolution) downscaledByteArrayAsOCRInput(sourceBitmap) else sourceBitmap
         val requestBody = bitmapToRequestBody(inpBitmap)

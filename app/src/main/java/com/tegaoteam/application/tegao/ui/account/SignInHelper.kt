@@ -82,7 +82,7 @@ class SignInHelper(private val activity: AppCompatActivity, private val launcher
                 accountEmailTxt.setTextWithVisibility(currentAccount.email)
                 accountTypeTxt.setTextWithVisibility("Đang phát triển...")
                 currentAccount.photoUrl?.let {
-                    Glide.with(activity).load(it) to accountAvatarImg
+                    Glide.with(activity).load(it).into(accountAvatarImg)
                     accountAvatarImg.toggleVisibility(true)
                 }
 

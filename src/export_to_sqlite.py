@@ -13,12 +13,10 @@ SQLITE_DB_PATH = os.path.join(root_dir, "data", "dictionary.db")
 
 
 def create_sqlite_schema(cursor):
-    # Xóa bảng cũ nếu có (Bao gồm cả android_metadata nếu file cũ còn sót lại)
     tables = ["Word_Tags", "Senses", "Kanji", "Words", "Tags", "Sources", "android_metadata"]
     for tbl in tables:
         cursor.execute(f"DROP TABLE IF EXISTS {tbl}")
 
-    # 1. Sources
     cursor.execute("""
                    CREATE TABLE Sources
                    (
@@ -30,7 +28,6 @@ def create_sqlite_schema(cursor):
                    )
                    """)
 
-    # 2. Tags
     cursor.execute("""
                    CREATE TABLE Tags
                    (
@@ -40,7 +37,6 @@ def create_sqlite_schema(cursor):
                    )
                    """)
 
-    # 3. Words (Lite Version)
     cursor.execute("""
                    CREATE TABLE Words
                    (
@@ -52,7 +48,6 @@ def create_sqlite_schema(cursor):
                    )
                    """)
 
-    # 4. Kanji (Lite Version: 5 columns)
     cursor.execute("""
                    CREATE TABLE Kanji
                    (
@@ -64,7 +59,6 @@ def create_sqlite_schema(cursor):
                    )
                    """)
 
-    # 5. Senses (Lite Version: 4 columns)
     cursor.execute("""
                    CREATE TABLE Senses
                    (
@@ -75,7 +69,6 @@ def create_sqlite_schema(cursor):
                    )
                    """)
 
-    # 6. Word_Tags
     cursor.execute("""
                    CREATE TABLE Word_Tags
                    (
@@ -84,9 +77,6 @@ def create_sqlite_schema(cursor):
                        tag_id      INTEGER             NOT NULL
                    )
                    """)
-
-    # ĐÃ XÓA BẢNG android_metadata TẠI ĐÂY
-
 
 def copy_table(pg_conn, sqlite_conn, table_name, columns):
     pg_cur = pg_conn.cursor()
@@ -132,7 +122,6 @@ def create_indices(cursor):
 def run_export():
     print("Starting SQLite export (Clean Version - No Metadata)")
 
-    # Bắt buộc xóa file cũ để đảm bảo không còn tàn dư của bảng android_metadata
     if os.path.exists(SQLITE_DB_PATH):
         try:
             os.remove(SQLITE_DB_PATH)

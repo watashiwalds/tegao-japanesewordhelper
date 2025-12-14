@@ -47,7 +47,7 @@ def check_if_update_needed(cur,source_name,new_version):
     cur.execute("SELECT version FROM Sources WHERE source_name = %s", (source_name,))
     row = cur.fetchone()
     if not row:
-        print(f"It's not necessary to update {source_name} version {new_version}")
+        print(f"Source not found, update needed")
         return True
     current_version = row[0]
     if current_version != new_version:

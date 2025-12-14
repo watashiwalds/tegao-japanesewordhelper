@@ -26,7 +26,7 @@ class SignInHelper(private val activity: AppCompatActivity, private val launcher
             auth.currentUser?.getIdToken(true)?.addOnSuccessListener { result ->
                 Timber.d("Token: ${result.token}")
                 callback.invoke(result.token)
-            }
+            }?: callback.invoke(null)
         }
     }
 

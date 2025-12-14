@@ -16,4 +16,9 @@ class StorageHub: StorageRepo {
         return _learningDb.purgeAllData()
     }
 
+    private val _chatLogDb = SQLiteDatabase.getInstance().chatLogDAO
+    override suspend fun deleteChatLog(): Int {
+        return _chatLogDb.purgeChatLog()
+    }
+
 }

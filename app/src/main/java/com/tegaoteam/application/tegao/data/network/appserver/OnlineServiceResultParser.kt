@@ -7,7 +7,7 @@ import timber.log.Timber
 
 class OnlineServiceResultParser {
     fun toRecognizedOCRResults(json: JsonElement): RepoResult<List<String>> {
-        Timber.i("Parser receive Element from API with data status: ${!json.isJsonNull}")
+        Timber.i("Parser receive Element from OCR API with data status: ${!json.isJsonNull}")
         val parseRes = mutableListOf<String>()
         try {
             val dataList = json.asJsonObject.get("data").asJsonArray.map { it.asJsonObject }
@@ -18,6 +18,20 @@ class OnlineServiceResultParser {
         }
         return if (parseRes.isNotEmpty())
             RepoResult.Success<List<String>>(parseRes)
+        else
+            ErrorResults.RepoRes.EMPTY_RESULT
+    }
+
+    fun toChatbotAnswerText(json: JsonElement): RepoResult<String> {
+        var parsedText: String = ""
+        try {
+            val answer = json.asJsonObject.get("message_content").asString
+            parsedText = answer
+        } catch (_: Exception) {
+            return RepoResult.Error<Nothing>(777, "Parsing Error")
+        }
+        return if (parsedText.isNotEmpty())
+            RepoResult.Success<String>(parsedText)
         else
             ErrorResults.RepoRes.EMPTY_RESULT
     }

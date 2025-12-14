@@ -43,4 +43,15 @@ class OnlineServiceApi private constructor() {
             is RepoResult.Success<JsonElement> -> parser.toRecognizedOCRResults(res.data)
         }
     }
+
+    suspend fun sendQuestionToChatbot(userToken: String, questionText: String): RepoResult<String> {
+        if (SystemStates.isInternetAvailable() != true) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
+
+        val body = JsonObject().apply { addProperty("text", questionText) }
+        val res = RetrofitResult.wrapper { retrofit.postChatbotConversation(TegaoFirebaseConst.obsoleteSoon, userToken, body) }
+        return when (res) {
+            is RepoResult.Error<*> -> RepoResult.Error<Nothing>(res.code, res.message)
+            is RepoResult.Success<JsonElement> -> parser.toChatbotAnswerText(res.data)
+        }
+    }
 }

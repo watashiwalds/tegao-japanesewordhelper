@@ -64,6 +64,10 @@ class OnlineServiceHub {
         return api.requestImageOCR(userToken, requestBody, "jpeg")
     }
 
+    suspend fun sendQuestionToChatbot(userToken: String, questionText: String): RepoResult<String> {
+        return api.sendQuestionToChatbot(userToken, questionText)
+    }
+
     private val _chatLogDb = SQLiteDatabase.getInstance().chatLogDAO
     fun getRecentChat(): FlowStream<List<ChatLogEntity>> = FlowStream(_chatLogDb.getRecentChat())
     suspend fun upsertChat(chatLogEntity: ChatLogEntity) = _chatLogDb.upsertChat(chatLogEntity)

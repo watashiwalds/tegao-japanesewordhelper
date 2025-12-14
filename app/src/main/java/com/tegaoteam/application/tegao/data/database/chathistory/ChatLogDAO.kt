@@ -19,4 +19,7 @@ interface ChatLogDAO {
 
     @Upsert
     suspend fun upsertChat(chatLog: ChatLogEntity): Long
+
+    @Query("""delete from ${ChatLogEntity.TABLE_NAME}""")
+    suspend fun purgeChatLog(): Int
 }

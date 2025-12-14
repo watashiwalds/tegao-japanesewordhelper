@@ -37,7 +37,7 @@ object Time {
     private fun transformToTimeType(value: Any?): LocalDateTime? {
         return try {
             when (value) {
-                is String -> LocalDateTime.parse(value)
+                is String -> if (value.isNotBlank()) LocalDateTime.parse(value) else null
                 is LocalDateTime -> value
                 else -> null
             }

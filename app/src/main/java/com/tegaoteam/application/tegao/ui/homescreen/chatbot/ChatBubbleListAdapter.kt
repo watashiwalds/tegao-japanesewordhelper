@@ -25,7 +25,7 @@ class ChatBubbleListAdapter: ListAdapter<ChatBubble, ChatBubbleListAdapter.ViewH
 
     class ViewHolder private constructor(private val binding: ItemChatboxBubbleBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ChatBubble) {
-            binding.bubble = item.apply { timestamp = Time.formatToPrettyString(timestamp) }
+            binding.bubble = item.copy().apply { timestamp = Time.formatToPrettyString(timestamp) }
             binding.executePendingBindings()
         }
         companion object {

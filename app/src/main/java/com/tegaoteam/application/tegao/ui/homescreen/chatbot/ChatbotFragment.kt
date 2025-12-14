@@ -32,6 +32,10 @@ class ChatbotFragment: Fragment() {
 
     private fun initObservers() {
         _viewModel.apply {
+            currentChat.observe(viewLifecycleOwner) {
+                val list = listOf(it.toList().reversed(), recentChats.value!!).flatten()
+                _adapter.submitList(list)
+            }
             recentChats.observe(viewLifecycleOwner) {
                 _adapter.submitList(it)
             }
@@ -40,6 +44,16 @@ class ChatbotFragment: Fragment() {
 
     private fun initView() {
         _binding.loChatBubbleBoxRcy.adapter = _adapter
+        setupChat()
         _binding.executePendingBindings()
+    }
+
+    private fun setupChat() {
+        _binding.sendChatBtn.setOnClickListener {
+            val questionText = _binding.inputChatEdt.text.toString()
+            if (questionText.isNotBlank()) {
+                _viewModel.sendQuestion(questionText)
+            }
+        }
     }
 }

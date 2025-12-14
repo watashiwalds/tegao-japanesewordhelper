@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.ui.homescreen.chatbot
 
 import com.tegaoteam.application.tegao.data.database.chathistory.ChatLogEntity
+import com.tegaoteam.application.tegao.utils.Time
 
 data class ChatBubble(
     val id: Long,
@@ -25,6 +26,14 @@ data class ChatBubble(
                 timestamp = entity.replyAtTime,
                 content = entity.replyText
             )
+        )
+
+        fun toChatLogEntity(converse: Pair<ChatBubble, ChatBubble>) = ChatLogEntity(
+            id = 0,
+            sendAtTime = converse.first.timestamp,
+            sendText = converse.first.content,
+            replyAtTime = converse.second.timestamp,
+            replyText = converse.second.content
         )
     }
 }

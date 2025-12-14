@@ -45,6 +45,22 @@ class SettingStorageViewModel(private val storageRepo: StorageRepo): ViewModel()
                     }
                 }
             }
+        ),
+        ConfigEntryItem(
+            labelResId = R.string.setting_storage_label_deleteChatLog,
+            descriptionResId = R.string.setting_storage_detail_deleteChatLog,
+            type = ConfigEntryItem.Companion.Type.CONFIRMATION,
+            clickListener = {
+                viewModelScope.launch(Dispatchers.Default) {
+                    val count = storageRepo.deleteChatLog()
+                    withContext(Dispatchers.Main) {
+                        AppToast.show(
+                            String.format(TegaoApplication.instance.getString(R.string.setting_storage_result_deleteChatLog), count),
+                            AppToast.LENGTH_SHORT
+                        )
+                    }
+                }
+            }
         )
     )
 

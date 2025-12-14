@@ -11,7 +11,9 @@ import com.tegaoteam.application.tegao.domain.interf.DictionaryLookupApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.google.gson.JsonElement
+import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.data.utils.ErrorResults
+import kotlinx.coroutines.flow.flow
 
 class MaziiDictionaryApi private constructor(): DictionaryLookupApi {
     companion object {
@@ -49,34 +51,31 @@ class MaziiDictionaryApi private constructor(): DictionaryLookupApi {
     private var _wordPayloadObj: JsonObject = gson.toJsonTree(payloadWord).asJsonObject
     private var _kanjiPayloadObj: JsonObject = gson.toJsonTree(payloadKanji).asJsonObject
 
-    override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {
-        if (SystemStates.isInternetAvailable() != true) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
+    override suspend fun searchWord(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( flow{
+        if (SystemStates.isInternetAvailable() != true) {
+            emit(ErrorResults.RepoRes.NO_INTERNET_CONNECTION)
+            return@flow
+        }
 
         _wordPayloadObj.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = endpointWord, params = mapOf(), body = _wordPayloadObj) }
-        return when (res) {
-            is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonObject)
+        when (res) {
+            is RepoResult.Error<*> -> emit(res)
+            is RepoResult.Success<JsonElement> -> emit(RepoResult.Success(res.data.asJsonObject))
         }
-    }
+    } )
 
-    override suspend fun searchKanji(keyword: String): RepoResult<JsonObject> {
-        if (SystemStates.isInternetAvailable() != true) return ErrorResults.RepoRes.NO_INTERNET_CONNECTION
+    override suspend fun searchKanji(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( flow{
+        if (SystemStates.isInternetAvailable() != true) {
+            emit(ErrorResults.RepoRes.NO_INTERNET_CONNECTION)
+            return@flow
+        }
 
         _kanjiPayloadObj.addProperty("query", keyword)
         val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = endpointKanji, params = mapOf(), body = _kanjiPayloadObj) }
-        return when (res) {
-            is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonObject)
+        when (res) {
+            is RepoResult.Error<*> -> emit(res)
+            is RepoResult.Success<JsonElement> -> emit(RepoResult.Success(res.data.asJsonObject))
         }
-    }
-
-    override suspend fun devTest(keyword: String): RepoResult<String> {
-        _wordPayloadObj.addProperty("query", keyword)
-        val res = RetrofitResult.wrapper { instance.postFunctionFetchJson(endpoint = endpointWord, params = mapOf(), body = _wordPayloadObj) }
-        return when (res) {
-            is RepoResult.Error<*> -> res
-            is RepoResult.Success<*> -> RepoResult.Success("${res.data}")
-        }
-    }
+    } )
 }

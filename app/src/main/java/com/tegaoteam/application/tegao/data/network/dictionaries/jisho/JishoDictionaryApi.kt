@@ -3,12 +3,14 @@ package com.tegaoteam.application.tegao.data.network.dictionaries.jisho
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
+import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
 import com.tegaoteam.application.tegao.domain.interf.DictionaryLookupApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
+import kotlinx.coroutines.flow.flow
 import okhttp3.ResponseBody
 
 class JishoDictionaryApi private constructor(): DictionaryLookupApi {
@@ -35,30 +37,21 @@ class JishoDictionaryApi private constructor(): DictionaryLookupApi {
         RetrofitMaker.createWithUrl(rootUrl, RetrofitMaker.TYPE_BROWSING).create(RetrofitApi::class.java)
     }
 
-    override suspend fun searchWord(keyword: String): RepoResult<JsonObject> {
+    override suspend fun searchWord(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( flow{
         val wordFormedParams = paramsWord.toMutableMap().apply { set("keyword", keyword) }
         val res = RetrofitResult.wrapper { instance.getFunctionFetchJson(endpoint = endpointWord, params = wordFormedParams) }
-        return when (res) {
-            is RepoResult.Error<*> -> res
-            is RepoResult.Success<JsonElement> -> RepoResult.Success(res.data.asJsonObject)
+        when (res) {
+            is RepoResult.Error<*> -> emit(res)
+            is RepoResult.Success<JsonElement> -> emit(RepoResult.Success(res.data.asJsonObject))
         }
-    }
+    } )
 
-    override suspend fun searchKanji(keyword: String): RepoResult<ResponseBody> {
+    override suspend fun searchKanji(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( flow{
         val kanjiFormedAppend = String.format(endpointKanjiAppend, keyword)
         val res = RetrofitResult.wrapper { instance.getFunctionFetchRaw(endpoint = endpointKanji + kanjiFormedAppend, params = mapOf()) }
-        return when (res) {
-            is RepoResult.Error<*> -> res
-            is RepoResult.Success<ResponseBody> -> RepoResult.Success(res.data)
+        when (res) {
+            is RepoResult.Error<*> -> emit(res)
+            is RepoResult.Success<ResponseBody> -> emit(RepoResult.Success(res.data))
         }
-    }
-
-    override suspend fun devTest(keyword: String): RepoResult<String> {
-        val wordFormedParams = paramsWord.toMutableMap().apply { set("keyword", keyword) }
-        val res = RetrofitResult.wrapper { instance.getFunctionFetchJson(endpoint = endpointWord, params = wordFormedParams) }
-        return when (res) {
-            is RepoResult.Error<*> -> res
-            is RepoResult.Success<*> -> RepoResult.Success("${res.data}")
-        }
-    }
+    } )
 }

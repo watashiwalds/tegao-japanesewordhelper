@@ -10,9 +10,11 @@ import com.tegaoteam.addon.tegao.yomitandictionary.ILookupService
 import com.tegaoteam.application.tegao.TegaoApplication
 import com.tegaoteam.application.tegao.data.config.AddonConfig
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
+import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.interf.OfflineDictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
+import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 
 class OfflineDictionaryAddonConnection private constructor(context: Context): OfflineDictionaryApi {
@@ -69,16 +71,12 @@ class OfflineDictionaryAddonConnection private constructor(context: Context): Of
     //region DictionaryLookupApi overrides
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == DICTIONARY_ID }
 
-    override suspend fun searchWord(keyword: String): RepoResult<Any> {
-        return RepoResult.Success("$keyword...")
-    }
+    override suspend fun searchWord(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( flow{
+        emit(RepoResult.Success("$keyword..."))
+    } )
 
-    override suspend fun searchKanji(keyword: String): RepoResult<Any> {
-        return RepoResult.Success("$keyword...")
-    }
-
-    override suspend fun devTest(keyword: String): RepoResult<String> {
-        return RepoResult.Success("Hasn't looked up: $keyword")
-    }
+    override suspend fun searchKanji(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( flow{
+        emit(RepoResult.Success("$keyword..."))
+    } )
     //endregion
 }

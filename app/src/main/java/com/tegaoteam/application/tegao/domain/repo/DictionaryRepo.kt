@@ -11,5 +11,4 @@ interface DictionaryRepo {
 
     suspend fun searchWord(keyword: String, dictionaryId: String): Stream<RepoResult<List<Word>?>>
     suspend fun searchKanji(keyword: String, dictionaryId: String): Stream<RepoResult<List<Kanji>?>>
-    suspend fun devTest(keyword: String, dictionaryId: String): RepoResult<String>
 }

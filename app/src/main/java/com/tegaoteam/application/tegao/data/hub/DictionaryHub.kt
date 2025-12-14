@@ -36,19 +36,21 @@ class DictionaryHub: DictionaryRepo {
 
             requestedApi?.let {
                 val res = requestedApi.searchWord(keyword)
-                when (res) {
-                    is RepoResult.Error<*> -> {
-                        // failed to search but have cache -> extends cache expiring time to 1 more day
-                        if (cache != null) {
-                            extendsDictionaryCache(cache, 1)
-                            emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json)))
+                res.flow.collect { result ->
+                    when (result) {
+                        is RepoResult.Error<*> -> {
+                            // failed to search but have cache -> extends cache expiring time to 1 more day
+                            if (cache != null) {
+                                extendsDictionaryCache(cache, 1)
+                                emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(cache.json)))
+                            }
+                            else emit(result)
                         }
-                        else emit(res)
-                    }
-                    is RepoResult.Success<*> -> {
-                        // attempt to upsert new response from net to cache
-                        if (requestedApi.dict?.isOnline?: true) upsertDictionaryCache(keyword, Word.TYPE_VALUE, dictionaryId, res.data, cache)
-                        emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(res.data)))
+                        is RepoResult.Success<*> -> {
+                            // attempt to upsert new response from net to cache
+                            if (requestedApi.dict?.isOnline?: true) upsertDictionaryCache(keyword, Word.TYPE_VALUE, dictionaryId, result.data, cache)
+                            emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(result.data)))
+                        }
                     }
                 }
             }
@@ -68,36 +70,26 @@ class DictionaryHub: DictionaryRepo {
 
             requestedApi?.let {
                 val res = requestedApi.searchKanji(keyword)
-                when (res) {
-                    is RepoResult.Error<*> -> {
-                        // failed to search but have cache -> extends cache expiring time to 1 more day
-                        if (cache != null) {
-                            extendsDictionaryCache(cache, 1)
-                            emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json)))
+                res.flow.collect { result ->
+                    when (result) {
+                        is RepoResult.Error<*> -> {
+                            // failed to search but have cache -> extends cache expiring time to 1 more day
+                            if (cache != null) {
+                                extendsDictionaryCache(cache, 1)
+                                emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(cache.json)))
+                            }
+                            else emit(result)
                         }
-                        else emit(res)
-                    }
-                    is RepoResult.Success<*> -> {
-                        // attempt to upsert new response from net to cache
-                        if (requestedApi.dict?.isOnline?: true) upsertDictionaryCache(keyword, Kanji.TYPE_VALUE, dictionaryId, res.data, cache)
-                        emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(res.data)))
+                        is RepoResult.Success<*> -> {
+                            // attempt to upsert new response from net to cache
+                            if (requestedApi.dict?.isOnline?: true) upsertDictionaryCache(keyword, Kanji.TYPE_VALUE, dictionaryId, result.data, cache)
+                            emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(result.data)))
+                        }
                     }
                 }
             }
         }
     } )
-
-    override suspend fun devTest(keyword: String, dictionaryId: String): RepoResult<String> {
-        val requestedApi = getDictionaryApiById(dictionaryId)
-        requestedApi?.let {
-            val res = requestedApi.devTest(keyword)
-            return when (res) {
-                is RepoResult.Error<*> -> res
-                is RepoResult.Success<*> -> RepoResult.Success("${res.data}")
-            }
-        }
-        return RepoResult.Error<String>(message = "dictId not found (unsupported or misvalued)")
-    }
 
     // cache get/check
     private val _cacheDAO = SQLiteDatabase.getInstance().dictionaryCacheDAO

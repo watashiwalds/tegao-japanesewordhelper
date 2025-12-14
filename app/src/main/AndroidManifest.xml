@@ -6,6 +6,7 @@
 
     <queries>
         <package android:name="com.tegaoteam.addon.tegao.handwritingrecognition" />
+        <package android:name="com.tegaoteam.addon.tegao.yomitandictionary" />
     </queries>
 
     <application

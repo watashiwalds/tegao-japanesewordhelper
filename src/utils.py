@@ -5,32 +5,42 @@ import json
 import requests
 from tqdm import tqdm
 
-GITHUB_API_URL = "https://api.github.com/repos/yomidevs/jmdict-yomitan/releases/latest"
+JMDICT_API_URL = "https://api.github.com/repos/yomidevs/jmdict-yomitan/releases/latest"
+KANJI_API_URL = "https://api.github.com/repos/yomidevs/kanjidic-yomitan/releases/latest"
 
 def get_latest_release_info():
+    tag_name = None
+    links = {}
     try:
-        resp = requests.get(GITHUB_API_URL, timeout=15)
-        if resp.status_code != 200:
-            print(f"LỖI API: Status Code = {resp.status_code}")
-            print(f"Nội dung trả về: {resp.text[:500]}")
-        resp.raise_for_status()
-        data = resp.json()
+        resp_jm = requests.get(JMDICT_API_URL, timeout=15)
+        if resp_jm.status_code == 200:
+            data_jm = resp_jm.json()
+            tag_name = data_jm.get('tag_name')
+            assets_jm = data_jm.get('assets', [])
+            for asset in assets_jm:
+                name = asset['name'].lower()
+                if 'jmdict' in name and 'english' in name and 'examples' not in name:
+                    links['jmdict'] = asset['browser_download_url']
+                    print(f"Found JMdict URL: {links['jmdict']}")
+        else:
+            print(f"Lỗi lấy JMdict API: {resp_jm.status_code}")
 
-        tag_name = data.get('tag_name')
-        assets = data.get('assets',[])
-
-        links = {}
-        for asset in assets:
-            name = asset['name'].lower()
-            url = asset['browser_download_url']
-            if 'jmdict' in name and 'english' in name and 'examples' not in name:
-                links['jmdict'] = url
-            elif 'kanjidic' in name and 'english' in name:
-                links['kanjidic'] = url
+        resp_kanji = requests.get(KANJI_API_URL, timeout=15)
+        if resp_kanji.status_code == 200:
+            data_kanji = resp_kanji.json()
+            assets_kanji = data_kanji.get('assets', [])
+            for asset in assets_kanji:
+                name = asset['name'].lower()
+                if 'kanjidic' in name and 'english' in name:
+                    links['kanjidic'] = asset['browser_download_url']
+                    print(f"Found Kanjidic URL: {links['kanjidic']}")
+        else:
+            print(f"Lỗi lấy Kanjidic API: {resp_kanji.status_code}")
 
         return tag_name, links
+
     except Exception as e:
-        print(f'Error: {e}')
+        print(f'Error getting release info: {e}')
         return None, {}
 
 def check_if_update_needed(cur,source_name,new_version):

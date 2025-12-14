@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.utils
 
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.text.Html
 import android.view.View
 import android.widget.ImageView
@@ -60,7 +61,11 @@ fun TextView.setTextWithResId(stringResId: Int) {
 }
 @BindingAdapter("backgroundResId")
 fun View.setBackgroundWithResId(drawableResId: Int?) {
-    drawableResId?.let { if (it != 0) setBackgroundResource(drawableResId) }
+    drawableResId?.let { if (drawableResId != 0) setBackgroundResource(drawableResId)  }
+}
+@BindingAdapter("backgroundDrawable")
+fun View.setBackgroundWithDrawable(drawable: Drawable?) {
+    background = drawable
 }
 @BindingAdapter("textColorResId")
 fun TextView.setTextColorWithResId(textColorResId: Int?) {

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Theme.Tegao.Screen.PaddingBorder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lo_chatBubbleBox_rcy"
+            style="@style/Theme.Tegao.ScrollableViewFadeEdge"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/lo_chatBar_lnr"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            app:reverseLayout="true"
+
+            tools:listitem="@layout/item_chatbox_bubble"
+            tools:itemCount="10"
+            />
+
+        <LinearLayout
+            android:id="@+id/lo_chatBar_lnr"
+            android:background="@drawable/neutral_stroke_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <EditText
+                android:id="@+id/inputChat_edt"
+                style="@style/Theme.Tegao.ContentText.Normal"
+                android:hint="@string/chatbot_enterQuestion_hint"
+                android:paddingHorizontal="@dimen/padding_normal"
+                android:paddingVertical="@dimen/padding_small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/img_icon_large"
+                android:layout_weight="1"
+                tools:text="Chat content in here content in here content in here content in here content in here"
+                />
+
+            <ImageButton
+                android:id="@+id/sendChat_btn"
+                style="@style/Theme.Tegao.IconButton"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ftc_round_send_128"
+                android:layout_width="@dimen/img_icon_large"
+                android:layout_height="@dimen/img_icon_large"
+                android:layout_gravity="bottom"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

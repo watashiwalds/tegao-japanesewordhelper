@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chatbot_enterQuestion_hint">Nhập câu hỏi</string>
+    <string name="chatbot_botAnswerThinking">Đang trả lời…</string>
+</resources>

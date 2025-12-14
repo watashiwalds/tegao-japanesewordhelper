@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="bubble"
+            type="com.tegaoteam.application.tegao.ui.homescreen.chatbot.ChatBubble" />
+    </data>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/padding_small"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:toggleVisibility="@{bubble.sender == bubble.SENDER_USER}"
+            />
+
+        <LinearLayout
+            app:backgroundDrawable='@{bubble.sender == bubble.SENDER_USER ? @drawable/neutral_stroke_background : @drawable/neutral_stroke_start}'
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/padding_small"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:orientation="vertical"
+            android:layout_weight="5"
+
+            tools:background="@drawable/neutral_stroke_background"
+            >
+
+            <TextView
+                style="@style/Theme.Tegao.ContentText.Normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:text="@{bubble.content}"
+
+                tools:text="Chat content residing in here like:\nSecond line\nThird line\nJust like that"
+                />
+
+            <TextView
+                style="@style/Theme.Tegao.ContentText.Small"
+                android:textColor="@color/neutral"
+                android:layout_marginTop="@dimen/padding_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="@{bubble.timestamp}"
+
+                tools:text="1990-01-01 10:10:10"
+                />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:toggleVisibility="@{bubble.sender == bubble.SENDER_BOT}"
+
+            tools:visibility="gone"
+            />
+
+    </LinearLayout>
+
+</layout>

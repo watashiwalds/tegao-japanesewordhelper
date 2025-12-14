@@ -21,5 +21,10 @@
         android:name="com.tegaoteam.application.tegao.ui.homescreen.translate.TranslateFragment"
         android:label="fragment_main_translate"
         tools:layout="@layout/fragment_main_translate"/>
+    <fragment
+        android:id="@+id/main_chatbotFragment"
+        android:name="com.tegaoteam.application.tegao.ui.homescreen.chatbot.ChatbotFragment"
+        android:label="ChatbotFragment"
+        tools:layout="@layout/fragment_main_chatbot"/>
 
 </navigation>

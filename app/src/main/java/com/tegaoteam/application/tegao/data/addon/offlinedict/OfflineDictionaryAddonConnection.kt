@@ -14,12 +14,13 @@ import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.interf.OfflineDictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
 import timber.log.Timber
 
 class OfflineDictionaryAddonConnection private constructor(context: Context): OfflineDictionaryApi {
     companion object {
-        val instance by lazy { OfflineDictionaryAddonConnection(TegaoApplication.instance.applicationContext) }
+        val instance = OfflineDictionaryAddonConnection(TegaoApplication.instance.applicationContext)
         const val DICTIONARY_ID = "yomitan"
     }
 
@@ -71,12 +72,18 @@ class OfflineDictionaryAddonConnection private constructor(context: Context): Of
     //region DictionaryLookupApi overrides
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == DICTIONARY_ID }
 
-    override suspend fun searchWord(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( flow{
-        emit(RepoResult.Success("$keyword..."))
+    override suspend fun searchWord(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( callbackFlow{
+        trySend(RepoResult.Success("$keyword..."))
+        registerCallback { rawResult -> trySend(RepoResult.Success(rawResult)) }
+        lookupService?.requestLookupResult(0, keyword)
+        awaitClose { registerCallback {  } }
     } )
 
-    override suspend fun searchKanji(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( flow{
-        emit(RepoResult.Success("$keyword..."))
+    override suspend fun searchKanji(keyword: String): FlowStream<RepoResult<Any>> = FlowStream( callbackFlow{
+        trySend(RepoResult.Success("$keyword..."))
+        registerCallback { rawResult -> trySend(RepoResult.Success(rawResult)) }
+        lookupService?.requestLookupResult(1, keyword)
+        awaitClose { registerCallback {  } }
     } )
     //endregion
 }

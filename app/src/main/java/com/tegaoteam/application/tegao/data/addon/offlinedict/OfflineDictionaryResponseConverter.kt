@@ -70,8 +70,11 @@ class OfflineDictionaryResponseConverter: DictionaryResponseConverter {
                 val tId = pKanji.get("id").asString
                 val tChar = pKanji.get("character").asString
                 val tMeaning = pKanji.get("meaning").asString
-                val tKun = pKanji.get("kunyomi").asJsonArray.mapNotNull { it.asString.takeUnless { s -> s.isNullOrBlank() } }
-                val tOn = pKanji.get("onyomi").asJsonArray.mapNotNull { it.asString.takeUnless { s -> s.isNullOrBlank() } }
+
+                var tKun: List<String>? = pKanji.get("kunyomi").asJsonArray.mapNotNull { it.asString.takeUnless { s -> s.isNullOrBlank() } }
+                if (tKun?.firstOrNull()?.isBlank()?: true) tKun = null
+                var tOn: List<String>? = pKanji.get("onyomi").asJsonArray.mapNotNull { it.asString.takeUnless { s -> s.isNullOrBlank() } }
+                if (tOn?.firstOrNull()?.isBlank()?: true) tOn = null
 
                 val tKanji = Kanji(
                     id = tId,

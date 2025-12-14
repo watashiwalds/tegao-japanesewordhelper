@@ -8,6 +8,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.data.database.chathistory.ChatLogDAO
+import com.tegaoteam.application.tegao.data.database.chathistory.ChatLogEntity
 import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheDAO
 import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheEntity
 import com.tegaoteam.application.tegao.data.database.learningcard.LearningCardDAO
@@ -24,8 +26,9 @@ import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistory
         CardGroupEntity::class,
         CardEntity::class,
         CardRepeatEntity::class,
+        ChatLogEntity::class,
     ],
-    version = SQLiteDatabase.Companion.DATABASE_VERSION,
+    version = SQLiteDatabase.DATABASE_VERSION,
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
@@ -33,7 +36,8 @@ import com.tegaoteam.application.tegao.data.database.searchhistory.SearchHistory
         AutoMigration(from = 5, to = 6),
         AutoMigration(from = 6, to = 7, spec = SQLiteDatabase.MigrationSpec6To7::class),
         AutoMigration(from = 7, to = 8),
-        AutoMigration(from = 8, to = 9)
+        AutoMigration(from = 8, to = 9),
+        AutoMigration(from = 9, to = 10)
                      ],
     exportSchema = true)
 abstract class SQLiteDatabase: RoomDatabase() {
@@ -41,10 +45,11 @@ abstract class SQLiteDatabase: RoomDatabase() {
     abstract val searchHistoryDAO: SearchHistoryDAO
     abstract val dictionaryCacheDAO: DictionaryCacheDAO
     abstract val learningCardDAO: LearningCardDAO
+    abstract val chatLogDAO: ChatLogDAO
 
     companion object {
         const val DATABASE_NAME = "tegao_sqlite_db"
-        const val DATABASE_VERSION = 9
+        const val DATABASE_VERSION = 10
 
         @Volatile
         private var _instance: SQLiteDatabase? = null

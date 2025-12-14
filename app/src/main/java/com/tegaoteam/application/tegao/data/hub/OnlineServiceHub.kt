@@ -3,10 +3,12 @@ package com.tegaoteam.application.tegao.data.hub
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.core.graphics.scale
+import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
+import com.tegaoteam.application.tegao.data.database.chathistory.ChatLogEntity
+import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.data.utils.ErrorResults
 import com.tegaoteam.application.tegao.data.network.appserver.OnlineServiceApi
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
-import com.tegaoteam.application.tegao.ui.account.SignInHelper
 import com.tegaoteam.application.tegao.utils.FileHelper
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
@@ -61,4 +63,8 @@ class OnlineServiceHub {
 
         return api.requestImageOCR(userToken, requestBody, "jpeg")
     }
+
+    private val _chatLogDb = SQLiteDatabase.getInstance().chatLogDAO
+    fun getRecentChat(): FlowStream<List<ChatLogEntity>> = FlowStream(_chatLogDb.getRecentChat())
+    suspend fun upsertChat(chatLogEntity: ChatLogEntity) = _chatLogDb.upsertChat(chatLogEntity)
 }

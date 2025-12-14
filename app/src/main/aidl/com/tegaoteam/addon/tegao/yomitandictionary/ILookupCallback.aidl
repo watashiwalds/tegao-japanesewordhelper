@@ -2,5 +2,5 @@
 package com.tegaoteam.addon.tegao.yomitandictionary;
 
 interface ILookupCallback {
-    void onResult(in String rawResult);
+    void onResult(String rawResult);
 }

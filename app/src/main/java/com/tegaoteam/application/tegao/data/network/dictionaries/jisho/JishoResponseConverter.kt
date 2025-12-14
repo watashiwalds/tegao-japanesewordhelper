@@ -116,7 +116,7 @@ class JishoResponseConverter: DictionaryResponseConverter {
             }
         } catch (e: Exception) {
             Timber.e(e)
-            return ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.PARSING_ERROR, e.message)
+            return words.apply { addAll(ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.PARSING_ERROR, e.message)) }
         }
 
         Timber.d("Converting finished, result: ${words.size}")

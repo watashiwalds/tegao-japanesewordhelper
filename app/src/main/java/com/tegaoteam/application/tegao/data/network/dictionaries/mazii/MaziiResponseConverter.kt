@@ -94,6 +94,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (word != null) words.add(word)
             }
         } catch (e: Exception) {
+            Timber.e(e)
             return words.apply { addAll(ErrorResults.DictionaryRes.wordRes(ErrorResults.DictionaryRes.PARSING_ERROR, e.message)) }
         }
 
@@ -148,6 +149,7 @@ class MaziiResponseConverter: DictionaryResponseConverter {
                 if (kanji != null) kanjis.add(kanji)
             }
         } catch (e: Exception) {
+            Timber.e(e)
             return kanjis.apply { addAll(ErrorResults.DictionaryRes.kanjiRes(ErrorResults.DictionaryRes.EMPTY_RESULT, e.message)) }
         }
 

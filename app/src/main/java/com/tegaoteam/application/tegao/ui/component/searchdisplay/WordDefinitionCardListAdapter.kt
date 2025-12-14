@@ -13,6 +13,7 @@ import com.tegaoteam.application.tegao.databinding.ItemDefinitionWordBinding
 import com.tegaoteam.application.tegao.databinding.ItemTagClassificationBinding
 import com.tegaoteam.application.tegao.domain.model.Word
 import com.tegaoteam.application.tegao.ui.component.tag.TagGroupListAdapter
+import com.tegaoteam.application.tegao.ui.component.tag.TagItem
 import com.tegaoteam.application.tegao.ui.learning.cardcreate.CardCreateActivityGate
 import com.tegaoteam.application.tegao.ui.shared.DisplayHelper
 import com.tegaoteam.application.tegao.utils.setTextWithVisibility
@@ -44,7 +45,9 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
 
             //display func for tags
             binding.loWordTagsRcy.layoutManager = DisplayHelper.FlexboxLayoutManagerMaker.rowStart(binding.loWordTagsRcy.context)
-            binding.loWordTagsRcy.adapter = TagGroupListAdapter(ItemTagClassificationBinding::inflate).apply { submitRawTagList(word.tags?.map { it.termKey to it.label }) }
+            binding.loWordTagsRcy.adapter = TagGroupListAdapter(ItemTagClassificationBinding::inflate).apply { submitList(
+                word.tags?.map { TagItem.toTagItem(it.termKey, it.label, it.description) }
+            ) }
 
             binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter(lifecycleOwner).apply { submitList(word.definitions) }
 

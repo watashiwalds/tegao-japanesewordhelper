@@ -48,6 +48,17 @@ class SettingAddonViewModel(private val _settingRepo: SettingRepo, private val _
                 else
                     Intent(Intent.ACTION_VIEW, "https://github.com/watashiwalds/tegaoaddon-handwritingrecognition/releases/".toUri())
             }
+        ),
+        ConfigEntryItem(
+            labelResId = R.string.setting_addon_label_offlineDict,
+            descriptionResId = if (_addonRepo.isOfflineDictionaryAvailable()) R.string.setting_addon_status_isInstalled else R.string.setting_addon_status_notInstalled,
+            type = ConfigEntryItem.Companion.Type.PENDING_INTENT,
+            clickListener = {
+                _evLaunchIntent.value = if (_addonRepo.isOfflineDictionaryAvailable())
+                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:com.tegaoteam.addon.tegao.yomitandictionary".toUri())
+                else
+                    Intent(Intent.ACTION_VIEW, "https://github.com/watashiwalds/tegaoaddon-yomitandictionary/releases/".toUri())
+            }
         )
     )
 

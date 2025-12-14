@@ -8,13 +8,11 @@ from tqdm import tqdm
 GITHUB_API_URL = "https://api.github.com/repos/yomidevs/jmdict-yomitan/releases/latest"
 
 def get_latest_release_info():
-    """Crawl the latest release info from the GitHub API."""
     try:
         resp = requests.get(GITHUB_API_URL, timeout=15)
         if resp.status_code != 200:
             print(f"LỖI API: Status Code = {resp.status_code}")
-            print(f"Nội dung trả về: {resp.text[:500]}")  # In 500 ký tự đầu xem là cái gì
-            return None, {}
+            print(f"Nội dung trả về: {resp.text[:500]}")
         resp.raise_for_status()
         data = resp.json()
 

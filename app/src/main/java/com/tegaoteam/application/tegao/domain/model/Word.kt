@@ -36,7 +36,8 @@ data class Word(
     @Serializable
     data class Tag(
         val termKey: String,
-        val label: String
+        val label: String,
+        val description: String? = null
     )
 
     @Serializable

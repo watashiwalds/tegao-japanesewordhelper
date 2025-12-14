@@ -165,6 +165,7 @@ class LookupActivity : AppCompatActivity() {
         }
         val dictChips = availDictsInMode.map{ ThemedChipItem.fromDictionary(it) }
         dictChipAdapter.apply {
+            submitList(null)
             submitList(dictChips)
         }
         dictChipAdapter.themedChipManager?.apply {

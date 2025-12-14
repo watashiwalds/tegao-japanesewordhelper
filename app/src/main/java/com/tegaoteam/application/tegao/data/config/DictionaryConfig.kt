@@ -1,9 +1,13 @@
 package com.tegaoteam.application.tegao.data.config
 
+import com.tegaoteam.application.tegao.data.addon.offlinedict.OfflineDictionaryAddonConnection
+import com.tegaoteam.application.tegao.data.addon.offlinedict.OfflineDictionaryResponseConverter
+import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.jisho.JishoDictionaryApi
 import com.tegaoteam.application.tegao.data.network.dictionaries.jisho.JishoResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.mazii.MaziiDictionaryApi
 import com.tegaoteam.application.tegao.data.network.dictionaries.mazii.MaziiResponseConverter
+import com.tegaoteam.application.tegao.domain.interf.DictionaryLookupApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 
 object DictionaryConfig {
@@ -11,26 +15,45 @@ object DictionaryConfig {
     const val DICT_WORD = 2
     const val DICT_KANJI = 3
 
-    val SIMDICT_MAZII = Dictionary(
+    private val SIMDICT_MAZII = Dictionary(
         MaziiDictionaryApi.DICTIONARY_ID,
         "Mazii",
         true,
         DICT_ALL
     )
-    val SIMDICT_JISHO = Dictionary(
+    private val SIMDICT_JISHO = Dictionary(
         JishoDictionaryApi.DICTIONARY_ID,
         "Jisho",
         true,
         DICT_WORD
     )
-
-    fun getDictionariesList() = listOf(
-        SIMDICT_MAZII,
-        SIMDICT_JISHO
+    private val SIMDICT_YOMITAN = Dictionary(
+        OfflineDictionaryAddonConnection.DICTIONARY_ID,
+        "Yomitan",
+        false,
+        DICT_ALL
     )
 
-    fun getDictionariesPack() = mapOf(
-        MaziiDictionaryApi.api to MaziiResponseConverter(),
-        JishoDictionaryApi.api to JishoResponseConverter()
-    )
+    private val isOfflineYomitanAvailable = AddonConfig.isOfflineDictionaryAvailable
+
+    private val dictList: List<Dictionary> by lazy {
+        val initList = mutableListOf(
+            SIMDICT_MAZII,
+            SIMDICT_JISHO
+        )
+        if (isOfflineYomitanAvailable) initList.add(0, SIMDICT_YOMITAN)
+        initList
+    }
+
+    private val dictPack: Map<DictionaryLookupApi, DictionaryResponseConverter> by lazy {
+        val initMap = mutableMapOf(
+            MaziiDictionaryApi.api to MaziiResponseConverter(),
+            JishoDictionaryApi.api to JishoResponseConverter()
+        )
+        if (isOfflineYomitanAvailable) initMap[OfflineDictionaryAddonConnection.instance] = OfflineDictionaryResponseConverter()
+        initMap
+    }
+
+    fun getDictionariesList() = dictList
+    fun getDictionariesPack() = dictPack
 }

@@ -7,7 +7,7 @@ Check for the latest release build to get the newest version. Notes that this pr
 ### Addons
 Tegao have addons as a form of expanding functions without bloated the main applicaton. You can install them separately with the main Tegao app to enhance your experience.
 - Handwriting recognition: [Tegao: HandwritingRecognition](https://github.com/watashiwalds/tegaoaddon-handwritingrecognition)
-- ... (more to come)
+- Yomitan offline dictionary: [Tegao: YomitanDictionary](https://github.com/watashiwalds/tegaoaddon-yomitandictionary)
 
 ---
 

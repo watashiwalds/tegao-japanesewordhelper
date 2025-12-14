@@ -1,9 +1,9 @@
-package com.tegaoteam.application.tegao.data.network.dictionaries
+package com.tegaoteam.application.tegao.domain.interf
 
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 
-interface DictionaryNetworkApi {
+interface DictionaryLookupApi {
     val dict: Dictionary?
 
     suspend fun searchWord(keyword: String): RepoResult<Any>

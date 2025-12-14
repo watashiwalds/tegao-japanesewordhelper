@@ -7,13 +7,13 @@ import com.tegaoteam.application.tegao.data.config.SystemStates
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
-import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
+import com.tegaoteam.application.tegao.domain.interf.DictionaryLookupApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.google.gson.JsonElement
 import com.tegaoteam.application.tegao.data.utils.ErrorResults
 
-class MaziiDictionaryApi private constructor(): DictionaryNetworkApi {
+class MaziiDictionaryApi private constructor(): DictionaryLookupApi {
     companion object {
         const val DICTIONARY_ID = "mazii"
 

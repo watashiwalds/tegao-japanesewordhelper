@@ -1,19 +1,17 @@
 package com.tegaoteam.application.tegao.data.network.dictionaries.jisho
 
-import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.data.network.RetrofitApi
 import com.tegaoteam.application.tegao.data.network.RetrofitMaker
 import com.tegaoteam.application.tegao.data.network.RetrofitResult
-import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
+import com.tegaoteam.application.tegao.domain.interf.DictionaryLookupApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
-import com.tegaoteam.application.tegao.utils.toMap
 import okhttp3.ResponseBody
 
-class JishoDictionaryApi private constructor(): DictionaryNetworkApi {
+class JishoDictionaryApi private constructor(): DictionaryLookupApi {
     companion object {
         const val DICTIONARY_ID = "jisho"
 

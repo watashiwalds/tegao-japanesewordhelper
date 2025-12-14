@@ -1,7 +1,5 @@
 package com.tegaoteam.application.tegao.data.config
 
-import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
-import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
 import com.tegaoteam.application.tegao.data.network.dictionaries.jisho.JishoDictionaryApi
 import com.tegaoteam.application.tegao.data.network.dictionaries.jisho.JishoResponseConverter
 import com.tegaoteam.application.tegao.data.network.dictionaries.mazii.MaziiDictionaryApi

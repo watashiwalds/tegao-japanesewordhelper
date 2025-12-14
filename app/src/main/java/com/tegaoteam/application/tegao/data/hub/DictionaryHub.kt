@@ -5,7 +5,7 @@ import com.tegaoteam.application.tegao.data.database.SQLiteDatabase
 import com.tegaoteam.application.tegao.data.database.dictionarycache.DictionaryCacheEntity
 import com.tegaoteam.application.tegao.data.model.FlowStream
 import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryResponseConverter
-import com.tegaoteam.application.tegao.data.network.dictionaries.DictionaryNetworkApi
+import com.tegaoteam.application.tegao.domain.interf.DictionaryLookupApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
 import com.tegaoteam.application.tegao.domain.repo.DictionaryRepo
 import com.tegaoteam.application.tegao.domain.model.Kanji
@@ -15,10 +15,9 @@ import com.tegaoteam.application.tegao.utils.Time
 import com.tegaoteam.application.tegao.utils.getMD5HashedValue
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
-import java.lang.Math.max
 
 class DictionaryHub: DictionaryRepo {
-    private fun getAvailableDictionaryPacks(): Map<DictionaryNetworkApi, DictionaryResponseConverter> = DictionaryConfig.getDictionariesPack()
+    private fun getAvailableDictionaryPacks(): Map<DictionaryLookupApi, DictionaryResponseConverter> = DictionaryConfig.getDictionariesPack()
     private fun getDictionaryApiById(dictId: String) = getAvailableDictionaryPacks().keys.firstOrNull { it.dict?.id == dictId }
     private fun getCompatDictionaryResponseConverter(dictId: String) = getAvailableDictionaryPacks().getOrDefault(getDictionaryApiById(dictId), null)
 

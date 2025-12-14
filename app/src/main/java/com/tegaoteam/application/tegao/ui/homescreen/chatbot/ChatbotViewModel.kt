@@ -1,8 +1,16 @@
 package com.tegaoteam.application.tegao.ui.homescreen.chatbot
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
+import com.tegaoteam.application.tegao.data.hub.OnlineServiceHub
+import com.tegaoteam.application.tegao.data.model.asFlow
+import kotlin.math.log
 
-class ChatbotViewModel: ViewModel() {
+class ChatbotViewModel(private val _onlineServiceHub: OnlineServiceHub): ViewModel() {
     val testChatBubble = mutableListOf(
         ChatBubble(
             id = -1,
@@ -41,4 +49,25 @@ class ChatbotViewModel: ViewModel() {
             content = "Thinking..."
         )
     ).apply { reverse() }
+
+    val recentChats = _onlineServiceHub.getRecentChat().asFlow().asLiveData().map { it.map { log -> ChatBubble.fromChatLogEntity(log).toList().reversed() }.flatten() }
+    private val _currentChat = MutableLiveData<Pair<ChatBubble, ChatBubble>>()
+    val currentChat: LiveData<Pair<ChatBubble, ChatBubble>> = _currentChat
+    fun sendQuestion(questionText: String) {
+
+    }
+
+    companion object {
+        class ViewModelFactory(
+            private val onlineServiceHub: OnlineServiceHub
+        ) : ViewModelProvider.Factory {
+            @Suppress("unchecked_cast")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(ChatbotViewModel::class.java)) {
+                    return ChatbotViewModel(onlineServiceHub) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class")
+            }
+        }
+    }
 }

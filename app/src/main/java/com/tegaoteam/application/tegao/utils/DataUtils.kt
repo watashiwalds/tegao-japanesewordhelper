@@ -19,6 +19,7 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
 
@@ -72,6 +73,11 @@ object Time {
     fun addDays(dateTime: Any, days: Long): LocalDateTime? {
         val dt = transformToTimeType(dateTime)
         return dt?.plus(Duration.ofDays(days))
+    }
+
+    fun formatToPrettyString(dateTime: Any): String {
+        val ldt = transformToTimeType(dateTime) ?: return ""
+        return ldt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
     }
 }
 

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tegaoteam.application.tegao.databinding.ItemChatboxBubbleBinding
+import com.tegaoteam.application.tegao.utils.Time
 
 class ChatBubbleListAdapter: ListAdapter<ChatBubble, ChatBubbleListAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
@@ -24,7 +25,7 @@ class ChatBubbleListAdapter: ListAdapter<ChatBubble, ChatBubbleListAdapter.ViewH
 
     class ViewHolder private constructor(private val binding: ItemChatboxBubbleBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ChatBubble) {
-            binding.bubble = item
+            binding.bubble = item.apply { timestamp = Time.formatToPrettyString(timestamp) }
             binding.executePendingBindings()
         }
         companion object {

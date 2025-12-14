@@ -49,9 +49,10 @@ class WordDefinitionCardListAdapter(private val lifecycleOwner: LifecycleOwner):
             binding.loWordDefinitionsRcy.adapter = DefinitionListAdapter(lifecycleOwner).apply { submitList(word.definitions) }
 
             //functions binding for quick action buttons
-            if (word.reading.isNotBlank()) binding.qabMakeNewCardBtn.apply {
-                toggleVisibility(true)
-                setOnClickListener { context.startActivity(CardCreateActivityGate.departIntent(context, word)) }
+            binding.qabMakeNewCardBtn.apply {
+                val hasKey = word.reading.isNotBlank()
+                toggleVisibility(hasKey)
+                if (hasKey) setOnClickListener { context.startActivity(CardCreateActivityGate.departIntent(context, word)) }
             }
 
             binding.executePendingBindings()

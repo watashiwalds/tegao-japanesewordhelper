@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao
 
 import android.app.Application
+import com.tegaoteam.application.tegao.ui.shared.FetchedConfigs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -13,6 +14,8 @@ class TegaoApplication: Application() {
 
         Timber.plant(Timber.DebugTree())
         instance = this
+
+        FetchedConfigs.igniteOfflineDictionaryAddon()
     }
 
     companion object {

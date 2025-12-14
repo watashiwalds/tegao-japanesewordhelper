@@ -1,6 +1,7 @@
 package com.tegaoteam.application.tegao.ui.shared
 
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.data.addon.offlinedict.OfflineDictionaryAddonConnection
 import com.tegaoteam.application.tegao.data.config.datastore.DefaultConfigs
 import com.tegaoteam.application.tegao.data.hub.AddonHub
 import com.tegaoteam.application.tegao.data.hub.SettingHub
@@ -31,4 +32,9 @@ object FetchedConfigs {
             started = SharingStarted.Eagerly,
             initialValue = DefaultConfigs.ENABLE_HANDWRITING_ADDON
         )
+
+    //spagetti this code for offline dict addon
+    fun igniteOfflineDictionaryAddon() {
+        if (addonRepo.isOfflineDictionaryAvailable()) OfflineDictionaryAddonConnection.instance
+    }
 }

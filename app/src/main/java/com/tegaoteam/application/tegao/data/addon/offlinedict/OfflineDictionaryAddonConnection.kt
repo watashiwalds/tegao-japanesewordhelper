@@ -20,7 +20,7 @@ import timber.log.Timber
 
 class OfflineDictionaryAddonConnection private constructor(context: Context): OfflineDictionaryApi {
     companion object {
-        val instance = OfflineDictionaryAddonConnection(TegaoApplication.instance.applicationContext)
+        val instance by lazy { OfflineDictionaryAddonConnection(TegaoApplication.instance.applicationContext) }
         const val DICTIONARY_ID = "yomitan"
     }
 

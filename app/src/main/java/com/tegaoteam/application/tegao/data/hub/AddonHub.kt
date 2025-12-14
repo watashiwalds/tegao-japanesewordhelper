@@ -1,7 +1,7 @@
 package com.tegaoteam.application.tegao.data.hub
 
 import com.tegaoteam.application.tegao.data.addon.HandwritingAddonConnection
-import com.tegaoteam.application.tegao.data.addon.OfflineDictionaryAddonConnection
+import com.tegaoteam.application.tegao.data.addon.offlinedict.OfflineDictionaryAddonConnection
 import com.tegaoteam.application.tegao.data.config.AddonConfig
 import com.tegaoteam.application.tegao.domain.repo.AddonRepo
 

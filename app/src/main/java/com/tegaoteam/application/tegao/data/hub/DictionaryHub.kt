@@ -47,7 +47,7 @@ class DictionaryHub: DictionaryRepo {
                     }
                     is RepoResult.Success<*> -> {
                         // attempt to upsert new response from net to cache
-                        upsertDictionaryCache(keyword, Word.TYPE_VALUE, dictionaryId, res.data, cache)
+                        if (requestedApi.dict?.isOnline?: true) upsertDictionaryCache(keyword, Word.TYPE_VALUE, dictionaryId, res.data, cache)
                         emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainWordList(res.data)))
                     }
                 }
@@ -79,7 +79,7 @@ class DictionaryHub: DictionaryRepo {
                     }
                     is RepoResult.Success<*> -> {
                         // attempt to upsert new response from net to cache
-                        upsertDictionaryCache(keyword, Kanji.TYPE_VALUE, dictionaryId, res.data, cache)
+                        if (requestedApi.dict?.isOnline?: true) upsertDictionaryCache(keyword, Kanji.TYPE_VALUE, dictionaryId, res.data, cache)
                         emit(RepoResult.Success(getCompatDictionaryResponseConverter(dictionaryId)?.toDomainKanjiList(res.data)))
                     }
                 }

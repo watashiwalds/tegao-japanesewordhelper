@@ -1,18 +1,18 @@
-package com.tegaoteam.application.tegao.data.addon
+package com.tegaoteam.application.tegao.data.addon.offlinedict
 
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
+import com.tegaoteam.addon.tegao.yomitandictionary.ILookupCallback
+import com.tegaoteam.addon.tegao.yomitandictionary.ILookupService
 import com.tegaoteam.application.tegao.TegaoApplication
+import com.tegaoteam.application.tegao.data.config.AddonConfig
 import com.tegaoteam.application.tegao.data.config.DictionaryConfig
 import com.tegaoteam.application.tegao.domain.independency.RepoResult
 import com.tegaoteam.application.tegao.domain.interf.OfflineDictionaryApi
 import com.tegaoteam.application.tegao.domain.model.Dictionary
-import com.tegaoteam.addon.tegao.yomitandictionary.ILookupService
-import com.tegaoteam.addon.tegao.yomitandictionary.ILookupCallback
-import com.tegaoteam.application.tegao.data.config.AddonConfig
 import timber.log.Timber
 
 class OfflineDictionaryAddonConnection private constructor(context: Context): OfflineDictionaryApi {
@@ -70,15 +70,15 @@ class OfflineDictionaryAddonConnection private constructor(context: Context): Of
     override val dict: Dictionary? = DictionaryConfig.getDictionariesList().find { it.id == DICTIONARY_ID }
 
     override suspend fun searchWord(keyword: String): RepoResult<Any> {
-        TODO("Not yet implemented")
+        return RepoResult.Success("$keyword...")
     }
 
     override suspend fun searchKanji(keyword: String): RepoResult<Any> {
-        TODO("Not yet implemented")
+        return RepoResult.Success("$keyword...")
     }
 
     override suspend fun devTest(keyword: String): RepoResult<String> {
-        TODO("Not yet implemented")
+        return RepoResult.Success("Hasn't looked up: $keyword")
     }
     //endregion
 }

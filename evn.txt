@@ -1,0 +1,6 @@
+Text này để nhắc cho người sau nếu clone code này về thì tạo 1 file .env điền các thông tin
+DB_NAME
+DB_USER
+DB_PASSWORD
+DB_HOST
+DB_POST

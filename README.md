@@ -10,5 +10,10 @@ Tegao have addons as a form of expanding functions without bloated the main appl
 - Yomitan offline dictionary: [Tegao: YomitanDictionary](https://github.com/watashiwalds/tegaoaddon-yomitandictionary)
 
 ---
+### Team members:
+- [@watashiwalds](https://github.com/watashiwalds)
+- [@ducvinh101101](https://github.com/ducvinh101101)
+- [@Wangamrt](https://github.com/Wangamrt)
+- [@chanh68](https://github.com/chanh68)
 
-#### Serving "Project 1" of 4th-year IT UTC student.
+#### Serving "Project 1" of 4th-year IT UTC student (up until v0.4.0-alpha).
